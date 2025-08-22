@@ -1,3 +1,4 @@
+import errorHandler from "@/app/api/(helpers)/error/error-handler";
 import {
   ErrorPayload,
   errorResponse,
@@ -24,6 +25,7 @@ export async function POST(req: Request) {
     });
   } catch (err) {
     const error = err as ErrorPayload;
-    return errorResponse(error);
+    const formattedError = errorHandler(error);
+    return errorResponse(formattedError);
   }
 }
