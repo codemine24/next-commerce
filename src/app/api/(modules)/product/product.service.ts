@@ -20,7 +20,47 @@ const getProducts = async (query: Record<string, any>) => {
   return products;
 };
 
+const getProduct = async (id: string) => {
+  const product = await prisma.product.findUnique({
+    where: {
+      id,
+    },
+  });
+
+  return product;
+};
+
+const updateProduct = async (id: string, payload: ProductPayload) => {
+  console.log('id...', id);
+  console.log('payload...', payload);
+  
+  const result = await prisma.product.update({
+    where: {
+      id,
+    },
+
+    data: {
+      ...payload,
+    },
+  });
+
+  return result;
+};
+
+const deleteProduct = async (id: string) => {
+  const product = await prisma.product.delete({
+    where: {
+      id,
+    },
+  });
+
+  return product;
+};
+
 export const ProductServices = {
   addProduct,
   getProducts,
+  getProduct,
+  updateProduct,
+  deleteProduct,
 };
