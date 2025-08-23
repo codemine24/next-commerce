@@ -13,6 +13,14 @@ const addProduct = async (payload: ProductPayload) => {
   return product;
 };
 
+const getProducts = async (query: Record<string, any>) => {
+  console.log("query..........", query);
+
+  const products = await prisma.product.findMany();
+  return products;
+};
+
 export const ProductServices = {
   addProduct,
+  getProducts,
 };
