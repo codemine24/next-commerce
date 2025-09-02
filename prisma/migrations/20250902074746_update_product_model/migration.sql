@@ -1,3 +1,0 @@
--- AlterTable
-ALTER TABLE "public"."products" ALTER COLUMN "price" SET DATA TYPE DOUBLE PRECISION,
-ALTER COLUMN "discount_price" SET DATA TYPE DOUBLE PRECISION;
