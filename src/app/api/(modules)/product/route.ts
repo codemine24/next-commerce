@@ -7,12 +7,15 @@ import {
 import payloadValidator from "@/app/api/(helpers)/utils/payload-validator";
 import httpStatus from "http-status";
 import { NextRequest } from "next/server";
+import userAuthenticator from "../../(helpers)/utils/user-authenticator";
 import { ProductSchemas } from "./product.schema";
 import { ProductServices } from "./product.service";
 
 // POST: Create new product
 export async function POST(req: Request) {
   try {
+    const authenticateUser = await userAuthenticator(req);
+    console.log(authenticateUser);
     const body = await req.json();
     await payloadValidator(ProductSchemas.addProduct, body);
     const result = await ProductServices.addProduct(body);

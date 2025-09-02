@@ -6,8 +6,8 @@ import {
 } from "@/app/api/(helpers)/shared/response";
 import payloadValidator from "@/app/api/(helpers)/utils/payload-validator";
 import httpStatus from "http-status";
-import { AuthSchemas } from "./schema";
-import { AuthServices } from "./service";
+import { AuthSchemas } from "../auth.schema";
+import { AuthServices } from "../auth.service";
 
 // ✅ POST: Create new user
 export async function POST(req: Request) {
