@@ -15,7 +15,7 @@ const addProduct = async (payload: ProductPayload) => {
 
 const getProducts = async (query: Record<string, any>) => {
   console.log("query..........", query);
-
+  
   const products = await prisma.product.findMany();
   return products;
 };
