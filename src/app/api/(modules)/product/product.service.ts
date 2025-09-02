@@ -10,6 +10,7 @@ import {
   productSearchableFields,
 } from "./product.utils";
 
+// ------------------------------------ ADD PRODUCT --------------------------------------
 const addProduct = async (payload: ProductPayload) => {
   const productCode = "product-" + Math.random().toString(36).substring(2, 9);
 
@@ -24,6 +25,7 @@ const addProduct = async (payload: ProductPayload) => {
   return product;
 };
 
+// ------------------------------------ GET ALL PRODUCTS ---------------------------------
 const getProducts = async (query: Record<string, any>) => {
   const { page, limit, sort_by, sort_order, search_term, price_range } = query;
 
@@ -91,20 +93,23 @@ const getProducts = async (query: Record<string, any>) => {
   };
 };
 
-const getProduct = async (id: string) => {
-  const product = await prisma.product.findUnique({
+// ------------------------------------ GET SINGLE PRODUCT -------------------------------
+const getProduct = async (slug: string) => {
+  const product = await prisma.product.findUniqueOrThrow({
     where: {
-      id,
+      slug,
     },
   });
 
   return product;
 };
 
-const updateProduct = async (id: string, payload: ProductPayload) => {
+// ------------------------------------ UPDATE PRODUCT -----------------------------------
+const updateProduct = async (slug: string, payload: ProductPayload) => {
+  if (payload.name) payload.slug = slugGenerator(payload.name);
   const result = await prisma.product.update({
     where: {
-      id,
+      slug,
     },
 
     data: {

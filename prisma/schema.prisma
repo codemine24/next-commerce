@@ -34,8 +34,8 @@ model Product {
   product_code           String?  @unique
   warranty               String?
   stock                  Int      @default(0)
-  price                  Int
-  discount_price         Int?
+  price                  Float
+  discount_price         Float?
   thumbnail              String?
   gallery                String[] @default([])
   description            String? //html

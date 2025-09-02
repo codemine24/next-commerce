@@ -4,19 +4,21 @@ import {
   errorResponse,
   successResponse,
 } from "@/app/api/(helpers)/shared/response";
+import payloadValidator from "@/app/api/(helpers)/utils/payload-validator";
 import httpStatus from "http-status";
 import { NextRequest } from "next/server";
+import { ProductSchemas } from "../product.schema";
 import { ProductServices } from "../product.service";
 
 // GET: Get single product
 export async function GET(
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
   try {
-    const id = (await params).id;
+    const slug = (await params).slug;
 
-    const product = await ProductServices.getProduct(id);
+    const product = await ProductServices.getProduct(slug);
     return successResponse({
       statusCode: httpStatus.OK,
       message: "Product fetched successfully",
@@ -53,17 +55,19 @@ export async function DELETE(
 // PATCH: Update product
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
   try {
-    const id = (await params).id;
-    const data = await request.json();
+    const slug = (await params).slug;
+    const body = await request.json();
 
-    const product = await ProductServices.updateProduct(id, data);
+    await payloadValidator(ProductSchemas.updateProduct, body);
+
+    const result = await ProductServices.updateProduct(slug, body);
     return successResponse({
       statusCode: httpStatus.OK,
       message: "Product updated successfully",
-      data: product,
+      data: result,
     });
   } catch (err) {
     const error = err as ErrorPayload;
