@@ -35,11 +35,12 @@ export async function GET(req: NextRequest) {
     const searchParams = req.nextUrl.searchParams;
     const queryParams = Object.fromEntries(searchParams.entries());
 
-    const products = await ProductServices.getProducts(queryParams);
+    const result = await ProductServices.getProducts(queryParams);
     return successResponse({
       statusCode: httpStatus.OK,
       message: "Products fetched successfully",
-      data: products,
+      meta: result.meta,
+      data: result.data,
     });
   } catch (err) {
     const error = err as ErrorPayload;
