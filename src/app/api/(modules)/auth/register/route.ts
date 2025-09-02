@@ -1,31 +1,25 @@
-import errorHandler from "@/app/api/(helpers)/error/error-handler";
-import {
-  ErrorPayload,
-  errorResponse,
-  successResponse,
-} from "@/app/api/(helpers)/shared/response";
+import { catchAsync } from "@/app/api/(helpers)/shared/catch-async";
+import { successResponse } from "@/app/api/(helpers)/shared/response";
 import payloadValidator from "@/app/api/(helpers)/utils/payload-validator";
 import httpStatus from "http-status";
 import { AuthSchemas } from "../auth.schema";
 import { AuthServices } from "../auth.service";
 
-// ✅ POST: Create new user
-export async function POST(req: Request) {
-  try {
-    const body = await req.json();
+// ---------------------------------- REGISTER NEW USER ---------------------------------
+export const POST = catchAsync(async (req: Request) => {
+  // Step 1: Parse request body
+  const body = await req.json();
 
-    await payloadValidator(AuthSchemas.registerUser, body);
+  // Step 2: Validate request body against register user schema
+  await payloadValidator(AuthSchemas.registerUser, body);
 
-    const result = await AuthServices.registerUser(body);
+  // Step 3: Call authentication service to create a new user
+  const result = await AuthServices.registerUser(body);
 
-    return successResponse({
-      statusCode: httpStatus.CREATED,
-      message: "User created successfully",
-      data: result,
-    });
-  } catch (err) {
-    const error = err as ErrorPayload;
-    const formattedError = errorHandler(error);
-    return errorResponse(formattedError);
-  }
-}
+  // Step 4: Return success response with created user data
+  return successResponse({
+    statusCode: httpStatus.CREATED,
+    message: "User created successfully",
+    data: result,
+  });
+});

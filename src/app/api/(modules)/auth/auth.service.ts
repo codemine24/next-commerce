@@ -8,6 +8,7 @@ import { generateToken } from "../../(helpers)/utils/jwt-helpers";
 import { CredentialPayload, UserPayload } from "./auth.interface";
 import { USER_SELECED_FIELDS } from "./auth.utils";
 
+// ------------------------------------ REGISTER NEW USER -----------------------------------
 const registerUser = async (data: UserPayload) => {
   const hashedPassword = await bcrypt.hash(
     data.password,
@@ -27,6 +28,7 @@ const registerUser = async (data: UserPayload) => {
   return result;
 };
 
+// ------------------------------------ LOG IN USER -----------------------------------------
 const login = async (credential: CredentialPayload) => {
   const { email, password } = credential;
 

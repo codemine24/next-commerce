@@ -1,4 +1,5 @@
 import errorHandler from "@/app/api/(helpers)/error/error-handler";
+import { catchAsync } from "@/app/api/(helpers)/shared/catch-async";
 import {
   ErrorPayload,
   errorResponse,
@@ -10,26 +11,53 @@ import { NextRequest } from "next/server";
 import { ProductSchemas } from "../product.schema";
 import { ProductServices } from "../product.service";
 
-// GET: Get single product
-export async function GET(
-  request: NextRequest,
-  { params }: { params: Promise<{ slug: string }> }
-) {
-  try {
+// ----------------------------------- GET SINGLE PRODUCT -------------------------------------
+export const GET = catchAsync(
+  async (
+    request: NextRequest,
+    { params }: { params: Promise<{ slug: string }> }
+  ) => {
+    // Step 1: Extract slug from params
     const slug = (await params).slug;
 
+    // Step 2: Fetch product by slug
     const product = await ProductServices.getProduct(slug);
+
+    // Step 3: Return success response
     return successResponse({
       statusCode: httpStatus.OK,
       message: "Product fetched successfully",
       data: product,
     });
-  } catch (err) {
-    const error = err as ErrorPayload;
-    const formattedError = errorHandler(error);
-    return errorResponse(formattedError);
   }
-}
+);
+
+// ----------------------------------- UPDATE PRODUCT -----------------------------------------
+export const PATCH = catchAsync(
+  async (
+    request: NextRequest,
+    { params }: { params: Promise<{ slug: string }> }
+  ) => {
+    // Step 1: Extract slug from route params
+    const slug = (await params).slug;
+
+    // Step 2: Parse request body
+    const body = await request.json();
+
+    // Step 3: Validate request body against update product schema
+    await payloadValidator(ProductSchemas.updateProduct, body);
+
+    // Step 4: Call service layer to update product in database
+    const result = await ProductServices.updateProduct(slug, body);
+
+    // Step 5: Return success response with updated product
+    return successResponse({
+      statusCode: httpStatus.OK,
+      message: "Product updated successfully",
+      data: result,
+    });
+  }
+);
 
 // DELETE: Delete product
 export async function DELETE(
@@ -44,30 +72,6 @@ export async function DELETE(
       statusCode: httpStatus.OK,
       message: "Products deleted successfully",
       data: product,
-    });
-  } catch (err) {
-    const error = err as ErrorPayload;
-    const formattedError = errorHandler(error);
-    return errorResponse(formattedError);
-  }
-}
-
-// PATCH: Update product
-export async function PATCH(
-  request: NextRequest,
-  { params }: { params: Promise<{ slug: string }> }
-) {
-  try {
-    const slug = (await params).slug;
-    const body = await request.json();
-
-    await payloadValidator(ProductSchemas.updateProduct, body);
-
-    const result = await ProductServices.updateProduct(slug, body);
-    return successResponse({
-      statusCode: httpStatus.OK,
-      message: "Product updated successfully",
-      data: result,
     });
   } catch (err) {
     const error = err as ErrorPayload;
