@@ -4,7 +4,7 @@ import { FeaturedProducts } from "./featured-products";
 
 export const HeroSection = () => {
     return (
-        <Grid container spacing={2} alignItems="stretch">
+        <Grid component="section" container spacing={2} alignItems="stretch">
             <HeroCarousel />
             <FeaturedProducts />
         </Grid>
