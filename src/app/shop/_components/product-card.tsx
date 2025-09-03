@@ -1,10 +1,10 @@
-import OptimizeImage from "@/components/ui/image/optimize-image";
+import OptimizeImage from "@/components/ui/optimize-image";
 import Card from "@mui/material/Card";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Link from "next/link";
-import { SoftIconButton } from "@/components/ui/button/soft-icon-button";
+import { SoftIconButton } from "@/components/ui/soft-icon-button";
 import Button from "@mui/material/Button";
 import { EyeIcon } from "@/icons/eye";
 
