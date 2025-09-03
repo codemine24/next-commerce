@@ -9,7 +9,7 @@ import { NextRequest } from "next/server";
 import { UserSchemas } from "../user.schema";
 import { UserServices } from "../user.service";
 
-// ----------------------------------- UPDATE USER -----------------------------------------
+// ----------------------------------- UPDATE PROFILE -----------------------------------------
 export const PATCH = catchAsync(async (request: NextRequest) => {
   // Step 1: Authenticate user
   const user = await userAuthenticator(request, [
