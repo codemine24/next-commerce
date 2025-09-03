@@ -8,6 +8,30 @@ import { NextRequest } from "next/server";
 import { UserSchemas } from "../user.schema";
 import { UserServices } from "../user.service";
 
+// ----------------------------------- GET USER --------------------------------------------
+export const GET = catchAsync(
+  async (
+    request: NextRequest,
+    { params }: { params: Promise<{ id: string }> }
+  ) => {
+    // Step 1: Authenticate user
+    await userAuthenticator(request, [UserRole.ADMIN, UserRole.SUPER_ADMIN]);
+
+    // Step 2: Extract id from params
+    const id = (await params).id;
+
+    // Step 3: Call service layer to get user by admin from database
+    const result = await UserServices.getUserByAdmin(id);
+
+    // Step 6: Return success response with user data
+    return successResponse({
+      statusCode: httpStatus.OK,
+      message: "User data fetched successfully",
+      data: result,
+    });
+  }
+);
+
 // ----------------------------------- UPDATE USER -----------------------------------------
 export const PATCH = catchAsync(
   async (

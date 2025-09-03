@@ -100,7 +100,7 @@ const updateProfile = async (user: User, data: Record<string, any>) => {
   return result;
 };
 
-// ------------------------------------ GET ALL PRODUCTS ----------------------------------
+// ------------------------------------ GET ALL USERS --------------------------------------
 const getUsers = async (query: Record<string, any>) => {
   const { page, limit, sort_by, sort_order, search_term, role, status } = query;
 
@@ -170,6 +170,18 @@ const getUsers = async (query: Record<string, any>) => {
   };
 };
 
+// ------------------------------------ GET USER BY ADMIN ----------------------------------
+const getUserByAdmin = async (id: string) => {
+  const result = await prisma.user.findUniqueOrThrow({
+    where: {
+      id: id,
+    },
+    select: USER_SELECED_FIELDS,
+  });
+
+  return result;
+};
+
 // ------------------------------------ UPDATE USER BY ADMIN ------------------------------
 const updateUserByAdmin = async (id: string, payload: Record<string, any>) => {
   const result = await prisma.user.update({
@@ -190,4 +202,5 @@ export const UserServices = {
   getProfile,
   getUsers,
   updateUserByAdmin,
+  getUserByAdmin,
 };
