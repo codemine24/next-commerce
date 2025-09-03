@@ -4,14 +4,15 @@ import { UserRole } from "@prisma/client";
 import httpStatus from "http-status";
 import { NextRequest } from "next/server";
 import { catchAsync } from "../../(helpers)/shared/catch-async";
+import { commonSchemas } from "../../(helpers)/shared/schema";
 import userAuthenticator from "../../(helpers)/utils/user-authenticator";
 import { ProductSchemas } from "./product.schema";
 import { ProductServices } from "./product.service";
 
 // ---------------------------------- CREATE NEW PRODUCT -----------------------------------
 export const POST = catchAsync(async (req: Request) => {
-  // Step 1: Authenticate user and ensure they have ADMIN role
-  await userAuthenticator(req, [UserRole.ADMIN]);
+  // Step 1: Authenticate user
+  await userAuthenticator(req, [UserRole.SUPER_ADMIN, UserRole.ADMIN]);
 
   // Step 2: Parse request body
   const body = await req.json();
@@ -47,5 +48,27 @@ export const GET = catchAsync(async (req: NextRequest) => {
     message: "Products fetched successfully",
     meta: result.meta,
     data: result.data,
+  });
+});
+
+// ---------------------------------- DELETE PRODUCTS --------------------------------------
+export const DELETE = catchAsync(async (req: NextRequest) => {
+  // Step 1: Authenticate user
+  await userAuthenticator(req, [UserRole.SUPER_ADMIN, UserRole.ADMIN]);
+
+  // Step 2: Parse request body
+  const body = await req.json();
+
+  // Step 3: Validate request body against schema
+  await payloadValidator(commonSchemas.deleteRecordsValidationSchema, body);
+
+  // Step 3: Delete products from the service layer
+  const result = await ProductServices.deleteProducts(body);
+
+  // Step 4: Return success response with products and metadata
+  return successResponse({
+    statusCode: httpStatus.OK,
+    message: "Products deleted successfully",
+    data: result,
   });
 });

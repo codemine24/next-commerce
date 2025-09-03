@@ -120,10 +120,11 @@ const updateProduct = async (slug: string, payload: ProductPayload) => {
   return result;
 };
 
-const deleteProduct = async (id: string) => {
-  const product = await prisma.product.delete({
+// ------------------------------------ DELETE PRODUCT -----------------------------------
+const deleteProducts = async (payload: { ids: string[] }) => {
+  const product = await prisma.product.deleteMany({
     where: {
-      id,
+      id: { in: payload.ids },
     },
   });
 
@@ -135,5 +136,5 @@ export const ProductServices = {
   getProducts,
   getProduct,
   updateProduct,
-  deleteProduct,
+  deleteProducts,
 };

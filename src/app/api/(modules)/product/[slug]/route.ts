@@ -1,10 +1,5 @@
-import errorHandler from "@/app/api/(helpers)/error/error-handler";
 import { catchAsync } from "@/app/api/(helpers)/shared/catch-async";
-import {
-  ErrorPayload,
-  errorResponse,
-  successResponse,
-} from "@/app/api/(helpers)/shared/response";
+import { successResponse } from "@/app/api/(helpers)/shared/response";
 import payloadValidator from "@/app/api/(helpers)/utils/payload-validator";
 import httpStatus from "http-status";
 import { NextRequest } from "next/server";
@@ -58,24 +53,3 @@ export const PATCH = catchAsync(
     });
   }
 );
-
-// DELETE: Delete product
-export async function DELETE(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
-  try {
-    const id = (await params).id;
-
-    const product = await ProductServices.deleteProduct(id);
-    return successResponse({
-      statusCode: httpStatus.OK,
-      message: "Products deleted successfully",
-      data: product,
-    });
-  } catch (err) {
-    const error = err as ErrorPayload;
-    const formattedError = errorHandler(error);
-    return errorResponse(formattedError);
-  }
-}
