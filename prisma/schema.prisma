@@ -21,6 +21,7 @@ model User {
   password_changed_at DateTime?
   created_at          DateTime   @default(now())
   updated_at          DateTime   @updatedAt
+  files               File[]
 
   @@map("users")
 }
@@ -53,6 +54,26 @@ model Product {
   updated_at             DateTime @updatedAt
 
   @@map("products")
+}
+
+model File {
+  id          String   @id @default(uuid())
+  user_id     String?
+  name        String
+  alt_text    String
+  type        String
+  size        Int
+  width       Int
+  height      Int
+  path        String
+  bucket_id   String
+  bucket_name String
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+
+  uploaded_by User? @relation(fields: [user_id], references: [id])
+
+  @@map("images")
 }
 
 enum UserRole {
