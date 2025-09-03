@@ -3,13 +3,15 @@ import Footer from './footer';
 import { AppProvider } from '@/providers/app-provider';
 import { Navbar } from '@/components/layout/navbar';
 import Box from '@mui/material/Box';
+import { TopNavbar } from './navbar/top-navbar';
 
 export const AppRootLayout = ({ children }: { children: React.ReactNode }) => {
     return (
         <AppRouterCacheProvider>
             <AppProvider>
+                <TopNavbar />
                 <Navbar />
-                <Box pt="50px" minHeight="100svh">
+                <Box minHeight="calc(100svh - 50px)">
                     {children}
                 </Box>
                 <Footer />

@@ -1,7 +1,7 @@
 import { PaletteOptions } from "@mui/material/styles";
 
 export const colorPalette: PaletteOptions = {
-  primary: { main: "#2800A2", '50': "#E7E5FC" },
+  primary: { main: "#03140E", '50': "#E7E5FC" },
   secondary: { main: "#22BCA5" },
   background: {
     default: "#f2f4f8",

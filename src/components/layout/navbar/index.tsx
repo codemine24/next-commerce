@@ -12,7 +12,7 @@ import { UserButton } from "./user-button";
 export const Navbar = () => {
     return (
         <AppBar
-            position="fixed"
+            position="sticky"
             elevation={0}
             sx={{
                 py: "0px !important",
