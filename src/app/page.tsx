@@ -1,7 +1,7 @@
-import Box from "@mui/material/Box";
+import { BoxContainer } from "@/components/layout/box-container";
 
 export default function Home() {
   return (
-    <Box>Hello world</Box>
+    <BoxContainer>Hello world</BoxContainer>
   )
 }
