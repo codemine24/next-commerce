@@ -7,5 +7,8 @@ declare namespace NodeJS {
     JWT_ACCESS_EXPIRESIN: number | StringValue | undefined;
     JWT_REFRESH_SECRET: string;
     JWT_REFRESH_EXPIRESIN: number | StringValue | undefined;
+    SUPABASE_BUCKET_URL: string;
+    SUPABASE_SERVICE_ROLE_KEY: string;
+    USER_BUCKET: string;
   }
 }

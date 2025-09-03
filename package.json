@@ -17,12 +17,14 @@
     "@mui/material-nextjs": "^7.3.0",
     "@prisma/client": "^6.14.0",
     "@prisma/extension-accelerate": "^2.0.2",
+    "@supabase/supabase-js": "^2.57.0",
     "bcrypt": "^6.0.0",
     "http-status": "^2.1.0",
     "jsonwebtoken": "^9.0.2",
     "next": "15.5.0",
     "react": "19.1.0",
     "react-dom": "19.1.0",
+    "sharp": "^0.34.3",
     "zod": "^4.0.17"
   },
   "devDependencies": {

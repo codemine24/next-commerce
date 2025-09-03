@@ -15,7 +15,7 @@ model User {
   contact_number      String?
   password            String
   avatar              String?
-  role                UserRole   @default(USER)
+  role                UserRole   @default(CUSTOMER)
   status              UserStatus @default(ACTIVE)
   is_deleted          Boolean    @default(false)
   password_changed_at DateTime?
@@ -79,7 +79,7 @@ model File {
 enum UserRole {
   SUPER_ADMIN
   ADMIN
-  USER
+  CUSTOMER
 }
 
 enum UserStatus {
