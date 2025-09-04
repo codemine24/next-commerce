@@ -28,10 +28,10 @@ export const ProductInfo = () => {
             {/* Price */}
             <Box display="flex" alignItems="center" gap={2} mt={4}>
                 <Typography variant="h4">
-                    ৳ 1,200
+                    Tk 1,200
                 </Typography>
                 <Typography variant="h6" fontWeight={400} sx={{ textDecoration: "line-through" }}>
-                    ৳ 1,500
+                    Tk 1,500
                 </Typography>
             </Box>
 

@@ -1,6 +1,12 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, {
+    useState,
+    useEffect,
+    useCallback,
+    useMemo,
+    forwardRef,
+} from "react";
 import { EmblaOptionsType } from "embla-carousel";
 import useEmblaCarousel from "embla-carousel-react";
 import Box from "@mui/material/Box";
@@ -10,49 +16,109 @@ import Image from "next/image";
 type PropType = {
     images: string[];
     options?: EmblaOptionsType;
+    thumbDirection?: "horizontal" | "vertical";
 };
 
-export const ProductCarousel = ({ images, options }: PropType) => {
+export const ProductCarousel = ({
+    images,
+    options,
+    thumbDirection = "horizontal",
+}: PropType) => {
     const [selectedIndex, setSelectedIndex] = useState(0);
     const [emblaMainRef, emblaMainApi] = useEmblaCarousel(options);
     const [emblaThumbsRef, emblaThumbsApi] = useEmblaCarousel({
         containScroll: "keepSnaps",
         dragFree: true,
+        axis: thumbDirection === "vertical" ? "y" : "x",
     });
+
+    const isVertical = thumbDirection === "vertical";
+
+    // Refs for each thumb
+    const thumbRefs = useMemo(
+        () => images.map(() => React.createRef<HTMLDivElement>()),
+        [images.length]
+    );
 
     const onThumbClick = useCallback(
         (index: number) => {
-            if (!emblaMainApi || !emblaThumbsApi) return;
+            if (!emblaMainApi) return;
             emblaMainApi.scrollTo(index);
         },
-        [emblaMainApi, emblaThumbsApi]
+        [emblaMainApi]
     );
 
     const onSelect = useCallback(() => {
-        if (!emblaMainApi || !emblaThumbsApi) return;
+        if (!emblaMainApi) return;
         const index = emblaMainApi.selectedScrollSnap();
         setSelectedIndex(index);
-        emblaThumbsApi.scrollTo(index);
-    }, [emblaMainApi, emblaThumbsApi]);
+
+        // Scroll to selected thumb
+        if (isVertical) {
+            const selectedThumb = thumbRefs[index]?.current;
+            if (selectedThumb) {
+                selectedThumb.scrollIntoView({
+                    behavior: "smooth",
+                    block: "center",
+                    inline: "center",
+                });
+            }
+        } else {
+            emblaThumbsApi?.scrollTo(index);
+        }
+    }, [emblaMainApi, emblaThumbsApi, thumbRefs, isVertical]);
 
     useEffect(() => {
         if (!emblaMainApi) return;
-        onSelect();
 
+        onSelect();
         emblaMainApi.on("select", onSelect).on("reInit", onSelect);
+
         return () => {
-            emblaMainApi.off("select", onSelect);
-            emblaMainApi.off("reInit", onSelect);
+            emblaMainApi?.off("select", onSelect);
+            emblaMainApi?.off("reInit", onSelect);
         };
     }, [emblaMainApi, onSelect]);
 
     return (
-        <Box>
+        <Box
+            display="flex"
+            flexDirection={isVertical ? "row" : "column"}
+            gap={2}
+        >
+            {/* Thumbnails on left if vertical */}
+            {isVertical && (
+                <Box
+                    ref={emblaThumbsRef}
+                    sx={{
+                        overflow: "hidden",
+                        height: 350,
+                        width: 80,
+                    }}
+                >
+                    <Box
+                        sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                        }}
+                    >
+                        {images.map((image, index) => (
+                            <ThumbImage
+                                key={index}
+                                ref={thumbRefs[index]}
+                                onClick={() => onThumbClick(index)}
+                                selected={index === selectedIndex}
+                                image={image}
+                                index={index}
+                                direction="vertical"
+                            />
+                        ))}
+                    </Box>
+                </Box>
+            )}
+
             {/* Main carousel */}
-            <Box
-                ref={emblaMainRef}
-                overflow="hidden"
-            >
+            <Box ref={emblaMainRef} overflow="hidden" flex={1}>
                 <Box
                     sx={{
                         display: "flex",
@@ -68,7 +134,7 @@ export const ProductCarousel = ({ images, options }: PropType) => {
                                 flex: "0 0 100%",
                                 minWidth: 0,
                                 paddingLeft: "1rem",
-                                height: 304,
+                                height: 350,
                             }}
                         >
                             <Image
@@ -83,8 +149,8 @@ export const ProductCarousel = ({ images, options }: PropType) => {
                 </Box>
             </Box>
 
-            {/* Thumbnails */}
-            <Box mt={2}>
+            {/* Thumbnails below if horizontal */}
+            {!isVertical && (
                 <Box ref={emblaThumbsRef} overflow="hidden">
                     <Box
                         sx={{
@@ -96,15 +162,17 @@ export const ProductCarousel = ({ images, options }: PropType) => {
                         {images.map((image, index) => (
                             <ThumbImage
                                 key={index}
+                                ref={thumbRefs[index]}
                                 onClick={() => onThumbClick(index)}
                                 selected={index === selectedIndex}
                                 image={image}
                                 index={index}
+                                direction="horizontal"
                             />
                         ))}
                     </Box>
                 </Box>
-            </Box>
+            )}
         </Box>
     );
 };
@@ -114,48 +182,54 @@ type ThumbImagePropType = {
     index: number;
     image: string;
     onClick: () => void;
+    direction: "horizontal" | "vertical";
 };
 
-const ThumbImage = ({ selected, image, onClick }: ThumbImagePropType) => {
-    return (
-        <Box
-            sx={{
-                flex: { xs: "0 0 22%", sm: "0 0 17%" },
-                minWidth: 0,
-                paddingLeft: "0.8rem",
-            }}
-        >
-            <Button
-                onClick={onClick}
-                type="button"
+const ThumbImage = forwardRef<HTMLDivElement, ThumbImagePropType>(
+    ({ selected, image, onClick, direction }, ref) => {
+        return (
+            <Box
+                ref={ref}
                 sx={{
-                    appearance: "none",
-                    touchAction: "manipulation",
-                    display: "inline-flex",
-                    textDecoration: "none",
-                    cursor: "pointer",
-                    border: "1px solid",
-                    borderColor: selected ? "primary.main" : "transparent",
-                    padding: 0,
-                    margin: 0,
-                    height: { xs: 70, sm: 80 },
-                    width: "100%",
-                    borderRadius: 0,
+                    flex: direction === "vertical" ? "0 0 80px" : { xs: "0 0 22%", sm: "0 0 17%" },
+                    minWidth: 0,
+                    padding: direction === "vertical" ? "0 0 0.8rem 0" : "0 0.8rem 0 0",
                 }}
             >
-                <Image
-                    src={image}
-                    alt={`Thumbnail ${image}`}
-                    draggable={false}
-                    fill
-                    style={{
-                        objectFit: "cover",
-                        pointerEvents: "none",
-                        userSelect: "none",
+                <Button
+                    onClick={onClick}
+                    type="button"
+                    sx={{
+                        appearance: "none",
+                        touchAction: "manipulation",
+                        display: "inline-flex",
+                        textDecoration: "none",
+                        cursor: "pointer",
+                        border: "1px solid",
+                        borderColor: selected ? "primary.main" : "transparent",
+                        padding: 0,
+                        margin: 0,
+                        height: direction === "vertical" ? 70 : { xs: 70, sm: 80 },
+                        width: direction === "vertical" ? 80 : "100%",
                         borderRadius: 0,
                     }}
-                />
-            </Button>
-        </Box>
-    );
-};
+                >
+                    <Image
+                        src={image}
+                        alt={`Thumbnail ${image}`}
+                        draggable={false}
+                        fill
+                        style={{
+                            objectFit: "cover",
+                            pointerEvents: "none",
+                            userSelect: "none",
+                            borderRadius: 0,
+                        }}
+                    />
+                </Button>
+            </Box>
+        );
+    }
+);
+
+ThumbImage.displayName = "ThumbImage";

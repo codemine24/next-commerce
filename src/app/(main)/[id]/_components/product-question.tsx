@@ -1,14 +1,10 @@
-"use client"
-
 import * as React from "react"
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
 import { QuestionCard } from "./product-question-card";
 import { ProductSectionHeader } from "./product-section-header";
 import Divider from "@mui/material/Divider";
 import { ProductQuestionForm } from "./product-question-form";
-import Button from "@mui/material/Button";
 
 const questions = [
     {
@@ -35,22 +31,12 @@ const questions = [
 ]
 
 export const ProductQuestions = () => {
-    const [open, setOpen] = React.useState(false)
-    const handleClose = () => setOpen(false)
-
     return (
         <Box id="#product-qna">
             {/* Section header */}
             <Box display="flex" alignItems="center" justifyContent="space-between" gap={2}>
                 <ProductSectionHeader title="Customer Questions" />
-                <Button
-                    variant="soft"
-                    color="primary"
-                    size="medium"
-                    onClick={() => setOpen(true)}
-                >
-                    {"Ask a Question"}
-                </Button>
+                <ProductQuestionForm />
             </Box>
 
             <Stack spacing={1} mt={2} bgcolor="background.paper">
@@ -63,9 +49,6 @@ export const ProductQuestions = () => {
                     </React.Fragment>
                 ))}
             </Stack>
-
-            {/* Ask a Question */}
-            <ProductQuestionForm open={open} onClose={handleClose} />
         </Box>
     )
 }

@@ -7,6 +7,7 @@ import Pagination from "@mui/material/Pagination"
 import { ProductSectionHeader } from "./product-section-header"
 import { StarIcon } from "@/icons/star"
 import React from "react"
+import { ProductAddReview } from "./product-add-review"
 
 type Review = {
     id: number
@@ -68,7 +69,10 @@ export const ProductReviews = () => {
     return (
         <Box id="#product-reviews">
             {/* Header */}
-            <ProductSectionHeader title="Customer Reviews" />
+            <Box display="flex" alignItems="center" justifyContent="space-between" gap={2}>
+                <ProductSectionHeader title="Customer Reviews" />
+                <ProductAddReview />
+            </Box>
 
             {/* Body */}
             <Box bgcolor="transparent">

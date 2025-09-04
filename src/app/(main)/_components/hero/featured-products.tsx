@@ -44,13 +44,13 @@ export const FeaturedProducts = () => {
                         <Typography variant="body2" color="text.secondary">{product.description}</Typography>
                         <Typography variant="body2" mt={3} fontWeight={600}>Limited Time Offer</Typography>
                         <Box display="flex" gap={1} alignItems="center" mt={2}>
-                            <Typography variant="h4" fontWeight={600}>{product.discount_price}</Typography>
-                            <Typography variant="h6" sx={{ textDecoration: "line-through" }}>{product.price}</Typography>
+                            <Typography variant="h4" fontWeight={500}>TK {product.discount_price}</Typography>
+                            <Typography variant="h6" fontWeight={400} sx={{ textDecoration: "line-through" }}>{product.price}</Typography>
                         </Box>
                     </Box>
                     <Box width={150}>
                         <Image
-                            src="/assets/product.svg"
+                            src="/assets/product.jpg"
                             alt={product.name}
                             width={150}
                             height={150}

@@ -12,14 +12,14 @@ export const RecentBlogs = () => {
                 {Array.from({ length: 4 }).map((_, index) => (
                     <Grid key={index} size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
                         <OptimizeImage
-                            src="assets/product.svg"
+                            src="https://placehold.co/600x400/png"
                             alt="Blog"
                             height={300}
-                            imageStyle={{ objectFit: "contain" }}
+                            imageStyle={{ objectFit: "cover" }}
                         />
-                        <Box p={2} mt={2}>
+                        <Box py={2}>
                             <Typography variant="h6" fontWeight={600} gutterBottom>
-                                Blog {index + 1}
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit.
                             </Typography>
                             <Typography variant="body2" color="text.secondary">
                                 By Admin on {new Date().toLocaleDateString()}

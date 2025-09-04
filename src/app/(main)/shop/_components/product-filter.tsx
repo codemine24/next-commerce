@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useMemo } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Accordion from "@mui/material/Accordion";
@@ -12,6 +12,8 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { Attribute } from "@/interfaces/attribute";
 import { ExpandMoreIcon } from "@/icons/expand-more";
+import { Button, Divider } from "@mui/material";
+import { CloseIcon } from "@/icons/close";
 
 interface ProductFilterProps {
     attributes: Attribute[];
@@ -109,65 +111,127 @@ export const ProductFilter = ({ attributes }: ProductFilterProps) => {
         []
     );
 
+    const sortAttributes = useMemo(() => attributes.sort((a, b) => a.name.localeCompare(b.name)), [attributes]);
+
+    console.log(selectedFilters);
+
     return (
         <Box
             sx={{
                 width: "100%",
-                bgcolor: "background.paper",
-                px: 2,
+                pr: 2,
                 pb: 2,
-                borderRadius: 2,
+                mt: 2
             }}
         >
-            {attributes.map((attribute) => (
-                <Accordion
-                    key={attribute.id}
-                    defaultExpanded
-                    sx={{ boxShadow: "none", "&:before": { display: "none" } }}
+            {selectedFilters.order.length > 0 && (
+                <Button
+                    variant="contained"
+                    color="primary"
+                    fullWidth
+                    onClick={() => setSelectedFilters({ values: {}, order: [] })}
                 >
-                    <AccordionSummary sx={{ p: 0 }} expandIcon={<ExpandMoreIcon />}>
-                        <Typography variant="h6">{attribute.name}</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails sx={{ p: 0 }}>
-                        <FormGroup
+                    Clear All
+                </Button>
+            )}
+            {selectedFilters.order.length > 0 && <Divider sx={{ my: 2 }} />}
+            {/* Filter Applied */}
+            <Box display="flex" flexDirection="column" gap={1}>
+                {Object.entries(selectedFilters.values).map(([filterName, values], index) => (
+                    values.map((value) => (
+                        <Box
+                            key={index}
+                            display="flex"
+                            justifyContent="space-between"
+                            alignItems="center"
+                            gap={1}
+                            pl={2}
+                            position="relative"
                             sx={{
-                                gap: 0.5,
-                                px: 1,
-                                display: "flex",
-                                flexDirection: "column",
-                                minHeight: "auto",
-                                flexWrap: "nowrap",
+                                "&:before": {
+                                    content: '""',
+                                    position: "absolute",
+                                    left: 0,
+                                    top: "50%",
+                                    transform: "translateY(-50%)",
+                                    width: 5,
+                                    height: 5,
+                                    borderRadius: "50%",
+                                    bgcolor: "text.primary",
+                                },
                             }}
                         >
-                            {attribute.value.map((value) => (
-                                <FormControlLabel
-                                    key={value}
+                            <Box display="flex" alignItems="center" gap={1}>
+                                <Typography variant="caption">{filterName}:</Typography>
+                                <Typography variant="caption" fontWeight={600} textTransform="capitalize">{value}</Typography>
+                            </Box>
+                            <CloseIcon fontSize="small" onClick={() => handleCheckboxChange(filterName, value)} />
+                        </Box>
+                    ))
+                ))}
+            </Box>
+            {selectedFilters.order.length > 0 && <Divider sx={{ my: 2 }} />}
+
+            {/* Filter Options */}
+            <Box>
+                {sortAttributes.map((attribute, index) => (
+                    <React.Fragment key={attribute.id}>
+                        <Accordion
+                            key={attribute.id}
+                            defaultExpanded
+                            sx={{
+                                bgcolor: "transparent",
+                                boxShadow: "none",
+                                "&:before": { display: "none" },
+                            }}
+                        >
+                            <AccordionSummary sx={{ p: 0 }} expandIcon={<ExpandMoreIcon sx={{ fontSize: 16 }} />}>
+                                <Typography variant="h6">{attribute.name}</Typography>
+                            </AccordionSummary>
+                            <AccordionDetails sx={{ p: 0 }}>
+                                <FormGroup
                                     sx={{
+                                        gap: 0.5,
+                                        px: 1,
                                         display: "flex",
-                                        alignItems: "center",
-                                        gap: 1,
-                                        "& .MuiFormControlLabel-label": {
-                                            fontSize: "16px",
-                                            textTransform: "capitalize",
-                                        },
+                                        flexDirection: "column",
+                                        minHeight: "auto",
+                                        flexWrap: "nowrap",
                                     }}
-                                    control={
-                                        <Checkbox
-                                            size="small"
-                                            checked={
-                                                selectedFilters.values[attribute.name]?.includes(value) || false
+                                >
+                                    {attribute.value.map((value) => (
+                                        <FormControlLabel
+                                            key={value}
+                                            sx={{
+                                                display: "flex",
+                                                alignItems: "center",
+                                                gap: 1,
+                                                "& .MuiFormControlLabel-label": {
+                                                    fontSize: "16px",
+                                                    textTransform: "capitalize",
+                                                },
+                                            }}
+                                            control={
+                                                <Checkbox
+                                                    size="small"
+                                                    checked={
+                                                        selectedFilters.values[attribute.name]?.includes(value) || false
+                                                    }
+                                                    onChange={() => handleCheckboxChange(attribute.name, value)}
+                                                    sx={{ p: 0 }}
+                                                />
                                             }
-                                            onChange={() => handleCheckboxChange(attribute.name, value)}
-                                            sx={{ p: 0 }}
+                                            label={value}
                                         />
-                                    }
-                                    label={value}
-                                />
-                            ))}
-                        </FormGroup>
-                    </AccordionDetails>
-                </Accordion>
-            ))}
+                                    ))}
+                                </FormGroup>
+                            </AccordionDetails>
+                        </Accordion>
+
+                        {index < sortAttributes.length - 1 && <Divider sx={{ my: 0.5 }} />}
+                    </React.Fragment>
+                ))}
+            </Box>
         </Box>
     );
 };

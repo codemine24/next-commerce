@@ -145,7 +145,7 @@ export const components: Components<Theme> = {
       {
         props: { variant: "soft", color: "primary" },
         style: ({ theme }) => ({
-          backgroundColor: alpha(theme.palette.primary.main, 0.1),
+          backgroundColor: alpha(theme.palette.primary.main, 0.15),
           border: `1px solid ${theme.palette.primary.main}`,
           color: theme.palette.primary.dark,
           borderRadius: 0,
