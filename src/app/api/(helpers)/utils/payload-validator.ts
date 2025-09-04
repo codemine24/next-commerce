@@ -7,7 +7,8 @@ const payloadValidator = async <T>(schema: ZodObject, data: T) => {
       body: data,
     });
   } catch (error) {
-    throw errorHandler(error as ZodError);
+    const res = errorHandler(error as ZodError);
+    throw res;
   }
 };
 

@@ -5,3 +5,8 @@ export interface UserPayload {
   contact_number?: string;
   password: string;
 }
+
+export interface CredentialPayload {
+  email: string;
+  password: string;
+}

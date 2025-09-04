@@ -1,15 +1,15 @@
-export function catchAsync<T extends (...args: unknown[]) => Promise<Response>>(
-  fn: T
-): (...args: Parameters<T>) => Promise<Response> {
-  return async (...args: Parameters<T>) => {
+import errorHandler from "../error/error-handler";
+import { errorResponse } from "./response";
+
+export function catchAsync<T extends (...args: any[]) => Promise<Response>>(
+  handler: T
+) {
+  return (async (...args: Parameters<T>): Promise<Response> => {
     try {
-      return await fn(...args);
-    } catch (error) {
-      console.error("Unhandled Error:", error);
-      return Response.json(
-        { success: false, message: "Internal Server Error" },
-        { status: 500 }
-      );
+      return await handler(...args);
+    } catch (err) {
+      const formattedError = errorHandler(err);
+      return errorResponse(formattedError);
     }
-  };
+  }) as T;
 }

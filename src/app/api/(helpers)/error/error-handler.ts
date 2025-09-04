@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Prisma } from "@prisma/client";
 import httpStatus from "http-status";
 import { ZodError } from "zod";
@@ -10,7 +9,7 @@ import zodErrorHandler from "./zod-error-handler";
 const errorHandler = (error: any) => {
   let statusCode = error.statusCode || httpStatus.INTERNAL_SERVER_ERROR;
   let message = error.message || "Something went wrong!";
-  let errorSources: ErrorSources[] = [
+  let errorSources: ErrorSources[] = error.errorSources || [
     {
       path: "",
       message: error.message || "",
