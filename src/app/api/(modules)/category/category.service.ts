@@ -177,11 +177,13 @@ const updateCategory = async (id: string, payload: CategoryPayload) => {
 
   const category = {
     ...payload,
-    slug: slugGenerator(
-      parent_category
-        ? `${payload.title}-${parent_category.slug}`
-        : payload.title
-    ),
+    ...(payload.title && {
+      slug: slugGenerator(
+        parent_category
+          ? `${payload.title}-${parent_category.slug}`
+          : payload.title
+      ),
+    }),
   };
 
   const result = await prisma.category.update({

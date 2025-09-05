@@ -22,6 +22,7 @@ model User {
   created_at          DateTime   @default(now())
   updated_at          DateTime   @updatedAt
   files               File[]
+  cart                Cart?
 
   @@map("users")
 }
@@ -56,6 +57,7 @@ model Product {
   brand      Brand?     @relation(fields: [brand_id], references: [id])
   categories Category[] @relation("ProductCategories")
   categoryId String?
+  cart_item  CartItem[]
 
   @@map("products")
 }
@@ -93,6 +95,32 @@ model Category {
   products Product[]  @relation("ProductCategories")
 
   @@map("categories")
+}
+
+model Cart {
+  id         String   @id @default(uuid())
+  user_id    String   @unique
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  cart_items CartItem[]
+  user       User       @relation(fields: [user_id], references: [id])
+
+  @@map("carts")
+}
+
+model CartItem {
+  id         String @id @default(uuid())
+  cart_id    String
+  product_id String
+  quantity   Int    @default(1)
+  price      Int
+
+  cart    Cart    @relation(fields: [cart_id], references: [id])
+  product Product @relation(fields: [product_id], references: [id])
+
+  @@unique([cart_id, product_id], name: "cart_id_product_id")
+  @@map("cart_items")
 }
 
 model File {
