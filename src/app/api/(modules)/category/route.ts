@@ -17,6 +17,8 @@ export const POST = catchAsync(async (req: Request) => {
   // Step 2: Parse request body
   const body = await req.json();
 
+  console.log(body);
+
   // Step 3: Validate request body against schema
   await payloadValidator(CategorySchemas.addCategory, body);
 
