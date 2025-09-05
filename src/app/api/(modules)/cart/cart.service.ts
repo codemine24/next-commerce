@@ -18,6 +18,9 @@ const addToCart = async (user: User, payload: AddToCartPayload) => {
 
   const quantity = payload.quantity || 1;
 
+  console.log("product: ", product);
+  console.log("quantity: ", quantity);
+
   const result = await prisma.$transaction(async (tx) => {
     const cart = await tx.cart.upsert({
       where: {
