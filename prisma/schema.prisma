@@ -8,16 +8,20 @@ datasource db {
 }
 
 model User {
-  id             String     @id @default(uuid())
-  first_name     String
-  last_name      String?
-  email          String     @unique
-  contact_number String?
-  password       String
-  role           UserRole   @default(USER)
-  status         UserStatus @default(ACTIVE)
-  created_at     DateTime   @default(now())
-  updated_at     DateTime   @updatedAt
+  id                  String     @id @default(uuid())
+  first_name          String
+  last_name           String?
+  email               String     @unique
+  contact_number      String?
+  password            String
+  avatar              String?
+  role                UserRole   @default(CUSTOMER)
+  status              UserStatus @default(ACTIVE)
+  is_deleted          Boolean    @default(false)
+  password_changed_at DateTime?
+  created_at          DateTime   @default(now())
+  updated_at          DateTime   @updatedAt
+  files               File[]
 
   @@map("users")
 }
@@ -34,8 +38,8 @@ model Product {
   product_code           String?  @unique
   warranty               String?
   stock                  Int      @default(0)
-  price                  Int
-  discount_price         Int?
+  price                  Float
+  discount_price         Float?
   thumbnail              String?
   gallery                String[] @default([])
   description            String? //html
@@ -52,10 +56,30 @@ model Product {
   @@map("products")
 }
 
+model File {
+  id          String   @id @default(uuid())
+  user_id     String?
+  name        String
+  alt_text    String
+  type        String
+  size        Int
+  width       Int
+  height      Int
+  path        String
+  bucket_id   String
+  bucket_name String
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+
+  uploaded_by User? @relation(fields: [user_id], references: [id])
+
+  @@map("images")
+}
+
 enum UserRole {
   SUPER_ADMIN
   ADMIN
-  USER
+  CUSTOMER
 }
 
 enum UserStatus {
