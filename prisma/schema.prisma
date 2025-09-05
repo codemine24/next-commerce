@@ -114,7 +114,6 @@ model CartItem {
   cart_id    String
   product_id String
   quantity   Int    @default(1)
-  price      Int
 
   cart    Cart    @relation(fields: [cart_id], references: [id])
   product Product @relation(fields: [product_id], references: [id])
