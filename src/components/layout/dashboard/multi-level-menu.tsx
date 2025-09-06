@@ -62,10 +62,10 @@ export const MultiLevelMenu = () => {
                                 justifyContent: "flex-start",
                                 transition: "all 0.15s ease",
                                 ...(activeRoute(item.path) && {
-                                    color: theme.palette.info.main,
+                                    color: theme.palette.primary.main,
                                     backgroundColor: alpha(theme.palette.grey[800], 0.6),
                                     "& .MuiSvgIcon-root .secondary": {
-                                        color: theme.palette.info.main,
+                                        color: theme.palette.primary.main,
                                         opacity: 1,
                                     },
                                 }),
@@ -96,10 +96,10 @@ export const MultiLevelMenu = () => {
                                         borderRadius: "50%",
                                         marginRight: "1.3rem",
                                         background: activeRoute(item.path)
-                                            ? theme.palette.info.main
+                                            ? theme.palette.primary.main
                                             : theme.palette.common.white,
                                         boxShadow: activeRoute(item.path)
-                                            ? `0px 0px 0px 4px ${alpha(theme.palette.info.main, 0.2)}`
+                                            ? `0px 0px 0px 4px ${alpha(theme.palette.primary.main, 0.2)}`
                                             : "none",
                                     }}
                                 />
@@ -144,10 +144,10 @@ export const MultiLevelMenu = () => {
                             justifyContent: "flex-start",
                             transition: "all 0.15s ease",
                             ...(activeRoute(item.path) && {
-                                color: theme.palette.info.main,
+                                color: theme.palette.primary.main,
                                 backgroundColor: alpha(theme.palette.grey[800], 0.6),
                                 "& .MuiSvgIcon-root .secondary": {
-                                    color: theme.palette.info.main,
+                                    color: theme.palette.primary.main,
                                     opacity: 1
                                 }
                             })
@@ -178,10 +178,10 @@ export const MultiLevelMenu = () => {
                                     borderRadius: "50%",
                                     marginRight: "1.3rem",
                                     background: activeRoute(item.path)
-                                        ? theme.palette.info.main
+                                        ? theme.palette.primary.main
                                         : theme.palette.common.white,
                                     boxShadow: activeRoute(item.path)
-                                        ? `0px 0px 0px 4px ${alpha(theme.palette.info.main, 0.2)}`
+                                        ? `0px 0px 0px 4px ${alpha(theme.palette.primary.main, 0.2)}`
                                         : "none"
                                 }}
                             />

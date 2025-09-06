@@ -22,7 +22,9 @@ export const AdminDashboardLayout = ({ children }: PropsWithChildren) => {
                 })}
             >
                 <DashboardNavbar />
-                <Box px={2}>{children}</Box>
+                <Box px={2} minHeight="calc(100svh - 50px)" overflow="auto">
+                    {children}
+                </Box>
             </Box>
         </>
     );

@@ -49,10 +49,10 @@ export const NavItemButton = ({ active, ...props }: Active & any) => (
             justifyContent: "flex-start",
             transition: "all 0.15s ease",
             ...(active && {
-                color: theme.palette.info.main,
+                color: theme.palette.primary.main,
                 backgroundColor: alpha(theme.palette.grey[800], 0.6),
                 "& .MuiSvgIcon-root .secondary": {
-                    color: theme.palette.info.main,
+                    color: theme.palette.primary.main,
                     opacity: 1
                 }
             }),
@@ -141,7 +141,7 @@ export const BulletIcon = ({ active, ...props }: Active & any) => (
             overflow: "hidden",
             borderRadius: "50%",
             mr: "1.3rem",
-            background: active ? theme.palette.info.main : theme.palette.common.white,
+            background: active ? theme.palette.primary.main : theme.palette.common.white,
             boxShadow: active
                 ? `0px 0px 0px 4px ${alpha(theme.palette.primary.main, 0.2)}`
                 : "none",
@@ -171,7 +171,7 @@ const NavExpandRoot = (props: any) => (
         sx={{
             "& .expansion-panel": {
                 overflow: "hidden",
-                "& .expansion-panel": { paddingLeft: 8 }
+                "& .expansion-panel": { paddingLeft: 8 },
             }
         }}
     />

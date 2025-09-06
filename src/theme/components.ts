@@ -102,10 +102,15 @@ export const components: Components<Theme> = {
   },
   MuiOutlinedInput: {
     styleOverrides: {
-      root: { borderRadius: 0 },
+      root: { borderRadius: 0, fontSize: 15 },
       sizeSmall: { lineHeight: "1.8em" },
       inputSizeSmall: { height: "1.8em" },
       notchedOutline: { borderColor: colorPalette.divider },
+    },
+  },
+  MuiFormHelperText: {
+    styleOverrides: {
+      root: { marginLeft: 0 }
     },
   },
   MuiButton: {
