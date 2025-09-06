@@ -7,7 +7,7 @@ import { PhoneIcon } from "@/icons/phone";
 
 export const TopNavbar = () => {
     return (
-        <Box bgcolor="primary.main">
+        <Box bgcolor="primary.dark">
             <BoxContainer>
                 <Box
                     display="flex"
