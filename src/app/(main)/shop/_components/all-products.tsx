@@ -6,7 +6,7 @@ import { FilterApplied } from "./filter-applied";
 const Products = [
   {
     id: "1",
-    name: "Product 1",
+    name: "Bar Cabinet With Integrated Lighting",
     slug: "product-1",
     thumbnail: "",
     price: 100,
@@ -14,7 +14,7 @@ const Products = [
   },
   {
     id: "2",
-    name: "Product 2",
+    name: "Bar Cabinet With Integrated Lighting",
     slug: "product-2",
     thumbnail: "",
     price: 200,
@@ -25,11 +25,11 @@ const Products = [
 export const AllProducts = () => {
   return (
     <Box flex={1}>
-      <FilterApplied />
+      {/* <FilterApplied /> */}
       <Grid container spacing={2}>
         {Products.map((product) => (
-          <Grid size={{ xs: 12, sm: 6, md: 4 }} key={product.id}>
-            <ProductCard product={product} />
+          <Grid size={{ xs: 6, md: 4 }} key={product.id}>
+            <ProductCard product={product} action={true} />
           </Grid>
         ))}
       </Grid>

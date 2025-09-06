@@ -1,12 +1,10 @@
-import OptimizeImage from "@/components/ui/image/optimize-image";
-import Card from "@mui/material/Card";
+import OptimizeImage from "@/components/ui/optimize-image";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Link from "next/link";
-import { SoftIconButton } from "@/components/ui/button/soft-icon-button";
 import Button from "@mui/material/Button";
-import { EyeIcon } from "@/icons/eye";
+import { ProductQuickViewButton } from "./product-quick-view-button";
 
 interface Product {
   id: string;
@@ -17,25 +15,23 @@ interface Product {
   discount_price: number;
 }
 
-export const ProductCard = async ({ product }: { product: Product }) => {
+export const ProductCard = async ({ product, action = false }: { product: Product, action?: boolean }) => {
   return (
-    <Card
+    <Box
       sx={{
-        padding: { xs: 2, md: 3 },
+        py: { xs: 2, md: 3 },
         display: "flex",
         flexDirection: "column",
       }}
     >
       <Box component={Link} href={`/${product.slug}`}>
-        <Box position="relative">
-          <OptimizeImage
-            src="assets/product.svg"
-            alt={product.name}
-            height={250}
-          />
-        </Box>
+        <OptimizeImage
+          src="/assets/product.jpg"
+          alt={product.name}
+          height={250}
+        />
 
-        <Box height={50}>
+        <Box height={50} mt={1.5}>
           <Typography
             component={Link}
             href={`/${product.slug}`}
@@ -47,28 +43,26 @@ export const ProductCard = async ({ product }: { product: Product }) => {
         </Box>
       </Box>
 
-      <Box mt={2}>
+      <Box mt={1}>
         <Stack direction="row" spacing={1} alignItems="center" mt={1}>
+          <Typography variant="h4">
+            Tk {product.discount_price}
+          </Typography>
           <Typography
             variant="body2"
             sx={{ textDecoration: "line-through", color: "text.secondary" }}
           >
             ৳ {product.price}
           </Typography>
-          <Typography variant="h6" fontWeight={500} color="primary.main">
-            ৳{product.discount_price}
-          </Typography>
         </Stack>
       </Box>
 
-      <Box display="flex" gap={1} mt={2}>
-        <SoftIconButton>
-          <EyeIcon />
-        </SoftIconButton>
+      {action && <Box display="flex" gap={1} mt={2}>
+        <ProductQuickViewButton />
         <Button variant="soft" color="primary" fullWidth>
           Add to Cart
         </Button>
-      </Box>
-    </Card>
+      </Box>}
+    </Box>
   );
 };
