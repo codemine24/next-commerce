@@ -24,7 +24,7 @@ const SingleBlogPage: React.FC = () => {
   const popularPosts = blogData.slice(1, 6);
 
   return (
-    <BoxContainer sx={{ py: 4 }}>
+    <BoxContainer sx={{ py: 2 }}>
       <Grid container spacing={4} sx={{ position: "relative" }}>
         <Grid size={{ xs: 12, md: 8 }}>
           <Box

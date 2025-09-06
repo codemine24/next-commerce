@@ -1,15 +1,10 @@
 import type { Metadata } from "next";
-import { Jost, Josefin_Sans } from "next/font/google";
+import { Inter } from "next/font/google";
 import { AppRootLayout } from "@/components/layout/app-root-layout";
 import "@/styles/globals.css";
 
-const jost = Jost({
-  variable: "--font-jost",
-  subsets: ["latin"],
-});
-
-const josefinSans = Josefin_Sans({
-  variable: "--font-josefin-sans",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 });
 
@@ -25,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${jost.variable} ${josefinSans.variable}`}>
+      <body className={`${inter.variable}`}>
         <AppRootLayout>{children}</AppRootLayout>
       </body>
     </html>
