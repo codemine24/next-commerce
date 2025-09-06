@@ -17,9 +17,9 @@ import {
   FormHelperText,
 } from "@mui/material";
 
-import { signupSchema, SignupSchemaType } from "@/zod/signup-schema";
 import { VisibilityOff } from "@/icons/visibility-off";
 import { Visibility } from "@/icons/visibility";
+import { signupSchema, SignupSchemaType } from "@/zod/signup-schema";
 
 export default function Signup() {
   const {
