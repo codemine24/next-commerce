@@ -1,3 +1,4 @@
+import { inputClasses } from '@mui/material/Input';
 import { common } from "@mui/material/colors";
 import { alpha, Components, Theme } from "@mui/material/styles";
 import { colorPalette } from "./palette";
@@ -101,7 +102,7 @@ export const components: Components<Theme> = {
   },
   MuiOutlinedInput: {
     styleOverrides: {
-      root: { borderRadius: 8 },
+      root: { borderRadius: 0 },
       sizeSmall: { lineHeight: "1.8em" },
       inputSizeSmall: { height: "1.8em" },
       notchedOutline: { borderColor: colorPalette.divider },
@@ -123,7 +124,7 @@ export const components: Components<Theme> = {
           variant: "outlined",
         },
         style: {
-          borderRadius: BORDER_RADIUS.default,
+          borderRadius: 0,
           transition: "all 0.3s",
           // backgroundColor: "transparent",
           // ":hover": { backgroundColor: colorPalette.divider },
@@ -136,7 +137,7 @@ export const components: Components<Theme> = {
         style: {
           backgroundColor: "primary.main",
           color: common.white,
-          borderRadius: BORDER_RADIUS.default,
+          borderRadius: 0,
           transition: "all 0.3s",
           ":hover": { backgroundColor: colorPalette.secondary },
         },
@@ -144,10 +145,10 @@ export const components: Components<Theme> = {
       {
         props: { variant: "soft", color: "primary" },
         style: ({ theme }) => ({
-          backgroundColor: alpha(theme.palette.primary.main, 0.1),
+          backgroundColor: alpha(theme.palette.primary.main, 0.15),
           border: `1px solid ${theme.palette.primary.main}`,
           color: theme.palette.primary.dark,
-          borderRadius: BORDER_RADIUS.default,
+          borderRadius: 0,
           transition: "all 0.3s",
           ":hover": {
             backgroundColor: theme.palette.primary.main,

@@ -22,6 +22,7 @@ model User {
   created_at          DateTime   @default(now())
   updated_at          DateTime   @updatedAt
   files               File[]
+  cart                Cart?
 
   @@map("users")
 }
@@ -53,7 +54,72 @@ model Product {
   created_at             DateTime @default(now())
   updated_at             DateTime @updatedAt
 
+  brand      Brand?     @relation(fields: [brand_id], references: [id])
+  categories Category[] @relation("ProductCategories")
+  categoryId String?
+  cart_item  CartItem[]
+
   @@map("products")
+}
+
+model Brand {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  slug        String   @unique
+  code        String?  @unique
+  icon        String?
+  description String?
+  featured    Boolean  @default(false)
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+
+  products Product[]
+
+  @@map("brands")
+}
+
+model Category {
+  id          String   @id @default(uuid())
+  title       String
+  slug        String   @unique
+  code        String?  @unique
+  icon        String?
+  featured    Boolean  @default(false)
+  description String?
+  parent_id   String?
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+
+  parent   Category?  @relation("CategoryToParent", fields: [parent_id], references: [id])
+  children Category[] @relation("CategoryToParent")
+  products Product[]  @relation("ProductCategories")
+
+  @@map("categories")
+}
+
+model Cart {
+  id         String   @id @default(uuid())
+  user_id    String   @unique
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  cart_items CartItem[]
+  user       User       @relation(fields: [user_id], references: [id])
+
+  @@map("carts")
+}
+
+model CartItem {
+  id         String @id @default(uuid())
+  cart_id    String
+  product_id String
+  quantity   Int    @default(1)
+
+  cart    Cart    @relation(fields: [cart_id], references: [id])
+  product Product @relation(fields: [product_id], references: [id])
+
+  @@unique([cart_id, product_id], name: "cart_id_product_id")
+  @@map("cart_items")
 }
 
 model File {

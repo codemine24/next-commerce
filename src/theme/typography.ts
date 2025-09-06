@@ -1,7 +1,7 @@
 import { TypographyVariantsOptions } from "@mui/material/styles";
 
 export const typography: TypographyVariantsOptions = {
-  fontFamily: `"Hind Siliguri", "Poppins", "Inter", "Roboto", "Helvetica", "Arial", sans-serif`,
+  fontFamily: `"Jost", "Hind Siliguri", "Poppins", "Inter", "Roboto", "Helvetica", "Arial", sans-serif`,
   fontWeightLight: 300,
   fontWeightRegular: 400,
   fontWeightMedium: 600,
