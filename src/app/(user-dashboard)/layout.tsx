@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { AppProvider } from "@/providers/app-provider";
+import { UserDashboardLayout } from "@/components/layout/user-dashboard/user-dashboard-layout";
 import "@/styles/globals.css";
 
 const inter = Inter({
@@ -22,7 +23,9 @@ export default function AccountLayout({
         <html lang="en">
             <body className={`${inter.variable}`}>
                 <AppProvider>
-                    {children}
+                    <UserDashboardLayout>
+                        {children}
+                    </UserDashboardLayout>
                 </AppProvider>
             </body>
         </html>
