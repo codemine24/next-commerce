@@ -13,6 +13,7 @@ import { useToast } from "@/providers/toast-provider";
 import Link from "next/link";
 import api from "@/lib/api";
 import { SubmitButton } from "@/components/ui/submit-button";
+import { API_ROUTES } from "@/lib/api-routes";
 
 export default function Signup() {
   const router = useRouter();
@@ -22,7 +23,7 @@ export default function Signup() {
   });
 
   const onSubmit = async (data: SignupSchemaType) => {
-    const response = await api.post("/auth/register", {
+    const response = await api.post(API_ROUTES.auth.register, {
       body: JSON.stringify({ ...data, confirm_password: undefined }),
     });
 

@@ -4,7 +4,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import { loginSchema, LoginSchemaType } from "@/zod/login-Schema";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { TextField } from "@/components/ui/form/text-field";
@@ -15,6 +14,8 @@ import Divider from "@mui/material/Divider";
 import { useAuth } from "@/providers/auth-provider";
 import { useToast } from "@/providers/toast-provider";
 import api from "@/lib/api";
+import { LoginSchemaType, loginSchema } from "@/zod/login-schema";
+import { API_ROUTES } from "@/lib/api-routes";
 
 export default function Login() {
   const router = useRouter();
@@ -25,7 +26,7 @@ export default function Login() {
   });
 
   const onSubmit = async (data: LoginSchemaType) => {
-    const response = await api.post("/auth/login", {
+    const response = await api.post(API_ROUTES.auth.login, {
       body: JSON.stringify(data),
     });
 

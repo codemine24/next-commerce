@@ -9,6 +9,11 @@ import Button from "@mui/material/Button";
 import { TextField, Select, Autocomplete, FileUploader, ColorPicker } from "@/components/ui/form";
 import { PRODUCT_SIZE, PRODUCT_TAGS } from "@/constants/product";
 import { Editor } from "@/components/ui/editor";
+import api from "@/lib/api";
+import { SubmitButton } from "@/components/ui/submit-button";
+import { useToast } from "@/providers/toast-provider";
+import { useRouter } from "next/navigation";
+import { API_ROUTES } from "@/lib/api-routes";
 
 const Brand = [
     { id: 1, label: "Brand 1", value: "brand-1" },
@@ -16,13 +21,22 @@ const Brand = [
     { id: 3, label: "Brand 3", value: "brand-3" },
 ]
 
-export const CreateProductForm = () => {
+export const ProductForm = () => {
+    const toast = useToast();
+    const router = useRouter();
     const methods = useForm<ProductSchema>({
         resolver: zodResolver(productSchema),
     });
 
-    const onSubmit = (data: ProductSchema) => {
-        console.log(data);
+    const onSubmit = async (data: ProductSchema) => {
+        const response = await api.post(API_ROUTES.products.create_product, { body: JSON.stringify(data) });
+
+        if (!response.success) {
+            toast.showMessage(response.message, "error");
+        } else {
+            toast.showMessage(response.message, "success");
+            router.replace("/admin/products");
+        }
     };
 
     return (
@@ -65,7 +79,7 @@ export const CreateProductForm = () => {
                 <Editor label="Description" placeholder="Write product description here" defaultValue="" setValue={(value) => methods.setValue("description", value)} />
 
                 {/* File Uploader */}
-                <Box display="flex" gap={2}>
+                <Box display="flex" flexDirection={{ xs: "column", sm: "row" }} gap={2}>
                     <FileUploader
                         label="Thumbnail Image"
                         onFilesChange={(files) => methods.setValue("thumbnail", files[0])}
@@ -92,17 +106,15 @@ export const CreateProductForm = () => {
                     >
                         Cancel
                     </Button>
-                    <Button
-                        type="submit"
-                        variant="contained"
+                    <SubmitButton
+                        label="Submit"
+                        isLoading={methods.formState.isSubmitting}
                         sx={{
                             width: 200,
                             height: 50,
                             textTransform: "none",
                         }}
-                    >
-                        Submit
-                    </Button>
+                    />
                 </Box>
             </Box>
         </FormProvider>

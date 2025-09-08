@@ -13,6 +13,7 @@ type FileUploaderProps = {
     multiple?: boolean;
     accept?: { [mime: string]: string[] };
     onFilesChange: (files: File[]) => void;
+    hidePlaceholderText?: boolean;
     containerSx?: SxProps;
     uploadBoxSx?: SxProps;
     previewBoxSx?: SxProps;
@@ -24,6 +25,7 @@ export const FileUploader = ({
     multiple = false,
     accept = { "image/*": [] },
     onFilesChange,
+    hidePlaceholderText = false,
     containerSx,
     uploadBoxSx,
     previewBoxSx,
@@ -64,7 +66,6 @@ export const FileUploader = ({
                     height: "100%",
                     border: "1px dotted",
                     borderColor: "divider",
-                    borderRadius: 3,
                     px: 4,
                     py: 8,
                     textAlign: "center",
@@ -77,12 +78,12 @@ export const FileUploader = ({
 
                 {/* Placeholder */}
                 <UploadCloudIcon width={50} height={50} />
-                <Typography color="text.primary">
+                {!hidePlaceholderText && <Typography color="text.primary">
                     {isDragActive ? "Drop files here..." : "Drop or select file"}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
+                </Typography>}
+                {!hidePlaceholderText && <Typography variant="body2" color="text.secondary">
                     Drop files here or click to browse your machine.
-                </Typography>
+                </Typography>}
             </Box>
 
             {/* Image Previews */}

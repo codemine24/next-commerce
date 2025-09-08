@@ -13,6 +13,7 @@ import { OrdersIcon } from "@/icons/orders";
 import { LogoutIcon } from "@/icons/logout";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/providers/toast-provider";
+import Link from "next/link";
 
 export const UserProfile = () => {
     const router = useRouter();
@@ -30,7 +31,7 @@ export const UserProfile = () => {
     const handleLogout = () => {
         logout();
         handleClose();
-        toast.showMessage("User logged out successfully", "success");
+        toast.showMessage("User logged out", "error");
         router.replace("/");
     };
 
@@ -107,13 +108,15 @@ export const UserProfile = () => {
                     <Box p={1} display="flex" flexDirection="column" gap={0.5}>
                         <Button
                             startIcon={<UserIcon />}
+                            component={Link}
+                            href="/account"
                             size="small"
                             variant="text"
                             color="inherit"
                             sx={{ justifyContent: "flex-start" }}
                             fullWidth
                         >
-                            Profile
+                            Account
                         </Button>
 
                         <Button

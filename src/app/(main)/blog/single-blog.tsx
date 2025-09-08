@@ -15,8 +15,8 @@ import * as React from "react";
 import { blogData, socialIcons } from "./blog-data";
 import { PopularPostCard } from "./popular-post-card";
 import { BoxContainer } from "@/components/layout/box-container";
-import { AccountCircleIcon } from "@/icons/account-circle-icon";
-import { AccessTimeIcon } from "@/icons/access-time-icon";
+import { AccountCircleIcon } from "@/icons/account-circle";
+import { AccessTimeIcon } from "@/icons/access-time";
 import { SectionTitle } from "./section-title";
 
 const SingleBlogPage: React.FC = () => {
