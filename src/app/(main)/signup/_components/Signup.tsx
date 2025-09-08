@@ -1,182 +1,82 @@
 "use client";
 
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-
-import {
-  TextField,
-  Button,
-  Typography,
-  Box,
-  IconButton,
-  InputAdornment,
-  FormControl,
-  InputLabel,
-  OutlinedInput,
-  FormHelperText,
-} from "@mui/material";
-
-import { VisibilityOff } from "@/icons/visibility-off";
-import { Visibility } from "@/icons/visibility";
 import { signupSchema, SignupSchemaType } from "@/zod/signup-schema";
+import FormProvider from "@/components/ui/form/form-provider";
+import { TextField } from "@/components/ui/form";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Divider from "@mui/material/Divider";
+import { useRouter } from "next/navigation";
+import { useToast } from "@/providers/toast-provider";
+import Link from "next/link";
+import api from "@/lib/api";
+import { SubmitButton } from "@/components/ui/submit-button";
+import { API_ROUTES } from "@/lib/api-routes";
 
 export default function Signup() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<SignupSchemaType>({
+  const router = useRouter();
+  const toast = useToast();
+  const methods = useForm<SignupSchemaType>({
     resolver: zodResolver(signupSchema),
   });
 
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const onSubmit = async (data: SignupSchemaType) => {
+    const response = await api.post(API_ROUTES.auth.register, {
+      body: JSON.stringify({ ...data, confirm_password: undefined }),
+    });
 
-  const handleMouseDownPassword = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    event.preventDefault();
-  };
+    if (!response.success) {
+      toast.showMessage(response.message, "error");
+      return;
+    }
 
-  const handleMouseUpPassword = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    event.preventDefault();
-  };
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
-  const handleClickConfirmPassword = () =>
-    setShowConfirmPassword((prev) => !prev);
-
-  const onSubmit = (data: SignupSchemaType) => {
-    console.log("Signup Data:", data);
+    toast.showMessage("User registered successfully", "success");
+    router.replace("/login");
   };
 
   return (
     <Box
       display="flex"
       flexDirection="column"
-      maxWidth={400}
+      maxWidth="sm"
       mx="auto"
       p={4}
-      border="1px solid #ddd"
-      borderRadius={2}
+      border={1}
+      borderColor="divider"
     >
       <Typography variant="h5" align="center" mb={2} fontWeight="bold">
         Create Account
       </Typography>
 
-      {/* Full Name */}
-      <TextField
-        label="Full Name"
-        placeholder="Full Name"
-        fullWidth
-        margin="normal"
-        {...register("fullName")}
-        error={!!errors.fullName}
-        helperText={errors.fullName?.message}
-      />
+      <FormProvider methods={methods} onSubmit={methods.handleSubmit(onSubmit)}>
+        <Box display="flex" flexDirection="column" gap={2}>
+          <Box display="flex" gap={2}>
+            <TextField disabled={methods.formState.isSubmitting} type="text" name="first_name" label="First Name" required />
+            <TextField disabled={methods.formState.isSubmitting} type="text" name="last_name" label="Last Name" />
+          </Box>
 
-      {/* Email */}
-      <TextField
-        label="Email"
-        placeholder="Email"
-        fullWidth
-        margin="normal"
-        {...register("email")}
-        error={!!errors.email}
-        helperText={errors.email?.message}
-      />
+          <TextField disabled={methods.formState.isSubmitting} type="text" name="email" label="Email" required />
+          <TextField disabled={methods.formState.isSubmitting} type="text" name="contact_number" label="Phone" />
+          <TextField disabled={methods.formState.isSubmitting} type="password" name="password" label="Password" required />
+          <TextField disabled={methods.formState.isSubmitting} type="password" name="confirm_password" label="Confirm Password" required />
 
-      {/* Phone */}
-      <TextField
-        label="Phone"
-        placeholder="Phone"
-        fullWidth
-        margin="normal"
-        {...register("phone")}
-        error={!!errors.phone}
-        helperText={errors.phone?.message}
-      />
+          <SubmitButton isLoading={methods.formState.isSubmitting} label="Register" />
 
-      {/* Password */}
-      <FormControl
-        variant="outlined"
-        error={!!errors.password}
-        margin="normal"
-        fullWidth
-      >
-        <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
-        <OutlinedInput
-          id="outlined-adornment-password"
-          placeholder="Password"
-          type={showPassword ? "text" : "password"}
-          {...register("password")}
-          endAdornment={
-            <InputAdornment position="end">
-              <IconButton
-                aria-label={
-                  showPassword ? "hide the password" : "display the password"
-                }
-                onClick={handleClickShowPassword}
-                onMouseDown={handleMouseDownPassword}
-                onMouseUp={handleMouseUpPassword}
-                edge="end"
-              >
-                {showPassword ? <VisibilityOff /> : <Visibility />}
-              </IconButton>
-            </InputAdornment>
-          }
-          label="Password"
-        />
-        <FormHelperText>{errors.password?.message}</FormHelperText>
-      </FormControl>
-
-      <FormControl
-        variant="outlined"
-        error={!!errors.confirmPassword}
-        fullWidth
-        margin="normal"
-      >
-        <InputLabel htmlFor="outlined-adornment-password">
-          Confirm Password
-        </InputLabel>
-        <OutlinedInput
-          id="outlined-adornment-password"
-          type={showPassword ? "text" : "password"}
-          placeholder="Confirm Password"
-          {...register("confirmPassword")}
-          endAdornment={
-            <InputAdornment position="end">
-              <IconButton
-                aria-label={
-                  showPassword
-                    ? "hide the confirm password"
-                    : "display the confirm password"
-                }
-                onClick={handleClickConfirmPassword}
-                onMouseDown={handleMouseDownPassword}
-                onMouseUp={handleMouseUpPassword}
-                edge="end"
-              >
-                {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
-              </IconButton>
-            </InputAdornment>
-          }
-          label="Confirm Password"
-        />
-        <FormHelperText>{errors.password?.message}</FormHelperText>
-      </FormControl>
-
-      {/* Signup Button */}
-      <Button
-        variant="contained"
-        fullWidth
-        sx={{ mt: 3, borderRadius: 2 }}
-        onClick={handleSubmit(onSubmit)}
-      >
-        Signup
-      </Button>
+          <Divider sx={{ my: 2, fontSize: 15 }}>
+            Already have an account?
+            <Typography
+              component={Link}
+              variant="body2"
+              href="/login"
+              sx={{ ml: 1, "&:hover": { color: "primary.main", textDecoration: "underline" } }}
+            >
+              Login
+            </Typography>
+          </Divider>
+        </Box>
+      </FormProvider>
     </Box>
   );
 }

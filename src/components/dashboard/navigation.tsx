@@ -7,6 +7,7 @@ import { CouponIcon } from "@/icons/coupon";
 import { ReviewIcon } from "@/icons/review";
 import { SettingsIcon } from "@/icons/settings";
 import { CustomizationIcon } from "@/icons/customization";
+import { BrandIcon } from "@/icons/brand";
 
 export const ADMIN_NAVIGATION = [
     {
@@ -38,6 +39,14 @@ export const ADMIN_NAVIGATION = [
         children: [
             { name: "Category List", path: "/admin/categories" },
             { name: "Create Category", path: "/admin/categories/create" }
+        ]
+    },
+    {
+        name: "Brands",
+        icon: <BrandIcon fontSize="small" />,
+        children: [
+            { name: "Brand List", path: "/admin/brands" },
+            { name: "Create Brand", path: "/admin/brands/create" }
         ]
     },
     {

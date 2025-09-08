@@ -12,8 +12,8 @@ import {
 } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { orange } from "@mui/material/colors";
-import { AccountCircleIcon } from "@/icons/account-circle-icon";
-import { AccessTimeIcon } from "@/icons/access-time-icon";
+import { AccountCircleIcon } from "@/icons/account-circle";
+import { AccessTimeIcon } from "@/icons/access-time";
 interface Article {
   slug: string;
   image: string;
