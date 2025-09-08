@@ -2,7 +2,7 @@
 
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import OptimizeImage from "@/components/ui/optimize-image";
+import OptimizeImage from "@/components/optimize-image";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Box from "@mui/material/Box";

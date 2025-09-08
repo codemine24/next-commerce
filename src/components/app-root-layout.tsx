@@ -1,7 +1,7 @@
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import Footer from './footer';
 import { AppProvider } from '@/providers/app-provider';
-import { Navbar } from '@/components/layout/navbar';
+import { Navbar } from '@/components/navbar';
 import Box from '@mui/material/Box';
 import { TopNavbar } from './navbar/top-navbar';
 

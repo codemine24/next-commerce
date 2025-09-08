@@ -5,9 +5,9 @@ import {
   CarouselContent,
   CarouselItem,
   CarouselDots,
-} from "@/components/ui/carousel";
+} from "@/components/carousel";
 import Grid from "@mui/material/Grid";
-import OptimizeImage from "@/components/ui/optimize-image";
+import OptimizeImage from "@/components/optimize-image";
 
 export const HeroCarousel = () => {
   return (

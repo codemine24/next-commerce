@@ -3,7 +3,7 @@
 import Box from "@mui/material/Box"
 import Stack from "@mui/material/Stack"
 import Button from "@mui/material/Button"
-import { ProductQuantityButton } from "@/components/ui/product-quantity-button"
+import { ProductQuantityButton } from "@/components/product-quantity-button"
 import { useState } from "react";
 import { Typography } from "@mui/material";
 import { HeartEmptyIcon } from "@/icons/heart-empty";

@@ -1,4 +1,4 @@
-import { BoxContainer } from "@/components/layout/box-container";
+import { BoxContainer } from "@/components/box-container";
 import { ProductSidebar } from "./_components/products-sidebar";
 import { AllProducts } from "./_components/all-products";
 import Box from "@mui/material/Box";

@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box"
 import { SectionTitle } from "./section-title"
 import Grid from "@mui/material/Grid"
-import OptimizeImage from "@/components/ui/optimize-image"
+import OptimizeImage from "@/components/optimize-image"
 import Typography from "@mui/material/Typography"
 
 export const RecentBlogs = () => {

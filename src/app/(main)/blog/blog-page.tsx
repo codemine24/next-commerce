@@ -3,7 +3,7 @@ import * as React from "react";
 import Grid from "@mui/material/Grid";
 import { PaginationOutlined } from "./pagination";
 import { ArticleCard } from "./ArticleCard";
-import { BoxContainer } from "@/components/layout/box-container";
+import { BoxContainer } from "@/components/box-container";
 
 interface Article {
   slug: string;

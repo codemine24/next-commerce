@@ -1,4 +1,4 @@
-import { BoxContainer } from "@/components/layout/box-container";
+import { BoxContainer } from "@/components/box-container";
 import { CategoriesSection } from "./_components/categories/categories-section";
 import { HeroSection } from "./_components/hero/hero-section";
 import { NewArrivals } from "./_components/new-arrivals";

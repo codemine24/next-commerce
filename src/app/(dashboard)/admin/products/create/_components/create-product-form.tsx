@@ -4,11 +4,11 @@ import Box from "@mui/material/Box";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ProductSchema, productSchema } from "@/zod/product-schema";
-import FormProvider from "@/components/ui/form/form-provider";
+import FormProvider from "@/components/form/form-provider";
 import Button from "@mui/material/Button";
-import { TextField, Select, Autocomplete, FileUploader, ColorPicker } from "@/components/ui/form";
+import { TextField, Select, Autocomplete, FileUploader, ColorPicker } from "@/components/form";
 import { PRODUCT_SIZE, PRODUCT_TAGS } from "@/constants/product";
-import { Editor } from "@/components/ui/editor";
+import { Editor } from "@/components/editor";
 
 const Brand = [
     { id: 1, label: "Brand 1", value: "brand-1" },
