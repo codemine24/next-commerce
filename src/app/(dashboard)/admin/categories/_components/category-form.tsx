@@ -1,15 +1,15 @@
 "use client";
 
-import FormProvider from "@/components/ui/form/form-provider";
+import FormProvider from "@/components/form/form-provider";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { categorySchema, CategorySchema } from "@/zod/category-schema";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import { TextField } from "@/components/ui/form";
-import { SubmitButton } from "@/components/ui/submit-button";
-import { Editor } from "@/components/ui/editor";
-import { FileUploader } from "@/components/ui/form/file-uploader";
+import { TextField } from "@/components/form";
+import { SubmitButton } from "@/components/submit-button";
+import { Editor } from "@/components/editor";
+import { FileUploader } from "@/components/form/file-uploader";
 
 export const CategoryForm = () => {
     const methods = useForm<CategorySchema>({

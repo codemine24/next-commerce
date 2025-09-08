@@ -10,7 +10,7 @@ export const colorPalette: PaletteOptions = {
     paper: "#F6F6F6",
   },
   text: {
-    primary: "#242626",
+    primary: "#03140E",
     secondary: "#8D9996",
   },
   divider: "#ddd",
@@ -20,6 +20,3 @@ export const colorPalette: PaletteOptions = {
   },
 
 };
-
-
-//#e4f5ec

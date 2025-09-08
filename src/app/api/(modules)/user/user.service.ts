@@ -7,7 +7,7 @@ import { prisma } from "../../(helpers)/shared/prisma";
 import supabase from "../../(helpers)/shared/supabase";
 import paginationMaker from "../../(helpers)/utils/pagination-maker";
 import queryValidator from "../../(helpers)/utils/query-validator";
-import { USER_SELETCED_FIELDS } from "./../auth/auth.utils";
+import { USER_SELECTED_FIELDS } from "../auth/auth.utils";
 import { userQueryValidationConfig, userSearchableFields } from "./user.utils";
 
 // ------------------------------------ GET PROFILE ----------------------------------------
@@ -16,7 +16,7 @@ const getProfile = async (user: User) => {
     where: {
       id: user.id,
     },
-    select: USER_SELETCED_FIELDS,
+    select: USER_SELECTED_FIELDS,
   });
 
   return result;
@@ -93,7 +93,7 @@ const updateProfile = async (user: User, data: Record<string, any>) => {
     where: { id: user.id },
     data: updateData,
     select: {
-      ...USER_SELETCED_FIELDS,
+      ...USER_SELECTED_FIELDS,
     },
   });
 
@@ -153,7 +153,7 @@ const getUsers = async (query: Record<string, any>) => {
       take: limitNumber,
       orderBy: { [sortWith]: sortSequence },
       select: {
-        ...USER_SELETCED_FIELDS,
+        ...USER_SELECTED_FIELDS,
       },
     }),
     prisma.user.count({ where: whereConditions }),
@@ -176,7 +176,7 @@ const getUserByAdmin = async (id: string) => {
     where: {
       id: id,
     },
-    select: USER_SELETCED_FIELDS,
+    select: USER_SELECTED_FIELDS,
   });
 
   return result;
@@ -191,7 +191,7 @@ const updateUserByAdmin = async (id: string, payload: Record<string, any>) => {
     data: {
       ...payload,
     },
-    select: USER_SELETCED_FIELDS,
+    select: USER_SELECTED_FIELDS,
   });
 
   return result;

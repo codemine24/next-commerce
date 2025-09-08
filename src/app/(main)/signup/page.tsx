@@ -1,4 +1,4 @@
-import { BoxContainer } from "@/components/layout/box-container";
+import { BoxContainer } from "@/components/box-container";
 import React from "react";
 import Signup from "./_components/Signup";
 

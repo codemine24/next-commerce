@@ -1,17 +1,17 @@
 "use client";
 
-import FormProvider from "@/components/ui/form/form-provider";
+import FormProvider from "@/components/form/form-provider";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { brandSchema, BrandSchema } from "@/zod/brand-schema";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import { FileUploader, TextField } from "@/components/ui/form";
-import { SubmitButton } from "@/components/ui/submit-button";
+import { FileUploader, TextField } from "@/components/form";
+import { SubmitButton } from "@/components/submit-button";
 import api from "@/lib/api";
 import { useToast } from "@/providers/toast-provider";
 import { useRouter } from "next/navigation";
-import { Editor } from "@/components/ui/editor";
+import { Editor } from "@/components/editor";
 import { API_ROUTES } from "@/lib/api-routes";
 
 export const BrandForm = () => {

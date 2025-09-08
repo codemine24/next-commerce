@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import { privacyData } from "./privacy-data";
 import { BORDER_RADIUS } from "@/theme";
-import { BoxContainer } from "@/components/layout/box-container";
+import { BoxContainer } from "@/components/box-container";
 import DOMPurify from "isomorphic-dompurify";
 interface PrivacyData {
   title: string | null;

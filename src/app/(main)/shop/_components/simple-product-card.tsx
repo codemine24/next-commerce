@@ -16,10 +16,12 @@ export const SimpleProductCard = ({
   return (
     <Card
       sx={{
-        border: "1px solid #ccc",
+        border: "1px solid",
+        borderColor: "divider",
         borderRadius: 0,
         boxShadow: "none",
         bgcolor: "transparent",
+        p: 1,
       }}
     >
       <CardContent>
@@ -35,7 +37,12 @@ export const SimpleProductCard = ({
         component="img"
         image={image}
         alt={title}
-        sx={{ objectFit: "cover", width: "100%", height: "auto" }}
+        sx={{
+          objectFit: "cover",
+          width: "300px",
+          height: "auto",
+          ml: "auto",
+        }}
       />
     </Card>
   );

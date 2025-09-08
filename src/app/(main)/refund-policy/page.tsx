@@ -3,7 +3,7 @@ import { refundPolicyData } from "./refund-policy-data";
 import DOMPurify from "isomorphic-dompurify";
 import { Box } from "@mui/material";
 import { BORDER_RADIUS } from "@/theme";
-import { BoxContainer } from "@/components/layout/box-container";
+import { BoxContainer } from "@/components/box-container";
 
 interface RefundPolicy {
   title: string | null;

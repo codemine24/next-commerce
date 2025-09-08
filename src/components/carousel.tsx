@@ -1,16 +1,16 @@
 "use client";
 
-import * as React from "react";
 import useEmblaCarousel, {
   type UseEmblaCarouselType,
 } from "embla-carousel-react";
+import * as React from "react";
 
-import IconButton from "@mui/material/IconButton";
 import Box from "@mui/material/Box";
+import IconButton from "@mui/material/IconButton";
 import type { SxProps, Theme } from "@mui/material/styles";
 
-import { ArrowForwardIcon } from "@/icons/arrow-forward";
 import { ArrowBackIcon } from "@/icons/arrow-back";
+import { ArrowForwardIcon } from "@/icons/arrow-forward";
 
 type CarouselApi = UseEmblaCarouselType[1];
 type UseCarouselParameters = Parameters<typeof useEmblaCarousel>;
@@ -55,7 +55,7 @@ export const Carousel: React.FC<CarouselProps> = ({
   children,
 }) => {
   const [carouselRef, api] = useEmblaCarousel(
-    { ...opts, axis: orientation === "horizontal" ? "x" : "y" },
+    { ...opts, axis: orientation === "horizontal" ? "x" : "y", loop: true },
     plugins
   );
 
@@ -247,6 +247,23 @@ export const CarouselDots: React.FC<CarouselDotsProps> = ({
   sx,
 }) => {
   const { api } = useCarousel();
+  const [selectedIndex, setSelectedIndex] = React.useState(0);
+  React.useEffect(() => {
+    if (!api) return;
+    setSelectedIndex(api.selectedScrollSnap());
+
+    const onSelect = () => {
+      setSelectedIndex(api.selectedScrollSnap());
+    };
+
+    api.on("select", onSelect);
+    api.on("reInit", onSelect);
+
+    return () => {
+      api.off("select", onSelect);
+      api.off("reInit", onSelect);
+    };
+  }, [api]);
   if (!api) return null;
 
   const scrollTo = (index: number) => {
@@ -254,79 +271,26 @@ export const CarouselDots: React.FC<CarouselDotsProps> = ({
   };
 
   return (
-    // <Box
-    //   sx={{
-    //     display: "flex",
-    //     gap: 1,
-    //     justifyContent: "center",
-    //     mt: 2,
-    //     bgcolor: "red",
-    //     ...sx,
-    //   }}
-    // >
-    //   {Array.from({ length: api.slideNodes().length }).map((_, index) => {
-    //     const isSelected = api.selectedScrollSnap() === index;
-
-    //     const commonStyles = {
-    //       cursor: "pointer",
-    //       padding: 0,
-    //       transition: "background-color 0.3s, border-color 0.3s",
-    //       outline: "none",
-    //       "&:focus-visible": {
-    //         outline: "2px solid",
-    //         outlineColor: "primary.main",
-    //         outlineOffset: 2,
-    //       },
-    //       backgroundColor: isSelected ? "primary.main" : "grey.400",
-    //       border: isSelected ? "none" : "1px solid",
-    //       borderColor: isSelected ? "primary.main" : "grey.400",
-    //     };
-
-    //     const variantStyles =
-    //       variant === "dot"
-    //         ? {
-    //             width: 24,
-    //             height: 4,
-    //             borderRadius: 3,
-    //           }
-    //         : {
-    //             width: 8,
-    //             height: 8,
-    //             borderRadius: "50%",
-    //           };
-
-    //     return (
-    //       <Box
-    //         key={index}
-    //         component="button"
-    //         onClick={() => scrollTo(index)}
-    //         aria-label={`Go to slide ${index + 1}`}
-    //         sx={{ ...commonStyles, ...variantStyles }}
-    //       />
-    //     );
-    //   })}
-    // </Box>
     <Box
       sx={{
         display: "flex",
         justifyContent: "center",
         mt: 2,
-        // allow overriding
       }}
     >
       <Box
         sx={{
           display: "flex",
           gap: 1,
-          backgroundColor: "grey.100", // background for dots container
+          backgroundColor: "red",
           borderRadius: 10,
           px: 2,
           py: 1,
-          ...sx, // keep existing sx for inner dots
+          ...sx,
         }}
       >
         {Array.from({ length: api.slideNodes().length }).map((_, index) => {
-          const isSelected = api.selectedScrollSnap() === index;
+          const isSelected = selectedIndex === index;
 
           const commonStyles = {
             cursor: "pointer",

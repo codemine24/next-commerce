@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Image from "next/image";
 import { Stack } from "@mui/material";
+import { currencyFormatter } from "@/utils/currency-formatter";
 
 const Products = [
   {
@@ -12,7 +13,7 @@ const Products = [
     slug: "product-1",
     price: 1000,
     discount_price: 900,
-    imgUrl: "/assets/blue-chair.svg",
+    imgUrl: "/images/featured_image_1.svg",
   },
   {
     id: "2",
@@ -21,7 +22,7 @@ const Products = [
     slug: "product-2",
     price: 1100,
     discount_price: 900,
-    imgUrl: "/assets/yellow-chair.svg",
+    imgUrl: "/images/featured_image_2.svg",
   },
 ];
 
@@ -37,12 +38,12 @@ export const FeaturedProducts = () => {
         <Box
           key={product.id}
           display="flex"
-          gap={2}
+          gap={1}
           p={2}
           height={200}
-          sx={{ border: "1px solid #EFEDFA" }}
+          sx={{ border: "1px solid", borderColor: "divider" }}
         >
-          <Stack spacing={3}>
+          <Stack spacing={2}>
             <Typography variant="h5" color="text-primary" gutterBottom>
               {product.name}
             </Typography>
@@ -55,25 +56,28 @@ export const FeaturedProducts = () => {
                 fontWeight={600}
                 sx={{ color: "text-primary" }}
               >
-                $ {product.discount_price}
+                {currencyFormatter(product.discount_price)}
               </Typography>
               <Typography
                 variant="h5"
                 fontWeight={400}
                 sx={{ textDecoration: "line-through", color: "text.secondary" }}
               >
-                {product.price}
+                {currencyFormatter(product.price)}
               </Typography>
             </Box>
           </Stack>
-          <Box width={150}>
-            <Image
-              src={product.imgUrl}
-              alt={product.name}
-              width={150}
-              height={150}
-            />
-          </Box>
+
+          <Image
+            src={product.imgUrl}
+            alt={product.name}
+            width={300}
+            height={150}
+            style={{
+              width: "100%",
+              height: "100%",
+            }}
+          />
         </Box>
       ))}
     </Grid>
