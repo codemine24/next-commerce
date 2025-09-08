@@ -1,19 +1,19 @@
 "use client";
 
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { signupSchema, SignupSchemaType } from "@/zod/signup-schema";
-import FormProvider from "@/components/ui/form/form-provider";
-import { TextField } from "@/components/ui/form";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
-import { useRouter } from "next/navigation";
-import { useToast } from "@/providers/toast-provider";
-import Link from "next/link";
-import api from "@/lib/api";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import FormProvider from "@/components/form/form-provider";
 import { SubmitButton } from "@/components/submit-button";
+import api from "@/lib/api";
 import { API_ROUTES } from "@/lib/api-routes";
+import { useToast } from "@/providers/toast-provider";
+import { TextField } from "@mui/material";
+import Box from "@mui/material/Box";
+import Divider from "@mui/material/Divider";
+import Typography from "@mui/material/Typography";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function Signup() {
   const router = useRouter();
@@ -53,16 +53,53 @@ export default function Signup() {
       <FormProvider methods={methods} onSubmit={methods.handleSubmit(onSubmit)}>
         <Box display="flex" flexDirection="column" gap={2}>
           <Box display="flex" gap={2}>
-            <TextField disabled={methods.formState.isSubmitting} type="text" name="first_name" label="First Name" required />
-            <TextField disabled={methods.formState.isSubmitting} type="text" name="last_name" label="Last Name" />
+            <TextField
+              disabled={methods.formState.isSubmitting}
+              type="text"
+              name="first_name"
+              label="First Name"
+              required
+            />
+            <TextField
+              disabled={methods.formState.isSubmitting}
+              type="text"
+              name="last_name"
+              label="Last Name"
+            />
           </Box>
 
-          <TextField disabled={methods.formState.isSubmitting} type="text" name="email" label="Email" required />
-          <TextField disabled={methods.formState.isSubmitting} type="text" name="contact_number" label="Phone" />
-          <TextField disabled={methods.formState.isSubmitting} type="password" name="password" label="Password" required />
-          <TextField disabled={methods.formState.isSubmitting} type="password" name="confirm_password" label="Confirm Password" required />
+          <TextField
+            disabled={methods.formState.isSubmitting}
+            type="text"
+            name="email"
+            label="Email"
+            required
+          />
+          <TextField
+            disabled={methods.formState.isSubmitting}
+            type="text"
+            name="contact_number"
+            label="Phone"
+          />
+          <TextField
+            disabled={methods.formState.isSubmitting}
+            type="password"
+            name="password"
+            label="Password"
+            required
+          />
+          <TextField
+            disabled={methods.formState.isSubmitting}
+            type="password"
+            name="confirm_password"
+            label="Confirm Password"
+            required
+          />
 
-          <SubmitButton isLoading={methods.formState.isSubmitting} label="Register" />
+          <SubmitButton
+            isLoading={methods.formState.isSubmitting}
+            label="Register"
+          />
 
           <Divider sx={{ my: 2, fontSize: 15 }}>
             Already have an account?
@@ -70,7 +107,13 @@ export default function Signup() {
               component={Link}
               variant="body2"
               href="/login"
-              sx={{ ml: 1, "&:hover": { color: "primary.main", textDecoration: "underline" } }}
+              sx={{
+                ml: 1,
+                "&:hover": {
+                  color: "primary.main",
+                  textDecoration: "underline",
+                },
+              }}
             >
               Login
             </Typography>

@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Box from "@mui/material/Box";
-import OptimizeImage from "@/components/ui/optimize-image";
 import { makeImageUrl } from "@/utils/helper";
 import Typography from "@mui/material/Typography";
 import { ChevronDownIcon } from "@/icons/chevron-down";
@@ -14,13 +13,14 @@ import { LogoutIcon } from "@/icons/logout";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/providers/toast-provider";
 import Link from "next/link";
+import { OptimizeImage } from "@/components/optimize-image";
 
 export const UserProfile = () => {
     const router = useRouter();
     const { user, logout } = useAuth();
     const toast = useToast();
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-
+ 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
     };
