@@ -78,16 +78,16 @@ const login = async (credential: CredentialPayload) => {
 
   // Set refresh token in cookie
   cookieStore.set("refresh_token", refreshToken, {
-    httpOnly: true,
-    secure: true,
+    httpOnly: false,
+    secure: CONFIG.node_env === "production",
     sameSite: "strict",
     maxAge: Number(CONFIG.jwt_refresh_expiresIn),
   });
 
   // Set access token in cookie
   cookieStore.set("access_token", accessToken, {
-    httpOnly: true,
-    secure: true,
+    httpOnly: false,
+    secure: CONFIG.node_env === "production",
     sameSite: "strict",
     maxAge: Number(CONFIG.jwt_access_expiresIn),
   });
@@ -103,8 +103,6 @@ const login = async (credential: CredentialPayload) => {
     status: user.status,
     created_at: user.created_at,
     updated_at: user.updated_at,
-    access_token: accessToken,
-    refresh_token: refreshToken,
   };
 };
 

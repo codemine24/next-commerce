@@ -7,16 +7,19 @@ import Box from "@mui/material/Box";
 import { loginSchema, LoginSchemaType } from "@/zod/login-Schema";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useToast } from "@/providers/toast-provider";
 import { TextField } from "@/components/ui/form/text-field";
-import api from "@/lib/api";
 import FormProvider from "@/components/ui/form/form-provider";
 import { SubmitButton } from "@/components/ui/submit-button";
-import { Button, Divider } from "@mui/material";
+import Button from "@mui/material/Button";
+import Divider from "@mui/material/Divider";
+import { useAuth } from "@/providers/auth-provider";
+import { useToast } from "@/providers/toast-provider";
+import api from "@/lib/api";
 
 export default function Login() {
   const router = useRouter();
   const toast = useToast();
+  const { setIsAuthenticated, setUser } = useAuth();
   const methods = useForm<LoginSchemaType>({
     resolver: zodResolver(loginSchema),
   });
@@ -32,6 +35,8 @@ export default function Login() {
     }
 
     toast.showMessage("User logged in successfully", "success");
+    setIsAuthenticated(true);
+    setUser(response.data);
     router.replace("/");
   };
 

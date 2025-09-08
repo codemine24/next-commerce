@@ -1,5 +1,4 @@
 import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
 import { BoxContainer } from "../box-container";
 import { Logo } from "./logo";
 import Box from "@mui/material/Box";
@@ -16,8 +15,8 @@ export const Navbar = () => {
             elevation={0}
             sx={{
                 py: "0px !important",
-                bgcolor: "#fff",
-                color: "#000",
+                bgcolor: "background.default",
+                color: "text.primary",
                 borderBottom: "1px solid",
                 borderColor: "divider"
             }}>
@@ -35,7 +34,6 @@ export const Navbar = () => {
                     <UserButton />
                 </Box>
             </BoxContainer>
-
         </AppBar>
     )
 }
