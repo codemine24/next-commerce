@@ -7,6 +7,7 @@ import CustomizedError from "../../(helpers)/error/customized-error";
 import { generateToken } from "../../(helpers)/utils/jwt-helpers";
 import { CredentialPayload, UserPayload } from "./auth.interface";
 import { USER_SELECTED_FIELDS } from "./auth.utils";
+import { cookies } from "next/headers";
 
 // ------------------------------------ REGISTER NEW USER -----------------------------------
 const registerUser = async (data: UserPayload) => {
@@ -31,6 +32,7 @@ const registerUser = async (data: UserPayload) => {
 // ------------------------------------ LOG IN USER -----------------------------------------
 const login = async (credential: CredentialPayload) => {
   const { email, password } = credential;
+  const cookieStore = await cookies();
 
   const user = await prisma.user.findFirst({
     where: {
@@ -65,14 +67,30 @@ const login = async (credential: CredentialPayload) => {
   const accessToken = generateToken(
     jwtPayload,
     CONFIG.jwt_access_secret,
-    CONFIG.jwt_access_expiresin
+    CONFIG.jwt_access_expiresIn
   );
 
   const refreshToken = generateToken(
     jwtPayload,
     CONFIG.jwt_refresh_secret,
-    CONFIG.jwt_refresh_expiresin
+    CONFIG.jwt_refresh_expiresIn
   );
+
+  // Set refresh token in cookie
+  cookieStore.set("refresh_token", refreshToken, {
+    httpOnly: true,
+    secure: true,
+    sameSite: "strict",
+    maxAge: Number(CONFIG.jwt_refresh_expiresIn),
+  });
+
+  // Set access token in cookie
+  cookieStore.set("access_token", accessToken, {
+    httpOnly: true,
+    secure: true,
+    sameSite: "strict",
+    maxAge: Number(CONFIG.jwt_access_expiresIn),
+  });
 
   return {
     id: user.id,
@@ -86,7 +104,7 @@ const login = async (credential: CredentialPayload) => {
     created_at: user.created_at,
     updated_at: user.updated_at,
     access_token: accessToken,
-    refreshToken,
+    refresh_token: refreshToken,
   };
 };
 
