@@ -1,6 +1,4 @@
 import { BoxContainer } from "@/components/box-container";
-import { AccessTimeIcon } from "@/icons/access-time-icon";
-import { AccountCircleIcon } from "@/icons/account-circle-icon";
 import { BORDER_RADIUS } from "@/theme";
 import {
   Box,
@@ -11,12 +9,14 @@ import {
   Grid,
   IconButton,
   Stack,
-  Typography
+  Typography,
 } from "@mui/material";
 import * as React from "react";
 import { blogData, socialIcons } from "./blog-data";
 import { PopularPostCard } from "./popular-post-card";
 import { SectionTitle } from "./section-title";
+import { AccountCircleIcon } from "@/icons/account-circle";
+import { AccessTimeIcon } from "@/icons/access-time";
 
 const SingleBlogPage: React.FC = () => {
   const blogPost = blogData[0];

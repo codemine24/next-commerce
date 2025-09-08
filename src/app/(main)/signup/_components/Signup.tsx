@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 import { useToast } from "@/providers/toast-provider";
 import Link from "next/link";
 import api from "@/lib/api";
-import { SubmitButton } from "@/components/ui/submit-button";
+import { SubmitButton } from "@/components/submit-button";
 import { API_ROUTES } from "@/lib/api-routes";
 
 export default function Signup() {

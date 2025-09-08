@@ -9,7 +9,7 @@ import {
   TextField,
 } from "@/components/form";
 import FormProvider from "@/components/form/form-provider";
-import { SubmitButton } from "@/components/ui/submit-button";
+import { SubmitButton } from "@/components/submit-button";
 import { PRODUCT_SIZE, PRODUCT_TAGS } from "@/constants/product";
 import api from "@/lib/api";
 import { API_ROUTES } from "@/lib/api-routes";

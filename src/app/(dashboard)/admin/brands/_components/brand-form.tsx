@@ -7,7 +7,7 @@ import { brandSchema, BrandSchema } from "@/zod/brand-schema";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { FileUploader, TextField } from "@/components/ui/form";
-import { SubmitButton } from "@/components/ui/submit-button";
+import { SubmitButton } from "@/components/submit-button";
 import api from "@/lib/api";
 import { useToast } from "@/providers/toast-provider";
 import { useRouter } from "next/navigation";

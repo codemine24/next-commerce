@@ -8,7 +8,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { TextField } from "@/components/ui/form/text-field";
 import FormProvider from "@/components/ui/form/form-provider";
-import { SubmitButton } from "@/components/ui/submit-button";
+import { SubmitButton } from "@/components/submit-button";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import { useAuth } from "@/providers/auth-provider";

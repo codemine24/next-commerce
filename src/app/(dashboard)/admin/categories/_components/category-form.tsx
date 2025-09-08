@@ -7,7 +7,7 @@ import { categorySchema, CategorySchema } from "@/zod/category-schema";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { TextField } from "@/components/ui/form";
-import { SubmitButton } from "@/components/ui/submit-button";
+import { SubmitButton } from "@/components/submit-button";
 import { Editor } from "@/components/ui/editor";
 import { FileUploader } from "@/components/ui/form/file-uploader";
 
