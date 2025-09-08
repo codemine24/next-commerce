@@ -8,12 +8,12 @@ import { SubmitButton } from "@/components/submit-button";
 import api from "@/lib/api";
 import { API_ROUTES } from "@/lib/api-routes";
 import { useToast } from "@/providers/toast-provider";
-import { TextField } from "@mui/material";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { TextField } from "@/components/form";
 
 export default function Signup() {
   const router = useRouter();

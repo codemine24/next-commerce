@@ -37,7 +37,7 @@ export const ProductCarousel = ({
     // Refs for each thumb
     const thumbRefs = useMemo(
         () => images.map(() => React.createRef<HTMLDivElement>()),
-        [images.length]
+        [images]
     );
 
     const onThumbClick = useCallback(

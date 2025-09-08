@@ -15,7 +15,7 @@ import { useAuth } from "@/providers/auth-provider";
 import { useToast } from "@/providers/toast-provider";
 import api from "@/lib/api";
 import { API_ROUTES } from "@/lib/api-routes";
-import { loginSchema, LoginSchemaType } from "@/zod/login-Schema";
+import { loginSchema, LoginSchemaType } from "@/zod/login-schema";
 
 export default function Login() {
   const router = useRouter();

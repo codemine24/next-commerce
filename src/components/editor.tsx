@@ -81,7 +81,7 @@ export const Editor = ({
                 setValue(updatedContent.toString());
             });
         }
-    }, [quill]);
+    }, [quill, defaultValue, setValue]);
 
     if (!isClient) {
         return null;
