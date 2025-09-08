@@ -58,6 +58,7 @@ export const ArticleCard: React.FC<BlogCardProps> = ({ article }) => {
           alt={article.title}
         />
         <OverlayText>
+        hiu
           <Typography variant="h6" sx={{ color: orange[500], ml: 1.5 }}>
             {article.overlayText}
           </Typography>
