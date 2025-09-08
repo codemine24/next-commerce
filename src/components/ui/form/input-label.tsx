@@ -10,7 +10,7 @@ export const InputLabel = ({ label, required, sx }: InputLabelProps) => {
     return (
         <Typography variant="body2" mb={0.5} sx={sx}>
             {label}
-            {required && <Typography color="error" component="span" ml={0.5}>*</Typography>}
+            <Typography color="error" component="span" ml={0.5}>{required ? "*" : ""}</Typography>
         </Typography>
     );
 };

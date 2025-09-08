@@ -114,7 +114,7 @@ export default function Login() {
         Login
       </Button>
 
-      <Divider sx={{ my: 2 }}>Don't have an account?</Divider>
+      <Divider sx={{ my: 2 }}>Don&apos;t have an account?</Divider>
 
       {/* Create Account Button */}
       <Button
