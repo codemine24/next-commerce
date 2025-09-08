@@ -244,14 +244,14 @@ export const components: Components<Theme> = {
     styleOverrides: {
       root: {
         borderRadius: "6px",
-        cursor: "pointer",
+        // cursor: "pointer",
         position: "relative",
         boxShadow: "0px 1px 3px rgba(3, 0, 71, 0.09)",
         transition: "all 0.2s ease-in-out",
-        ":hover": {
-          boxShadow:
-            "rgba(43, 52, 69, 0.05) 0px 0px 24px 0px, rgba(43, 52, 69, 0.05) 0px 3px 6px 0px",
-        },
+        // ":hover": {
+        //   boxShadow:
+        //     "rgba(43, 52, 69, 0.05) 0px 0px 24px 0px, rgba(43, 52, 69, 0.05) 0px 3px 6px 0px",
+        // },
         backgroundColor: "background.paper",
       },
     },

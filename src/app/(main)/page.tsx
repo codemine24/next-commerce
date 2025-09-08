@@ -11,7 +11,7 @@ import FeaturedProductCard from "./_components/featured-product-card";
 
 export default function Home() {
   return (
-    <BoxContainer sx={{ mt: 2 }}>
+    <BoxContainer>
       <HeroSection />
       <FeaturedProductCard />
       <CategoriesSection />

@@ -9,19 +9,19 @@ export default function FeaturedProductCard() {
       id: 1,
       title: "Chairs",
       subtitle: "12 brands, 5.5k products",
-      imgUrl: "/assets/luxury-yellow-chair.svg",
+      imgUrl: "/images/category_chair.png",
     },
     {
       id: 2,
-      title: "Chairs",
+      title: "Tables",
       subtitle: "12 brands, 5.5k products",
-      imgUrl: "/assets/luxury-yellow-chair.svg",
+      imgUrl: "/images/category_table.png",
     },
     {
       id: 3,
-      title: "Chairs",
+      title: "Sofa",
       subtitle: "12 brands, 5.5k products",
-      imgUrl: "/assets/luxury-yellow-chair.svg",
+      imgUrl: "/images/category_sofa.png",
     },
   ];
 
