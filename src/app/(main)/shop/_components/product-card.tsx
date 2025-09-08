@@ -1,4 +1,4 @@
-import OptimizeImage from "@/components/optimize-image";
+import { OptimizeImage } from "@/components/optimize-image";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";

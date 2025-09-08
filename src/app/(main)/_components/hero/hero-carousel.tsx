@@ -7,17 +7,18 @@ import {
   CarouselDots,
 } from "@/components/carousel";
 import Grid from "@mui/material/Grid";
-import OptimizeImage from "@/components/optimize-image";
+import { OptimizeImage } from "@/components/optimize-image";
+import Autoplay from "embla-carousel-autoplay";
 
 export const HeroCarousel = () => {
   return (
     <Grid size={{ xs: 12, lg: 8 }}>
-      <Carousel>
+      <Carousel plugins={[Autoplay({ delay: 3000 })]}>
         <CarouselContent>
           {[...Array(5)].map((_, i) => (
-            <CarouselItem key={i}>
+            <CarouselItem key={i + 1} onClick={() => console.log("click")}>
               <OptimizeImage
-                src="/assets/slider-image.svg"
+                src="/images/banner.png"
                 alt="Hero Carousel"
                 height={420}
               />
@@ -32,8 +33,8 @@ export const HeroCarousel = () => {
             left: 0,
             right: 0,
             p: 1,
-            backgroundColor: "#FFFFFF",
-            backdropFilter: "blur(5px)",
+            backgroundColor: "rgba(255, 255, 255, 0.9)",
+            backdropFilter: "blur(18px)",
             width: "fit-content",
             justifySelf: "center",
           }}
