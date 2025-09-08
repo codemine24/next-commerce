@@ -7,13 +7,13 @@ export default function FeaturedProductCard() {
   const products = [
     {
       id: 1,
-      title: "Chairs",
+      title: "Chair",
       subtitle: "12 brands, 5.5k products",
       imgUrl: "/images/category_chair.png",
     },
     {
       id: 2,
-      title: "Tables",
+      title: "Table",
       subtitle: "12 brands, 5.5k products",
       imgUrl: "/images/category_table.png",
     },

@@ -108,7 +108,7 @@ export const components: Components<Theme> = {
   },
   MuiFormHelperText: {
     styleOverrides: {
-      root: { marginLeft: 0 }
+      root: { marginLeft: 0 },
     },
   },
   MuiButton: {
@@ -148,8 +148,7 @@ export const components: Components<Theme> = {
       {
         props: { variant: "soft", color: "primary" },
         style: ({ theme }) => ({
-          backgroundColor: alpha(theme.palette.primary.main, 0.15),
-          border: `1px solid ${theme.palette.primary.main}`,
+            backgroundColor: alpha((theme.palette.primary as unknown as { [key: string]: string })["100"], 0.1),
           color: theme.palette.primary.dark,
           borderRadius: 0,
           transition: "all 0.3s",
