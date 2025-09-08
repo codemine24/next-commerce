@@ -13,13 +13,10 @@ export const colorPalette: PaletteOptions = {
     primary: "#03140E",
     secondary: "#8D9996",
   },
-  divider: "#E9F5F0",
+  divider: "#EFEDFA",
   common: {
     black: "#000",
     white: "#fff",
   },
 
 };
-
-
-//#e4f5ec
