@@ -1,21 +1,36 @@
+import { HeartIcon } from "@/icons/heart-icon";
+import { Badge } from "@mui/material";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { WishListIcon } from "@/icons/wish-list";
 
 export const WishlistButton = () => {
-    return (
-        <Button
-            startIcon={<WishListIcon />}
-            sx={{
-                px: 3,
-                height: "100%",
-                minHeight: 0,
-                borderRadius: 0,
-                borderRight: "1px solid",
-                borderColor: "divider"
+  return (
+    <>
+      <Button
+        startIcon={
+          <Badge
+            color="primary"
+            showZero
+            badgeContent={0}
+            anchorOrigin={{
+              vertical: "top",
+              horizontal: "right",
             }}
-        >
-            <Typography variant="body2">Wishlist</Typography>
-        </Button>
-    )
-}
+          >
+            <HeartIcon />
+          </Badge>
+        }
+        sx={{
+          px: 2,
+          height: "100%",
+          minHeight: 0,
+          color: "text.primary",
+        }}
+      >
+        <Typography variant="body2" className="ml-2">
+          Wishlist
+        </Typography>
+      </Button>
+    </>
+  );
+};

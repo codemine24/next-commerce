@@ -10,10 +10,10 @@ export const colorPalette: PaletteOptions = {
     paper: "#F6F6F6",
   },
   text: {
-    primary: "#242626",
+    primary: "#03140E",
     secondary: "#8D9996",
   },
-  divider: "#EFEDFA",
+  divider: "#E9F5F0",
   common: {
     black: "#000",
     white: "#fff",
