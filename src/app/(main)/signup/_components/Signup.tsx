@@ -7,13 +7,12 @@ import FormProvider from "@/components/ui/form/form-provider";
 import { TextField } from "@/components/ui/form";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import CircularProgress from "@mui/material/CircularProgress";
 import Divider from "@mui/material/Divider";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/providers/toast-provider";
 import Link from "next/link";
 import api from "@/lib/api";
+import { SubmitButton } from "@/components/ui/submit-button";
 
 export default function Signup() {
   const router = useRouter();
@@ -43,8 +42,8 @@ export default function Signup() {
       maxWidth="sm"
       mx="auto"
       p={4}
-      border="1px solid #ddd"
-      borderRadius={2}
+      border={1}
+      borderColor="divider"
     >
       <Typography variant="h5" align="center" mb={2} fontWeight="bold">
         Create Account
@@ -62,14 +61,10 @@ export default function Signup() {
           <TextField disabled={methods.formState.isSubmitting} type="password" name="password" label="Password" required />
           <TextField disabled={methods.formState.isSubmitting} type="password" name="confirm_password" label="Confirm Password" required />
 
-          <Button disabled={methods.formState.isSubmitting} type="submit" variant="contained" sx={{ height: 50 }}>
-            {methods.formState.isSubmitting
-              ? <Box display="flex" alignItems="center" gap={2}><CircularProgress size={20} /> Loading...</Box>
-              : "Register"}
-          </Button>
+          <SubmitButton isLoading={methods.formState.isSubmitting} label="Register" />
 
           <Divider sx={{ my: 2, fontSize: 15 }}>
-            Don&apos;t have an account?
+            Already have an account?
             <Typography
               component={Link}
               variant="body2"

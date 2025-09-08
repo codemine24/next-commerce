@@ -6,7 +6,7 @@ import httpStatus from "http-status";
 import CustomizedError from "../../(helpers)/error/customized-error";
 import { generateToken } from "../../(helpers)/utils/jwt-helpers";
 import { CredentialPayload, UserPayload } from "./auth.interface";
-import { USER_SELECED_FIELDS } from "./auth.utils";
+import { USER_SELECTED_FIELDS } from "./auth.utils";
 
 // ------------------------------------ REGISTER NEW USER -----------------------------------
 const registerUser = async (data: UserPayload) => {
@@ -21,7 +21,7 @@ const registerUser = async (data: UserPayload) => {
       password: hashedPassword,
     },
     select: {
-      ...USER_SELECED_FIELDS,
+      ...USER_SELECTED_FIELDS,
     },
   });
 
