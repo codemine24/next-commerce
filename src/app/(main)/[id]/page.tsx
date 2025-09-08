@@ -1,4 +1,4 @@
-import { BoxContainer } from "@/components/layout/box-container"
+import { BoxContainer } from "@/components/box-container"
 import Typography from "@mui/material/Typography"
 import { ProductCarousel } from "./_components/product-carousel"
 import Grid from "@mui/material/Grid"

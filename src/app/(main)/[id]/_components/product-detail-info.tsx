@@ -1,6 +1,6 @@
 "use client";
 
-import { CustomTab } from "@/components/ui/custom-tab";
+import { CustomTab } from "@/components/custom-tab";
 import Box from "@mui/material/Box";
 import { useState } from "react";
 import { ProductSpecification } from "./product-specifications";

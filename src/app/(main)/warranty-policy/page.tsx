@@ -3,7 +3,7 @@ import { warrantyPolicyData } from "./warranty-policy-data";
 import { Box } from "@mui/material";
 import DOMPurify from "isomorphic-dompurify";
 import { BORDER_RADIUS } from "@/theme";
-import { BoxContainer } from "@/components/layout/box-container";
+import { BoxContainer } from "@/components/box-container";
 
 interface WarrantyPolicy {
   title: string | null;
