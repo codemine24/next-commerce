@@ -7,11 +7,13 @@ import { HotDeals } from "./_components/hot-deals";
 import { NewsLetter } from "./_components/news-letter";
 import { RecentBlogs } from "./_components/recent-blogs";
 import { Services } from "./_components/services";
+import FeaturedProductCard from "./_components/featured-product-card";
 
 export default function Home() {
   return (
     <BoxContainer sx={{ mt: 2 }}>
       <HeroSection />
+      <FeaturedProductCard />
       <CategoriesSection />
       <NewArrivals />
       <Banner />
@@ -20,5 +22,5 @@ export default function Home() {
       <RecentBlogs />
       <Services />
     </BoxContainer>
-  )
+  );
 }
