@@ -8,6 +8,7 @@ import {
 } from "@/components/carousel";
 import Grid from "@mui/material/Grid";
 import { OptimizeImage } from "@/components/optimize-image";
+// import Autoplay from "embla-carousel-autoplay";
 import Autoplay from "embla-carousel-autoplay";
 
 export const HeroCarousel = () => {
