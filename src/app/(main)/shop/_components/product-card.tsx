@@ -5,6 +5,7 @@ import Typography from "@mui/material/Typography";
 import Link from "next/link";
 import Button from "@mui/material/Button";
 import { ProductQuickViewButton } from "./product-quick-view-button";
+import { currencyFormatter } from "@/utils/currency-formatter";
 
 interface Product {
   id: string;
@@ -34,7 +35,7 @@ export const ProductCard = async ({
     >
       <Box component={Link} href={`/${product.slug}`}>
         <OptimizeImage
-          src="/assets/images/new-arrivals/luxury-blue-chair.svg"
+          src="/images/featured_image_1.svg"
           alt={product.name}
           height={290}
         />
@@ -53,12 +54,14 @@ export const ProductCard = async ({
 
       <Stack direction="row" justifyContent="space-between" mt={1}>
         <Stack direction="row" spacing={3} alignItems="center" mt={1}>
-          <Typography variant="h4">$ {product.discount_price}</Typography>
+          <Typography variant="h4">
+            {currencyFormatter(product.discount_price)}
+          </Typography>
           <Typography
             variant="body2"
             sx={{ textDecoration: "line-through", color: "text.secondary" }}
           >
-            $ {product.price}
+            {currencyFormatter(product.price)}
           </Typography>
         </Stack>
         <ProductQuickViewButton />

@@ -73,7 +73,7 @@ const Products = [
 export const NewArrivals = () => {
   return (
     <Box component="section" py={5}>
-      <SectionTitle title="New Arrivals" href="/shop" />
+      <SectionTitle title="Hot Deals" href="/shop" />
       <Grid container spacing={2}>
         {Products.map((product) => (
           <Grid key={product.id} size={{ xs: 6, md: 3 }}>
