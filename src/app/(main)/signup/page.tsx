@@ -1,11 +1,11 @@
 import { BoxContainer } from "@/components/box-container";
 import React from "react";
-import Signup from "./_components/Signup";
+import { SignupFormContainer } from "./_components/signup-form-container";
 
 const SignupPage = () => {
   return (
     <BoxContainer sx={{ mt: 10 }}>
-      <Signup />
+      <SignupFormContainer />
     </BoxContainer>
   );
 };

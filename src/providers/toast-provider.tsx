@@ -1,7 +1,16 @@
 'use client'
 
 import React, { createContext, useState, useCallback, useContext } from 'react';
-import { Snackbar, Alert, AlertColor } from '@mui/material';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
+import { AlertColor } from '@mui/material';
+import Slide, { SlideProps } from '@mui/material/Slide';
+
+// Slide transition
+const SlideTransition = (props: SlideProps) => {
+    return <Slide {...props} direction="down" />;
+}
+
 
 interface ToastContextProps {
     showMessage: (message: string, severity?: AlertColor) => void;
@@ -30,6 +39,7 @@ export const ToastProvider = ({ children }: { children: React.ReactNode }) => {
                 autoHideDuration={4000}
                 onClose={handleClose}
                 anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                slots={{ transition: SlideTransition }}
             >
                 <Alert severity={severity} onClose={handleClose} variant="filled">
                     {message}
