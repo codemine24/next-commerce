@@ -1,3 +1,6 @@
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+
 import { OrderTable } from "./_components/order-table";
 
 const orders = [
@@ -94,5 +97,13 @@ const orders = [
 ];
 
 export default function OrdersPage() {
-    return <OrderTable orders={orders} />;
+    return (
+        <Box>
+            <Typography variant="h5" fontWeight={600} mb={2}>
+                Product Orders
+            </Typography>
+
+            <OrderTable orders={orders} />
+        </Box>
+    );
 }

@@ -23,7 +23,7 @@ export const LogoutButton = () => {
                 startIcon={<LogoutIcon />}
                 size="small"
                 variant="outlined"
-                color="inherit"
+                color="error"
                 fullWidth
                 onClick={handleLogout}
             >
