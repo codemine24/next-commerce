@@ -1,9 +1,9 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
+import { LogoutButton } from "./logout-button";
 import { NavItem } from "./user-nav-item";
 import { USER_NAVIGATION } from "./user-navigation";
-import { LogoutButton } from "./logout-button";
 
 export const UserSidebar = () => {
     return (
@@ -12,6 +12,7 @@ export const UserSidebar = () => {
             py={3}
             border={1}
             borderColor="divider"
+            sx={{ position: "sticky", top: 70 }}
         >
             <Box display="flex" flexDirection="column" gap={4}>
                 {USER_NAVIGATION.map(nav_items => (

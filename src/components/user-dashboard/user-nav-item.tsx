@@ -27,9 +27,11 @@ export const NavItem = ({ item }: { item: UserNavItem }) => {
                 borderColor: isActive ? "text.primary" : "transparent",
                 transition: "all 0.2s ease-in-out",
                 color: isActive ? "text.primary" : "text.secondary",
+                bgcolor: isActive ? "background.paper" : "transparent",
                 "&:hover": {
                     color: "text.primary",
                     borderColor: "text.primary",
+                    bgcolor: "background.paper",
                 },
             }}
         >

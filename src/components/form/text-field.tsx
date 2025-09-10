@@ -5,8 +5,8 @@ import MuiTextField, { TextFieldProps } from "@mui/material/TextField";
 import { useState } from "react";
 import { useFormContext, Controller } from "react-hook-form";
 
-import { Visibility } from "@/icons/visibility";
-import { VisibilityOff } from "@/icons/visibility-off";
+import { VisibilityIcon } from "@/icons/visibility";
+import { VisibilityOffIcon } from "@/icons/visibility-off";
 
 import { InputLabel } from "./input-label";
 
@@ -52,7 +52,7 @@ export const TextField = ({ name, helperText, type = "text", label, placeholder,
                                         aria-label="toggle password visibility"
                                         onClick={handleClickShowPassword}
                                     >
-                                        {inputType === "password" ? <VisibilityOff /> : <Visibility />}
+                                        {inputType === "password" ? <VisibilityOffIcon /> : <VisibilityIcon />}
                                     </IconButton>
                                 </InputAdornment>,
                             },

@@ -1,11 +1,11 @@
 "use client";
 
-import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import { useRouter } from "next/navigation";
 
 import { LogoutIcon } from "@/icons/logout";
 import { toast } from "@/lib/toast-store";
-import { useRouter } from "next/navigation";
 import { useAuth } from "@/providers/auth-provider";
 
 export const LogoutButton = () => {
