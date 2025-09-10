@@ -8,14 +8,13 @@ import { useForm } from "react-hook-form";
 
 import api from "@/lib/api";
 import { API_ROUTES } from "@/lib/api-routes";
-import { useToast } from "@/providers/toast-provider";
+import { toast } from "@/lib/toast-store";
 import { signupSchema, SignupSchemaType } from "@/zod/signup-schema";
 
 import { SignupForm } from "./signup-form";
 
 export const SignupFormContainer = () => {
     const router = useRouter();
-    const toast = useToast();
     const methods = useForm<SignupSchemaType>({
         resolver: zodResolver(signupSchema),
         defaultValues: {

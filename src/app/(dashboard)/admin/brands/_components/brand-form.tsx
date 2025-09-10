@@ -12,11 +12,10 @@ import FormProvider from "@/components/form/form-provider";
 import { SubmitButton } from "@/components/submit-button";
 import api from "@/lib/api";
 import { API_ROUTES } from "@/lib/api-routes";
-import { useToast } from "@/providers/toast-provider";
+import { toast } from "@/lib/toast-store";
 import { brandSchema, BrandSchema } from "@/zod/brand-schema";
 
 export const BrandForm = () => {
-    const toast = useToast();
     const router = useRouter();
     const methods = useForm<BrandSchema>({
         resolver: zodResolver(brandSchema),

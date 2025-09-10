@@ -8,8 +8,8 @@ import { useForm } from "react-hook-form";
 
 import api from "@/lib/api";
 import { API_ROUTES } from "@/lib/api-routes";
+import { toast } from "@/lib/toast-store";
 import { useAuth } from "@/providers/auth-provider";
-import { useToast } from "@/providers/toast-provider";
 import { loginSchema, LoginSchemaType } from "@/zod/login-schema";
 
 import { LoginForm } from "./login-form";
@@ -17,7 +17,6 @@ import { LoginForm } from "./login-form";
 
 export const LoginFormContainer = () => {
     const router = useRouter();
-    const toast = useToast();
     const { setIsAuthenticated, setUser } = useAuth();
     const methods = useForm<LoginSchemaType>({
         resolver: zodResolver(loginSchema),

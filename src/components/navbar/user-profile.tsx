@@ -12,14 +12,13 @@ import { ChevronDownIcon } from "@/icons/chevron-down";
 import { LogoutIcon } from "@/icons/logout";
 import { OrdersIcon } from "@/icons/orders";
 import { UserIcon } from "@/icons/user";
+import { toast } from "@/lib/toast-store";
 import { useAuth } from "@/providers/auth-provider";
-import { useToast } from "@/providers/toast-provider";
 import { makeImageUrl } from "@/utils/helper";
 
 export const UserProfile = () => {
     const router = useRouter();
     const { user, logout } = useAuth();
-    const toast = useToast();
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {

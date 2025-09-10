@@ -19,7 +19,7 @@ import { SubmitButton } from "@/components/submit-button";
 import { PRODUCT_SIZE, PRODUCT_TAGS } from "@/constants/product";
 import api from "@/lib/api";
 import { API_ROUTES } from "@/lib/api-routes";
-import { useToast } from "@/providers/toast-provider";
+import { toast } from "@/lib/toast-store";
 import { ProductSchema, productSchema } from "@/zod/product-schema";
 
 const Brand = [
@@ -29,7 +29,6 @@ const Brand = [
 ];
 
 export const ProductForm = () => {
-  const toast = useToast();
   const router = useRouter();
   const methods = useForm<ProductSchema>({
     resolver: zodResolver(productSchema),
