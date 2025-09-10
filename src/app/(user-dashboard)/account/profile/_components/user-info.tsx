@@ -22,7 +22,7 @@ export const UserInfo = () => {
 
 const TableRowItem = ({ title, value }: { title: string; value: string }) => {
     return (
-        <Box p={1}>
+        <Box p={1} flex={1}>
             <Typography variant="h2" fontWeight={600} mb={1}>
                 {value}
             </Typography>
