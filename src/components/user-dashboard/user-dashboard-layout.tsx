@@ -1,4 +1,4 @@
-import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
 
 import { BoxContainer } from "@/components/box-container";
 import { Navbar } from "@/components/navbar/nav-bar";
@@ -10,12 +10,12 @@ export const UserDashboardLayout = ({ children }: { children: React.ReactNode })
         <>
             <Navbar />
             <BoxContainer sx={{ mt: 2 }}>
-                <Grid container>
+                <Box display="flex" gap={2}>
                     <UserSidebar />
-                    <Grid size={{ xs: 12, md: 9 }}>
+                    <Box flex={1}>
                         {children}
-                    </Grid>
-                </Grid>
+                    </Box>
+                </Box>
             </BoxContainer>
         </>
     )

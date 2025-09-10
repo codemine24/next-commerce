@@ -24,12 +24,12 @@ export const NavItem = ({ item }: { item: UserNavItem }) => {
                 alignItems: "center",
                 justifyContent: "space-between",
                 borderLeft: "2px solid",
-                borderColor: isActive ? "primary.main" : "transparent",
+                borderColor: isActive ? "text.primary" : "transparent",
                 transition: "all 0.2s ease-in-out",
-                color: isActive ? "primary.main" : "inherit",
+                color: isActive ? "text.primary" : "text.secondary",
                 "&:hover": {
-                    color: "primary.main",
-                    borderColor: "primary.main",
+                    color: "text.primary",
+                    borderColor: "text.primary",
                 },
             }}
         >
@@ -41,7 +41,7 @@ export const NavItem = ({ item }: { item: UserNavItem }) => {
                 }}
             >
                 {icon}
-                <Typography variant="body2" fontWeight={500}>
+                <Typography variant="body2">
                     {name}
                 </Typography>
             </Box>
