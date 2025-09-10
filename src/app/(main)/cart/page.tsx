@@ -11,29 +11,30 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Paper,
   TextField,
   Button,
   Stack,
-  Divider,
+  IconButton,
+  inputBaseClasses,
 } from "@mui/material";
+import { ShippingArrowIcon } from "@/icons/spinning-arrow";
+import { CloseIcon } from "@/icons/close";
 
-const CartPage = () => {
-  // Example cart items (replace with ProductCart context later)
+const Cart = () => {
   const cartItems = [
     {
       id: 1,
       image: "https://placehold.co/80x80/png",
-      name: "Product A",
-      model: "Model A",
+      name: "Living Room Furniture Chair",
+      model: "ZV-1v0",
       quantity: 2,
       price: 100,
     },
     {
       id: 2,
       image: "https://placehold.co/80x80/png",
-      name: "Product B",
-      model: "Model B",
+      name: "Living Room Furniture Chair ",
+      model: "ZV-1v0",
       quantity: 1,
       price: 150,
     },
@@ -49,7 +50,6 @@ const CartPage = () => {
   return (
     <BoxContainer>
       <Box sx={{ p: 4 }}>
-        {/* Title */}
         <Typography variant="h3" gutterBottom>
           Shopping Cart
         </Typography>
@@ -57,27 +57,73 @@ const CartPage = () => {
         {/* Table */}
         <TableContainer sx={{ mb: 4 }}>
           <Table>
-            <TableHead sx={{ borderBottom: "1px solid red" }}>
+            <TableHead>
               <TableRow
                 sx={{
                   bgcolor: "background.paper",
+                  align: "left",
                 }}
               >
-                <TableCell sx={{}}>Image</TableCell>
-                <TableCell align="left">Product Name</TableCell>
-                <TableCell>Model</TableCell>
-                <TableCell>Quantity</TableCell>
-                <TableCell>Unit Price</TableCell>
-                <TableCell>Total</TableCell>
+                <TableCell
+                  sx={{
+                    pl: 1,
+                    py: 1,
+                  }}
+                >
+                  Image
+                </TableCell>
+                <TableCell
+                  sx={{
+                    pl: 1,
+                    py: 1,
+                  }}
+                >
+                  Product Name
+                </TableCell>
+                <TableCell
+                  sx={{
+                    pl: 1,
+                    py: 1,
+                  }}
+                >
+                  Model
+                </TableCell>
+                <TableCell
+                  sx={{
+                    pl: 1,
+                    py: 1,
+                  }}
+                >
+                  Quantity
+                </TableCell>
+                <TableCell
+                  sx={{
+                    pl: 1,
+                    py: 1,
+                  }}
+                >
+                  Unit Price
+                </TableCell>
+                <TableCell
+                  sx={{
+                    pl: 1,
+                    py: 1,
+                  }}
+                >
+                  Total
+                </TableCell>
               </TableRow>
             </TableHead>
-            <TableBody>
+            <TableBody
+              sx={{
+                "& .MuiTableCell-root": {
+                  borderBottom: "1px solid #edeaea",
+                },
+              }}
+            >
               {cartItems.map((item) => (
-                <TableRow
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  key={item.id}
-                >
-                  <TableCell>
+                <TableRow key={item.id}>
+                  <TableCell sx={{ px: 0, py: 1 }}>
                     <img
                       src={item.image}
                       alt={item.name}
@@ -85,60 +131,129 @@ const CartPage = () => {
                       height={60}
                     />
                   </TableCell>
-                  <TableCell>{item.name}</TableCell>
-                  <TableCell>{item.model}</TableCell>
-                  <TableCell>{item.quantity}</TableCell>
-                  <TableCell>${item.price}</TableCell>
-                  <TableCell>${item.price * item.quantity}</TableCell>
+                  <TableCell sx={{ px: 1, py: 1 }}>
+                    <Typography variant="h6">{item.name}</Typography>
+                  </TableCell>
+                  <TableCell sx={{ px: 1, py: 1 }}>
+                    <Typography variant="h6">{item.model}</Typography>
+                  </TableCell>
+
+                  {/* Quantity */}
+                  <TableCell sx={{ px: 1, py: 1 }}>
+                    <Stack direction="row" spacing={1} alignItems="center">
+                      <TextField
+                        value={item.quantity}
+                        size="small"
+                        type="number"
+                        sx={{ width: 80, fontSize: "14px", fontWeight: 700 }}
+                      />
+                      <IconButton size="small">
+                        <ShippingArrowIcon
+                          fontSize="small"
+                          sx={{ color: "text.secondary" }}
+                        />
+                      </IconButton>
+                      <IconButton size="small" sx={{ fontSize: "16px" }}>
+                        <CloseIcon
+                          fontSize="small"
+                          sx={{ color: "text.secondary" }}
+                        />
+                      </IconButton>
+                    </Stack>
+                  </TableCell>
+
+                  <TableCell sx={{ px: 1, py: 1 }}>
+                    <Typography variant="h6">TK {item.price}</Typography>
+                  </TableCell>
+                  <TableCell sx={{ px: 1, py: 1 }}>
+                    <Typography variant="h6">
+                      TK {item.price * item.quantity}
+                    </Typography>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         </TableContainer>
 
-        {/* Totals */}
+        {/* Total */}
         <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 4 }}>
-          <Box sx={{ minWidth: 250 }}>
-            <Stack direction="row" justifyContent="space-between" mb={1}>
-              <Typography>Subtotal:</Typography>
-              <Typography fontWeight={600}>${subtotal}</Typography>
+          <Box sx={{ minWidth: 280 }}>
+            <Stack
+              direction="row"
+              justifyContent="space-between"
+              sx={{ borderBottom: "1px solid #edeaea", mb: 1, pb: 1 }}
+            >
+              <Typography fontWeight={600} width="60%" textAlign="right">
+                Subtotal:
+              </Typography>
+              <Typography fontWeight={600} color="red">
+                TK {subtotal}
+              </Typography>
             </Stack>
-            <Stack direction="row" justifyContent="space-between" mb={1}>
-              <Typography>Home Delivery:</Typography>
-              <Typography fontWeight={600}>${delivery}</Typography>
+            <Stack
+              direction="row"
+              justifyContent="space-between"
+              sx={{ borderBottom: "1px solid #edeaea", mb: 1, pb: 1 }}
+            >
+              <Typography fontWeight={600} width="60%" textAlign="right">
+                Home Delivery:
+              </Typography>
+              <Typography fontWeight={600} color="red">
+                TK {delivery}
+              </Typography>
             </Stack>
-            <Stack direction="row" justifyContent="space-between">
-              <Typography>Total:</Typography>
-              <Typography fontWeight={700} color="primary">
-                ${total}
+            <Stack
+              direction="row"
+              justifyContent="space-between"
+              sx={{ borderBottom: "1px solid #edeaea", pb: 1 }}
+            >
+              <Typography fontWeight={600} width="60%" textAlign="right">
+                Total:
+              </Typography>
+              <Typography fontWeight={700} color="red">
+                TK {total}
               </Typography>
             </Stack>
           </Box>
         </Box>
 
-        {/* Title + Subtitle */}
-        <Box mb={3}>
-          <Typography variant="h6" fontWeight={600}>
-            Discount & Vouchers
+        {/* Discount */}
+        <Box my={3}>
+          <Typography variant="h5" fontWeight={600}>
+            What would you like to do next?
           </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Apply promo codes or gift vouchers to get discounts.
+          <Typography variant="h6" color="text.primary" mt={1}>
+            Choose if you have a discount code or reward points you want to use
+            or would like to estimate your delivery cost.
           </Typography>
         </Box>
 
-        {/* Promo Code */}
+        {/* Promo  */}
         <Stack
           direction="row"
           spacing={2}
           mb={4}
           sx={{
             bgcolor: "background.paper",
-            p: 4,
+            p: 3,
             borderRadius: BORDER_RADIUS.default,
           }}
         >
           <Stack direction="row" spacing={2} flex="1">
-            <TextField fullWidth placeholder="Promo code" size="small" />
+            <TextField
+              fullWidth
+              placeholder="Promo code"
+              size="small"
+              sx={{
+                [`& .${inputBaseClasses.root}`]: {
+                  borderRadius: BORDER_RADIUS.default,
+                },
+                [`& .${inputBaseClasses.input}`]: {
+                  p: "5px 14px",
+                },
+              }}
+            />
             <Button
               variant="outlined"
               sx={{
@@ -156,6 +271,14 @@ const CartPage = () => {
               fullWidth
               placeholder="Enter your gift voucher"
               size="small"
+              sx={{
+                [`& .${inputBaseClasses.root}`]: {
+                  borderRadius: BORDER_RADIUS.default,
+                },
+                [`& .${inputBaseClasses.input}`]: {
+                  p: "5px 14px",
+                },
+              }}
             />
             <Button
               variant="outlined"
@@ -164,6 +287,7 @@ const CartPage = () => {
                 color: "blue",
                 border: "1px solid blue",
                 borderRadius: BORDER_RADIUS.default,
+                px: "16px",
               }}
             >
               Apply Voucher
@@ -178,7 +302,7 @@ const CartPage = () => {
             sx={{
               whiteSpace: "nowrap",
               bgcolor: "blue",
-              color: "#ffffff",
+              color: "#fff",
               border: "1px solid blue",
               borderRadius: BORDER_RADIUS.default,
             }}
@@ -190,7 +314,7 @@ const CartPage = () => {
             sx={{
               whiteSpace: "nowrap",
               bgcolor: "blue",
-              color: "#ffffff",
+              color: "#fff",
               border: "1px solid blue",
               borderRadius: BORDER_RADIUS.default,
             }}
@@ -203,4 +327,4 @@ const CartPage = () => {
   );
 };
 
-export default CartPage;
+export default Cart;

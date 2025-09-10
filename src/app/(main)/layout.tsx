@@ -24,7 +24,8 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.variable}`}>
         <AppRootLayout>
-          {children} <CartSnackbar />
+          {children}
+          {/* <CartSnackbar /> */}
         </AppRootLayout>
       </body>
     </html>
