@@ -1,7 +1,8 @@
-import { CartIcon } from "@/icons/cart-icon";
 import Badge from "@mui/material/Badge";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+
+import { CartIcon } from "@/icons/cart-icon";
 
 export const CartButton = () => {
   return (

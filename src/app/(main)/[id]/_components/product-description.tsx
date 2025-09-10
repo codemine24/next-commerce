@@ -1,5 +1,6 @@
 import Box from "@mui/material/Box"
 import DOMPurify from 'isomorphic-dompurify';
+
 import { ProductSectionHeader } from "./product-section-header";
 
 export const ProductDescription = ({ description }: { description: string | null }) => {

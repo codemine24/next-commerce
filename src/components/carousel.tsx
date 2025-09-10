@@ -1,16 +1,16 @@
 "use client";
 
+import Box from "@mui/material/Box";
+import IconButton from "@mui/material/IconButton";
 import useEmblaCarousel, {
   type UseEmblaCarouselType,
 } from "embla-carousel-react";
 import * as React from "react";
 
-import Box from "@mui/material/Box";
-import IconButton from "@mui/material/IconButton";
-import type { SxProps, Theme } from "@mui/material/styles";
-
 import { ArrowBackIcon } from "@/icons/arrow-back";
 import { ArrowForwardIcon } from "@/icons/arrow-forward";
+
+import type { SxProps, Theme } from "@mui/material/styles";
 
 type CarouselApi = UseEmblaCarouselType[1];
 type UseCarouselParameters = Parameters<typeof useEmblaCarousel>;
@@ -310,15 +310,15 @@ export const CarouselDots: React.FC<CarouselDotsProps> = ({
           const variantStyles =
             variant === "dot"
               ? {
-                  width: 8,
-                  height: 8,
-                  borderRadius: "50%",
-                }
+                width: 8,
+                height: 8,
+                borderRadius: "50%",
+              }
               : {
-                  width: 24,
-                  height: 4,
-                  borderRadius: 3,
-                };
+                width: 24,
+                height: 4,
+                borderRadius: 3,
+              };
 
           return (
             <Box

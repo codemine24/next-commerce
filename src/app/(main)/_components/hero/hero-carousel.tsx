@@ -1,14 +1,16 @@
 "use client";
 
+import Grid from "@mui/material/Grid";
+import Autoplay from "embla-carousel-autoplay";
+
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselDots,
 } from "@/components/carousel";
-import Grid from "@mui/material/Grid";
 import { OptimizeImage } from "@/components/optimize-image";
-import Autoplay from "embla-carousel-autoplay";
+
 
 export const HeroCarousel = () => {
   return (

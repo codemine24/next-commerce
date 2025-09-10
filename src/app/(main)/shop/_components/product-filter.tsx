@@ -1,19 +1,21 @@
 "use client";
 
-import React, { useMemo } from "react";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import Checkbox from "@mui/material/Checkbox";
-import FormGroup from "@mui/material/FormGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import { useRouter, useSearchParams, usePathname } from "next/navigation";
-import { Attribute } from "@/interfaces/attribute";
-import { ExpandMoreIcon } from "@/icons/expand-more";
 import { Button, Divider } from "@mui/material";
+import Accordion from "@mui/material/Accordion";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import Box from "@mui/material/Box";
+import Checkbox from "@mui/material/Checkbox";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormGroup from "@mui/material/FormGroup";
+import Typography from "@mui/material/Typography";
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
+import React, { useMemo } from "react";
+
 import { CloseIcon } from "@/icons/close";
+import { ExpandMoreIcon } from "@/icons/expand-more";
+import { Attribute } from "@/interfaces/attribute";
+
 
 interface ProductFilterProps {
     attributes: Attribute[];
@@ -113,8 +115,6 @@ export const ProductFilter = ({ attributes }: ProductFilterProps) => {
 
     const sortAttributes = useMemo(() => attributes.sort((a, b) => a.name.localeCompare(b.name)), [attributes]);
 
-    console.log(selectedFilters);
-
     return (
         <Box
             sx={{
@@ -140,7 +140,7 @@ export const ProductFilter = ({ attributes }: ProductFilterProps) => {
                 {Object.entries(selectedFilters.values).map(([filterName, values], index) => (
                     values.map((value) => (
                         <Box
-                            key={index}
+                            key={filterName + value + index}
                             display="flex"
                             justifyContent="space-between"
                             alignItems="center"

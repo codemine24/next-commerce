@@ -1,8 +1,10 @@
 import { Chip } from "@mui/material"
 import Box from "@mui/material/Box"
-import Typography from "@mui/material/Typography"
-import { StarIcon } from "@/icons/star"
 import Divider from "@mui/material/Divider"
+import Typography from "@mui/material/Typography"
+
+import { StarIcon } from "@/icons/star"
+
 import { ProductActionButton } from "./product-action-button"
 
 export const ProductInfo = () => {

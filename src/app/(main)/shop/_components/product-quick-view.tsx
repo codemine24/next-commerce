@@ -1,11 +1,13 @@
+import Backdrop from "@mui/material/Backdrop"
 import Box from "@mui/material/Box";
+import Fade from "@mui/material/Fade"
 import Grid from "@mui/material/Grid";
 import Modal from "@mui/material/Modal";
-import { ProductCarousel } from "../../[id]/_components/product-carousel";
-import { ProductInfo } from "../../[id]/_components/product-info";
+
+import { ProductCarousel } from "@/components/product/product-carousel";
+import { ProductInfo } from "@/components/product/product-info";
 import { CloseIcon } from "@/icons/close";
-import Fade from "@mui/material/Fade"
-import Backdrop from "@mui/material/Backdrop"
+
 
 const images = [
     "https://placehold.co/600x400/png",

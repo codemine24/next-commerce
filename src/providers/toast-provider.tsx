@@ -1,10 +1,10 @@
 'use client'
 
-import React, { createContext, useState, useCallback, useContext } from 'react';
-import Snackbar from '@mui/material/Snackbar';
-import Alert from '@mui/material/Alert';
 import { AlertColor } from '@mui/material';
+import Alert from '@mui/material/Alert';
 import Slide, { SlideProps } from '@mui/material/Slide';
+import Snackbar from '@mui/material/Snackbar';
+import React, { createContext, useState, useCallback, useContext } from 'react';
 
 // Slide transition
 const SlideTransition = (props: SlideProps) => {
@@ -13,7 +13,10 @@ const SlideTransition = (props: SlideProps) => {
 
 
 interface ToastContextProps {
-    showMessage: (message: string, severity?: AlertColor) => void;
+    success: (message: string) => void;
+    error: (message: string) => void;
+    warning: (message: string) => void;
+    info: (message: string) => void;
 }
 
 const ToastContext = createContext<ToastContextProps | undefined>(undefined);
@@ -29,10 +32,15 @@ export const ToastProvider = ({ children }: { children: React.ReactNode }) => {
         setOpen(true);
     }, []);
 
+    const success = (msg: string) => showMessage(msg, 'success');
+    const error = (msg: string) => showMessage(msg, 'error');
+    const warning = (msg: string) => showMessage(msg, 'warning');
+    const info = (msg: string) => showMessage(msg, 'info');
+
     const handleClose = () => setOpen(false);
 
     return (
-        <ToastContext.Provider value={{ showMessage }}>
+        <ToastContext.Provider value={{ success, error, warning, info }}>
             {children}
             <Snackbar
                 open={open}

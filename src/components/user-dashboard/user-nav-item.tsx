@@ -1,9 +1,10 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
 import { UserNavItem } from "@/interfaces/common";
 
 export const NavItem = ({ item }: { item: UserNavItem }) => {

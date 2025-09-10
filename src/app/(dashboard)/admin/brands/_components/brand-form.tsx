@@ -1,18 +1,19 @@
 "use client";
 
-import FormProvider from "@/components/form/form-provider";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { brandSchema, BrandSchema } from "@/zod/brand-schema";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+
+import { Editor } from "@/components/editor";
 import { FileUploader, TextField } from "@/components/form";
+import FormProvider from "@/components/form/form-provider";
 import { SubmitButton } from "@/components/submit-button";
 import api from "@/lib/api";
-import { useToast } from "@/providers/toast-provider";
-import { useRouter } from "next/navigation";
-import { Editor } from "@/components/editor";
 import { API_ROUTES } from "@/lib/api-routes";
+import { useToast } from "@/providers/toast-provider";
+import { brandSchema, BrandSchema } from "@/zod/brand-schema";
 
 export const BrandForm = () => {
     const toast = useToast();
@@ -25,9 +26,9 @@ export const BrandForm = () => {
         const response = await api.post(API_ROUTES.brands.create_brand, { body: JSON.stringify(data) });
 
         if (!response.success) {
-            toast.showMessage(response.message, "error");
+            toast.error(response.message);
         } else {
-            toast.showMessage(response.message, "success");
+            toast.success(response.message);
             router.replace("/admin/brands");
         }
     }

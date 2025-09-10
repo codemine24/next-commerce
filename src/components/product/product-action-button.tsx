@@ -1,13 +1,14 @@
 "use client";
 
-import { ProductQuantityButton } from "@/components/product-quantity-button";
-import { CartIcon } from "@/icons/cart-icon";
-import { HeartEmptyIcon } from "@/icons/heart-empty";
 import { Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import { useState } from "react";
+
+import { ProductQuantityButton } from "@/components/product-quantity-button";
+import { CartIcon } from "@/icons/cart-icon";
+import { HeartEmptyIcon } from "@/icons/heart-empty";
 
 export const ProductActionButton = () => {
   const [qty, setQty] = useState(1);

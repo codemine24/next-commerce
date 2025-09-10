@@ -1,8 +1,9 @@
 import Box from "@mui/material/Box";
-import { USER_NAVIGATION } from "./user-navigation";
-import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+
 import { NavItem } from "./user-nav-item";
+import { USER_NAVIGATION } from "./user-navigation";
 
 export const UserSidebar = () => {
     return (

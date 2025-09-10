@@ -1,15 +1,17 @@
 "use client";
 
-import { signupSchema, SignupSchemaType } from "@/zod/signup-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { API_ROUTES } from "@/lib/api-routes";
-import { useToast } from "@/providers/toast-provider";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { useRouter } from "next/navigation";
-import { SignupForm } from "./signup-form";
+import { useForm } from "react-hook-form";
+
 import api from "@/lib/api";
+import { API_ROUTES } from "@/lib/api-routes";
+import { useToast } from "@/providers/toast-provider";
+import { signupSchema, SignupSchemaType } from "@/zod/signup-schema";
+
+import { SignupForm } from "./signup-form";
 
 export const SignupFormContainer = () => {
     const router = useRouter();
@@ -32,11 +34,11 @@ export const SignupFormContainer = () => {
         });
 
         if (!response.success) {
-            toast.showMessage(response.message, "error");
+            toast.error(response.message);
             return;
         }
 
-        toast.showMessage("User registered successfully", "success");
+        toast.success("User registered successfully");
         router.replace("/login");
     };
 

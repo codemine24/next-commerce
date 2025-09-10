@@ -1,13 +1,14 @@
 import { Prisma } from "@prisma/client";
-import { prisma } from "../../(helpers)/shared/prisma";
-import paginationMaker from "../../(helpers)/utils/pagination-maker";
-import queryValidator from "../../(helpers)/utils/query-validator";
-import { slugGenerator } from "../../(helpers)/utils/slug-generator";
+
 import { BrandPayload } from "./brand.interface";
 import {
   brandQueryValidationConfig,
   brandSearchableFields,
 } from "./brand.utils";
+import { prisma } from "../../(helpers)/shared/prisma";
+import paginationMaker from "../../(helpers)/utils/pagination-maker";
+import queryValidator from "../../(helpers)/utils/query-validator";
+import { slugGenerator } from "../../(helpers)/utils/slug-generator";
 
 // ------------------------------------ ADD BRAND --------------------------------------
 const addBrand = async (payload: BrandPayload) => {

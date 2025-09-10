@@ -1,16 +1,19 @@
 "use client";
 
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
-import { useAuth } from "@/providers/auth-provider";
-import { useToast } from "@/providers/toast-provider";
-import api from "@/lib/api";
-import { API_ROUTES } from "@/lib/api-routes";
-import { loginSchema, LoginSchemaType } from "@/zod/login-schema";
-import { LoginForm } from "./login-form";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+
+import api from "@/lib/api";
+import { API_ROUTES } from "@/lib/api-routes";
+import { useAuth } from "@/providers/auth-provider";
+import { useToast } from "@/providers/toast-provider";
+import { loginSchema, LoginSchemaType } from "@/zod/login-schema";
+
+import { LoginForm } from "./login-form";
+
 
 export const LoginFormContainer = () => {
     const router = useRouter();
@@ -30,11 +33,11 @@ export const LoginFormContainer = () => {
         });
 
         if (!response.success) {
-            toast.showMessage(response.message, "error");
+            toast.error(response.message);
             return;
         }
 
-        toast.showMessage("User logged in successfully", "success");
+        toast.success("User logged in successfully");
         setIsAuthenticated(true);
         setUser(response.data);
         router.replace("/");

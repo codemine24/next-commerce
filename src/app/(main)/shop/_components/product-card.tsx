@@ -1,11 +1,14 @@
-import { OptimizeImage } from "@/components/optimize-image";
-import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import Link from "next/link";
-import Button from "@mui/material/Button";
-import { ProductQuickViewButton } from "./product-quick-view-button";
+
+import { OptimizeImage } from "@/components/optimize-image";
 import { currencyFormatter } from "@/utils/currency-formatter";
+
+import { ProductQuickViewButton } from "./product-quick-view-button";
+
 
 interface Product {
   id: string;
@@ -42,8 +45,6 @@ export const ProductCard = async ({
 
         <Box height={50} mt={1.5}>
           <Typography
-            component={Link}
-            href={`/${product.slug}`}
             variant="h4"
             sx={{ "&:hover": { textDecoration: "underline" } }}
           >

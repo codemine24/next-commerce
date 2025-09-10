@@ -1,6 +1,7 @@
 "use client";
 
 import { Box, Grid } from "@mui/material";
+
 import { SimpleProductCard } from "../shop/_components/simple-product-card";
 
 export default function FeaturedProductCard() {

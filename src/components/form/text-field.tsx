@@ -1,12 +1,14 @@
+import Box from "@mui/material/Box";
+import IconButton from "@mui/material/IconButton";
+import InputAdornment from "@mui/material/InputAdornment";
+import MuiTextField, { TextFieldProps } from "@mui/material/TextField";
 import { useState } from "react";
 import { useFormContext, Controller } from "react-hook-form";
-import MuiTextField, { TextFieldProps } from "@mui/material/TextField";
-import Box from "@mui/material/Box";
-import { InputLabel } from "./input-label";
-import InputAdornment from "@mui/material/InputAdornment";
-import IconButton from "@mui/material/IconButton";
-import { VisibilityOff } from "@/icons/visibility-off";
+
 import { Visibility } from "@/icons/visibility";
+import { VisibilityOff } from "@/icons/visibility-off";
+
+import { InputLabel } from "./input-label";
 
 type Props = TextFieldProps & { name: string, label: string, placeholder?: string, required?: boolean };
 

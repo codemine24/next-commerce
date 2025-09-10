@@ -1,5 +1,7 @@
-import { BoxContainer } from "@/components/box-container";
 import React from "react";
+
+import { BoxContainer } from "@/components/box-container";
+
 import { SignupFormContainer } from "./_components/signup-form-container";
 
 const SignupPage = () => {

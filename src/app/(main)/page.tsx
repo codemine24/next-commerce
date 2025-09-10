@@ -1,4 +1,5 @@
 import { BoxContainer } from "@/components/box-container";
+
 import { Banner } from "./_components/banner";
 import FeaturedProductCard from "./_components/featured-product-card";
 import { HeroSection } from "./_components/hero/hero-section";

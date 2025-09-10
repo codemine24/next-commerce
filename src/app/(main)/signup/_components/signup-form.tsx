@@ -1,13 +1,14 @@
 "use client";
 
-import FormProvider from "@/components/form/form-provider";
-import { SubmitButton } from "@/components/submit-button";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
 import Link from "next/link";
-import { TextField } from "@/components/form";
 import { UseFormReturn } from "react-hook-form";
+
+import { TextField } from "@/components/form";
+import FormProvider from "@/components/form/form-provider";
+import { SubmitButton } from "@/components/submit-button";
 import { SignupSchemaType } from "@/zod/signup-schema";
 
 interface SignupFormProps {

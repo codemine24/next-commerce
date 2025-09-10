@@ -1,6 +1,7 @@
-import { CategoryForm } from "../_components/category-form";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+
+import { CategoryForm } from "../_components/category-form";
 
 export default function CategoryCreatePage() {
     return (
