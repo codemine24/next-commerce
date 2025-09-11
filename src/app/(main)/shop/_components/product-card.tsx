@@ -9,6 +9,7 @@ import { currencyFormatter } from "@/utils/currency-formatter";
 
 import { AddToCartIconButton } from "./add-to-cart-icon-button";
 import { AddWishListButton } from "./add-wish-list-button";
+import { ProductDiscountLabel } from "./product-discount-label";
 import { ProductQuickViewButton } from "./product-quick-view-button";
 
 interface Product {
@@ -61,22 +62,6 @@ export const ProductCard = async ({
             alt={product.name}
             height={290}
             imageStyle={{ objectFit: "contain" }}
-          />
-
-          {/* Hover overlay for large screen */}
-          <Box
-            className="hover-overlay"
-            sx={{
-              display: { xs: "none", md: "block" },
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-              bgcolor: "rgba(0,0,0,0.2)",
-              opacity: 0,
-              transition: "opacity 0.3s ease",
-            }}
           />
 
           {/* Action icons */}
@@ -135,7 +120,9 @@ export const ProductCard = async ({
           </Button>
         </Box>
       )}
-    </Box>
 
+      {/* discount label */}
+      <ProductDiscountLabel />
+    </Box>
   );
 };
