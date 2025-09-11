@@ -6,9 +6,10 @@ import Link from "next/link";
 
 import { OptimizeImage } from "@/components/optimize-image";
 import { currencyFormatter } from "@/utils/currency-formatter";
-import { ProductQuickViewButton } from "./product-quick-view-button";
-import { AddWishListButton } from "./add-wish-list-button";
+
 import { AddToCartIconButton } from "./add-to-cart-icon-button";
+import { AddWishListButton } from "./add-wish-list-button";
+import { ProductQuickViewButton } from "./product-quick-view-button";
 
 interface Product {
   id: string;

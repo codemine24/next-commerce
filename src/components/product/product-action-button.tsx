@@ -46,7 +46,7 @@ export const ProductActionButton = ({
         </Button>
         <Button
           startIcon={<HeartEmptyIcon />}
-          variant="soft"
+          variant="outlined"
           color="primary"
           sx={{ width: 200, height: 50 }}
           onClick={handleAddToCart}

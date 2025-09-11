@@ -1,6 +1,7 @@
 "use client";
 
 import { IconButton } from "@mui/material";
+
 import { HeartEmptyIcon } from "@/icons/heart-empty";
 
 export const AddWishListButton = () => {

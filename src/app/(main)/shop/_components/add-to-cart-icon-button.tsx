@@ -1,7 +1,8 @@
 "use client";
 
-import { CartIcon } from "@/icons/cart-icon";
 import { IconButton } from "@mui/material";
+
+import { CartIcon } from "@/icons/cart-icon";
 
 export const AddToCartIconButton = () => {
     const handleAddToCart = (e: React.MouseEvent) => {

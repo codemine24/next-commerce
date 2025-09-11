@@ -3,28 +3,35 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 
 import { OptimizeImage } from "@/components/optimize-image";
+import { dateFormatter } from "@/utils/date-formatter";
 
 import { SectionTitle } from "./section-title";
+
+const images = [
+  "/images/blog/blog-1.svg",
+  "/images/blog/blog-2.svg",
+  "/images/blog/blog-3.svg",
+]
 
 export const RecentBlogs = () => {
   return (
     <Box>
       <SectionTitle title="Recent Blogs" />
       <Grid container spacing={2}>
-        {Array.from({ length: 4 }).map((_, index) => (
-          <Grid key={index} size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
+        {images.map((image, index) => (
+          <Grid key={index} size={{ xs: 12, sm: 6, md: 4 }}>
             <OptimizeImage
-              src="https://placehold.co/600x400/png"
+              src={image}
               alt="Blog"
-              height={300}
+              height={250}
               imageStyle={{ objectFit: "cover" }}
             />
             <Box py={2}>
-              <Typography variant="h6" fontWeight={600} gutterBottom>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              <Typography variant="h5" fontWeight={600} gutterBottom>
+                First Time Home Owner Ideas
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                By Admin on {new Date().toLocaleDateString()}
+                By Admin on {dateFormatter(new Date())}
               </Typography>
             </Box>
           </Grid>
