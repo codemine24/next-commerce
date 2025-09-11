@@ -57,7 +57,14 @@ const Cart = () => {
         {/* Table */}
         <TableContainer sx={{ mb: 4 }}>
           <Table>
-            <TableHead>
+            <TableHead
+              sx={{
+                borderRadius: BORDER_RADIUS.default,
+                "& .MuiTableCell-root": {
+                  borderRight: "1px solid #fff",
+                },
+              }}
+            >
               <TableRow
                 sx={{
                   bgcolor: "background.paper",
@@ -243,7 +250,7 @@ const Cart = () => {
           <Stack direction="row" spacing={2} flex="1">
             <TextField
               fullWidth
-              placeholder="Promo code"
+              placeholder="Promo / Coupon code"
               size="small"
               sx={{
                 [`& .${inputBaseClasses.root}`]: {
@@ -269,7 +276,7 @@ const Cart = () => {
           <Stack direction="row" spacing={2} flex="1">
             <TextField
               fullWidth
-              placeholder="Enter your gift voucher"
+              placeholder="Enter your gift voucher code here"
               size="small"
               sx={{
                 [`& .${inputBaseClasses.root}`]: {
