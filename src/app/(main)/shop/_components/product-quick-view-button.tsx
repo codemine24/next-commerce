@@ -11,7 +11,15 @@ export const ProductQuickViewButton = () => {
     const [open, setOpen] = useState(false);
     return (
         <>
-            <Button variant="soft" onClick={() => setOpen(true)}><EyeIcon /></Button>
+            <Button
+                variant="outlined"
+                color="primary"
+                onClick={() => setOpen(true)}
+                sx={{
+                    border: 'none',
+                }}>
+                <EyeIcon />
+            </Button>
             <ProductQuickView open={open} onClose={() => setOpen(false)} />
         </>
     );

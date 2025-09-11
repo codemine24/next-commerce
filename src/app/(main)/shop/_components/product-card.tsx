@@ -32,7 +32,8 @@ export const ProductCard = async ({
         py: { xs: 2, md: 3 },
         display: "flex",
         flexDirection: "column",
-        border: "1px solid #EFEDFA",
+        border: "1px solid",
+        borderColor: "divider",
         p: 2,
       }}
     >
