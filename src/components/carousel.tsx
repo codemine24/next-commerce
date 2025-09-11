@@ -62,7 +62,7 @@ export const Carousel: React.FC<CarouselProps> = ({
 
   const plugins = autoplay ? [autoplayPlugin.current] : [];
   const [carouselRef, api] = useEmblaCarousel(
-    { ...opts, axis: orientation === "horizontal" ? "x" : "y", loop: true },
+    { axis: orientation === "horizontal" ? "x" : "y", loop: true, ...opts },
     plugins
   );
 
