@@ -1,7 +1,6 @@
 "use client";
 
 import Grid from "@mui/material/Grid";
-import Autoplay from "embla-carousel-autoplay";
 
 import {
   Carousel,
@@ -11,11 +10,10 @@ import {
 } from "@/components/carousel";
 import { OptimizeImage } from "@/components/optimize-image";
 
-
 export const HeroCarousel = () => {
   return (
     <Grid size={{ xs: 12, lg: 8 }}>
-      <Carousel plugins={[Autoplay({ delay: 3000 })]}>
+      <Carousel autoplay pauseOnHover={true}>
         <CarouselContent>
           {[...Array(5)].map((_, i) => (
             <CarouselItem key={i + 1} onClick={() => console.log("click")}>

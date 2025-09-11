@@ -5,6 +5,8 @@ import { AppRootLayout } from "@/components/app-root-layout";
 import type { Metadata } from "next";
 import "@/styles/globals.css";
 
+import { CartSnackbar } from "./shop/_components/cart-snackbar";
+
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
@@ -23,7 +25,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable}`}>
-        <AppRootLayout>{children}</AppRootLayout>
+        <AppRootLayout>
+          {children}
+          {/* <CartSnackbar /> */}
+        </AppRootLayout>
       </body>
     </html>
   );

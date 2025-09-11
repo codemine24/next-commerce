@@ -1,6 +1,6 @@
 "use client";
 
-import { Typography } from "@mui/material";
+import { Alert, Snackbar, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
@@ -10,12 +10,21 @@ import { ProductQuantityButton } from "@/components/product-quantity-button";
 import { CartIcon } from "@/icons/cart-icon";
 import { HeartEmptyIcon } from "@/icons/heart-empty";
 
-export const ProductActionButton = () => {
+interface ProductActionButtonProps {
+  open: boolean;
+  onClose: () => void;
+}
+
+export const ProductActionButton = ({
+  open,
+  onClose,
+}: ProductActionButtonProps) => {
   const [qty, setQty] = useState(1);
 
   const handleAddToCart = () => {
-    console.log("Add to cart");
+    onClose();
   };
+
   return (
     <Box mt={4}>
       <Typography variant="h6" fontWeight={600} gutterBottom>
