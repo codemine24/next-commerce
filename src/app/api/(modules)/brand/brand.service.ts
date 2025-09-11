@@ -68,13 +68,13 @@ const getBrands = async (query: Record<string, any>) => {
   const orderBy: Prisma.BrandOrderByWithRelationInput =
     sortWith === "products"
       ? {
-          products: {
-            _count: sortSequence,
-          },
-        }
+        products: {
+          _count: sortSequence,
+        },
+      }
       : {
-          [sortWith]: sortSequence,
-        };
+        [sortWith]: sortSequence,
+      };
 
   const [result, total] = await Promise.all([
     prisma.brand.findMany({

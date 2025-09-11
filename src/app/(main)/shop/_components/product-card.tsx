@@ -56,7 +56,7 @@ export const ProductCard = async ({
           overflow: "hidden",
         }}
       >
-        <Box sx={{ position: "relative" }}>
+        <Box sx={{ position: "relative", p: 2, pb: 0, borderBottom: 1, borderColor: "divider" }}>
           <OptimizeImage
             src="/images/featured_image_1.svg"
             alt={product.name}
@@ -108,16 +108,16 @@ export const ProductCard = async ({
             {currencyFormatter(product.price)}
           </Typography>
         </Stack>
-        <ProductQuickViewButton />
+        {!action && <ProductQuickViewButton />}
       </Stack>
 
       {/* Action buttons (Add to Cart etc) */}
       {action && (
-        <Box display="flex" gap={1} mt={2}>
-          <ProductQuickViewButton />
+        <Box display="flex" gap={1} mt={2} px={2}>
           <Button variant="soft" color="primary" fullWidth>
             Add to Cart
           </Button>
+          <ProductQuickViewButton />
         </Box>
       )}
 

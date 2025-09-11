@@ -13,11 +13,12 @@ export const AddWishListButton = () => {
         <IconButton
             onClick={handleAddWishList}
             sx={{
-                bgcolor: "background.paper",
+                bgcolor: "primary.light",
                 transform: "translateY(-10px)",
                 transition: "opacity 0.3s ease, transform 0.3s ease",
+                color: "primary.contrastText",
                 "&:hover": {
-                    bgcolor: "grey.100",
+                    bgcolor: "primary.light",
                 },
             }}
         >

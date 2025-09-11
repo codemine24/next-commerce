@@ -121,7 +121,6 @@ export const ProductFilter = ({ attributes }: ProductFilterProps) => {
                 width: "100%",
                 pr: 2,
                 pb: 2,
-                mt: 2
             }}
         >
             {selectedFilters.order.length > 0 && (
@@ -185,7 +184,10 @@ export const ProductFilter = ({ attributes }: ProductFilterProps) => {
                                 "&:before": { display: "none" },
                             }}
                         >
-                            <AccordionSummary sx={{ p: 0 }} expandIcon={<ExpandMoreIcon sx={{ fontSize: 16 }} />}>
+                            <AccordionSummary
+                                sx={{ p: 0 }}
+                                expandIcon={<ExpandMoreIcon sx={{ fontSize: 16 }} />}
+                            >
                                 <Typography variant="h6">{attribute.name}</Typography>
                             </AccordionSummary>
                             <AccordionDetails sx={{ p: 0 }}>
