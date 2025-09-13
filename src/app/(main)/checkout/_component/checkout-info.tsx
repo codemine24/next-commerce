@@ -1,40 +1,33 @@
 "use client";
-import { useState } from "react";
+import { CreditCardIcon } from "@/icons/credit-card-icon";
+import { DollarIcon } from "@/icons/dollar-icon";
+import { LockIcon } from "@/icons/lock-icon";
+import { PaymentsIcon } from "@/icons/payments-icon";
+import { BORDER_RADIUS } from "@/theme";
 import {
+  alpha,
   Box,
-  Grid,
   Card,
-  Typography,
-  Radio,
-  RadioGroup,
+  Divider,
   FormControl,
   FormControlLabel,
-  TextField,
-  Select,
-  MenuItem,
-  InputLabel,
-  Button,
-  ToggleButton,
-  ToggleButtonGroup,
-  Stack,
-  alpha,
-  Divider,
+  Grid,
   InputAdornment,
+  Radio,
+  RadioGroup,
+  Stack,
+  TextField,
+  ToggleButton,
   toggleButtonClasses,
+  ToggleButtonGroup,
+  Typography
 } from "@mui/material";
-import { CreditCardIcon } from "@/icons/credit-card-icon";
-import { PaymentsIcon } from "@/icons/payments-icon";
-import PaymentInfo from "./payment-info";
-import PaymentInfoV2 from "./payment-infoV2";
-import { LockIcon } from "@/icons/lock-icon";
 import Image from "next/image";
-import { BORDER_RADIUS } from "@/theme";
-import { DollarIcon } from "@/icons/dollar-icon";
+import { useState } from "react";
 
 const CheckoutInfo = () => {
   const [delivery, setDelivery] = useState("home");
   const [paymentOption, setPaymentOption] = useState("card");
-  const [country, setCountry] = useState("bangladesh");
 
   return (
     <Grid container spacing={3}>
