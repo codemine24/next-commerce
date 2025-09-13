@@ -2,7 +2,7 @@
 
 import { ProductQuantityButton } from "@/components/product-quantity-button";
 import { CartIcon } from "@/icons/cart-icon";
-import { HeartEmptyIcon } from "@/icons/heart-empty";
+import { PaymentIcon } from "@/icons/payment-icon";
 import { Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -23,7 +23,7 @@ export const ProductActionButton = ({ onClose }: ProductActionButtonProps) => {
 
   return (
     <Box mt={4}>
-      <Typography variant="h6" fontWeight={600} gutterBottom>
+      <Typography variant="h6" mb={1}>
         Quantity
       </Typography>
       <ProductQuantityButton
@@ -33,21 +33,20 @@ export const ProductActionButton = ({ onClose }: ProductActionButtonProps) => {
       />
       <Stack direction="row" spacing={1} alignItems="center" mt={4}>
         <Button
-          startIcon={<CartIcon />}
+          startIcon={<PaymentIcon />}
           variant="contained"
-          sx={{ width: 200, height: 50 }}
+          sx={{ width: 150, height: 50 }}
           onClick={handleAddToCart}
         >
-          Add to Cart
+          Buy now
         </Button>
         <Button
-          startIcon={<HeartEmptyIcon />}
-          variant="outlined"
+          startIcon={<CartIcon />}
+          variant="text"
           color="primary"
-          sx={{ width: 200, height: 50 }}
           onClick={handleAddToCart}
         >
-          Add to Wish List
+          Add to cart
         </Button>
       </Stack>
     </Box>
