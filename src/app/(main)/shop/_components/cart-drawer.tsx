@@ -10,6 +10,7 @@ import { CloseIcon } from "@/icons/close";
 import { DeleteIcon } from "@/icons/delete-icon";
 import { BORDER_RADIUS } from "@/theme";
 import { alpha } from "@mui/material";
+import { useRouter } from "next/navigation";
 
 interface CartDrawerProps {
   open: boolean;
@@ -98,6 +99,7 @@ const products = [
 ];
 
 export const CartDrawer = ({ open, onClose }: CartDrawerProps) => {
+  const router = useRouter();
   return (
     <Drawer anchor="right" open={open} onClose={onClose}>
       <Box
@@ -182,7 +184,7 @@ export const CartDrawer = ({ open, onClose }: CartDrawerProps) => {
             sx={{ mb: 2, borderTop: "1px solid #edeaea", pt: 2 }}
           >
             <Typography variant="body2">Subtotal:</Typography>
-            <Typography variant="h3">$80.00</Typography>
+            <Typography variant="h4">$80.00</Typography>
           </Stack>
           <Stack direction="row" spacing={2}>
             <Button
@@ -195,6 +197,9 @@ export const CartDrawer = ({ open, onClose }: CartDrawerProps) => {
                 border: "1px solid blue",
                 borderRadius: BORDER_RADIUS.default,
               }}
+              onClick={() => {
+                router.push("/cart"), onClose();
+              }} 
             >
               View Cart
             </Button>

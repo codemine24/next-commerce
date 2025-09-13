@@ -16,6 +16,9 @@ import {
   Stack,
   IconButton,
   inputBaseClasses,
+  tableCellClasses,
+  tableRowClasses,
+  tableHeadClasses,
 } from "@mui/material";
 import { ShippingArrowIcon } from "@/icons/spinning-arrow";
 import { CloseIcon } from "@/icons/close";
@@ -60,65 +63,26 @@ const Cart = () => {
             <TableHead
               sx={{
                 borderRadius: BORDER_RADIUS.default,
-                "& .MuiTableCell-root": {
-                  borderRight: "1px solid #fff",
+                [`& .${tableRowClasses.root}`]: {
+                  // bgcolor: "red",
                 },
               }}
             >
               <TableRow
                 sx={{
-                  bgcolor: "background.paper",
-                  align: "left",
+                  borderRadius: "10px",
+                  [`& .${tableCellClasses.root}`]: {
+                    py: 1,
+                    pl: 1,
+                  },
                 }}
               >
-                <TableCell
-                  sx={{
-                    pl: 1,
-                    py: 1,
-                  }}
-                >
-                  Image
-                </TableCell>
-                <TableCell
-                  sx={{
-                    pl: 1,
-                    py: 1,
-                  }}
-                >
-                  Product Name
-                </TableCell>
-                <TableCell
-                  sx={{
-                    pl: 1,
-                    py: 1,
-                  }}
-                >
-                  Model
-                </TableCell>
-                <TableCell
-                  sx={{
-                    pl: 1,
-                    py: 1,
-                  }}
-                >
-                  Quantity
-                </TableCell>
-                <TableCell
-                  sx={{
-                    pl: 1,
-                    py: 1,
-                  }}
-                >
-                  Unit Price
-                </TableCell>
-                <TableCell
-                  sx={{
-                    pl: 1,
-                    py: 1,
-                  }}
-                >
-                  Total
-                </TableCell>
+                <TableCell>Image</TableCell>
+                <TableCell>Product Name</TableCell>
+                <TableCell>Model</TableCell>
+                <TableCell>Quantity</TableCell>
+                <TableCell>Unit Price</TableCell>
+                <TableCell>Total</TableCell>
               </TableRow>
             </TableHead>
             <TableBody
