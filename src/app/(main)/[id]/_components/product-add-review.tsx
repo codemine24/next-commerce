@@ -14,10 +14,6 @@ import Backdrop from "@mui/material/Backdrop";
 import { PlusIcon } from "@/icons/plus";
 import { CloseIcon } from "@/icons/close";
 
-interface ProductAddReviewProps {
-    productId: string;
-}
-
 const style = {
     position: "absolute",
     top: "50%",
@@ -35,7 +31,6 @@ export const ProductAddReview = () => {
     const [open, setOpen] = useState(false);
     const [rating, setRating] = useState<number | null>(5);
     const [comment, setComment] = useState<string>("");
-    const [loading, setLoading] = useState(false);
 
     const handleOpenReviewModal = () => {
         if (!isAuthenticated) {
@@ -122,9 +117,8 @@ export const ProductAddReview = () => {
                                 size="medium"
                                 onClick={handleAddReview}
                                 sx={{ mt: 2 }}
-                                disabled={loading}
                             >
-                                {loading ? "Submitting..." : "Submit"}
+                                Submit
                             </Button>
                         </Box>
                     </Box>

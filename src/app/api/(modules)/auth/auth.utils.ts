@@ -1,4 +1,4 @@
-export const USER_SELECED_FIELDS = {
+export const USER_SELECTED_FIELDS = {
   id: true,
   first_name: true,
   last_name: true,

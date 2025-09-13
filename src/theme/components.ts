@@ -1,8 +1,6 @@
-import { inputClasses } from '@mui/material/Input';
 import { common } from "@mui/material/colors";
 import { alpha, Components, Theme } from "@mui/material/styles";
 import { colorPalette } from "./palette";
-import { BORDER_RADIUS } from "./shape";
 
 // ========================================================
 
@@ -102,10 +100,15 @@ export const components: Components<Theme> = {
   },
   MuiOutlinedInput: {
     styleOverrides: {
-      root: { borderRadius: 0 },
+      root: { borderRadius: 0, fontSize: 15 },
       sizeSmall: { lineHeight: "1.8em" },
       inputSizeSmall: { height: "1.8em" },
       notchedOutline: { borderColor: colorPalette.divider },
+    },
+  },
+  MuiFormHelperText: {
+    styleOverrides: {
+      root: { marginLeft: 0 },
     },
   },
   MuiButton: {
@@ -145,8 +148,7 @@ export const components: Components<Theme> = {
       {
         props: { variant: "soft", color: "primary" },
         style: ({ theme }) => ({
-          backgroundColor: alpha(theme.palette.primary.main, 0.15),
-          border: `1px solid ${theme.palette.primary.main}`,
+            backgroundColor: alpha((theme.palette.primary as unknown as { [key: string]: string })["100"], 0.1),
           color: theme.palette.primary.dark,
           borderRadius: 0,
           transition: "all 0.3s",
@@ -239,14 +241,14 @@ export const components: Components<Theme> = {
     styleOverrides: {
       root: {
         borderRadius: "6px",
-        cursor: "pointer",
+        // cursor: "pointer",
         position: "relative",
         boxShadow: "0px 1px 3px rgba(3, 0, 71, 0.09)",
         transition: "all 0.2s ease-in-out",
-        ":hover": {
-          boxShadow:
-            "rgba(43, 52, 69, 0.05) 0px 0px 24px 0px, rgba(43, 52, 69, 0.05) 0px 3px 6px 0px",
-        },
+        // ":hover": {
+        //   boxShadow:
+        //     "rgba(43, 52, 69, 0.05) 0px 0px 24px 0px, rgba(43, 52, 69, 0.05) 0px 3px 6px 0px",
+        // },
         backgroundColor: "background.paper",
       },
     },

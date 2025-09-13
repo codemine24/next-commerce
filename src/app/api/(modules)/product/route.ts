@@ -33,6 +33,7 @@ export const POST = catchAsync(async (req: Request) => {
 
 // ---------------------------------- GET ALL PRODUCTS -------------------------------------
 export const GET = catchAsync(async (req: NextRequest) => {
+  console.log("GET ALL PRODUCTS");
   // Step 1: Extract search parameters from the request URL
   const searchParams = req.nextUrl.searchParams;
 
