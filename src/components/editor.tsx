@@ -1,10 +1,11 @@
 "use client";
 
-import { useQuill } from "react-quilljs";
 import "quill/dist/quill.snow.css";
-import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import { SxProps } from "@mui/material/styles";
+import { useEffect, useState } from "react";
+import { useQuill } from "react-quilljs";
+
 import { InputLabel } from "./form/input-label";
 
 type EditorProps = {

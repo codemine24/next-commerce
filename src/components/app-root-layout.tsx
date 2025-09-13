@@ -1,8 +1,10 @@
-import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
-import Footer from './footer';
-import { AppProvider } from '@/providers/app-provider';
-import { Navbar } from '@/components/navbar/nav-bar';
 import Box from '@mui/material/Box';
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
+
+import { Navbar } from '@/components/navbar/nav-bar';
+import { AppProvider } from '@/providers/app-provider';
+
+import Footer from './footer';
 import { TopNavbar } from './navbar/top-navbar';
 
 export const AppRootLayout = ({ children }: { children: React.ReactNode }) => {

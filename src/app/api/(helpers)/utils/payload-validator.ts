@@ -1,4 +1,5 @@
 import { ZodError, ZodObject } from "zod";
+
 import errorHandler from "../error/error-handler";
 
 const payloadValidator = async <T>(schema: ZodObject, data: T) => {

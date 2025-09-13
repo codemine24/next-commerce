@@ -1,9 +1,12 @@
-import React from "react";
-import { refundPolicyData } from "./refund-policy-data";
-import DOMPurify from "isomorphic-dompurify";
 import { Box } from "@mui/material";
-import { BORDER_RADIUS } from "@/theme";
+import DOMPurify from "isomorphic-dompurify";
+import React from "react";
+
 import { BoxContainer } from "@/components/box-container";
+import { BORDER_RADIUS } from "@/theme";
+
+import { refundPolicyData } from "./refund-policy-data";
+
 
 interface RefundPolicy {
   title: string | null;

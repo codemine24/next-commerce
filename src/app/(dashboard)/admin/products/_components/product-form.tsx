@@ -1,5 +1,11 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+
 import { Editor } from "@/components/editor";
 import {
   Autocomplete,
@@ -13,13 +19,8 @@ import { SubmitButton } from "@/components/submit-button";
 import { PRODUCT_SIZE, PRODUCT_TAGS } from "@/constants/product";
 import api from "@/lib/api";
 import { API_ROUTES } from "@/lib/api-routes";
-import { useToast } from "@/providers/toast-provider";
+import { toast } from "@/lib/toast-store";
 import { ProductSchema, productSchema } from "@/zod/product-schema";
-import { zodResolver } from "@hookform/resolvers/zod";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
 
 const Brand = [
   { id: 1, label: "Brand 1", value: "brand-1" },
@@ -28,7 +29,6 @@ const Brand = [
 ];
 
 export const ProductForm = () => {
-  const toast = useToast();
   const router = useRouter();
   const methods = useForm<ProductSchema>({
     resolver: zodResolver(productSchema),
@@ -40,9 +40,9 @@ export const ProductForm = () => {
     });
 
     if (!response.success) {
-      toast.showMessage(response.message, "error");
+      toast.error(response.message);
     } else {
-      toast.showMessage(response.message, "success");
+      toast.success(response.message);
       router.replace("/admin/products");
     }
   };

@@ -1,10 +1,12 @@
+import { UserRole } from "@prisma/client";
+import httpStatus from "http-status";
+import { NextRequest } from "next/server";
+
 import { catchAsync } from "@/app/api/(helpers)/shared/catch-async";
 import { successResponse } from "@/app/api/(helpers)/shared/response";
 import payloadValidator from "@/app/api/(helpers)/utils/payload-validator";
 import userAuthenticator from "@/app/api/(helpers)/utils/user-authenticator";
-import { UserRole } from "@prisma/client";
-import httpStatus from "http-status";
-import { NextRequest } from "next/server";
+
 import { BrandSchemas } from "../brand.schema";
 import { BrandServices } from "../brand.service";
 

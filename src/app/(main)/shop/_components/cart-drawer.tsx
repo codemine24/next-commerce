@@ -1,11 +1,16 @@
 "use client";
 
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+<<<<<<< HEAD
+import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
-import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+
+=======
+>>>>>>> e04c07da9e9e5bcbeaf85de92bfbdebd1290d5d8
 import { CloseIcon } from "@/icons/close";
 import { DeleteIcon } from "@/icons/delete-icon";
 import { BORDER_RADIUS } from "@/theme";

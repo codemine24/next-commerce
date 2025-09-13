@@ -1,12 +1,14 @@
+import Box from "@mui/material/Box";
+import IconButton from "@mui/material/IconButton";
+import InputAdornment from "@mui/material/InputAdornment";
+import MuiTextField, { TextFieldProps } from "@mui/material/TextField";
 import { useState } from "react";
 import { useFormContext, Controller } from "react-hook-form";
-import MuiTextField, { TextFieldProps } from "@mui/material/TextField";
-import Box from "@mui/material/Box";
+
+import { VisibilityIcon } from "@/icons/visibility";
+import { VisibilityOffIcon } from "@/icons/visibility-off";
+
 import { InputLabel } from "./input-label";
-import InputAdornment from "@mui/material/InputAdornment";
-import IconButton from "@mui/material/IconButton";
-import { VisibilityOff } from "@/icons/visibility-off";
-import { Visibility } from "@/icons/visibility";
 
 type Props = TextFieldProps & { name: string, label: string, placeholder?: string, required?: boolean };
 
@@ -50,7 +52,7 @@ export const TextField = ({ name, helperText, type = "text", label, placeholder,
                                         aria-label="toggle password visibility"
                                         onClick={handleClickShowPassword}
                                     >
-                                        {inputType === "password" ? <VisibilityOff /> : <Visibility />}
+                                        {inputType === "password" ? <VisibilityOffIcon /> : <VisibilityIcon />}
                                     </IconButton>
                                 </InputAdornment>,
                             },

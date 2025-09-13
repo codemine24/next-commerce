@@ -1,10 +1,13 @@
 "use client";
 
-import { PropsWithChildren } from "react";
 import Box from "@mui/material/Box";
-import { DashboardSidebar } from "./dashboard-sidebar";
-import { DashboardNavbar } from "./dashboard-navbar";
+import { PropsWithChildren } from "react";
+
 import { useLayout } from "@/providers/layout-provider";
+
+import { DashboardNavbar } from "./dashboard-navbar";
+import { DashboardSidebar } from "./dashboard-sidebar";
+
 
 export const AdminDashboardLayout = ({ children }: PropsWithChildren) => {
     const { sidebarCompact } = useLayout();

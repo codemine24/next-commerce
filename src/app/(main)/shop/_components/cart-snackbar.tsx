@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import Snackbar, { snackbarClasses } from "@mui/material/Snackbar";
 import { Typography } from "@mui/material";
+import Snackbar, { snackbarClasses } from "@mui/material/Snackbar";
+import { useEffect, useState } from "react";
 // import { useCart } from "@/providers/cart-provider";
 
 export const CartSnackbar = () => {

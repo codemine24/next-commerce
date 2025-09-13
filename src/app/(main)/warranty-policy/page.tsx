@@ -1,9 +1,11 @@
-import React from "react";
-import { warrantyPolicyData } from "./warranty-policy-data";
 import { Box } from "@mui/material";
 import DOMPurify from "isomorphic-dompurify";
-import { BORDER_RADIUS } from "@/theme";
+import React from "react";
+
 import { BoxContainer } from "@/components/box-container";
+import { BORDER_RADIUS } from "@/theme";
+
+import { warrantyPolicyData } from "./warranty-policy-data";
 
 interface WarrantyPolicy {
   title: string | null;

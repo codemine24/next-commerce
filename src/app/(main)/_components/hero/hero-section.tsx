@@ -1,6 +1,7 @@
 import Grid from "@mui/material/Grid";
-import { HeroCarousel } from "./hero-carousel";
+
 import { FeaturedProducts } from "./featured-products";
+import { HeroCarousel } from "./hero-carousel";
 
 export const HeroSection = () => {
   return (

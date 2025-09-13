@@ -1,8 +1,10 @@
-import { BoxContainer } from "@/components/box-container";
-import { ProductSidebar } from "./_components/products-sidebar";
-import { AllProducts } from "./_components/all-products";
 import Box from "@mui/material/Box";
 import { Suspense } from "react";
+
+import { BoxContainer } from "@/components/box-container";
+
+import { AllProducts } from "./_components/all-products";
+import { ProductSidebar } from "./_components/products-sidebar";
 
 const ShopPage = () => {
     return (

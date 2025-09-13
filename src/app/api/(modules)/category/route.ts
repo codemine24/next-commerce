@@ -1,13 +1,14 @@
 import { UserRole } from "@prisma/client";
 import httpStatus from "http-status";
 import { NextRequest } from "next/server";
+
+import { CategorySchemas } from "./category.schema";
+import { CategoryServices } from "./category.service";
 import { catchAsync } from "../../(helpers)/shared/catch-async";
 import { successResponse } from "../../(helpers)/shared/response";
 import { commonSchemas } from "../../(helpers)/shared/schema";
 import payloadValidator from "../../(helpers)/utils/payload-validator";
 import userAuthenticator from "../../(helpers)/utils/user-authenticator";
-import { CategorySchemas } from "./category.schema";
-import { CategoryServices } from "./category.service";
 
 // ---------------------------------- CREATE NEW CATEGORY -----------------------------------
 export const POST = catchAsync(async (req: Request) => {

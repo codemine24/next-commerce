@@ -1,7 +1,5 @@
 "use client";
 
-import { BoxContainer } from "@/components/box-container";
-import { BORDER_RADIUS } from "@/theme";
 import {
   Box,
   Typography,
@@ -20,8 +18,11 @@ import {
   tableRowClasses,
   tableHeadClasses,
 } from "@mui/material";
-import { ShippingArrowIcon } from "@/icons/spinning-arrow";
+
+import { BoxContainer } from "@/components/box-container";
 import { CloseIcon } from "@/icons/close";
+import { ShippingArrowIcon } from "@/icons/spinning-arrow";
+import { BORDER_RADIUS } from "@/theme";
 
 const Cart = () => {
   const cartItems = [

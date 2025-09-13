@@ -1,12 +1,14 @@
-import { BoxContainer } from "@/components/box-container";
 import React from "react";
-import Login from "./_components/Login";
+
+import { BoxContainer } from "@/components/box-container";
+
+import { LoginFormContainer } from "./_components/login-form-container";
 
 const LoginPage = () => {
   return (
     <div>
       <BoxContainer sx={{ mt: 10 }}>
-        <Login />
+        <LoginFormContainer />
       </BoxContainer>
     </div>
   );

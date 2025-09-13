@@ -1,10 +1,17 @@
-import { CloseIcon } from "@/icons/close";
-import { UploadCloudIcon } from "@/icons/upload-cloud";
-import { Box, Fade, IconButton, Stack, Typography, Zoom } from "@mui/material";
+import Box from "@mui/material/Box";
+import Fade from "@mui/material/Fade";
+import IconButton from "@mui/material/IconButton";
+import Stack from "@mui/material/Stack";
+import { SxProps } from "@mui/material/styles";
+import Typography from "@mui/material/Typography";
+import Zoom from "@mui/material/Zoom";
 import Image from "next/image";
 import React, { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { SxProps } from "@mui/material/styles";
+
+import { CloseIcon } from "@/icons/close";
+import { UploadCloudIcon } from "@/icons/upload-cloud";
+
 import { InputLabel } from "./input-label";
 
 type FileUploaderProps = {

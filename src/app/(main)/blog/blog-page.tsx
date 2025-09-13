@@ -1,9 +1,12 @@
-import { blogData } from "./blog-data";
-import * as React from "react";
 import Grid from "@mui/material/Grid";
-import { PaginationOutlined } from "./pagination";
-import { ArticleCard } from "./ArticleCard";
+import * as React from "react";
+
 import { BoxContainer } from "@/components/box-container";
+
+import { ArticleCard } from "./ArticleCard";
+import { blogData } from "./blog-data";
+import { PaginationOutlined } from "./pagination";
+
 
 interface Article {
   slug: string;

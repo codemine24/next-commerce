@@ -1,13 +1,14 @@
 "use client";
 
-import { CloseIcon } from "@/icons/close";
-import { SearchIcon } from "@/icons/search";
-import { BORDER_RADIUS } from "@/theme";
 import { InputAdornment } from "@mui/material";
 import Box from "@mui/material/Box";
 import { inputClasses } from "@mui/material/Input";
 import TextField from "@mui/material/TextField";
 import { useState } from "react";
+
+import { CloseIcon } from "@/icons/close";
+import { SearchIcon } from "@/icons/search";
+import { BORDER_RADIUS } from "@/theme";
 
 export const SearchBox = () => {
   const [searchQuery, setSearchQuery] = useState("");

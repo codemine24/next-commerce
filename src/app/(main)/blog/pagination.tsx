@@ -1,8 +1,9 @@
 "use client";
-import { BORDER_RADIUS } from "@/theme";
 import Box from "@mui/material/Box";
 import Pagination from "@mui/material/Pagination";
 import React, { useState } from "react";
+
+import { BORDER_RADIUS } from "@/theme";
 
 const MAX_PAGE = 50;
 const DEFAULT_PAGE = 1;

@@ -1,13 +1,14 @@
 "use client";
 
-import { ProductQuantityButton } from "@/components/product-quantity-button";
-import { CartIcon } from "@/icons/cart-icon";
-import { HeartEmptyIcon } from "@/icons/heart-empty";
 import { Alert, Snackbar, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import { useState } from "react";
+
+import { ProductQuantityButton } from "@/components/product-quantity-button";
+import { CartIcon } from "@/icons/cart-icon";
+import { HeartEmptyIcon } from "@/icons/heart-empty";
 
 interface ProductActionButtonProps {
   open: boolean;
@@ -45,7 +46,7 @@ export const ProductActionButton = ({
         </Button>
         <Button
           startIcon={<HeartEmptyIcon />}
-          variant="soft"
+          variant="outlined"
           color="primary"
           sx={{ width: 200, height: 50 }}
           onClick={handleAddToCart}

@@ -1,7 +1,9 @@
+import httpStatus from "http-status";
+
 import { catchAsync } from "@/app/api/(helpers)/shared/catch-async";
 import { successResponse } from "@/app/api/(helpers)/shared/response";
 import payloadValidator from "@/app/api/(helpers)/utils/payload-validator";
-import httpStatus from "http-status";
+
 import { AuthSchemas } from "../auth.schema";
 import { AuthServices } from "../auth.service";
 

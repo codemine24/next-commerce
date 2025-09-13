@@ -1,4 +1,5 @@
 import httpStatus from "http-status";
+
 import CustomizedError from "../error/customized-error";
 
 const queryValidator = (

@@ -1,5 +1,6 @@
 import { common } from "@mui/material/colors";
 import { alpha, Components, Theme } from "@mui/material/styles";
+
 import { colorPalette } from "./palette";
 
 // ========================================================
@@ -148,7 +149,7 @@ export const components: Components<Theme> = {
       {
         props: { variant: "soft", color: "primary" },
         style: ({ theme }) => ({
-            backgroundColor: alpha((theme.palette.primary as unknown as { [key: string]: string })["100"], 0.1),
+          backgroundColor: alpha((theme.palette.primary as unknown as { [key: string]: string })["100"], 0.1),
           color: theme.palette.primary.dark,
           borderRadius: 0,
           transition: "all 0.3s",

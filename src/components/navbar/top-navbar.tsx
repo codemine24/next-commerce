@@ -1,9 +1,11 @@
 import Box from "@mui/material/Box";
-import { BoxContainer } from "../box-container";
-import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
 import Link from "next/link";
+
 import { PhoneIcon } from "@/icons/phone";
+
+import { BoxContainer } from "../box-container";
 
 export const TopNavbar = () => {
     return (
