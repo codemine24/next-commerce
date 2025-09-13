@@ -1,28 +1,38 @@
 "use client";
 
+<<<<<<< HEAD
+import { BoxContainer } from "@/components/box-container";
+import { CloseIcon } from "@/icons/close";
+import { ShippingArrowIcon } from "@/icons/spinning-arrow";
+import { BORDER_RADIUS } from "@/theme";
+=======
+>>>>>>> 7e7b4fa33c89ed5b9adcb6ea3161e85b9603b99d
 import {
   Box,
-  Typography,
+  Button,
+  IconButton,
+  inputBaseClasses,
+  Stack,
   Table,
   TableBody,
   TableCell,
+  tableCellClasses,
   TableContainer,
   TableHead,
   TableRow,
-  TextField,
-  Button,
-  Stack,
-  IconButton,
-  inputBaseClasses,
-  tableCellClasses,
   tableRowClasses,
-  tableHeadClasses,
+  TextField,
+  Typography,
 } from "@mui/material";
+<<<<<<< HEAD
+import Image from "next/image";
+=======
 
 import { BoxContainer } from "@/components/box-container";
 import { CloseIcon } from "@/icons/close";
 import { ShippingArrowIcon } from "@/icons/spinning-arrow";
 import { BORDER_RADIUS } from "@/theme";
+>>>>>>> 7e7b4fa33c89ed5b9adcb6ea3161e85b9603b99d
 
 const Cart = () => {
   const cartItems = [
@@ -96,7 +106,7 @@ const Cart = () => {
               {cartItems.map((item) => (
                 <TableRow key={item.id}>
                   <TableCell sx={{ px: 0, py: 1 }}>
-                    <img
+                    <Image
                       src={item.image}
                       alt={item.name}
                       width={60}

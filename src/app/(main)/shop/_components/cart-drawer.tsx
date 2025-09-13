@@ -203,8 +203,9 @@ export const CartDrawer = ({ open, onClose }: CartDrawerProps) => {
                 borderRadius: BORDER_RADIUS.default,
               }}
               onClick={() => {
-                router.push("/cart"), onClose();
-              }} 
+                router.push("/cart");
+                onClose();
+              }}
             >
               View Cart
             </Button>

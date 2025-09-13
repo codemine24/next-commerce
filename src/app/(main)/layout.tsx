@@ -1,11 +1,14 @@
+<<<<<<< HEAD
+=======
 import { Inter } from "next/font/google";
 
+>>>>>>> 7e7b4fa33c89ed5b9adcb6ea3161e85b9603b99d
 import { AppRootLayout } from "@/components/app-root-layout";
 
 import type { Metadata } from "next";
 import "@/styles/globals.css";
-
-import { CartSnackbar } from "./shop/_components/cart-snackbar";
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
 
 const inter = Inter({
   variable: "--font-inter",
