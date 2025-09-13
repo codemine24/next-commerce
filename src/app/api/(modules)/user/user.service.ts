@@ -1,6 +1,8 @@
 import { Prisma, User } from "@prisma/client";
 import httpStatus from "http-status";
 import sharp from "sharp";
+
+import { userQueryValidationConfig, userSearchableFields } from "./user.utils";
 import { CONFIG } from "../../(helpers)/config";
 import CustomizedError from "../../(helpers)/error/customized-error";
 import { prisma } from "../../(helpers)/shared/prisma";
@@ -8,7 +10,6 @@ import supabase from "../../(helpers)/shared/supabase";
 import paginationMaker from "../../(helpers)/utils/pagination-maker";
 import queryValidator from "../../(helpers)/utils/query-validator";
 import { USER_SELECTED_FIELDS } from "../auth/auth.utils";
-import { userQueryValidationConfig, userSearchableFields } from "./user.utils";
 
 // ------------------------------------ GET PROFILE ----------------------------------------
 const getProfile = async (user: User) => {

@@ -1,13 +1,16 @@
-'use client'
+'use client';
 
-import React, { createContext, useState, useCallback, useContext } from 'react';
-import { Snackbar, Alert, AlertColor } from '@mui/material';
+import { AlertColor } from '@mui/material';
+import Alert from '@mui/material/Alert';
+import Slide, { SlideProps } from '@mui/material/Slide';
+import Snackbar from '@mui/material/Snackbar';
+import React, { useState, useCallback, useEffect } from 'react';
 
-interface ToastContextProps {
-    showMessage: (message: string, severity?: AlertColor) => void;
-}
+import { toast } from '@/lib/toast-store';
 
-const ToastContext = createContext<ToastContextProps | undefined>(undefined);
+const SlideTransition = (props: SlideProps) => {
+    return <Slide {...props} direction="down" />;
+};
 
 export const ToastProvider = ({ children }: { children: React.ReactNode }) => {
     const [open, setOpen] = useState(false);
@@ -22,27 +25,24 @@ export const ToastProvider = ({ children }: { children: React.ReactNode }) => {
 
     const handleClose = () => setOpen(false);
 
+    useEffect(() => {
+        toast._setHandler(showMessage);
+    }, [showMessage]);
+
     return (
-        <ToastContext.Provider value={{ showMessage }}>
+        <>
             {children}
             <Snackbar
                 open={open}
                 autoHideDuration={4000}
                 onClose={handleClose}
                 anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                TransitionComponent={SlideTransition}
             >
                 <Alert severity={severity} onClose={handleClose} variant="filled">
                     {message}
                 </Alert>
             </Snackbar>
-        </ToastContext.Provider>
+        </>
     );
-};
-
-export const useToast = () => {
-    const context = useContext(ToastContext);
-    if (!context) {
-        throw new Error('useToast must be used within a ToastProvider');
-    }
-    return context;
 };

@@ -1,9 +1,10 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
 import { UserNavItem } from "@/interfaces/common";
 
 export const NavItem = ({ item }: { item: UserNavItem }) => {
@@ -23,12 +24,14 @@ export const NavItem = ({ item }: { item: UserNavItem }) => {
                 alignItems: "center",
                 justifyContent: "space-between",
                 borderLeft: "2px solid",
-                borderColor: isActive ? "primary.main" : "transparent",
+                borderColor: isActive ? "text.primary" : "transparent",
                 transition: "all 0.2s ease-in-out",
-                color: isActive ? "primary.main" : "inherit",
+                color: isActive ? "text.primary" : "text.secondary",
+                bgcolor: isActive ? "background.paper" : "transparent",
                 "&:hover": {
-                    color: "primary.main",
-                    borderColor: "primary.main",
+                    color: "text.primary",
+                    borderColor: "text.primary",
+                    bgcolor: "background.paper",
                 },
             }}
         >
@@ -40,7 +43,7 @@ export const NavItem = ({ item }: { item: UserNavItem }) => {
                 }}
             >
                 {icon}
-                <Typography variant="body2" fontWeight={500}>
+                <Typography variant="body2">
                     {name}
                 </Typography>
             </Box>

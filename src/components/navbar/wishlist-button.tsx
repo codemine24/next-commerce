@@ -1,7 +1,8 @@
-import { HeartIcon } from "@/icons/heart-icon";
 import { Badge } from "@mui/material";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+
+import { HeartIcon } from "@/icons/heart-icon";
 
 export const WishlistButton = () => {
   return (

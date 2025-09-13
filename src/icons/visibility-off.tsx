@@ -1,6 +1,6 @@
 import SvgIcon, { SvgIconProps } from "@mui/material/SvgIcon";
 
-export const VisibilityOff = (props: SvgIconProps) => {
+export const VisibilityOffIcon = (props: SvgIconProps) => {
   return (
     <SvgIcon {...props}>
       <svg

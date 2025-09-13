@@ -1,7 +1,8 @@
-import { ArrowDownIcon } from "@/icons/arrow-down-icon";
-import { GridIcon } from "@/icons/grid-icon";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+
+import { ArrowDownIcon } from "@/icons/arrow-down-icon";
+import { GridIcon } from "@/icons/grid-icon";
 
 export const CategoriesButton = () => {
   return (

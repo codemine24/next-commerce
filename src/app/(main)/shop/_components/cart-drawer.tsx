@@ -1,11 +1,12 @@
 "use client";
 
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
-import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+
 import { CloseIcon } from "@/icons/close";
 import { DeleteIcon } from "@/icons/delete-icon";
 import { BORDER_RADIUS } from "@/theme";
@@ -198,8 +199,9 @@ export const CartDrawer = ({ open, onClose }: CartDrawerProps) => {
                 borderRadius: BORDER_RADIUS.default,
               }}
               onClick={() => {
-                router.push("/cart"), onClose();
-              }} 
+                router.push("/cart");
+                onClose();
+              }}
             >
               View Cart
             </Button>

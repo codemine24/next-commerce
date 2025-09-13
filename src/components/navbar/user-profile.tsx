@@ -1,26 +1,26 @@
-import { useState } from "react";
+import { Button } from "@mui/material";
 import Box from "@mui/material/Box";
-import { makeImageUrl } from "@/utils/helper";
-import Typography from "@mui/material/Typography";
-import { ChevronDownIcon } from "@/icons/chevron-down";
-import { useAuth } from "@/providers/auth-provider";
 import Divider from "@mui/material/Divider";
 import Popover from "@mui/material/Popover";
-import { Button } from "@mui/material";
-import { UserIcon } from "@/icons/user";
-import { OrdersIcon } from "@/icons/orders";
-import { LogoutIcon } from "@/icons/logout";
-import { useRouter } from "next/navigation";
-import { useToast } from "@/providers/toast-provider";
+import Typography from "@mui/material/Typography";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+
 import { OptimizeImage } from "@/components/optimize-image";
+import { ChevronDownIcon } from "@/icons/chevron-down";
+import { LogoutIcon } from "@/icons/logout";
+import { OrdersIcon } from "@/icons/orders";
+import { UserIcon } from "@/icons/user";
+import { toast } from "@/lib/toast-store";
+import { useAuth } from "@/providers/auth-provider";
+import { makeImageUrl } from "@/utils/helper";
 
 export const UserProfile = () => {
     const router = useRouter();
     const { user, logout } = useAuth();
-    const toast = useToast();
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
- 
+
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
     };
@@ -31,7 +31,7 @@ export const UserProfile = () => {
     const handleLogout = () => {
         logout();
         handleClose();
-        toast.showMessage("User logged out", "error");
+        toast.error("User logged out");
         router.replace("/");
     };
 

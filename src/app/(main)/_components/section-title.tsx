@@ -1,8 +1,9 @@
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import { ArrowForwardIcon } from "@/icons/arrow-forward";
+import Typography from "@mui/material/Typography";
 import Link from "next/link";
+
+import { ArrowForwardIcon } from "@/icons/arrow-forward";
 
 interface SectionTitleProps {
   title: string;

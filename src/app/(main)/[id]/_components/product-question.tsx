@@ -1,10 +1,12 @@
-import * as React from "react"
 import Box from "@mui/material/Box";
-import Stack from "@mui/material/Stack";
-import { QuestionCard } from "./product-question-card";
-import { ProductSectionHeader } from "./product-section-header";
 import Divider from "@mui/material/Divider";
+import Stack from "@mui/material/Stack";
+import * as React from "react"
+
+import { QuestionCard } from "./product-question-card";
 import { ProductQuestionForm } from "./product-question-form";
+import { ProductSectionHeader } from "./product-section-header";
+
 
 const questions = [
     {

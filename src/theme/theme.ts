@@ -1,4 +1,5 @@
 import { createTheme } from "@mui/material/styles";
+
 import { components } from "./components";
 import { colorPalette } from "./palette";
 import { shape } from "./shape";

@@ -1,8 +1,9 @@
-import Grid from "@mui/material/Grid"
 import Box from "@mui/material/Box"
+import Grid from "@mui/material/Grid"
 import Typography from "@mui/material/Typography"
-import { ShippingIcon } from "@/icons/shipping"
+
 import { PaymentCardIcon } from "@/icons/payment-card"
+import { ShippingIcon } from "@/icons/shipping"
 import { SupportIcon } from "@/icons/support"
 import { TruckReturnIcon } from "@/icons/truck-return"
 

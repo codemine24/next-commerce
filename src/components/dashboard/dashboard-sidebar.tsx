@@ -1,13 +1,17 @@
 "use client";
 
-import Image from "next/image";
 import Box from "@mui/material/Box";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import { LogoArea } from "./logo-area";
-import { LayoutDrawer } from "./layout-drawer";
-import { MultiLevelMenu } from "./multi-level-menu";
-import { useLayout } from "@/providers/layout-provider";
 import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import Image from "next/image";
+
+import { useLayout } from "@/providers/layout-provider";
+
+import { LayoutDrawer } from "./layout-drawer";
+import { LogoArea } from "./logo-area";
+import { MultiLevelMenu } from "./multi-level-menu";
+
+
 
 export const DashboardSidebar = () => {
     const {

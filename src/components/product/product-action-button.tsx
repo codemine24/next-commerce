@@ -3,7 +3,7 @@
 import { ProductQuantityButton } from "@/components/product-quantity-button";
 import { CartIcon } from "@/icons/cart-icon";
 import { HeartEmptyIcon } from "@/icons/heart-empty";
-import { Alert, Snackbar, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
@@ -14,10 +14,7 @@ interface ProductActionButtonProps {
   onClose: () => void;
 }
 
-export const ProductActionButton = ({
-  open,
-  onClose,
-}: ProductActionButtonProps) => {
+export const ProductActionButton = ({ onClose }: ProductActionButtonProps) => {
   const [qty, setQty] = useState(1);
 
   const handleAddToCart = () => {
@@ -45,7 +42,7 @@ export const ProductActionButton = ({
         </Button>
         <Button
           startIcon={<HeartEmptyIcon />}
-          variant="soft"
+          variant="outlined"
           color="primary"
           sx={{ width: 200, height: 50 }}
           onClick={handleAddToCart}

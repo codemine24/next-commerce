@@ -1,12 +1,14 @@
-import React from 'react';
-import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
+import React from 'react';
+
 import { FacebookIcon } from '@/icons/facebook';
 import { InstagramIcon } from '@/icons/instagram';
 import { YoutubeIcon } from '@/icons/youtube';
+
 import { BoxContainer } from './box-container';
 
 const aboutLinks = [

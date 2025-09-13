@@ -1,6 +1,6 @@
+import { SxProps } from "@mui/material";
 import Box from "@mui/material/Box";
 import Image, { StaticImageData } from "next/image";
-import { SxProps } from "@mui/material";
 import { CSSProperties } from "react";
 
 const placeholderImage = "/assets/image-placeholder.png";

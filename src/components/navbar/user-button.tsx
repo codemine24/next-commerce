@@ -1,11 +1,13 @@
 "use client";
 
-import { ArrowDownIcon } from "@/icons/arrow-down-icon";
-import { UserIcon } from "@/icons/user-icon";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Link from "next/link";
+
+import { ArrowDownIcon } from "@/icons/arrow-down-icon";
+import { UserIcon } from "@/icons/user-icon";
 import { useAuth } from "@/providers/auth-provider";
+
 import { UserProfile } from "./user-profile";
 
 export const UserButton = () => {

@@ -1,20 +1,24 @@
-import Grid from "@mui/material/Grid";
-import { UserSidebar } from "./user-sidebar";
-import { Navbar } from "@/components/navbar/nav-bar";
+import Box from "@mui/material/Box";
+
 import { BoxContainer } from "@/components/box-container";
+import { Navbar } from "@/components/navbar/nav-bar";
+
+import { UserSidebar } from "./user-sidebar";
+import Footer from "../footer";
 
 export const UserDashboardLayout = ({ children }: { children: React.ReactNode }) => {
     return (
         <>
             <Navbar />
-            <BoxContainer sx={{ mt: 2 }}>
-                <Grid container>
+            <BoxContainer>
+                <Box py={2} display="flex" gap={3} alignItems="start">
                     <UserSidebar />
-                    <Grid size={{ xs: 12, md: 9 }}>
+                    <Box flex={1}>
                         {children}
-                    </Grid>
-                </Grid>
+                    </Box>
+                </Box>
             </BoxContainer>
+            <Footer />
         </>
     )
 }
