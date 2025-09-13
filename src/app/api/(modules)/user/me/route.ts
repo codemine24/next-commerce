@@ -1,9 +1,11 @@
-import { catchAsync } from "@/app/api/(helpers)/shared/catch-async";
-import { successResponse } from "@/app/api/(helpers)/shared/response";
-import userAuthenticator from "@/app/api/(helpers)/utils/user-authenticator";
 import { UserRole } from "@prisma/client";
 import httpStatus from "http-status";
 import { NextRequest } from "next/server";
+
+import { catchAsync } from "@/app/api/(helpers)/shared/catch-async";
+import { successResponse } from "@/app/api/(helpers)/shared/response";
+import userAuthenticator from "@/app/api/(helpers)/utils/user-authenticator";
+
 import { UserServices } from "../user.service";
 
 // ----------------------------------- GET PROFILE ----------------------------------------

@@ -1,13 +1,16 @@
-import { CONFIG } from "@/app/api/(helpers)/config";
-import { prisma } from "@/app/api/(helpers)/shared/prisma";
 import { UserStatus } from "@prisma/client";
 import bcrypt from "bcrypt";
 import httpStatus from "http-status";
-import CustomizedError from "../../(helpers)/error/customized-error";
-import { generateToken } from "../../(helpers)/utils/jwt-helpers";
+import { cookies } from "next/headers";
+
+import { CONFIG } from "@/app/api/(helpers)/config";
+import { prisma } from "@/app/api/(helpers)/shared/prisma";
+
 import { CredentialPayload, UserPayload } from "./auth.interface";
 import { USER_SELECTED_FIELDS } from "./auth.utils";
-import { cookies } from "next/headers";
+import CustomizedError from "../../(helpers)/error/customized-error";
+import { generateToken } from "../../(helpers)/utils/jwt-helpers";
+
 
 // ------------------------------------ REGISTER NEW USER -----------------------------------
 const registerUser = async (data: UserPayload) => {

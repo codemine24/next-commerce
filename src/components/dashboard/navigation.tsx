@@ -1,13 +1,13 @@
+import { BrandIcon } from "@/icons/brand";
+import { CategoriesIcon } from "@/icons/categories";
+import { CouponIcon } from "@/icons/coupon";
+import { CustomizationIcon } from "@/icons/customization";
 import { DashboardIcon } from "@/icons/dashboard";
 import { OrdersIcon } from "@/icons/orders";
 import { ProductsIcon } from "@/icons/products";
-import { UsersIcon } from "@/icons/users";
-import { CategoriesIcon } from "@/icons/categories";
-import { CouponIcon } from "@/icons/coupon";
 import { ReviewIcon } from "@/icons/review";
 import { SettingsIcon } from "@/icons/settings";
-import { CustomizationIcon } from "@/icons/customization";
-import { BrandIcon } from "@/icons/brand";
+import { UsersIcon } from "@/icons/users";
 
 export const ADMIN_NAVIGATION = [
     {

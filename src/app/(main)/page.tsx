@@ -1,5 +1,7 @@
 import { BoxContainer } from "@/components/box-container";
+
 import { Banner } from "./_components/banner";
+import { CustomerReviewSection } from "./_components/customer-review/customer-review-section";
 import FeaturedProductCard from "./_components/featured-product-card";
 import { HeroSection } from "./_components/hero/hero-section";
 import { HotDeals } from "./_components/hot-deals";
@@ -16,6 +18,7 @@ export default function Home() {
       <NewArrivals />
       <Banner />
       <HotDeals />
+      <CustomerReviewSection />
       <NewsLetter />
       <RecentBlogs />
       <Services />

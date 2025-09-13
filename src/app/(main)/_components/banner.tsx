@@ -1,6 +1,6 @@
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
 
 export const Banner = () => {
     return (
@@ -10,7 +10,7 @@ export const Banner = () => {
                 backgroundImage: "url('/assets/banner.jpeg')",
                 backgroundSize: "cover",
                 backgroundPosition: "center center",
-                height: { xs: 250, md: 350 },
+                height: { xs: 250, sm: 300, md: 380 },
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -35,19 +35,12 @@ export const Banner = () => {
                     Luxary Living for Less
                 </Typography>
                 <Button
-                    variant="outlined"
+                    variant="contained"
                     color="primary"
                     sx={{
                         mt: 3,
                         width: 200,
-                        color: '#fff',
-                        borderColor: '#fff',
-                        borderRadius: 0,
-                        '&:hover': {
-                            color: '#000',
-                            backgroundColor: '#fff',
-                            transition: 'all 0.3s ease-in-out',
-                        }
+                        height: 50,
                     }}
                 >
                     Shop Now

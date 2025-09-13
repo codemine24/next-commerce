@@ -1,13 +1,16 @@
 import Box from "@mui/material/Box"
 import Divider from "@mui/material/Divider"
+import Pagination from "@mui/material/Pagination"
 import Rating from "@mui/material/Rating"
 import Stack from "@mui/material/Stack"
 import Typography from "@mui/material/Typography"
-import Pagination from "@mui/material/Pagination"
-import { ProductSectionHeader } from "./product-section-header"
-import { StarIcon } from "@/icons/star"
 import React from "react"
+
+import { StarIcon } from "@/icons/star"
+
+
 import { ProductAddReview } from "./product-add-review"
+import { ProductSectionHeader } from "./product-section-header"
 
 type Review = {
     id: number

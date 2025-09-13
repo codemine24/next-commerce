@@ -1,6 +1,8 @@
 import Box from "@mui/material/Box";
-import { ProductFilter } from "./product-filter";
+
 import { Attribute } from "@/interfaces/attribute";
+
+import { ProductFilter } from "./product-filter";
 
 const attributes: Attribute[] = [
     {

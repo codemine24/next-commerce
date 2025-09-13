@@ -1,8 +1,10 @@
-import { BoxContainer } from "@/components/box-container"
-import Typography from "@mui/material/Typography"
-import { ProductCarousel } from "./_components/product-carousel"
 import Grid from "@mui/material/Grid"
-import { ProductInfo } from "./_components/product-info"
+import Typography from "@mui/material/Typography"
+
+import { BoxContainer } from "@/components/box-container"
+import { ProductCarousel } from "@/components/product/product-carousel"
+import { ProductInfo } from "@/components/product/product-info"
+
 import { ProductDetailInfo } from "./_components/product-detail-info"
 
 const images = [

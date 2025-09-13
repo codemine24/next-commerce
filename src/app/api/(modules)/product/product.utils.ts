@@ -1,4 +1,5 @@
 import { UserRole, UserStatus } from "@prisma/client";
+
 import { SORT_ORDER_VALUE } from "../../(helpers)/constants/common";
 
 export const productSortableFields = [

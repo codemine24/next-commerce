@@ -1,14 +1,14 @@
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 
 export const NewsLetter = () => {
     return (
         <Box
             my={5}
             sx={{
-                bgcolor: "primary.main",
+                bgcolor: "primary.dark",
                 backgroundImage: "url('/assets/news-letter.png')",
                 backgroundSize: "cover",
                 backgroundPosition: "center center",
@@ -24,8 +24,9 @@ export const NewsLetter = () => {
                 display="flex"
                 alignItems="center"
                 justifyContent="space-between"
+                gap={4}
             >
-                <Box width="50%">
+                <Box flex={1}>
                     <Typography variant="h3" fontWeight={600}>
                         Don&apos;t miss out on the latest trends and offers
                     </Typography>
@@ -34,9 +35,8 @@ export const NewsLetter = () => {
                     </Typography>
                 </Box>
                 <Box
-                    width="50%"
+                    flex={1}
                     display="flex"
-                    gap={2}
                     alignItems="center"
                     justifyContent="space-between"
                 >
@@ -48,11 +48,11 @@ export const NewsLetter = () => {
                             bgcolor: "white",
                             "& .MuiOutlinedInput-root": {
                                 "&:hover fieldset": {
-                                    borderColor: "transparent",
+                                    border: 0,
                                     boxShadow: "none",
                                 },
                                 "&.Mui-focused fieldset": {
-                                    borderColor: "transparent",
+                                    border: 0,
                                     boxShadow: "none",
                                 },
                             },
@@ -60,19 +60,11 @@ export const NewsLetter = () => {
                     />
 
                     <Button
-                        variant="outlined"
+                        variant="contained"
                         color="primary"
                         sx={{
                             height: 56,
                             width: 200,
-                            color: '#fff',
-                            borderColor: '#fff',
-                            borderRadius: 0,
-                            '&:hover': {
-                                color: '#000',
-                                backgroundColor: '#fff',
-                                transition: 'all 0.3s ease-in-out',
-                            }
                         }}
                     >
                         Subscribe

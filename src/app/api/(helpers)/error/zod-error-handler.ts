@@ -1,4 +1,5 @@
 import { ZodError } from "zod";
+
 import { ErrorSources, GenericErrorResponse } from "../shared/response";
 
 const zodErrorHandler = (err: ZodError): GenericErrorResponse => {

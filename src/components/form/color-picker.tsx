@@ -1,6 +1,7 @@
-import { useFormContext, Controller } from "react-hook-form";
-import FormHelperText from "@mui/material/FormHelperText";
 import Box from "@mui/material/Box";
+import FormHelperText from "@mui/material/FormHelperText";
+import { useFormContext, Controller } from "react-hook-form";
+
 import { InputLabel } from "./input-label";
 
 type Props = {
@@ -36,7 +37,8 @@ export const ColorPicker = ({
                                 height: 40,
                                 width: 40,
                                 borderRadius: 6,
-                                border: "1px solid #ccc",
+                                border: "1px solid",
+                                borderColor: "divider",
                                 cursor: "pointer",
                                 padding: 0,
                                 background: "transparent",
@@ -56,8 +58,9 @@ export const ColorPicker = ({
                                         cursor: "pointer",
                                         border:
                                             field.value === color
-                                                ? "2px solid black"
-                                                : "1px solid #ddd",
+                                                ? "2px solid"
+                                                : "1px solid",
+                                        borderColor: field.value === color ? "black" : "divider",
                                         backgroundColor: color,
                                     }}
                                 />

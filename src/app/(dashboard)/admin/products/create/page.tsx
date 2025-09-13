@@ -1,6 +1,7 @@
 import Box from "@mui/material/Box";
-import { ProductForm } from "../_components/product-form";
 import Typography from "@mui/material/Typography";
+
+import { ProductForm } from "../_components/product-form";
 
 export default function CreateProduct() {
     return (

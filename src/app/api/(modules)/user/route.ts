@@ -1,10 +1,11 @@
 import { UserRole } from "@prisma/client";
 import httpStatus from "http-status";
 import { NextRequest } from "next/server";
+
+import { UserServices } from "./user.service";
 import { catchAsync } from "../../(helpers)/shared/catch-async";
 import { successResponse } from "../../(helpers)/shared/response";
 import userAuthenticator from "../../(helpers)/utils/user-authenticator";
-import { UserServices } from "./user.service";
 
 // ----------------------------------- GET USERS ----------------------------------------
 export const GET = catchAsync(async (request: NextRequest) => {

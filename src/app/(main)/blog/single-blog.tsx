@@ -1,5 +1,3 @@
-import { BoxContainer } from "@/components/box-container";
-import { BORDER_RADIUS } from "@/theme";
 import {
   Box,
   Card,
@@ -12,11 +10,16 @@ import {
   Typography,
 } from "@mui/material";
 import * as React from "react";
+
+import { BoxContainer } from "@/components/box-container";
+import { AccessTimeIcon } from "@/icons/access-time";
+import { AccountCircleIcon } from "@/icons/account-circle";
+import { BORDER_RADIUS } from "@/theme";
+
 import { blogData, socialIcons } from "./blog-data";
 import { PopularPostCard } from "./popular-post-card";
 import { SectionTitle } from "./section-title";
-import { AccountCircleIcon } from "@/icons/account-circle";
-import { AccessTimeIcon } from "@/icons/access-time";
+
 
 const SingleBlogPage: React.FC = () => {
   const blogPost = blogData[0];

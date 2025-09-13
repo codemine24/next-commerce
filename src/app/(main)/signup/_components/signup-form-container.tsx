@@ -1,0 +1,61 @@
+"use client";
+
+import { zodResolver } from "@hookform/resolvers/zod";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+
+import api from "@/lib/api";
+import { API_ROUTES } from "@/lib/api-routes";
+import { toast } from "@/lib/toast-store";
+import { signupSchema, SignupSchemaType } from "@/zod/signup-schema";
+
+import { SignupForm } from "./signup-form";
+
+export const SignupFormContainer = () => {
+    const router = useRouter();
+    const methods = useForm<SignupSchemaType>({
+        resolver: zodResolver(signupSchema),
+        defaultValues: {
+            first_name: "",
+            last_name: "",
+            email: "",
+            contact_number: "",
+            password: "",
+            confirm_password: "",
+        },
+    });
+
+    const onSubmit = async (data: SignupSchemaType) => {
+        const response = await api.post(API_ROUTES.auth.register, {
+            body: JSON.stringify({ ...data, confirm_password: undefined }),
+        });
+
+        if (!response.success) {
+            toast.error(response.message);
+            return;
+        }
+
+        toast.success("User registered successfully");
+        router.replace("/login");
+    };
+
+    return (
+        <Box
+            display="flex"
+            flexDirection="column"
+            maxWidth="sm"
+            mx="auto"
+            p={4}
+            border={1}
+            borderColor="divider"
+        >
+            <Typography variant="h5" align="center" mb={2} fontWeight="bold">
+                Create Account
+            </Typography>
+
+            <SignupForm methods={methods} onSubmit={onSubmit} />
+        </Box>
+    );
+}
