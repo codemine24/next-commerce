@@ -1,3 +1,4 @@
+"use client";
 import { Chip } from "@mui/material";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
@@ -9,7 +10,7 @@ import { ProductActionButton } from "./product-action-button";
 
 interface ProductInfoProps {
   open: boolean;
-  onClose: () => void;
+  onClose?: () => void;
 }
 
 export const ProductInfo = ({ open, onClose }: ProductInfoProps) => {
@@ -52,7 +53,7 @@ export const ProductInfo = ({ open, onClose }: ProductInfoProps) => {
       </Box>
 
       {/* Action Button */}
-      <ProductActionButton open={open} onClose={onClose} />
+      <ProductActionButton open={open} onClose={onClose || (() => {})} />
     </Box>
   );
 };
