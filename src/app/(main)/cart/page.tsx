@@ -16,6 +16,9 @@ import {
   Stack,
   IconButton,
   inputBaseClasses,
+  tableCellClasses,
+  tableRowClasses,
+  tableHeadClasses,
 } from "@mui/material";
 import { ShippingArrowIcon } from "@/icons/spinning-arrow";
 import { CloseIcon } from "@/icons/close";
@@ -57,61 +60,29 @@ const Cart = () => {
         {/* Table */}
         <TableContainer sx={{ mb: 4 }}>
           <Table>
-            <TableHead>
+            <TableHead
+              sx={{
+                borderRadius: BORDER_RADIUS.default,
+                [`& .${tableRowClasses.root}`]: {
+                  // bgcolor: "red",
+                },
+              }}
+            >
               <TableRow
                 sx={{
-                  bgcolor: "background.paper",
-                  align: "left",
+                  borderRadius: "10px",
+                  [`& .${tableCellClasses.root}`]: {
+                    py: 1,
+                    pl: 1,
+                  },
                 }}
               >
-                <TableCell
-                  sx={{
-                    pl: 1,
-                    py: 1,
-                  }}
-                >
-                  Image
-                </TableCell>
-                <TableCell
-                  sx={{
-                    pl: 1,
-                    py: 1,
-                  }}
-                >
-                  Product Name
-                </TableCell>
-                <TableCell
-                  sx={{
-                    pl: 1,
-                    py: 1,
-                  }}
-                >
-                  Model
-                </TableCell>
-                <TableCell
-                  sx={{
-                    pl: 1,
-                    py: 1,
-                  }}
-                >
-                  Quantity
-                </TableCell>
-                <TableCell
-                  sx={{
-                    pl: 1,
-                    py: 1,
-                  }}
-                >
-                  Unit Price
-                </TableCell>
-                <TableCell
-                  sx={{
-                    pl: 1,
-                    py: 1,
-                  }}
-                >
-                  Total
-                </TableCell>
+                <TableCell>Image</TableCell>
+                <TableCell>Product Name</TableCell>
+                <TableCell>Model</TableCell>
+                <TableCell>Quantity</TableCell>
+                <TableCell>Unit Price</TableCell>
+                <TableCell>Total</TableCell>
               </TableRow>
             </TableHead>
             <TableBody
@@ -243,7 +214,7 @@ const Cart = () => {
           <Stack direction="row" spacing={2} flex="1">
             <TextField
               fullWidth
-              placeholder="Promo code"
+              placeholder="Promo / Coupon code"
               size="small"
               sx={{
                 [`& .${inputBaseClasses.root}`]: {
@@ -269,7 +240,7 @@ const Cart = () => {
           <Stack direction="row" spacing={2} flex="1">
             <TextField
               fullWidth
-              placeholder="Enter your gift voucher"
+              placeholder="Enter your gift voucher code here"
               size="small"
               sx={{
                 [`& .${inputBaseClasses.root}`]: {
