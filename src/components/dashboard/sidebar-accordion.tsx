@@ -1,12 +1,13 @@
-import { PropsWithChildren, useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
 import Box from "@mui/material/Box";
-import Collapse from "@mui/material/Collapse";
 import ButtonBase from "@mui/material/ButtonBase";
+import Collapse from "@mui/material/Collapse";
 import { alpha, Theme } from "@mui/material/styles";
+import { usePathname } from "next/navigation";
+import { PropsWithChildren, useEffect, useState } from "react";
+
+import { ChevronDownIcon } from "@/icons/chevron-down";
 import { useLayout } from "@/providers/layout-provider";
 import { theme } from "@/theme";
-import { ChevronDownIcon } from "@/icons/chevron-down";
 
 interface Active {
     active: number;

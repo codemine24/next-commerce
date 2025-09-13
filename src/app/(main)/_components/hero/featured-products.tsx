@@ -1,8 +1,9 @@
-import Grid from "@mui/material/Grid";
+import { Stack } from "@mui/material";
 import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Image from "next/image";
-import { Stack } from "@mui/material";
+
 import { currencyFormatter } from "@/utils/currency-formatter";
 
 const Products = [

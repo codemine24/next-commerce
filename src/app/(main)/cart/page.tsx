@@ -1,9 +1,12 @@
 "use client";
 
+<<<<<<< HEAD
 import { BoxContainer } from "@/components/box-container";
 import { CloseIcon } from "@/icons/close";
 import { ShippingArrowIcon } from "@/icons/spinning-arrow";
 import { BORDER_RADIUS } from "@/theme";
+=======
+>>>>>>> 7e7b4fa33c89ed5b9adcb6ea3161e85b9603b99d
 import {
   Box,
   Button,
@@ -21,7 +24,15 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+<<<<<<< HEAD
 import Image from "next/image";
+=======
+
+import { BoxContainer } from "@/components/box-container";
+import { CloseIcon } from "@/icons/close";
+import { ShippingArrowIcon } from "@/icons/spinning-arrow";
+import { BORDER_RADIUS } from "@/theme";
+>>>>>>> 7e7b4fa33c89ed5b9adcb6ea3161e85b9603b99d
 
 const Cart = () => {
   const cartItems = [

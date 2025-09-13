@@ -1,5 +1,5 @@
-import errorHandler from "../error/error-handler";
 import { errorResponse } from "./response";
+import errorHandler from "../error/error-handler";
 
 export function catchAsync<T extends (...args: any[]) => Promise<Response>>(
   handler: T

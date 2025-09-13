@@ -10,10 +10,11 @@ import {
   styled,
   Typography,
 } from "@mui/material";
-import { useRouter } from "next/navigation";
 import { orange } from "@mui/material/colors";
-import { AccountCircleIcon } from "@/icons/account-circle";
+import { useRouter } from "next/navigation";
+
 import { AccessTimeIcon } from "@/icons/access-time";
+import { AccountCircleIcon } from "@/icons/account-circle";
 interface Article {
   slug: string;
   image: string;

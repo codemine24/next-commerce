@@ -1,13 +1,15 @@
 "use client";
 
-import { CustomTab } from "@/components/custom-tab";
 import Box from "@mui/material/Box";
 import { useState } from "react";
-import { ProductSpecification } from "./product-specifications";
+
+import { CustomTab } from "@/components/custom-tab";
 import { scrollToSection } from "@/utils/scroll-to-section";
+
 import { ProductDescription } from "./product-description";
-import { ProductReviews } from "./product-reviews";
 import { ProductQuestions } from "./product-question";
+import { ProductReviews } from "./product-reviews";
+import { ProductSpecification } from "./product-specifications";
 
 const TAB_ITEM = [
     { value: 'product-description', label: "Description" },

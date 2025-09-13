@@ -1,8 +1,10 @@
 import { Box } from "@mui/material";
-import { nextCommercePolicyData } from "./next-commerce-policy-data";
 import DOMPurify from "isomorphic-dompurify";
-import { BORDER_RADIUS } from "@/theme";
+
 import { BoxContainer } from "@/components/box-container";
+import { BORDER_RADIUS } from "@/theme";
+
+import { nextCommercePolicyData } from "./next-commerce-policy-data";
 interface TechTongPointPolicy {
   title: string | null;
   description: string | null;

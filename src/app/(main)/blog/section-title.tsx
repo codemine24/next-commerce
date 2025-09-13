@@ -1,7 +1,8 @@
-import { BORDER_RADIUS } from "@/theme";
 import { SxProps } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
+
+import { BORDER_RADIUS } from "@/theme";
 
 export const SectionTitle = ({
   title,

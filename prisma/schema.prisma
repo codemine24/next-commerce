@@ -23,6 +23,7 @@ model User {
   updated_at          DateTime   @updatedAt
   files               File[]
   cart                Cart?
+  addresses           Address[]
 
   @@map("users")
 }
@@ -140,6 +141,28 @@ model File {
   uploaded_by User? @relation(fields: [user_id], references: [id])
 
   @@map("images")
+}
+
+model Address {
+  id                       String   @id @default(uuid())
+  user_id                  String?
+  name                     String
+  contact_number           String
+  secondary_contact_number String?
+  email                    String?
+  address                  String
+  postal_code              String?
+  city                     String
+  district                 String
+  country                  String   @default("bangladesh")
+  is_default               Boolean  @default(false)
+  created_at               DateTime @default(now())
+  updated_at               DateTime @updatedAt
+
+  user User? @relation(fields: [user_id], references: [id])
+  // Order Order[]
+
+  @@map("addresses")
 }
 
 enum UserRole {

@@ -1,9 +1,10 @@
 "use client";
 
 import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
+import Toolbar from "@mui/material/Toolbar";
+
 import { HamburgerIcon } from "@/icons/hamburger";
 import { useLayout } from "@/providers/layout-provider";
 

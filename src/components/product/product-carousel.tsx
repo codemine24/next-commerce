@@ -1,5 +1,10 @@
 "use client";
 
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import { EmblaOptionsType } from "embla-carousel";
+import useEmblaCarousel from "embla-carousel-react";
+import Image from "next/image";
 import React, {
     useState,
     useEffect,
@@ -7,11 +12,6 @@ import React, {
     useMemo,
     forwardRef,
 } from "react";
-import { EmblaOptionsType } from "embla-carousel";
-import useEmblaCarousel from "embla-carousel-react";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Image from "next/image";
 
 type PropType = {
     images: string[];
