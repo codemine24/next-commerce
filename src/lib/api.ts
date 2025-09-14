@@ -85,13 +85,13 @@ class ApiClient {
         token: string | null,
         options: RequestOptions
     ): Promise<Response> {
-        const cacheStrategy =
-            options.method === "GET" ? options.cache || "force-cache" : "no-store";
+        const cacheStrategy = options.method === "GET" ? options.cache || "force-cache" : undefined;
 
+        // Convert headers to object
         const headers = this.convertHeadersToObject(options.headers);
-        if (token) {
-            headers['Authorization'] = `Bearer ${token}`;
-        }
+
+        // Set Authorization header if token is present
+        if (token) headers['Authorization'] = `Bearer ${token}`;
 
         // Handle Content-Type based on body type
         const isFormData = options.body instanceof FormData;
@@ -106,15 +106,16 @@ class ApiClient {
         const fetchOptions: RequestInit = {
             method: options.method,
             headers,
-            body: options.body,
-            cache: cacheStrategy,
-            credentials: options.credentials,
-            redirect: options.redirect,
-            referrer: options.referrer,
-            signal: options.signal,
-            next: options.next,
+            ...(options.body !== undefined && { body: options.body }),
+            ...(cacheStrategy && { cache: cacheStrategy }),
+            ...(options.credentials && { credentials: options.credentials }),
+            ...(options.redirect && { redirect: options.redirect }),
+            ...(options.referrer && { referrer: options.referrer }),
+            ...(options.signal && { signal: options.signal }),
+            ...(options.next && { next: options.next }),
         };
 
+        // Make actual API request
         return fetch(`${this.baseURL}${url}`, fetchOptions);
     }
 

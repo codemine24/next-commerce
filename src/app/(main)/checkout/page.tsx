@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Box,
   Grid,
@@ -8,8 +7,11 @@ import {
   inputBaseClasses,
   Button,
 } from "@mui/material";
+import React from "react";
+
 import { BoxContainer } from "@/components/box-container";
 import { BORDER_RADIUS } from "@/theme";
+
 import CheckoutInfo from "./_component/checkout-info";
 import CustomerInformation from "./_component/customer-information";
 import OrderOverview from "./_component/OrderOverview";

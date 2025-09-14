@@ -1,5 +1,4 @@
 "use client";
-import { useState } from "react";
 import {
   Box,
   Grid,
@@ -22,14 +21,18 @@ import {
   InputAdornment,
   toggleButtonClasses,
 } from "@mui/material";
+import Image from "next/image";
+import { useState } from "react";
+
 import { CreditCardIcon } from "@/icons/credit-card-icon";
+import { DollarIcon } from "@/icons/dollar-icon";
+import { LockIcon } from "@/icons/lock-icon";
 import { PaymentsIcon } from "@/icons/payments-icon";
+import { BORDER_RADIUS } from "@/theme";
+
 import PaymentInfo from "./payment-info";
 import PaymentInfoV2 from "./payment-infoV2";
-import { LockIcon } from "@/icons/lock-icon";
-import Image from "next/image";
-import { BORDER_RADIUS } from "@/theme";
-import { DollarIcon } from "@/icons/dollar-icon";
+
 
 const CheckoutInfo = () => {
   const [delivery, setDelivery] = useState("home");

@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Box,
   Typography,
@@ -11,8 +11,9 @@ import {
   Button,
 } from "@mui/material";
 import { alpha } from "@mui/material/styles";
+import React from "react";
 import { useForm, Controller } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+
 import { CustomerFormData, customerSchema } from "@/zod/customer-schema";
 
 const CustomerInformation: React.FC = () => {

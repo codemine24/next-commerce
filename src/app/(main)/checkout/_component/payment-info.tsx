@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import {
   Box,
   Radio,
@@ -15,9 +14,10 @@ import {
   Typography,
   SelectChangeEvent,
 } from "@mui/material";
+import React, { useState } from "react";
 
-import { LockIcon } from "@/icons/lock-icon";
 import { CreditCardIcon } from "@/icons/credit-card-icon";
+import { LockIcon } from "@/icons/lock-icon";
 import { PaymentsIcon } from "@/icons/payments-icon";
 
 type Country =

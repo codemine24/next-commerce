@@ -1,6 +1,5 @@
 "use client";
 
-import React, { useState } from "react";
 import {
   Box,
   Typography,
@@ -19,10 +18,13 @@ import {
   CardContent,
   SelectChangeEvent,
 } from "@mui/material";
-import { LockIcon } from "@/icons/lock-icon";
-import { CreditCardIcon } from "@/icons/credit-card-icon";
-import { PaymentsIcon } from "@/icons/payments-icon"; // placeholder for Cash App Pay
 import Image from "next/image";
+import React, { useState } from "react";
+
+import { CreditCardIcon } from "@/icons/credit-card-icon";
+import { LockIcon } from "@/icons/lock-icon";
+import { PaymentsIcon } from "@/icons/payments-icon"; // placeholder for Cash App Pay
+
 
 type Country =
   | "Bangladesh"

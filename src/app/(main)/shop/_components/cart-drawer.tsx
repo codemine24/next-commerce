@@ -1,21 +1,18 @@
 "use client";
 
+import { alpha } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-<<<<<<< HEAD
 import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
+import { useRouter } from "next/navigation";
 
-=======
->>>>>>> e04c07da9e9e5bcbeaf85de92bfbdebd1290d5d8
 import { CloseIcon } from "@/icons/close";
 import { DeleteIcon } from "@/icons/delete-icon";
 import { BORDER_RADIUS } from "@/theme";
-import { alpha } from "@mui/material";
-import { useRouter } from "next/navigation";
 
 interface CartDrawerProps {
   open: boolean;
@@ -204,7 +201,7 @@ export const CartDrawer = ({ open, onClose }: CartDrawerProps) => {
               }}
               onClick={() => {
                 router.push("/cart"), onClose();
-              }} 
+              }}
             >
               View Cart
             </Button>
