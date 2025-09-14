@@ -1,14 +1,18 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import Cookies from "js-cookie";
+
 import CONFIG from "@/config";
-import { FetchError, RequestOptions, HttpMethod, FetchApi } from "@/interfaces/api";
+import { RequestOptions, HttpMethod, FetchApi, ApiResponse } from "@/interfaces/api";
+
+import { API_ROUTES } from "./api-routes";
 
 class ApiClient {
     private baseURL: string;
-    get: <T = any>(url: string, options?: RequestOptions) => Promise<T | FetchError>;
-    post: <T = any>(url: string, options?: RequestOptions) => Promise<T | FetchError>;
-    put: <T = any>(url: string, options?: RequestOptions) => Promise<T | FetchError>;
-    delete: <T = any>(url: string, options?: RequestOptions) => Promise<T | FetchError>;
-    patch: <T = any>(url: string, options?: RequestOptions) => Promise<T | FetchError>;
+    get: <T = any>(url: string, options?: RequestOptions) => Promise<ApiResponse<T>>;
+    post: <T = any>(url: string, options?: RequestOptions) => Promise<ApiResponse<T>>;
+    put: <T = any>(url: string, options?: RequestOptions) => Promise<ApiResponse<T>>;
+    delete: <T = any>(url: string, options?: RequestOptions) => Promise<ApiResponse<T>>;
+    patch: <T = any>(url: string, options?: RequestOptions) => Promise<ApiResponse<T>>;
 
     constructor(baseURL: string = CONFIG.base_url) {
         this.baseURL = baseURL;
@@ -27,7 +31,7 @@ class ApiClient {
     async request<T = any>(
         url: string,
         options: RequestOptions = {}
-    ): Promise<T | FetchError> {
+    ): Promise<ApiResponse<T>> {
         if (typeof window === "undefined") {
             return this.serverRequest(url, options);
         } else {
@@ -103,6 +107,10 @@ class ApiClient {
             headers['Content-Type'] = 'application/json';
         }
 
+        const controller = new AbortController();
+        const timeout = options.timeout ?? 10000; // Default timeout is 10 seconds 
+        const timeoutId = setTimeout(() => controller.abort(), timeout);
+
         const fetchOptions: RequestInit = {
             method: options.method,
             headers,
@@ -111,12 +119,15 @@ class ApiClient {
             ...(options.credentials && { credentials: options.credentials }),
             ...(options.redirect && { redirect: options.redirect }),
             ...(options.referrer && { referrer: options.referrer }),
-            ...(options.signal && { signal: options.signal }),
             ...(options.next && { next: options.next }),
+            signal: controller.signal,
         };
 
-        // Make actual API request
-        return fetch(`${this.baseURL}${url}`, fetchOptions);
+        try {
+            return await fetch(`${this.baseURL}${url}`, fetchOptions);
+        } finally {
+            clearTimeout(timeoutId); // Clear the timeout when request completes
+        }
     }
 
     // Server side refresh token
@@ -126,7 +137,7 @@ class ApiClient {
         if (!refreshToken) return null;
 
         try {
-            const response = await fetch(`${CONFIG.base_url}/auth/refresh`, {
+            const response = await fetch(`${CONFIG.base_url}/${API_ROUTES.auth.refresh_token}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -137,7 +148,6 @@ class ApiClient {
             if (!response.ok) return null;
 
             const data = await response.json();
-            await this.setTokenOnServer(data.accessToken, "access_token");
             return data.accessToken;
         } catch (error) {
             return null;
@@ -151,7 +161,7 @@ class ApiClient {
         if (!refreshToken) return null;
 
         try {
-            const response = await fetch(`${CONFIG.base_url}/auth/refresh`, {
+            const response = await fetch(`${CONFIG.base_url}/${API_ROUTES.auth.refresh_token}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -162,7 +172,6 @@ class ApiClient {
             if (!response.ok) return null;
 
             const data = await response.json();
-            this.setTokenOnClient("access_token", data.accessToken);
             return data.accessToken;
         } catch (error) {
             return null;
@@ -183,40 +192,10 @@ class ApiClient {
         }
     }
 
-    // Server side set token
-    private async setTokenOnServer(accessToken: string, name: string): Promise<void> {
-        try {
-            const { cookies } = await import('next/headers');
-            const cookieStore = await cookies();
-            cookieStore.set({
-                name: name,
-                value: accessToken,
-                httpOnly: true,
-                sameSite: "lax",
-                secure: process.env.NODE_ENV === "production",
-                maxAge: 60 * 60 * 12,
-            });
-        } catch (error) {
-            console.error("Error setting access token:", error);
-        }
-    };
-
     // Client side get token
     private getTokenFromClient(name: string): string | null {
         if (typeof window === "undefined") return null;
-
-        const value = `; ${document.cookie}`;
-        const parts = value.split(`; ${name}=`);
-        if (parts.length === 2) return parts.pop()!.split(";").shift() || null;
-        return null;
-    }
-
-    // Client side set token
-    private setTokenOnClient(name: string, value: string): void {
-        if (typeof window === "undefined") return;
-
-        document.cookie = `${name}=${value}; path=/; max-age=${60 * 60 * 12
-            }; secure; samesite=none`;
+        return Cookies.get(name) || null;
     }
 
     // Helper to convert any HeadersInit to plain object
@@ -263,8 +242,13 @@ class ApiClient {
 
     // Handle error
     private handleError(error: unknown) {
-        const errorMessage =
-            error instanceof Error ? error.message : "Network error";
+        let errorMessage = "Network error";
+
+        if (error instanceof DOMException && error.name === "AbortError") {
+            errorMessage = "Request timed out";
+        } else if (error instanceof Error) {
+            errorMessage = error.message;
+        }
 
         return {
             success: false,

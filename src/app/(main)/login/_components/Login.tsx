@@ -21,6 +21,7 @@ import { loginSchema, LoginSchemaType } from "@/zod/login-schema";
 export default function Login() {
   const router = useRouter();
   const { setIsAuthenticated, setUser } = useAuth();
+
   const methods = useForm<LoginSchemaType>({
     resolver: zodResolver(loginSchema),
   });

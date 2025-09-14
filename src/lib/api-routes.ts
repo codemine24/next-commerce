@@ -2,6 +2,7 @@ export const API_ROUTES = {
     auth: {
         login: "/auth/login",
         register: "/auth/register",
+        refresh_token: "/auth/refresh-token",
     },
     products: {
         get_products: "/product",
