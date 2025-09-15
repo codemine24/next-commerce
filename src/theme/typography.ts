@@ -22,7 +22,7 @@ export const typography: TypographyVariantsOptions = {
   h3: {
     fontSize: "24px",
     fontWeight: 500,
-    lineHeight: "22px",
+    lineHeight: "28px",
     letterSpacing: "0px",
   },
   h4: { fontSize: "20px", fontWeight: 400 },
@@ -33,10 +33,10 @@ export const typography: TypographyVariantsOptions = {
     letterSpacing: 0,
     lineHeight: "14px",
   },
-  body1: { fontSize: "1.1rem", fontWeight: 400 },
+  body1: { fontSize: "14px", fontWeight: 400 },
   body2: {
-    fontSize: "14px",
-    fontWeight: 400,
+    fontSize: "12px",
+    fontWeight: 300,
     lineHeight: "16px",
     letterSpacing: "0px",
   },

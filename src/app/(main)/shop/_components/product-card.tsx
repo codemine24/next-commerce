@@ -56,7 +56,15 @@ export const ProductCard = async ({
           overflow: "hidden",
         }}
       >
-        <Box sx={{ position: "relative", p: 2, pb: 0, borderBottom: 1, borderColor: "divider" }}>
+        <Box
+          sx={{
+            position: "relative",
+            p: 2,
+            pb: 0,
+            borderBottom: 1,
+            borderColor: "divider",
+          }}
+        >
           <OptimizeImage
             src="/images/featured_image_1.svg"
             alt={product.name}
