@@ -24,3 +24,17 @@ export const productQueryValidationConfig: Record<string, any> = {
   role: Object.values(UserRole),
   status: Object.values(UserStatus),
 };
+
+export const brandSelectFieldsWithProduct = {
+  id: true,
+  name: true,
+  slug: true,
+  icon: true,
+};
+
+export const categorySelectFieldsWithProduct = {
+  id: true,
+  title: true,
+  slug: true,
+  icon: true,
+};
