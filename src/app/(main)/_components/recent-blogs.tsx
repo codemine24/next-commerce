@@ -11,7 +11,7 @@ const images = [
   "/images/blog/blog-1.svg",
   "/images/blog/blog-2.svg",
   "/images/blog/blog-3.svg",
-]
+];
 
 export const RecentBlogs = () => {
   return (
@@ -27,7 +27,7 @@ export const RecentBlogs = () => {
               imageStyle={{ objectFit: "cover" }}
             />
             <Box py={2}>
-              <Typography variant="h5" fontWeight={600} gutterBottom>
+              <Typography variant="h5" gutterBottom>
                 First Time Home Owner Ideas
               </Typography>
               <Typography variant="body2" color="text.secondary">

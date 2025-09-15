@@ -8,19 +8,21 @@ import { EyeIcon } from "@/icons/eye";
 import { ProductQuickView } from "./product-quick-view";
 
 export const ProductQuickViewButton = () => {
-    const [open, setOpen] = useState(false);
-    return (
-        <>
-            <Button
-                variant="outlined"
-                color="primary"
-                onClick={() => setOpen(true)}
-                sx={{
-                    border: 'none',
-                }}>
-                <EyeIcon />
-            </Button>
-            <ProductQuickView open={open} onClose={() => setOpen(false)} />
-        </>
-    );
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      <Button
+        variant="soft"
+        color="primary"
+        onClick={() => setOpen(true)}
+        sx={{
+          border: "none",
+          px: 1,
+        }}
+      >
+        <EyeIcon sx={{ color: "primary.main", fontSize: 20 }} />
+      </Button>
+      <ProductQuickView open={open} onClose={() => setOpen(false)} />
+    </>
+  );
 };

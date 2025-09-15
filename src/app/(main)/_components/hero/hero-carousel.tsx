@@ -5,22 +5,25 @@ import Grid from "@mui/material/Grid";
 import {
   Carousel,
   CarouselContent,
-  CarouselItem,
   CarouselDots,
+  CarouselItem,
 } from "@/components/carousel";
 import { OptimizeImage } from "@/components/optimize-image";
+import { useRouter } from "next/navigation";
 
 export const HeroCarousel = () => {
+  const route = useRouter();
   return (
     <Grid size={{ xs: 12, lg: 8 }}>
       <Carousel autoplay pauseOnHover={true}>
         <CarouselContent>
           {[...Array(5)].map((_, i) => (
-            <CarouselItem key={i + 1} onClick={() => console.log("click")}>
+            <CarouselItem key={i + 1} onClick={() => route.push("/shop")}>
               <OptimizeImage
                 src="/images/banner.png"
                 alt="Hero Carousel"
                 height={420}
+                sx={{ cursor: "pointer" }}
               />
             </CarouselItem>
           ))}

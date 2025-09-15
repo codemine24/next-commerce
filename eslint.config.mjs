@@ -42,10 +42,16 @@ const eslintConfig = [
         "warn",
         {
           groups: [
+            "builtin",
+            "external",
+            "internal",
+            "parent",
+            "sibling",
+            "index",
+          ],
+          pathGroups: [
             {
               pattern: "@/**",
-              group: "internal",
-              position: "after",
             },
           ],
           pathGroupsExcludedImportTypes: ["builtin"],
