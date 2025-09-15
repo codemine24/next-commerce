@@ -154,7 +154,7 @@ export const components: Components<Theme> = {
           borderRadius: 0,
           transition: "all 0.3s",
           ":hover": {
-            backgroundColor: theme.palette.primary.main,
+            backgroundColor: alpha((theme.palette.primary as unknown as { [key: string]: string })["100"], 0.2),
             color: common.white,
           },
         }),
