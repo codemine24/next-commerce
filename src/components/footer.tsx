@@ -1,92 +1,178 @@
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import Link from '@mui/material/Link';
-import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
-import React from 'react';
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import Link from "@mui/material/Link";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
 
-import { FacebookIcon } from '@/icons/facebook';
-import { InstagramIcon } from '@/icons/instagram';
-import { YoutubeIcon } from '@/icons/youtube';
+import { FacebookIcon } from "@/icons/facebook";
+import { InstagramIcon } from "@/icons/instagram";
+import { YoutubeIcon } from "@/icons/youtube";
 
-import { BoxContainer } from './box-container';
+import Image from "next/image";
+import { BoxContainer } from "./box-container";
+import { LogoWhite } from "./logo-white";
 
 const aboutLinks = [
-    { label: 'Careers', href: '#' },
-    { label: 'Our Stores', href: '#' },
-    { label: 'Our Cares', href: '#' },
-    { label: 'Terms & Conditions', href: '#' },
-    { label: 'Privacy Policy', href: '#' },
+  { label: "Careers", href: "#" },
+  { label: "Our Stores", href: "#" },
+  { label: "Our Cares", href: "#" },
+  { label: "Terms & Conditions", href: "#" },
+  { label: "Privacy Policy", href: "#" },
 ];
 
 const customerCareLinks = [
-    { label: 'Help Center', href: '#' },
-    { label: 'How to Buy', href: '#' },
-    { label: 'Track Your Order', href: '#' },
-    { label: 'Corporate & Bulk Purchasing', href: '#' },
-    { label: 'Returns & Refunds', href: '#' },
+  { label: "Help Center", href: "#" },
+  { label: "How to Buy", href: "#" },
+  { label: "Track Your Order", href: "#" },
+  { label: "Corporate & Bulk Purchasing", href: "#" },
+  { label: "Returns & Refunds", href: "#" },
+];
+
+const paymentLinks = [
+  { label: "Visa", href: "/images/visa.svg" },
+  { label: "Mastercard", href: "/images/mastercard.svg" },
+  { label: "Nagad", href: "/images/nagad.svg" },
+  { label: "bKash", href: "/images/bkash.svg" },
+];
+
+const contactInfo = [
+  { label: "Bashundhara R/A", href: "#" },
+  { label: "Dhaka, Bangladesh.", href: "#" },
+  { label: "Email: info@logo.com", href: "mailto:info@logo.com" },
+  { label: "Phone: +880 1123 456 780", href: "tel:+8801123456780" },
 ];
 
 export default function Footer() {
-    return (
-        <Box sx={{ bgcolor: '#1e1e1e', color: 'white', py: 6 }}>
-            <BoxContainer>
-                <Grid container spacing={4}>
-                    {/* Logo & Description */}
-                    <Grid size={{ xs: 12, md: 3 }}>
-                        <Typography variant="h6" sx={{ mb: 2 }}>
-                            LOGO
-                        </Typography>
-                        <Typography variant="body2" sx={{ mb: 2 }}>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Auctor libero id et, in gravida.
-                        </Typography>
-                        {/* <Stack direction="row" spacing={1}>
-                        <Box component="img" src="/visa.png" alt="Visa" sx={{ width: 40 }} />
-                        <Box component="img" src="/bkash.png" alt="Bkash" sx={{ width: 40 }} />
-                        <Box component="img" src="/nagad.png" alt="Nagad" sx={{ width: 40 }} />
-                        <Box component="img" src="/rocket.png" alt="Rocket" sx={{ width: 40 }} />
-                    </Stack> */}
-                    </Grid>
+  return (
+    <Box sx={{ bgcolor: "primary.dark", color: "white", py: 6 }}>
+      <BoxContainer>
+        <Grid container spacing={4}>
+          {/* Logo & Description */}
+          <Grid size={{ xs: 12, md: 3 }}>
+            <LogoWhite />
+            <Typography variant="body2" sx={{ my: 2 }}>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Auctor
+              libero id et, in gravida. Sit diam duis mauris nulla cursus. Erat
+              et lectus vel ut sollicitudin elit at amet.
+            </Typography>
+            {/* payment methods */}
+            <Stack direction="row" spacing={1}>
+              {paymentLinks.map((link) => (
+                <Image
+                  title={link.label}
+                  key={link.label}
+                  src={link.href}
+                  alt={link.label}
+                  width={40}
+                  height={40}
+                />
+              ))}
+            </Stack>
+          </Grid>
 
-                    {/* About Us */}
-                    <Grid size={{ xs: 12, sm: 4, md: 2 }}>
-                        <Typography variant="subtitle1" sx={{ mb: 2 }}>About Us</Typography>
-                        <Stack spacing={1}>
-                            {aboutLinks.map((link) => (
-                                <Link key={link.label} href={link.href} underline="none" color="inherit">
-                                    {link.label}
-                                </Link>
-                            ))}
-                        </Stack>
-                    </Grid>
+          {/* About Us */}
+          <Grid size={{ xs: 12, sm: 4, md: 2 }}>
+            <Typography variant="h4" sx={{ mb: 2 }}>
+              About Us
+            </Typography>
+            <Stack spacing={1}>
+              {aboutLinks.map((link) => (
+                <Link
+                  key={link.label}
+                  href={link.href}
+                  underline="none"
+                  color="grey.500"
+                  sx={{
+                    transition: "color 0.3s ease",
+                    "&:hover": {
+                      color: "common.white",
+                    },
+                  }}
+                >
+                  <Typography variant="body2">{link.label}</Typography>
+                </Link>
+              ))}
+            </Stack>
+          </Grid>
 
-                    {/* Customer Care */}
-                    <Grid size={{ xs: 12, sm: 4, md: 3 }}>
-                        <Typography variant="subtitle1" sx={{ mb: 2 }}>Customer Care</Typography>
-                        <Stack spacing={1}>
-                            {customerCareLinks.map((link) => (
-                                <Link key={link.label} href={link.href} underline="none" color="inherit">
-                                    {link.label}
-                                </Link>
-                            ))}
-                        </Stack>
-                    </Grid>
+          {/* Customer Care */}
+          <Grid size={{ xs: 12, sm: 4, md: 3 }}>
+            <Typography variant="h4" sx={{ mb: 2 }}>
+              Customer Care
+            </Typography>
+            <Stack spacing={1}>
+              {customerCareLinks.map((link) => (
+                <Link
+                  key={link.label}
+                  href={link.href}
+                  underline="none"
+                  color="grey.500"
+                  sx={{
+                    transition: "color 0.3s ease",
+                    "&:hover": {
+                      color: "common.white",
+                    },
+                  }}
+                >
+                  <Typography variant="body2">{link.label}</Typography>
+                </Link>
+              ))}
+            </Stack>
+          </Grid>
 
-                    {/* Contact Us */}
-                    <Grid size={{ xs: 12, sm: 4, md: 4 }}>
-                        <Typography variant="subtitle1" sx={{ mb: 2 }}>Contact Us</Typography>
-                        <Typography variant="body2">Bashundhara R/A</Typography>
-                        <Typography variant="body2">Dhaka, Bangladesh.</Typography>
-                        <Typography variant="body2">Email: info@logo.com</Typography>
-                        <Typography variant="body2" sx={{ mb: 1 }}>Phone: +880 1123 456 780</Typography>
-                        <Stack direction="row" spacing={1}>
-                            <FacebookIcon sx={{ color: '#1877f2' }} />
-                            <InstagramIcon sx={{ color: '#e1306c' }} />
-                            <YoutubeIcon sx={{ color: '#cd201f' }} />
-                        </Stack>
-                    </Grid>
-                </Grid>
-            </BoxContainer>
-        </Box>
-    );
+          {/* Contact Us */}
+          <Grid size={{ xs: 12, sm: 4, md: 4 }}>
+            <Typography variant="h4" sx={{ mb: 2 }}>
+              Contact Us
+            </Typography>
+            {/* contact info */}
+            <Stack spacing={1}>
+              {contactInfo.map((info) => (
+                <Link
+                  key={info.label}
+                  href={info.href}
+                  underline="none"
+                  color="grey.500"
+                >
+                  <Typography variant="body2">{info.label}</Typography>
+                </Link>
+              ))}
+            </Stack>
+            <Stack direction="row" spacing={1} mt={1}>
+              <FacebookIcon
+                sx={{
+                  color: "common.white",
+                  bgcolor: "grey.700",
+                  width: 30,
+                  height: 30,
+                  borderRadius: "50%",
+                  p: 0.5,
+                }}
+              />
+              <InstagramIcon
+                sx={{
+                  color: "common.white",
+                  bgcolor: "grey.700",
+                  width: 30,
+                  height: 30,
+                  borderRadius: "50%",
+                  p: 0.5,
+                }}
+              />
+              <YoutubeIcon
+                sx={{
+                  color: "common.white",
+                  bgcolor: "grey.700",
+                  width: 30,
+                  height: 30,
+                  borderRadius: "50%",
+                  p: 0.5,
+                }}
+              />
+            </Stack>
+          </Grid>
+        </Grid>
+      </BoxContainer>
+    </Box>
+  );
 }

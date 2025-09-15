@@ -27,7 +27,7 @@ const ProductDetail = () => {
           <ProductCarousel images={images} />
         </Grid>
         <Grid size={{ xs: 12, md: 6 }}>
-          <ProductInfo open={false} onClose={() => {}} />
+          <ProductInfo open={false} />
         </Grid>
       </Grid>
 

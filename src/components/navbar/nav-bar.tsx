@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import { BoxContainer } from "../box-container";
 import { CartButton } from "./cart-button";
 import { CategoriesButton } from "./categories-button";
-import { Logo } from "./logo";
+import { Logo } from "../logo";
 import { SearchBox } from "./search-box";
 import { UserButton } from "./user-button";
 import { WishlistButton } from "./wishlist-button";
