@@ -42,13 +42,12 @@ const eslintConfig = [
         "warn",
         {
           groups: [
-            // Import Order
-            "builtin",   // For Node.js built-in modules like 'fs', 'path'
-            "external",  // For external npm packages
-            "internal",  // For aliased imports like '@/...'
-            ["parent", "sibling", "index"], // For relative imports
-            "object",
-            "type",
+            "builtin",
+            "external",
+            "internal",
+            "parent",
+            "sibling",
+            "index",
           ],
           pathGroups: [
             {

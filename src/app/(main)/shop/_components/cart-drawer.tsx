@@ -3,7 +3,6 @@
 import { alpha } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
@@ -200,7 +199,8 @@ export const CartDrawer = ({ open, onClose }: CartDrawerProps) => {
                 borderRadius: BORDER_RADIUS.default,
               }}
               onClick={() => {
-                router.push("/cart"), onClose();
+                router.push("/cart");
+                onClose();
               }}
             >
               View Cart
