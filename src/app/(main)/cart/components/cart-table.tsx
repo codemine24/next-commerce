@@ -6,19 +6,12 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Typography,
   IconButton,
-  Stack,
-  TextField,
-  tableCellClasses,
   tableRowClasses,
   alpha,
-  ButtonGroup,
-  Button,
 } from "@mui/material";
 import Image from "next/image";
 import { DeleteCircle } from "@/icons/delete-circle";
-import { CartItem } from "./types";
 import { cartData } from "./cart-data";
 import Counter from "./counter";
 
@@ -100,7 +93,7 @@ const CartTable = () => {
               {/* Model */}
               <TableCell>{item.name}</TableCell>
 
-              {/* Quantity with actions */}
+              {/* Quantity  */}
               <TableCell>
                 <IconButton
                   sx={{

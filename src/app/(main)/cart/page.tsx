@@ -1,31 +1,17 @@
 "use client";
 
 import { BoxContainer } from "@/components/box-container";
-import { CloseIcon } from "@/icons/close";
-import { ShippingArrowIcon } from "@/icons/spinning-arrow";
 import { BORDER_RADIUS } from "@/theme";
 import {
   Box,
   Button,
-  IconButton,
   inputBaseClasses,
   Stack,
-  Table,
-  TableBody,
-  TableCell,
-  tableCellClasses,
-  TableContainer,
-  TableHead,
-  TableRow,
-  tableRowClasses,
   TextField,
   Typography,
 } from "@mui/material";
-import Image from "next/image";
 import EmptyCart from "./components/empty-cart";
 import CartTable from "./components/cart-table";
-import { CartItem } from "./components/types";
-import { cartData } from "./components/cart-data";
 
 const CartPage = () => {
   const subtotal = 10;
@@ -84,8 +70,6 @@ const CartPage = () => {
             </Stack>
           </Box>
         </Box>
-
-        {/* Discount */}
         <Box my={3}>
           <Typography variant="h3" fontWeight={400}>
             What would you like to do next?
@@ -96,7 +80,7 @@ const CartPage = () => {
           </Typography>
         </Box>
 
-        {/* Promo  */}
+        {/* Coupon  */}
         <Stack
           direction="row"
           spacing={2}
@@ -190,7 +174,7 @@ const CartPage = () => {
           </Button>
         </Stack>
       </Box>
-      {/* -------Empty cart------- */}
+      {/*Empty cart */}
       <EmptyCart />
     </BoxContainer>
   );
