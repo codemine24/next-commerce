@@ -4,6 +4,7 @@ import { BoxContainer } from "@/components/box-container";
 import { Navbar } from "@/components/navbar/nav-bar";
 
 import Footer from "../footer";
+
 import { UserSidebar } from "./user-sidebar";
 
 export const UserDashboardLayout = ({

@@ -5,7 +5,7 @@ import { useState } from "react";
 
 import { EyeIcon } from "@/icons/eye";
 
-import { ProductQuickView } from "./product-quick-view";
+import { ProductQuickView } from "../../../../components/product/product-quick-view";
 
 export const ProductQuickViewButton = () => {
   const [open, setOpen] = useState(false);

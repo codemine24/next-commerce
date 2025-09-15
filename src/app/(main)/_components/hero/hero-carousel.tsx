@@ -1,6 +1,7 @@
 "use client";
 
 import Grid from "@mui/material/Grid";
+import { useRouter } from "next/navigation";
 
 import {
   Carousel,
@@ -9,7 +10,6 @@ import {
   CarouselItem,
 } from "@/components/carousel";
 import { OptimizeImage } from "@/components/optimize-image";
-import { useRouter } from "next/navigation";
 
 export const HeroCarousel = () => {
   const route = useRouter();

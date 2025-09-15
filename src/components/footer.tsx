@@ -3,12 +3,12 @@ import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
+import Image from "next/image";
 
 import { FacebookIcon } from "@/icons/facebook";
 import { InstagramIcon } from "@/icons/instagram";
 import { YoutubeIcon } from "@/icons/youtube";
 
-import Image from "next/image";
 import { BoxContainer } from "./box-container";
 import { LogoWhite } from "./logo-white";
 
