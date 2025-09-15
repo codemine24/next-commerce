@@ -160,7 +160,6 @@ model Address {
   updated_at               DateTime @updatedAt
 
   user User? @relation(fields: [user_id], references: [id])
-  // Order Order[]
 
   @@map("addresses")
 }
