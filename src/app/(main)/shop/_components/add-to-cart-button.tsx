@@ -2,8 +2,8 @@
 
 import Button from "@mui/material/Button";
 
+import { useCart } from "@/hooks/use-cart";
 import { Product } from "@/interfaces/product";
-import { useCart } from "@/providers/cart-provider";
 
 export const AddToCartButton = ({ product }: { product: Product }) => {
   const { addToCart } = useCart();

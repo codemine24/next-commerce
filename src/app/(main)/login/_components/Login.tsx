@@ -12,10 +12,10 @@ import { useForm } from "react-hook-form";
 import FormProvider from "@/components/form/form-provider";
 import { TextField } from "@/components/form/text-field";
 import { SubmitButton } from "@/components/submit-button";
+import { useAuth } from "@/hooks/use-auth";
 import api from "@/lib/api";
 import { API_ROUTES } from "@/lib/api-routes";
 import { toast } from "@/lib/toast-store";
-import { useAuth } from "@/providers/auth-provider";
 import { loginSchema, LoginSchemaType } from "@/zod/login-schema";
 
 export default function Login() {

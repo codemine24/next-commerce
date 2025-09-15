@@ -9,9 +9,9 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { useRouter } from "next/navigation";
 
+import { useCart } from "@/hooks/use-cart";
 import { CloseIcon } from "@/icons/close";
 import { DeleteIcon } from "@/icons/delete-icon";
-import { useCart } from "@/providers/cart-provider";
 import { BORDER_RADIUS } from "@/theme";
 
 interface CartDrawerProps {

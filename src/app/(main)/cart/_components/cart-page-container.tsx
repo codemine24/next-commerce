@@ -7,7 +7,7 @@ import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 
-import { useCart } from "@/providers/cart-provider";
+import { useCart } from "@/hooks/use-cart";
 import { BORDER_RADIUS } from "@/theme";
 
 import { CartItems } from "./cart-items";
@@ -40,7 +40,7 @@ export const CartPageContainer = () => {
               Subtotal:
             </Typography>
             <Typography fontWeight={600} color="red">
-              TK {cart.cart_total}
+              TK {cart?.cart_total || 0}
             </Typography>
           </Stack>
           <Stack
@@ -69,7 +69,7 @@ export const CartPageContainer = () => {
               Total:
             </Typography>
             <Typography fontWeight={700} color="red">
-              TK {cart.cart_total + delivery}
+              TK {cart?.cart_total + delivery || 0}
             </Typography>
           </Stack>
         </Box>

@@ -1,16 +1,9 @@
 import Cookies from "js-cookie";
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-  useCallback,
-} from "react";
+import React, { createContext, useEffect, useState, useCallback } from "react";
 
+import { useAuth } from "@/hooks/use-auth";
 import { Cart, CartItem, CartProduct } from "@/interfaces/cart";
 import { toast } from "@/lib/toast-store";
-
-import { useAuth } from "./auth-provider";
 
 interface CartContextType {
   cart: Cart;
@@ -38,7 +31,9 @@ interface CartContextType {
   syncCartWithServer: () => Promise<void>;
 }
 
-const CartContext = createContext<CartContextType | undefined>(undefined);
+export const CartContext = createContext<CartContextType | undefined>(
+  undefined
+);
 
 const CART_EXPIRE_DAYS = 7;
 
@@ -446,12 +441,4 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
-};
-
-export const useCart = () => {
-  const context = useContext(CartContext);
-  if (context === undefined) {
-    throw new Error("useCart must be used within a CartProvider");
-  }
-  return context;
 };

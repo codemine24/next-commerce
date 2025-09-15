@@ -6,8 +6,8 @@ import Typography from "@mui/material/Typography";
 import { useState } from "react";
 
 import { CartDrawer } from "@/app/(main)/shop/_components/cart-drawer";
+import { useCart } from "@/hooks/use-cart";
 import { CartIcon } from "@/icons/cart-icon";
-import { useCart } from "@/providers/cart-provider";
 
 export const CartButton = () => {
   const [openDrawer, setOpenDrawer] = useState(false);

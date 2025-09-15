@@ -2,8 +2,8 @@
 
 import { IconButton } from "@mui/material";
 
+import { useCart } from "@/hooks/use-cart";
 import { CartIcon } from "@/icons/cart-icon";
-import { useCart } from "@/providers/cart-provider";
 
 type Product = {
   id: string;

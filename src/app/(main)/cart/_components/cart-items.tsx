@@ -12,9 +12,9 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Image from "next/image";
 
+import { useCart } from "@/hooks/use-cart";
 import { CloseIcon } from "@/icons/close";
 import { ShippingArrowIcon } from "@/icons/spinning-arrow";
-import { useCart } from "@/providers/cart-provider";
 import { BORDER_RADIUS } from "@/theme";
 
 export const CartItems = () => {

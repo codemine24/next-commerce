@@ -4,14 +4,14 @@ import Typography from "@mui/material/Typography";
 import Link from "next/link";
 
 import { OptimizeImage } from "@/components/optimize-image";
+import { Product } from "@/interfaces/product";
 import { currencyFormatter } from "@/utils/currency-formatter";
 
+import { AddToCartButton } from "./add-to-cart-button";
 import { AddToCartIconButton } from "./add-to-cart-icon-button";
 import { AddWishListButton } from "./add-wish-list-button";
 import { ProductDiscountLabel } from "./product-discount-label";
 import { ProductQuickViewButton } from "./product-quick-view-button";
-import { Product } from "@/interfaces/product";
-import { AddToCartButton } from "./add-to-cart-button";
 
 export const ProductCard = async ({
   product,
