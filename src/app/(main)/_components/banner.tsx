@@ -28,7 +28,7 @@ export const Banner = () => {
             }}
         >
             <Box position="relative" zIndex={2} color="white" textAlign="center">
-                <Typography variant="subtitle2" gutterBottom>
+                <Typography variant="subtitle2" gutterBottom sx={{fontWeight: 200}}>
                     The best seat in the house
                 </Typography>
                 <Typography variant="h2" fontWeight={600}>
@@ -41,6 +41,8 @@ export const Banner = () => {
                         mt: 3,
                         width: 200,
                         height: 50,
+                        fontSize: 16,
+                        fontWeight: 400,
                     }}
                 >
                     Shop Now
