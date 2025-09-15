@@ -1,8 +1,9 @@
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 
-import { SectionTitle } from "./section-title";
 import { ProductCard } from "../shop/_components/product-card";
+
+import { SectionTitle } from "./section-title";
 
 const Products = [
   {

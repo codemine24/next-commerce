@@ -1,9 +1,5 @@
 "use client";
 
-import { BoxContainer } from "@/components/box-container";
-import { CloseIcon } from "@/icons/close";
-import { ShippingArrowIcon } from "@/icons/spinning-arrow";
-import { BORDER_RADIUS } from "@/theme";
 import {
   Box,
   Button,
@@ -22,6 +18,11 @@ import {
   Typography,
 } from "@mui/material";
 import Image from "next/image";
+
+import { BoxContainer } from "@/components/box-container";
+import { CloseIcon } from "@/icons/close";
+import { ShippingArrowIcon } from "@/icons/spinning-arrow";
+import { BORDER_RADIUS } from "@/theme";
 
 const Cart = () => {
   const cartItems = [

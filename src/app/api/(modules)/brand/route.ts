@@ -2,13 +2,14 @@ import { UserRole } from "@prisma/client";
 import httpStatus from "http-status";
 import { NextRequest } from "next/server";
 
-import { BrandSchemas } from "./brand.schema";
-import { BrandServices } from "./brand.service";
 import { catchAsync } from "../../(helpers)/shared/catch-async";
 import { successResponse } from "../../(helpers)/shared/response";
 import { commonSchemas } from "../../(helpers)/shared/schema";
 import payloadValidator from "../../(helpers)/utils/payload-validator";
 import userAuthenticator from "../../(helpers)/utils/user-authenticator";
+
+import { BrandSchemas } from "./brand.schema";
+import { BrandServices } from "./brand.service";
 
 // ---------------------------------- CREATE NEW BRAND -------------------------------------
 export const POST = catchAsync(async (req: Request) => {

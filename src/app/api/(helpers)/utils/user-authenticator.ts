@@ -2,9 +2,10 @@ import { UserRole, UserStatus } from "@prisma/client";
 import httpStatus from "http-status";
 
 import { CONFIG } from "../config";
-import { verifyToken } from "./jwt-helpers";
 import CustomizedError from "../error/customized-error";
 import { prisma } from "../shared/prisma";
+
+import { verifyToken } from "./jwt-helpers";
 
 const userAuthenticator = async (req: Request, roles: UserRole[]) => {
   // Step 1: Get token from request header

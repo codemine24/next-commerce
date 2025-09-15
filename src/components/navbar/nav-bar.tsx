@@ -2,6 +2,7 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 
 import { BoxContainer } from "../box-container";
+
 import { CartButton } from "./cart-button";
 import { CategoriesButton } from "./categories-button";
 import { Logo } from "./logo";

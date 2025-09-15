@@ -1,8 +1,10 @@
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+
 import { BoxContainer } from "@/components/box-container";
 import { ProductCarousel } from "@/components/product/product-carousel";
 import { ProductInfo } from "@/components/product/product-info";
-import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
+
 import { ProductDetailInfo } from "./_components/product-detail-info";
 
 const images = [

@@ -5,11 +5,12 @@ import { NextRequest } from "next/server";
 import { successResponse } from "@/app/api/(helpers)/shared/response";
 import payloadValidator from "@/app/api/(helpers)/utils/payload-validator";
 
-import { ProductSchemas } from "./product.schema";
-import { ProductServices } from "./product.service";
 import { catchAsync } from "../../(helpers)/shared/catch-async";
 import { commonSchemas } from "../../(helpers)/shared/schema";
 import userAuthenticator from "../../(helpers)/utils/user-authenticator";
+
+import { ProductSchemas } from "./product.schema";
+import { ProductServices } from "./product.service";
 
 // ---------------------------------- CREATE NEW PRODUCT -----------------------------------
 export const POST = catchAsync(async (req: Request) => {
