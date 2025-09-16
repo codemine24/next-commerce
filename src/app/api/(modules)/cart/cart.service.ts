@@ -5,25 +5,9 @@ import { prisma } from "../../(helpers)/shared/prisma";
 import { AddToCartPayload } from "./cart.interface";
 
 // ------------------------------------ ADD TO CART ------------------------------------
-const addToCart = async (user: User, payload: AddToCartPayload) => {
-  const product = await prisma.product.findUniqueOrThrow({
-    where: {
-      id: payload.product_id,
-      is_deleted: false,
-    },
-    select: {
-      id: true,
-      price: true,
-      discount_price: true,
-    },
-  });
-
-  const quantity = payload.quantity || 1;
-
-  console.log("product: ", product);
-  console.log("quantity: ", quantity);
-
+const addToCart = async (user: User, payload: AddToCartPayload[]) => {
   const result = await prisma.$transaction(async (tx) => {
+    // Ensure the user has a cart
     const cart = await tx.cart.upsert({
       where: {
         user_id: user.id,
@@ -34,26 +18,43 @@ const addToCart = async (user: User, payload: AddToCartPayload) => {
       update: {},
     });
 
-    const cartItem = await tx.cartItem.upsert({
-      where: {
-        cart_id_product_id: {
+    // Loop through each item in payload
+    for (const item of payload) {
+      const product = await tx.product.findUniqueOrThrow({
+        where: {
+          id: item.product_id,
+          is_deleted: false,
+        },
+        select: {
+          id: true,
+          price: true,
+          discount_price: true,
+        },
+      });
+
+      const quantity = item.quantity || 1;
+
+      await tx.cartItem.upsert({
+        where: {
+          cart_id_product_id: {
+            cart_id: cart.id,
+            product_id: product.id,
+          },
+        },
+        create: {
           cart_id: cart.id,
           product_id: product.id,
+          quantity: quantity,
         },
-      },
-      create: {
-        cart_id: cart.id,
-        product_id: product.id,
-        quantity: quantity,
-      },
-      update: {
-        quantity: {
-          increment: quantity,
+        update: {
+          quantity: {
+            increment: quantity,
+          },
         },
-      },
-    });
+      });
+    }
 
-    return cartItem;
+    return { message: "Products added to cart successfully" };
   });
 
   return result;
@@ -127,8 +128,6 @@ const updateCartItem = async (id: string, payload: { quantity: number }) => {
 
 // ------------------------------------ REMOVE ITEM FROM CART --------------------------
 const removeItemFromCart = async (user: User, cartItemId: string) => {
-  console.log("cartItemId: ", cartItemId);
-  console.log("user: ", user);
   await prisma.cartItem.delete({
     where: {
       id: cartItemId,

@@ -14,7 +14,7 @@ export const getCartForLogInUser = async () => {
     return res;
 }
 
-export const addToCartForLogInUser = async (payload: CartPayload) => {
+export const addToCartForLogInUser = async (payload: CartPayload[]) => {
     const res = await api.post(API_ROUTES.cart.add_to_cart, {
         body: JSON.stringify(payload),
     });

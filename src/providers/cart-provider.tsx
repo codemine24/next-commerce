@@ -27,7 +27,6 @@ interface CartContextType {
     discount: number;
     value: string;
   }) => void;
-  syncCartWithServer: () => Promise<void>;
 }
 
 export const CartContext = createContext<CartContextType | undefined>(
@@ -79,7 +78,6 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
 
     try {
       const response = await getCartForLogInUser();
-      console.log(response);
       return response.data;
     } catch (error) {
       console.error("Error fetching cart:", error);
@@ -160,10 +158,10 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
 
       if (isAuthenticated) {
         setIsAdding(true);
-        const res = await addToCartForLogInUser({
+        const res = await addToCartForLogInUser([{
           product_id: product.id,
           quantity,
-        });
+        }]);
 
         if (!res.success) {
           toast.error(res.message);
@@ -178,6 +176,8 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
           toast.success(res.message);
         }
         setIsAdding(false);
+      } else {
+        toast.success("Product added to cart");
       }
     },
     [isAuthenticated]
@@ -227,6 +227,8 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
 
         // Reset loading state
         setIsRemoving(false);
+      } else {
+        toast.success("Product removed from cart");
       }
     },
     [cart, isAuthenticated]
@@ -377,45 +379,45 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, [cart, isAuthenticated]);
 
-  const syncCartWithServer = useCallback(async () => {
-    if (!isAuthenticated) return;
+  // const syncCartWithServer = useCallback(async () => {
+  //   if (!isAuthenticated) return;
 
-    try {
-      const cookieCart = Cookies.get("cart");
-      const localCart = cookieCart
-        ? JSON.parse(cookieCart)
-        : { id: "guest_cart", cart_items: [], cart_total: 0 };
+  //   try {
+  //     const cookieCart = Cookies.get("cart");
+  //     const localCart = cookieCart
+  //       ? JSON.parse(cookieCart)
+  //       : { id: "guest_cart", cart_items: [], cart_total: 0 };
 
-      // Skip sync if the local cart is already equal to the server cart
-      const cartIsAlreadySynced =
-        JSON.stringify(localCart.cart_items) ===
-        JSON.stringify(cart.cart_items);
-      if (cartIsAlreadySynced) return;
+  //     // Skip sync if the local cart is already equal to the server cart
+  //     const cartIsAlreadySynced =
+  //       JSON.stringify(localCart.cart_items) ===
+  //       JSON.stringify(cart.cart_items);
+  //     if (cartIsAlreadySynced) return;
 
-      if (localCart.cart_items.length > 0) {
-        // Merge guest cart with server by adding items individually
-        // for (const item of localCart.cart_items) {
-        //     try {
-        //         await addToCartForLoggedInUser({
-        //             product_id: item.product.id,
-        //             quantity: item.quantity,
-        //         });
-        //     } catch (error) {
-        //         console.error("Failed to merge item:", error);
-        //     }
-        // }
+  //     if (localCart.cart_items.length > 0) {
+  //       // Merge guest cart with server by adding items individually
+  //       // for (const item of localCart.cart_items) {
+  //       //     try {
+  //       //         await addToCartForLoggedInUser({
+  //       //             product_id: item.product.id,
+  //       //             quantity: item.quantity,
+  //       //         });
+  //       //     } catch (error) {
+  //       //         console.error("Failed to merge item:", error);
+  //       //     }
+  //       // }
 
-        // Clear guest cart after successful merge
-        Cookies.remove("cart");
-      }
+  //       // Clear guest cart after successful merge
+  //       Cookies.remove("cart");
+  //     }
 
-      // Refresh with server cart
-      const serverCart = await fetchCart();
-      setCart(serverCart);
-    } catch (error) {
-      console.error("Error syncing cart with server:", error);
-    }
-  }, [fetchCart, isAuthenticated, cart]);
+  //     // Refresh with server cart
+  //     const serverCart = await fetchCart();
+  //     setCart(serverCart);
+  //   } catch (error) {
+  //     console.error("Error syncing cart with server:", error);
+  //   }
+  // }, [fetchCart, isAuthenticated, cart]);
 
   const value: CartContextType = {
     cart,
@@ -430,7 +432,6 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     increaseQty,
     decreaseQty,
     setCoupon,
-    syncCartWithServer,
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

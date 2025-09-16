@@ -16,10 +16,10 @@ interface AuthContextType {
 
 export const AUTH_CONTEXT = React.createContext<AuthContextType>({
   user: null,
-  setUser: () => {},
+  setUser: () => { },
   isAuthenticated: false,
-  setIsAuthenticated: () => {},
-  logout: () => {},
+  setIsAuthenticated: () => { },
+  logout: () => { },
 });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
@@ -42,6 +42,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const logout = React.useCallback(() => {
     Cookies.remove("access_token");
     Cookies.remove("refresh_token");
+    Cookies.remove("cart");
     setUser(null);
     setIsAuthenticated(false);
   }, []);
