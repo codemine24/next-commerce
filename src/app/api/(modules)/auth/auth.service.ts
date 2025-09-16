@@ -12,7 +12,6 @@ import { generateToken } from "../../(helpers)/utils/jwt-helpers";
 import { CredentialPayload, UserPayload } from "./auth.interface";
 import { USER_SELECTED_FIELDS } from "./auth.utils";
 
-
 // ------------------------------------ REGISTER NEW USER -----------------------------------
 const registerUser = async (data: UserPayload) => {
   const hashedPassword = await bcrypt.hash(
@@ -107,6 +106,8 @@ const login = async (credential: CredentialPayload) => {
     status: user.status,
     created_at: user.created_at,
     updated_at: user.updated_at,
+    access_token: accessToken,
+    refresh_token: refreshToken,
   };
 };
 
