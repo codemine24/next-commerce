@@ -1,0 +1,39 @@
+import { catchAsync } from "@/app/api/(helpers)/shared/catch-async";
+import payloadValidator from "@/app/api/(helpers)/utils/payload-validator";
+import userAuthenticator from "@/app/api/(helpers)/utils/user-authenticator";
+import { UserRole } from "@prisma/client";
+import { NextRequest } from "next/server";
+import { CouponSchemas } from "../coupon.schema";
+import { CouponServices } from "../coupon.service";
+import { successResponse } from "@/app/api/(helpers)/shared/response";
+import httpStatus from "http-status";
+
+// ----------------------------------- UPDATE COUPON ----------------------------------------
+export const PATCH = catchAsync(
+  async (
+    request: NextRequest,
+    { params }: { params: Promise<{ id: string }> }
+  ) => {
+    // Step 1: Authenticate user
+    await userAuthenticator(request, [UserRole.SUPER_ADMIN, UserRole.ADMIN]);
+
+    // Step 2: Extract id from route params
+    const id = (await params).id;
+
+    // Step 3: Parse request body
+    const body = await request.json();
+
+    // Step 4: Validate request body against update coupon schema
+    await payloadValidator(CouponSchemas.updateCoupon, body);
+
+    // Step 5: Call service layer to update coupon in database
+    const result = await CouponServices.updateCoupon(id, body);
+
+    // Step 6: Return success response with updated coupon
+    return successResponse({
+      statusCode: httpStatus.OK,
+      message: "Coupon updated successfully",
+      data: result,
+    });
+  }
+);

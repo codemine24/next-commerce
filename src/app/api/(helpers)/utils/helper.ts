@@ -15,3 +15,10 @@ export function formDataToObject(formData: FormData): Record<string, any> {
   });
   return obj;
 }
+
+export const convertConnectingData = (data?: string[]): { id: string }[] => {
+  if (data && Array.isArray(data) && data.length > 0) {
+    return data.map((item: string) => ({ id: item }));
+  }
+  return [];
+};
