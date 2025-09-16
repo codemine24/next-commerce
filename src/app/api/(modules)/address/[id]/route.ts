@@ -8,8 +8,8 @@ import { successResponse } from "@/app/api/(helpers)/shared/response";
 import payloadValidator from "@/app/api/(helpers)/utils/payload-validator";
 import userAuthenticator from "@/app/api/(helpers)/utils/user-authenticator";
 
+import { AddressValidations } from "../address.schema";
 import { AddressServices } from "../address.service";
-import { AddressValidations } from "../address.validation";
 
 export const PATCH = catchAsync(async (req: NextRequest, { params }: { params: Promise<{ id: string }> }) => {
     // Step 1: Authenticate user

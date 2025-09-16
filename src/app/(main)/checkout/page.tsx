@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Box,
   Grid,
@@ -8,11 +7,14 @@ import {
   inputBaseClasses,
   Button,
 } from "@mui/material";
+import React from "react";
+
 import { BoxContainer } from "@/components/box-container";
 import { BORDER_RADIUS } from "@/theme";
-import CheckoutInfo from "./_component/checkout-info";
-import CustomerInformation from "./_component/customer-information";
-import OrderOverview from "./_component/OrderOverview";
+
+import CheckoutInfo from "./_components/checkout-info";
+import CustomerInformation from "./_components/customer-information";
+import OrderOverview from "./_components/order-overview";
 
 const orderItems = [
   { id: 1, name: "Product 1", price: 500, total: 500 },

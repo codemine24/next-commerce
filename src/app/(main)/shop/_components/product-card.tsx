@@ -1,25 +1,17 @@
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import Link from "next/link";
 
 import { OptimizeImage } from "@/components/optimize-image";
+import { Product } from "@/interfaces/product";
 import { currencyFormatter } from "@/utils/currency-formatter";
 
+import { AddToCartButton } from "./add-to-cart-button";
 import { AddToCartIconButton } from "./add-to-cart-icon-button";
 import { AddWishListButton } from "./add-wish-list-button";
 import { ProductDiscountLabel } from "./product-discount-label";
 import { ProductQuickViewButton } from "./product-quick-view-button";
-
-interface Product {
-  id: string;
-  name: string;
-  slug: string;
-  thumbnail: string;
-  price: number;
-  discount_price: number;
-}
 
 export const ProductCard = async ({
   product,
@@ -88,7 +80,7 @@ export const ProductCard = async ({
             }}
           >
             <AddWishListButton />
-            <AddToCartIconButton />
+            <AddToCartIconButton product={product} />
           </Stack>
         </Box>
 
@@ -122,9 +114,7 @@ export const ProductCard = async ({
       {/* Action buttons (Add to Cart etc) */}
       {action && (
         <Box display="flex" gap={1} mt={2} px={2}>
-          <Button variant="soft" color="primary" fullWidth>
-            Add to Cart
-          </Button>
+          <AddToCartButton product={product} />
           <ProductQuickViewButton />
         </Box>
       )}

@@ -6,6 +6,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { theme } from "@/theme/theme";
 
 import { AuthProvider } from "./auth-provider";
+import { CartProvider } from "./cart-provider";
 import { ToastProvider } from "./toast-provider";
 
 export const AppProvider = ({
@@ -18,7 +19,9 @@ export const AppProvider = ({
       <CssBaseline />
       <ToastProvider>
         <AuthProvider>
-          {children}
+          <CartProvider>
+            {children}
+          </CartProvider>
         </AuthProvider>
       </ToastProvider>
     </ThemeProvider>

@@ -1,12 +1,5 @@
 "use client";
 
-import FormProvider from "@/components/form/form-provider";
-import { TextField } from "@/components/form/text-field";
-import { SubmitButton } from "@/components/submit-button";
-import api from "@/lib/api";
-import { API_ROUTES } from "@/lib/api-routes";
-import { useAuth } from "@/providers/auth-provider";
-import { loginSchema, LoginSchemaType } from "@/zod/login-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -16,9 +9,19 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
+import FormProvider from "@/components/form/form-provider";
+import { TextField } from "@/components/form/text-field";
+import { SubmitButton } from "@/components/submit-button";
+import { useAuth } from "@/hooks/use-auth";
+import api from "@/lib/api";
+import { API_ROUTES } from "@/lib/api-routes";
+import { toast } from "@/lib/toast-store";
+import { loginSchema, LoginSchemaType } from "@/zod/login-schema";
+
 export default function Login() {
   const router = useRouter();
   const { setIsAuthenticated, setUser } = useAuth();
+
   const methods = useForm<LoginSchemaType>({
     resolver: zodResolver(loginSchema),
   });
@@ -29,9 +32,11 @@ export default function Login() {
     });
 
     if (!response.success) {
+      toast.error(response.message);
       return;
     }
 
+    toast.success(response.message);
     setIsAuthenticated(true);
     setUser(response.data);
     router.replace("/");

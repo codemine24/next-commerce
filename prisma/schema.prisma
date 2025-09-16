@@ -165,7 +165,7 @@ model Address {
   id                       String   @id @default(uuid())
   user_id                  String?
   name                     String
-  contact_number           String
+  contact_number           String   @unique
   secondary_contact_number String?
   email                    String?
   address                  String

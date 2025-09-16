@@ -1,106 +1,28 @@
 "use client";
 
+import { alpha } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
+import { useRouter } from "next/navigation";
 
+import { useCart } from "@/hooks/use-cart";
 import { CloseIcon } from "@/icons/close";
 import { DeleteIcon } from "@/icons/delete-icon";
 import { BORDER_RADIUS } from "@/theme";
-import { alpha } from "@mui/material";
-import { useRouter } from "next/navigation";
 
 interface CartDrawerProps {
   open: boolean;
   onClose: () => void;
 }
 
-const products = [
-  {
-    id: 1,
-    name: "Living Room Furniture Chair Living Room Furniture Chair",
-    price: 1500,
-    imgUrl: " https://placehold.co/80x80/png",
-  },
-  {
-    id: 2,
-    name: "Living Room Furniture Chair",
-    price: 1500,
-    imgUrl: " https://placehold.co/80x80/png",
-  },
-  {
-    id: 3,
-    name: "Living Room Furniture Chair",
-    price: 1500,
-    imgUrl: " https://placehold.co/80x80/png",
-  },
-  {
-    id: 4,
-    name: "Living Room Furniture Chair",
-    price: 1500,
-    imgUrl: " https://placehold.co/80x80/png",
-  },
-  {
-    id: 5,
-    name: "Living Room Furniture Chair",
-    price: 1500,
-    imgUrl: " https://placehold.co/80x80/png",
-  },
-  {
-    id: 6,
-    name: "Living Room Furniture Chair",
-    price: 1500,
-    imgUrl: " https://placehold.co/80x80/png",
-  },
-  {
-    id: 7,
-    name: "Living Room Furniture Chair",
-    price: 1500,
-    imgUrl: " https://placehold.co/80x80/png",
-  },
-  {
-    id: 8,
-    name: "Living Room Furniture Chair ",
-    price: 1500,
-    imgUrl: " https://placehold.co/80x80/png",
-  },
-  {
-    id: 9,
-    name: "Living Room Furniture Chair",
-    price: 1500,
-    imgUrl: " https://placehold.co/80x80/png",
-  },
-  {
-    id: 10,
-    name: "Living Room Furniture Chair",
-    price: 1500,
-    imgUrl: " https://placehold.co/80x80/png",
-  },
-  {
-    id: 11,
-    name: "Living Room Furniture Chair",
-    price: 1500,
-    imgUrl: " https://placehold.co/80x80/png",
-  },
-  {
-    id: 12,
-    name: "Living Room Furniture Chair",
-    price: 1500,
-    imgUrl: " https://placehold.co/80x80/png",
-  },
-  {
-    id: 13,
-    name: "Living Room Furniture Chair",
-    price: 1500,
-    imgUrl: " https://placehold.co/80x80/png",
-  },
-];
-
 export const CartDrawer = ({ open, onClose }: CartDrawerProps) => {
   const router = useRouter();
+  const { cart, removeFromCart } = useCart();
+
   return (
     <Drawer anchor="right" open={open} onClose={onClose}>
       <Box
@@ -118,7 +40,8 @@ export const CartDrawer = ({ open, onClose }: CartDrawerProps) => {
             direction="row"
             justifyContent="space-between"
             alignItems="center"
-            borderBottom="1px solid #edeaea"
+            borderBottom="1px solid"
+            borderColor="divider"
             pb={2}
           >
             <Typography variant="h2">Your Cart</Typography>
@@ -130,9 +53,9 @@ export const CartDrawer = ({ open, onClose }: CartDrawerProps) => {
 
         {/* Product List */}
         <Box sx={{ flex: 1, overflowY: "auto", p: 3 }}>
-          {products.map((product) => (
+          {cart?.cart_items?.map((cart_item) => (
             <Stack
-              key={product.id}
+              key={cart_item.id}
               direction="row"
               alignItems="center"
               spacing={2}
@@ -140,8 +63,11 @@ export const CartDrawer = ({ open, onClose }: CartDrawerProps) => {
             >
               <Box
                 component="img"
-                src={product.imgUrl}
-                alt={product.name}
+                src={
+                  cart_item.product.thumbnail ||
+                  "https://placehold.co/80x80/png"
+                }
+                alt={cart_item.product.name}
                 sx={{
                   width: 80,
                   height: 80,
@@ -151,20 +77,21 @@ export const CartDrawer = ({ open, onClose }: CartDrawerProps) => {
               />
               <Box sx={{ flex: 1 }}>
                 <Typography variant="h5" mb={1}>
-                  {product.name}
+                  {cart_item.product.name}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  Price: TK {product.price}
+                  Price: TK {cart_item.product.price}
                 </Typography>
               </Box>
               <IconButton
+                onClick={() => removeFromCart(cart_item.id)}
                 sx={{
-                  border: "1px solid #EFEDFA",
+                  border: "1px solid",
+                  borderColor: "divider",
                   color: "text.secondary",
                   transition: "all 0.25s ease",
                   "&:hover": {
-                    border: "1px solid #EFEDFA",
-                    bgcolor: alpha("rgb(255, 0, 0)", 0.1),
+                    bgcolor: (theme) => alpha(theme.palette.error.main, 0.1),
                   },
                   "&:hover svg": {
                     color: "error.light",
@@ -182,7 +109,12 @@ export const CartDrawer = ({ open, onClose }: CartDrawerProps) => {
             direction="row"
             justifyContent="space-between"
             alignItems="center"
-            sx={{ mb: 2, borderTop: "1px solid #edeaea", pt: 2 }}
+            sx={{
+              mb: 2,
+              pt: 2,
+              borderTop: "1px solid",
+              borderColor: "divider",
+            }}
           >
             <Typography variant="body2">Subtotal:</Typography>
             <Typography variant="h4">$80.00</Typography>

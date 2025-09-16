@@ -52,6 +52,8 @@ const eslintConfig = [
           pathGroups: [
             {
               pattern: "@/**",
+              group: "internal",
+              position: "after"
             },
           ],
           pathGroupsExcludedImportTypes: ["builtin"],

@@ -1,7 +1,8 @@
 import { User } from "@prisma/client";
 
-import { AddToCartPayload } from "./cart.interface";
 import { prisma } from "../../(helpers)/shared/prisma";
+
+import { AddToCartPayload } from "./cart.interface";
 
 // ------------------------------------ ADD TO CART ------------------------------------
 const addToCart = async (user: User, payload: AddToCartPayload) => {
