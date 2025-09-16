@@ -35,7 +35,7 @@ export const LoginFormContainer = () => {
       return;
     }
 
-    toast.success("User logged in successfully");
+    toast.success(response.message);
     setIsAuthenticated(true);
     setUser(response.data);
     router.replace("/");

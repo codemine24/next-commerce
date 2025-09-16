@@ -127,6 +127,8 @@ const updateCartItem = async (id: string, payload: { quantity: number }) => {
 
 // ------------------------------------ REMOVE ITEM FROM CART --------------------------
 const removeItemFromCart = async (user: User, cartItemId: string) => {
+  console.log("cartItemId: ", cartItemId);
+  console.log("user: ", user);
   await prisma.cartItem.delete({
     where: {
       id: cartItemId,

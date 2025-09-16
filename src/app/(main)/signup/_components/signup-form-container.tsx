@@ -37,7 +37,7 @@ export const SignupFormContainer = () => {
             return;
         }
 
-        toast.success("User registered successfully");
+        toast.success(response.message);
         router.replace("/login");
     };
 
