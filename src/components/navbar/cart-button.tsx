@@ -1,14 +1,18 @@
 "use client";
+
 import Badge from "@mui/material/Badge";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
 
 import { CartDrawer } from "@/app/(main)/shop/_components/cart-drawer";
+import { useCart } from "@/hooks/use-cart";
 import { CartIcon } from "@/icons/cart-icon";
 
 export const CartButton = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
+  const { cart } = useCart();
+
   return (
     <>
       <Button
@@ -17,7 +21,7 @@ export const CartButton = () => {
           <Badge
             color="primary"
             showZero
-            badgeContent={0}
+            badgeContent={cart?.cart_items?.length || 0}
             anchorOrigin={{
               vertical: "top",
               horizontal: "right",

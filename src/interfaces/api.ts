@@ -5,29 +5,36 @@ export interface RequestOptions extends RequestInit {
         tags?: string[];
     };
     body?: any;
+    timeout?: number;
 }
 
-// Error format if fetch fails
-export interface FetchError {
+// ApiResponse
+export type ApiResponse<T> = {
+    success: true;
+    data: T;
+    statusCode: number;
+    message: string;
+} | {
     success: false;
     statusCode: number;
     message: string;
     data: null;
-}
+};
+
 
 export interface BaseRequestOptions {
     headers?: HeadersInit;
     credentials?: RequestCredentials;
     redirect?: RequestRedirect;
     referrer?: string;
-    signal?: AbortSignal;
+    timeout?: number;
     next?: NextFetchRequestConfig;
 }
 
 export type FetchMethod<ExtraOptions = Record<string, never>> = <T = any>(
     url: string,
     options?: BaseRequestOptions & ExtraOptions
-) => Promise<T | FetchError>;
+) => Promise<ApiResponse<T>>;
 
 export interface FetchApi {
     request: FetchMethod;

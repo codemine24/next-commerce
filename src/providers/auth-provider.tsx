@@ -1,70 +1,66 @@
 "use client";
 
-import Cookies from 'js-cookie'
-import { jwtDecode } from 'jwt-decode';
-import React from 'react'
+import Cookies from "js-cookie";
+import { jwtDecode } from "jwt-decode";
+import React from "react";
 
-import { User } from '@/interfaces/user';
+import { User } from "@/interfaces/user";
 
 interface AuthContextType {
-    user: User | null;
-    isAuthenticated: boolean;
-    logout: () => void;
-    setUser: React.Dispatch<React.SetStateAction<User | null>>;
-    setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
+  user: User | null;
+  isAuthenticated: boolean;
+  logout: () => void;
+  setUser: React.Dispatch<React.SetStateAction<User | null>>;
+  setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const AUTH_CONTEXT = React.createContext<AuthContextType>({
-    user: null,
-    setUser: () => { },
-    isAuthenticated: false,
-    setIsAuthenticated: () => { },
-    logout: () => { },
+  user: null,
+  setUser: () => {},
+  isAuthenticated: false,
+  setIsAuthenticated: () => {},
+  logout: () => {},
 });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-    const [user, setUser] = React.useState<User | null>(null);
-    const [isAuthenticated, setIsAuthenticated] = React.useState<boolean>(false);
+  const [user, setUser] = React.useState<User | null>(null);
+  const [isAuthenticated, setIsAuthenticated] = React.useState<boolean>(false);
 
-    const getUser = React.useCallback(async () => {
-        const token = Cookies.get("access_token");
-        if (token && !isAuthenticated) {
-            try {
-                const decodedToken = jwtDecode(token || "") as User;
-                setUser(decodedToken);
-                setIsAuthenticated(true);
-            } catch (error) {
-                console.log(error);
-            }
-        }
-    }, [isAuthenticated]);
+  const getUser = React.useCallback(async () => {
+    const token = Cookies.get("access_token");
+    if (token && !isAuthenticated) {
+      try {
+        const decodedToken = jwtDecode(token || "") as User;
+        setUser(decodedToken);
+        setIsAuthenticated(true);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }, [isAuthenticated]);
 
-    const logout = React.useCallback(() => {
-        Cookies.remove("access_token");
-        Cookies.remove("refresh_token");
-        setUser(null);
-        setIsAuthenticated(false);
-    }, []);
+  const logout = React.useCallback(() => {
+    Cookies.remove("access_token");
+    Cookies.remove("refresh_token");
+    setUser(null);
+    setIsAuthenticated(false);
+  }, []);
 
-    React.useEffect(() => {
-        const token = Cookies.get("access_token");
-        if (token && !isAuthenticated) {
-            getUser();
-        }
-    }, [isAuthenticated, getUser]);
+  React.useEffect(() => {
+    const token = Cookies.get("access_token");
+    if (token && !isAuthenticated) {
+      getUser();
+    }
+  }, [isAuthenticated, getUser]);
 
-    const value = {
-        user,
-        setUser,
-        isAuthenticated,
-        setIsAuthenticated,
-        logout,
-    };
-    return (
-        <AUTH_CONTEXT.Provider value={value}>
-            {children}
-        </AUTH_CONTEXT.Provider>
-    );
+  const value = {
+    user,
+    setUser,
+    isAuthenticated,
+    setIsAuthenticated,
+    logout,
+  };
+  return (
+    <AUTH_CONTEXT.Provider value={value}>{children}</AUTH_CONTEXT.Provider>
+  );
 };
-
-export const useAuth = () => React.useContext(AUTH_CONTEXT);

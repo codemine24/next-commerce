@@ -2,15 +2,16 @@ import { Prisma } from "@prisma/client";
 
 import { prisma } from "@/app/api/(helpers)/shared/prisma";
 
+import filterAdder from "../../(helpers)/utils/filter-adder";
+import paginationMaker from "../../(helpers)/utils/pagination-maker";
+import queryValidator from "../../(helpers)/utils/query-validator";
+import { slugGenerator } from "../../(helpers)/utils/slug-generator";
+
 import { ProductPayload } from "./product.interface";
 import {
   productQueryValidationConfig,
   productSearchableFields,
 } from "./product.utils";
-import filterAdder from "../../(helpers)/utils/filter-adder";
-import paginationMaker from "../../(helpers)/utils/pagination-maker";
-import queryValidator from "../../(helpers)/utils/query-validator";
-import { slugGenerator } from "../../(helpers)/utils/slug-generator";
 
 // ------------------------------------ ADD PRODUCT --------------------------------------
 const addProduct = async (payload: ProductPayload) => {

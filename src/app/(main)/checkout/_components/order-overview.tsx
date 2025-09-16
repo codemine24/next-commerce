@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import {
   Table,
   TableBody,
@@ -11,6 +10,7 @@ import {
   Typography,
   tableCellClasses,
 } from "@mui/material";
+import React from "react";
 
 const BORDER_RADIUS = { default: "8px" }; // adjust if you already have theme
 

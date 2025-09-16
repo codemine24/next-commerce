@@ -1,9 +1,4 @@
 "use client";
-import { CreditCardIcon } from "@/icons/credit-card-icon";
-import { DollarIcon } from "@/icons/dollar-icon";
-import { LockIcon } from "@/icons/lock-icon";
-import { PaymentsIcon } from "@/icons/payments-icon";
-import { BORDER_RADIUS } from "@/theme";
 import {
   alpha,
   Box,
@@ -24,6 +19,12 @@ import {
 } from "@mui/material";
 import Image from "next/image";
 import { useState } from "react";
+
+import { CreditCardIcon } from "@/icons/credit-card-icon";
+import { DollarIcon } from "@/icons/dollar-icon";
+import { LockIcon } from "@/icons/lock-icon";
+import { PaymentsIcon } from "@/icons/payments-icon";
+import { BORDER_RADIUS } from "@/theme";
 
 const CheckoutInfo = () => {
   const [delivery, setDelivery] = useState("home");

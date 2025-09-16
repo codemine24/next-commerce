@@ -24,6 +24,11 @@ model User {
   files               File[]
   cart                Cart?
   addresses           Address[]
+  orders              Order[]
+  reviews             Review[]
+  order_histories     OrderHistory[]
+  wishlist            Wishlist[]
+  QnA                 QnA[]
 
   @@map("users")
 }
@@ -58,7 +63,14 @@ model Product {
   brand      Brand?     @relation(fields: [brand_id], references: [id])
   categories Category[] @relation("ProductCategories")
   categoryId String?
-  cart_item  CartItem[]
+  cart_items  CartItem[]
+  order_items OrderItem[]
+  reviews     Review[]
+  attributes  ProductAttribute[]
+  coupons     Coupon[]           @relation("EligibleProductsCoupon")
+  wishlist    Wishlist[]
+  campaigns   Campaign[]         @relation("EligibleCampaignProducts")
+  campaignId  String?
 
   @@map("products")
 }
@@ -75,6 +87,9 @@ model Brand {
   updated_at  DateTime @updatedAt
 
   products Product[]
+  menu_items MenuItem[]
+  coupons    Coupon[]   @relation("EligibleBrandsCoupon")
+  campaigns  Campaign[] @relation("EligibleCampaignBrands")
 
   @@map("brands")
 }
@@ -94,6 +109,9 @@ model Category {
   parent   Category?  @relation("CategoryToParent", fields: [parent_id], references: [id])
   children Category[] @relation("CategoryToParent")
   products Product[]  @relation("ProductCategories")
+  coupons    Coupon[]    @relation("EligibleCategoriesCoupon")
+  menu_items MenuItem[]
+  campaign   Campaign[]  @relation("EligibleCampaignCategories")
 
   @@map("categories")
 }
@@ -147,7 +165,7 @@ model Address {
   id                       String   @id @default(uuid())
   user_id                  String?
   name                     String
-  contact_number           String
+  contact_number           String   @unique
   secondary_contact_number String?
   email                    String?
   address                  String
@@ -159,10 +177,341 @@ model Address {
   created_at               DateTime @default(now())
   updated_at               DateTime @updatedAt
 
+  orders Order[]
+
   user User? @relation(fields: [user_id], references: [id])
-  // Order Order[]
 
   @@map("addresses")
+}
+
+model Order {
+  id                String         @id @default(uuid())
+  order_id          String         @unique
+  user_id           String?
+  address_id        String
+  payment_type      PaymentType    @default(CASH_ON_DELIVERY)
+  delivery_method   DeliveryMethod @default(HOME_DELIVERY)
+  order_status      OrderStatus    @default(PENDING)
+  payment_status    PaymentStatus  @default(DUE)
+  delivery_charge   Int
+  discount_amount   Int            @default(0)
+  sub_amount        Int
+  total_amount      Int
+  tax               Int            @default(0)
+  percentage_of_tax Float          @default(0)
+  coupon_id         String?
+  comment           String?
+  created_at        DateTime       @default(now())
+  updated_at        DateTime       @updatedAt
+
+  user         User?          @relation(fields: [user_id], references: [id])
+  address      Address        @relation(fields: [address_id], references: [id])
+  coupon       Coupon?        @relation(fields: [coupon_id], references: [id])
+  order_items  OrderItem[]
+  history      OrderHistory[]
+  shipped_info ShippedInfo?
+  payment      Payment?
+  refund       Refund?
+
+  @@map("orders")
+}
+
+model OrderItem {
+  id         String @id @default(uuid())
+  order_id   String
+  product_id String
+  quantity   Int    @default(1)
+  price      Int
+
+  order   Order   @relation(fields: [order_id], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [product_id], references: [id])
+
+  @@map("order_items")
+}
+
+model OrderHistory {
+  id         String      @id @default(uuid())
+  user_id    String?
+  order_id   String
+  status     OrderStatus
+  remark     String?
+  created_at DateTime    @default(now())
+
+  order      Order @relation(fields: [order_id], references: [id], onDelete: Cascade)
+  created_by User? @relation(fields: [user_id], references: [id])
+
+  @@unique([order_id, status], name: "order_id_status")
+  @@map("order_histories")
+}
+
+model Payment {
+  id             String        @id @default(uuid())
+  order_id       String        @unique
+  amount         Int
+  gateway         PaymentGateway
+  status         PaymentStatus @default(PENDING)
+  transaction_id String?
+  paid_at        DateTime?
+  error_message  String?
+  metadata       Json?
+  created_at     DateTime      @default(now())
+  updated_at     DateTime      @updatedAt
+
+  order Order @relation(fields: [order_id], references: [id])
+
+  @@map("payments")
+}
+
+model Refund {
+  id             String   @id @default(uuid())
+  order_id       String   @unique
+  paid_amount    Float
+  refund_amount  Float
+  penalty_charge Float    @default(0)
+  reason         String?
+  refunded_at    DateTime @default(now())
+
+  order Order @relation(fields: [order_id], references: [id])
+
+  @@map("refunds")
+}
+
+model Review {
+  id         String   @id @default(uuid())
+  user_id    String
+  product_id String
+  rating     Float    @default(5)
+  comment    String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  user    User    @relation(fields: [user_id], references: [id])
+  product Product @relation(fields: [product_id], references: [id])
+
+  @@map("reviews")
+}
+
+model Coupon {
+  id                  String          @id @default(uuid())
+  code                String          @unique
+  discount_type       DiscountType    @default(AMOUNT)
+  discount_value      Float
+  maximum_value       Float?
+  start_date          DateTime        @default(now())
+  expiration_date     DateTime
+  usage_limit         Int?
+  per_user_limit      Int?
+  min_order_amount    Float?
+  is_active           Boolean         @default(true)
+  used_count          Int             @default(0)
+  beneficiary_type    BeneficiaryType @default(ALL)
+  eligible_categories Category[]      @relation("EligibleCategoriesCoupon")
+  eligible_brands     Brand[]         @relation("EligibleBrandsCoupon")
+  eligible_products   Product[]       @relation("EligibleProductsCoupon")
+  created_at          DateTime        @default(now())
+  updated_at          DateTime        @updatedAt
+  order               Order[]
+}
+
+model Courier {
+  id             String        @id @default(uuid())
+  name           String
+  address        String?
+  contact_number String?
+  email          String?
+  created_at     DateTime      @default(now())
+  shipped_info   ShippedInfo[]
+
+  @@map("couriers")
+}
+
+model ShippedInfo {
+  id          String   @id @default(uuid())
+  order_id    String   @unique
+  courier_id  String
+  tracking_id String?
+  created_at  DateTime @default(now())
+
+  order   Order   @relation(fields: [order_id], references: [id], onDelete: Cascade)
+  courier Courier @relation(fields: [courier_id], references: [id])
+
+  @@map("shipped_info")
+}
+
+model UserOTP {
+  id             String   @id @default(uuid())
+  name           String
+  email          String?
+  contact_number String
+  otp            Int      @unique
+  expires_at     String
+  created_at     DateTime @default(now())
+
+  @@map("user_otp")
+}
+
+model ProductAttribute {
+  id         String   @id @default(uuid())
+  title      String
+  value      String[]
+  product_id String
+
+  product Product @relation(fields: [product_id], references: [id], onDelete: Cascade)
+
+  @@map("product_attributes")
+}
+
+model ProductMeta {
+  id    String          @id @default(uuid())
+  type  ProductMetaType @default(TAG)
+  value String
+
+  @@unique([type, value], name: "type_value")
+  @@map("product_meta")
+}
+
+model Menu {
+  id         String     @id @default(uuid())
+  name       String     @unique
+  menu_items MenuItem[]
+
+  @@map("menus")
+}
+
+model MenuItem {
+  id          String     @id @default(uuid())
+  title       String
+  slug        String     @unique
+  menu_id     String
+  category_id String?
+  brand_id    String?
+  position    Int
+  parent_id   String?
+  parent      MenuItem?  @relation("MenuChildren", fields: [parent_id], references: [id])
+  children    MenuItem[] @relation("MenuChildren")
+
+  menu     Menu      @relation(fields: [menu_id], references: [id])
+  category Category? @relation(fields: [category_id], references: [id])
+  brand    Brand?    @relation(fields: [brand_id], references: [id])
+
+  @@map("menu_items")
+}
+
+model Wishlist {
+  id         String   @id @default(uuid())
+  user_id    String
+  product_id String
+  created_at DateTime @default(now())
+
+  user    User    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [product_id], references: [id], onDelete: Cascade)
+
+  @@unique([user_id, product_id])
+  @@map("wishlists")
+}
+
+model Campaign {
+  id                  String           @id @default(uuid())
+  slug                String
+  title               String           @unique
+  sub_title           String?
+  description         String?
+  thumbnail           String
+  start_at            DateTime
+  end_at              DateTime
+  platform            CampaignPlatform @default(ALL)
+  conditions          String[]         @default([])
+  note                String?
+  eligible_categories Category[]       @relation("EligibleCampaignCategories")
+  eligible_brands     Brand[]          @relation("EligibleCampaignBrands")
+  eligible_products   Product[]        @relation("EligibleCampaignProducts")
+  status              CampaignStatus
+  created_at          DateTime         @default(now())
+  updated_at          DateTime         @updatedAt
+
+  @@map("campaigns")
+}
+
+model QnA {
+  id          String   @id @default(uuid())
+  inquirer_id String
+  question    String
+  answer      String?
+  is_approved Boolean  @default(false)
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+
+  inquirer User @relation(fields: [inquirer_id], references: [id])
+
+  @@map("qna")
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  REFUNDED
+  CANCELLED
+}
+
+enum PaymentType {
+  CASH_ON_DELIVERY
+  ONLINE_PAYMENT
+}
+
+enum PaymentGateway {
+  STRIPE
+  BANK
+  CASH
+}
+
+enum DeliveryMethod {
+  STORE_PICKUP
+  HOME_DELIVERY
+}
+
+enum PaymentStatus {
+  DUE
+  PENDING
+  PAID
+  FAILED
+  CANCELLED
+  REFUNDED
+}
+
+enum DiscountType {
+  PERCENTAGE
+  AMOUNT
+}
+
+enum BeneficiaryType {
+  NEW_USER
+  EXISTING_USER
+  ALL
+}
+
+enum ProductMetaType {
+  WARRANTY
+  TAG
+}
+
+enum AttributeType {
+  SINGLE
+  MULTIPLE
+}
+
+enum CampaignPlatform {
+  ONLINE
+  OFFLINE
+  ALL
+}
+
+enum CampaignStatus {
+  ACTIVE
+  UPCOMING
+  CLOSED
 }
 
 enum UserRole {

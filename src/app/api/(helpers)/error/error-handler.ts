@@ -2,10 +2,11 @@ import { Prisma } from "@prisma/client";
 import httpStatus from "http-status";
 import { ZodError } from "zod";
 
+import { ErrorSources } from "../shared/response";
+
 import prismaClientKnownErrorHandler from "./prisma-client-known-error-handler";
 import prismaValidationErrorHandler from "./prisma-validation-error-handler";
 import zodErrorHandler from "./zod-error-handler";
-import { ErrorSources } from "../shared/response";
 
 const errorHandler = (error: any) => {
   let statusCode = error.statusCode || httpStatus.INTERNAL_SERVER_ERROR;

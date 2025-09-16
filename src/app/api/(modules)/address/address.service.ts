@@ -1,12 +1,13 @@
 import { Prisma, User } from "@prisma/client";
 import httpStatus from 'http-status';
 
-import { AddressFieldsValidationConfig, addressSearchableFields } from "./address.constant";
-import { TAddressPayload } from "./address.interface";
 import CustomizedError from "../../(helpers)/error/customized-error";
 import { prisma } from "../../(helpers)/shared/prisma";
 import paginationMaker from "../../(helpers)/utils/pagination-maker";
 import queryValidator from "../../(helpers)/utils/query-validator";
+
+import { AddressFieldsValidationConfig, addressSearchableFields } from "./address.constant";
+import { TAddressPayload } from "./address.interface";
 
 const createAddress = async (data: TAddressPayload, user: User) => {
     // Step 1: Unset previous default address if new one is marked as default for registered user

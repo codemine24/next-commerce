@@ -1,6 +1,7 @@
 "use client";
 
 import Grid from "@mui/material/Grid";
+import { useRouter } from "next/navigation";
 
 import {
   Carousel,
@@ -9,13 +10,12 @@ import {
   CarouselItem,
 } from "@/components/carousel";
 import { OptimizeImage } from "@/components/optimize-image";
-import { useRouter } from "next/navigation";
 
 export const HeroCarousel = () => {
   const route = useRouter();
   return (
     <Grid size={{ xs: 12, lg: 8 }}>
-      <Carousel autoplay pauseOnHover={true}>
+      <Carousel autoplay pauseOnHover>
         <CarouselContent>
           {[...Array(5)].map((_, i) => (
             <CarouselItem key={i + 1} onClick={() => route.push("/shop")}>

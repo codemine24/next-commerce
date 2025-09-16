@@ -5,6 +5,7 @@ import Box from "@mui/material/Box";
 import { Carousel, CarouselContent, CarouselItem } from "@/components/carousel";
 
 import { SectionTitle } from "../section-title";
+
 import { ReviewCard } from "./review-card";
 
 export const CustomerReviewSection = () => {

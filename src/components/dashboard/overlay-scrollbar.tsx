@@ -1,9 +1,8 @@
 "use client";
 
 import { styled } from "@mui/material/styles";
-import { OverlayScrollbarsComponent } from "overlayscrollbars-react";
-
 import type { SxProps, Theme } from "@mui/material/styles";
+import { OverlayScrollbarsComponent } from "overlayscrollbars-react";
 import type { PropsWithChildren } from "react";
 import "overlayscrollbars/overlayscrollbars.css";
 
