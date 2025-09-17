@@ -1,36 +1,21 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
+import { UseFormReturn } from "react-hook-form";
 
 import { Editor } from "@/components/editor";
 import { FileUploader, TextField } from "@/components/form";
 import FormProvider from "@/components/form/form-provider";
 import { SubmitButton } from "@/components/submit-button";
-import api from "@/lib/api";
-import { API_ROUTES } from "@/lib/api-routes";
-import { toast } from "@/lib/toast-store";
-import { brandSchema, BrandSchema } from "@/zod/brand-schema";
+import { BrandSchema } from "@/zod/brand-schema";
 
-export const BrandForm = () => {
-    const router = useRouter();
-    const methods = useForm<BrandSchema>({
-        resolver: zodResolver(brandSchema),
-    });
+interface BrandFormProps {
+    methods: UseFormReturn<BrandSchema>;
+    onSubmit: (data: BrandSchema) => void;
+}
 
-    const onSubmit = async (data: BrandSchema) => {
-        const response = await api.post(API_ROUTES.brands.create_brand, { body: JSON.stringify(data) });
-
-        if (!response.success) {
-            toast.error(response.message);
-        } else {
-            toast.success(response.message);
-            router.replace("/admin/brands");
-        }
-    }
+export const BrandForm = ({ methods, onSubmit }: BrandFormProps) => {
     return (
         <FormProvider methods={methods} onSubmit={methods.handleSubmit(onSubmit)}>
             <Box display="flex" flexDirection="column" gap={4}>

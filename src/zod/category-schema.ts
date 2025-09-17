@@ -4,7 +4,8 @@ export const categorySchema = z
     .object({
         title: z
             .string({ error: "Category title is required" })
-            .min(1, "Category title is required"),
+            .min(2, "Category title must be at least 2 characters long")
+            .max(100, "Category title must be at most 100 characters long"),
         code: z
             .string()
             .optional(),

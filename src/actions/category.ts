@@ -18,9 +18,7 @@ export const addCategory = async (category: CategorySchema) => {
         body: JSON.stringify(category),
     });
 
-    if (res.success) {
-        revalidateTag("categories");
-    }
+    if (res.success) revalidateTag("categories");
 
     return res;
 }

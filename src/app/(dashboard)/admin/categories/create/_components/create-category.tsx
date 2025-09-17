@@ -38,7 +38,7 @@ export const CreateCategory = ({ categories }: { categories: Category[] }) => {
         }
 
         toast.success(res.message);
-        router.push("/admin/categories");
+        router.replace("/admin/categories");
     };
 
     return (
