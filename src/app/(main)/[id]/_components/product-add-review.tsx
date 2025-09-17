@@ -14,6 +14,13 @@ import { useState } from "react";
 
 import { CloseIcon } from "@/icons/close";
 import { PlusIcon } from "@/icons/plus";
+import { Controller, useForm } from "react-hook-form";
+import { reviewSchema, ReviewSchemaType } from "@/zod/review-schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "@/lib/toast-store";
+import { addReView } from "@/actions/review";
+import Rating from "@mui/material/Rating";
+import api from "@/lib/api";
 
 const style = {
   position: "absolute",
@@ -33,6 +40,19 @@ export const ProductAddReview = () => {
   const [rating, setRating] = useState<number | null>(5);
   const [comment, setComment] = useState<string>("");
 
+  const {
+    handleSubmit,
+    control,
+    reset,
+    formState: { errors },
+  } = useForm<ReviewSchemaType>({
+    resolver: zodResolver(reviewSchema),
+    defaultValues: {
+      rating: 5,
+      comment: "",
+    },
+  });
+
   const handleOpenReviewModal = () => {
     if (!isAuthenticated) {
       router.push(`/login?redirect=${path}`);
@@ -47,7 +67,16 @@ export const ProductAddReview = () => {
     setRating(5);
   };
 
-  const handleAddReview = async () => {};
+  const handleAddReview = async (data: ReviewSchemaType) => {
+    const response = await addReView(data);
+    console.log(response.data);
+    if (!response.success) {
+      toast.error(response.message || "Failed to add review");
+      return;
+    }
+    toast.success("Review submitted successfully");
+    reset(), setOpen(false);
+  };
 
   return (
     <>
@@ -91,7 +120,7 @@ export const ProductAddReview = () => {
               </IconButton>
             </Box>
 
-            <Box p={2}>
+            {/* <Box p={2}>
               <Typography variant="body1">Rate this product</Typography>
 
               <MuiRating
@@ -119,6 +148,55 @@ export const ProductAddReview = () => {
                 color="primary"
                 size="medium"
                 onClick={handleAddReview}
+                sx={{ mt: 2 }}
+              >
+                Submit
+              </Button>
+            </Box> */}
+            {/* Form */}
+            <Box
+              p={2}
+              component="form"
+              onSubmit={handleSubmit(handleAddReview)}
+            >
+              <Typography variant="body1">Rate this product</Typography>
+
+              <Controller
+                name="rating"
+                control={control}
+                render={({ field }) => (
+                  <Rating
+                    {...field}
+                    precision={0.5}
+                    onChange={(_, value) => field.onChange(value)}
+                    sx={{ mt: 2 }}
+                  />
+                )}
+              />
+
+              <Box mt={2}>
+                <Controller
+                  name="comment"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      {...field}
+                      fullWidth
+                      multiline
+                      rows={4}
+                      placeholder="Write your review here"
+                      error={!!errors.comment}
+                      helperText={errors.comment?.message}
+                    />
+                  )}
+                />
+              </Box>
+
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                size="medium"
                 sx={{ mt: 2 }}
               >
                 Submit
