@@ -4,6 +4,7 @@ import { NextRequest } from "next/server";
 
 import { catchAsync } from "../../(helpers)/shared/catch-async";
 import { successResponse } from "../../(helpers)/shared/response";
+import { commonSchemas } from "../../(helpers)/shared/schema";
 import payloadValidator from "../../(helpers)/utils/payload-validator";
 import { picker } from "../../(helpers)/utils/picker";
 import userAuthenticator from "../../(helpers)/utils/user-authenticator";
@@ -38,7 +39,7 @@ export const POST = catchAsync(async (req: Request) => {
   });
 });
 
-// ------------------------------------- GET COUPONS --------------------------------------
+// ------------------------------------- GET ALL ORDERS ----------------------------------------
 export const GET = catchAsync(async (req: NextRequest) => {
   // Step 1: Authenticate user
   await userAuthenticator(req, [UserRole.SUPER_ADMIN, UserRole.ADMIN]);
@@ -59,5 +60,27 @@ export const GET = catchAsync(async (req: NextRequest) => {
     message: "Orders fetched successfully",
     meta: result.meta,
     data: result.data,
+  });
+});
+
+// ------------------------------------- DELETE ORDERS -----------------------------------------
+export const DELETE = catchAsync(async (req: NextRequest) => {
+  // Step 1: Authenticate user
+  await userAuthenticator(req, [UserRole.SUPER_ADMIN, UserRole.ADMIN]);
+
+  // Step 2: Parse request body
+  const body = await req.json();
+
+  // Step 3: Validate request body against schema
+  await payloadValidator(commonSchemas.deleteRecordsValidationSchema, body);
+
+  // Step 3: Delete orders from the database
+  const result = await OrderServices.deleteOrders(body);
+
+  // Step 4: Return success response
+  return successResponse({
+    statusCode: httpStatus.OK,
+    message: "Orders deleted successfully",
+    data: result,
   });
 });

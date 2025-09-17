@@ -1,7 +1,12 @@
-import { DeliveryMethod, PaymentType } from "@prisma/client";
+import {
+  DeliveryMethod,
+  OrderStatus,
+  PaymentStatus,
+  PaymentType,
+} from "@prisma/client";
 import z from "zod";
 
-import { createAddress } from "../address/address.schema";
+import { createAddress, updateAddress } from "../address/address.schema";
 
 const placeOrderForRegisteredUser = z.object({
   body: z
@@ -87,7 +92,78 @@ const placeOrderForGuestUser = z.object({
     }),
 });
 
+const updateOrderByAdmin = z.object({
+  body: z
+    .object({
+      delivery_method: z
+        .enum(Object.values(DeliveryMethod) as [string, ...string[]])
+        .optional(),
+      payment_type: z
+        .enum(Object.values(PaymentType) as [string, ...string[]])
+        .optional(),
+      order_status: z
+        .enum(Object.values(OrderStatus) as [string, ...string[]])
+        .optional(),
+      payment_status: z
+        .enum(Object.values(PaymentStatus) as [string, ...string[]])
+        .optional(),
+      comment: z.string({ error: "Comment should be a text" }).optional(),
+      order_history: z
+        .object({
+          remark: z.string().optional(),
+        })
+        .optional(),
+      shipped_info: z
+        .object({
+          courier_id: z.uuid({
+            error: "Courier ID should be a valid uuid",
+          }),
+          tracking_id: z
+            .string({
+              error: "Tracking ID should be a text",
+            })
+            .min(1, "Tracking ID is required"),
+        })
+        .optional()
+        .nullable(),
+      refund_info: z
+        .object({
+          penalty_charge: z
+            .number({ error: "Penalty charge should be a number" })
+            .nonnegative({ message: "Penalty charge should be greater than 0" })
+            .default(0)
+            .optional(),
+        })
+        .optional()
+        .nullable(),
+    })
+    .strict(),
+});
+
+const updateOrderByCustomer = z.object({
+  body: z
+    .object({
+      payment_type: z
+        .enum(Object.values(PaymentType) as [string, ...string[]])
+        .optional(),
+      delivery_method: z
+        .enum(Object.values(DeliveryMethod) as [string, ...string[]])
+        .optional(),
+      comment: z.string({ error: "Comment should be a text" }).optional(),
+      address: updateAddress.strict().optional().nullable(),
+      address_id: z
+        .uuid({
+          error: "Address id should be a valid uuid",
+        })
+        .optional()
+        .nullable(),
+    })
+    .strict(),
+});
+
 export const OrderSchemas = {
   placeOrderForRegisteredUser,
   placeOrderForGuestUser,
+  updateOrderByAdmin,
+  updateOrderByCustomer,
 };

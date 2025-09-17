@@ -55,7 +55,7 @@ export const createAddress = z.object({
     .default(false),
 });
 
-export const updateAddressValidationSchema = z.object({
+export const updateAddress = z.object({
   body: z
     .object({
       name: z
@@ -117,5 +117,5 @@ export const updateAddressValidationSchema = z.object({
 
 export const AddressValidations = {
   createAddress,
-  updateAddressValidationSchema,
+  updateAddress,
 };

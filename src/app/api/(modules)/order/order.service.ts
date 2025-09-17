@@ -571,9 +571,9 @@ const getOrders = async (query: Record<string, any>) => {
 
 // ------------------------------------- GET ORDER BY ORDER ID ---------------------------------
 const getOrder = async (order_id: string, user: User) => {
-  const result = await prisma.order.findUniqueOrThrow({
+  const order = await prisma.order.findFirst({
     where: {
-      order_id: order_id,
+      OR: [{ id: order_id }, { order_id: order_id }],
     },
     select: {
       ...orderSelectedFields,
@@ -630,18 +630,23 @@ const getOrder = async (order_id: string, user: User) => {
     },
   });
 
+  if (!order) {
+    throw new CustomizedError(httpStatus.NOT_FOUND, "Order not found");
+  }
+
   if (!["SUPER_ADMIN", "ADMIN"].includes(user.role)) {
-    if (result.user_id !== user.id) {
+    if (order.user_id !== user.id) {
       throw new CustomizedError(httpStatus.FORBIDDEN, "Forbidden");
     }
   }
 
-  return result;
+  return order;
 };
 
-const myOrder = async (user: User | undefined, query: Record<string, any>) => {
+// ------------------------------------- MY ORDERS ---------------------------------------------
+const myOrders = async (user: User | undefined, query: Record<string, any>) => {
   const {
-    searchTerm,
+    search_term,
     page,
     limit,
     sort_by,
@@ -665,12 +670,12 @@ const myOrder = async (user: User | undefined, query: Record<string, any>) => {
 
   const andConditions: Prisma.OrderWhereInput[] = [{ user_id: user?.id }];
 
-  if (searchTerm) {
+  if (search_term) {
     andConditions.push({
       OR: [
         ...orderSearchableFields.map((field) => ({
           [field]: {
-            contains: searchTerm,
+            contains: search_term,
             mode: "insensitive",
           },
         })),
@@ -678,7 +683,7 @@ const myOrder = async (user: User | undefined, query: Record<string, any>) => {
           address: {
             OR: orderSearchableFieldsByAddress.map((field) => ({
               [field]: {
-                contains: searchTerm,
+                contains: search_term,
                 mode: "insensitive",
               },
             })),
@@ -689,7 +694,7 @@ const myOrder = async (user: User | undefined, query: Record<string, any>) => {
             some: {
               product: {
                 name: {
-                  contains: searchTerm,
+                  contains: search_term,
                   mode: "insensitive",
                 },
               },
@@ -699,7 +704,7 @@ const myOrder = async (user: User | undefined, query: Record<string, any>) => {
         {
           coupon: {
             code: {
-              contains: searchTerm,
+              contains: search_term,
               mode: "insensitive",
             },
           },
@@ -758,6 +763,7 @@ const myOrder = async (user: User | undefined, query: Record<string, any>) => {
   };
 };
 
+// ------------------------------------- UPDATE ORDER (ADMIN) ----------------------------------
 const updateOrderByAdmin = async (
   id: string,
   payload: UpdateOrderByAdminPayload,
@@ -905,10 +911,11 @@ const updateOrderByAdmin = async (
   return result;
 };
 
+// ------------------------------------- UPDATE ORDER (CUSTOMER) -------------------------------
 const updateOrderByCustomer = async (
-  user: User,
   id: string,
-  payload: UpdateOrderByCustomerPayload
+  payload: UpdateOrderByCustomerPayload,
+  user: User
 ) => {
   const { address, address_id, ...remainingPayload } = payload;
 
@@ -969,6 +976,7 @@ const updateOrderByCustomer = async (
   return result;
 };
 
+// ------------------------------------- DELETE ORDERS ------------------------------------------
 const deleteOrders = async ({ ids }: { ids: string[] }) => {
   await prisma.order.deleteMany({
     where: {
@@ -980,6 +988,7 @@ const deleteOrders = async ({ ids }: { ids: string[] }) => {
   return null;
 };
 
+// ------------------------------------- HELPER FUNCTIONS ---------------------------------------
 export const checkAddressInOrderFlow = async (
   address_id?: string,
   address?: AddressPayload
@@ -1020,7 +1029,7 @@ export const OrderServices = {
   placeOrderForGuestUser,
   placeOrderForRegisteredUser,
   getOrders,
-  myOrder,
+  myOrders,
   updateOrderByAdmin,
   updateOrderByCustomer,
   deleteOrders,

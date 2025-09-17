@@ -24,10 +24,7 @@ export const PATCH = catchAsync(
     const { id } = await params;
 
     // Step 3: Validate request body against schema
-    await payloadValidator(
-      AddressValidations.updateAddressValidationSchema,
-      body
-    );
+    await payloadValidator(AddressValidations.updateAddress, body);
 
     // Step 4: Call service to update address
     const result = await AddressServices.updateAddress(id, body, user);
