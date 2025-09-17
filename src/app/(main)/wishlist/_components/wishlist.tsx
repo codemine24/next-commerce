@@ -1,7 +1,8 @@
-import React from "react";
 import { Box, Typography, Button } from "@mui/material";
-import { wishlistData } from "./wishlistData";
+import React from "react";
+
 import WishlistTable from "./wishlist-table";
+import { wishlistData } from "./wishlistData";
 
 const Wishlist: React.FC = () => {
   const hasProducts = wishlistData.length > 0;

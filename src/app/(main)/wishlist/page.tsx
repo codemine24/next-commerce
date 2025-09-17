@@ -1,6 +1,7 @@
 import { BoxContainer } from "@/components/box-container";
-import Wishlist from "./_components/wishlist";
+
 import EmptyWishlist from "./_components/empty-wishlist";
+import Wishlist from "./_components/wishlist";
 import { wishlistData } from "./_components/wishlistData";
 
 const wishlistPage = () => {

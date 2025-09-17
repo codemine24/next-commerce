@@ -1,5 +1,6 @@
-import React from "react";
 import { Box, Typography, Button } from "@mui/material";
+import React from "react";
+
 import { cartData } from "./cart-data";
 import CartTable from "./cart-table";
 

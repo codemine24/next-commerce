@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Table,
   TableBody,
@@ -12,12 +11,13 @@ import {
   Box,
   alpha,
 } from "@mui/material";
+import React from "react";
 
 import { AccessTimeIcon } from "@/icons/access-time";
 import { CheckCircle } from "@/icons/check-circle";
+import { DeleteCircle } from "@/icons/delete-circle";
 import { ShoppingCart } from "@/icons/shopping-cart";
 import { BORDER_RADIUS } from "@/theme";
-import { DeleteCircle } from "@/icons/delete-circle";
 
 type Product = {
   id: string | number;

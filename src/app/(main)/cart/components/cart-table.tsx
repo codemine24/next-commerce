@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Table,
   TableBody,
@@ -11,7 +10,10 @@ import {
   alpha,
 } from "@mui/material";
 import Image from "next/image";
+import React from "react";
+
 import { DeleteCircle } from "@/icons/delete-circle";
+
 import { cartData } from "./cart-data";
 import Counter from "./counter";
 

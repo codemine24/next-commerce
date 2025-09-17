@@ -1,26 +1,24 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
 import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Fade from "@mui/material/Fade";
 import IconButton from "@mui/material/IconButton";
 import Modal from "@mui/material/Modal";
-import MuiRating from "@mui/material/Rating";
+import Rating from "@mui/material/Rating";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { useRouter, usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
 
+import { addReView } from "@/actions/review";
 import { CloseIcon } from "@/icons/close";
 import { PlusIcon } from "@/icons/plus";
-import { Controller, useForm } from "react-hook-form";
-import { reviewSchema, ReviewSchemaType } from "@/zod/review-schema";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "@/lib/toast-store";
-import { addReView } from "@/actions/review";
-import Rating from "@mui/material/Rating";
-import api from "@/lib/api";
+import { reviewSchema, ReviewSchemaType } from "@/zod/review-schema";
 
 const style = {
   position: "absolute",

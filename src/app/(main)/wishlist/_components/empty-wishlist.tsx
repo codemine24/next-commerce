@@ -1,5 +1,5 @@
-import React from "react";
 import { Box, Typography, Button } from "@mui/material";
+import React from "react";
 
 const EmptyWishlist: React.FC = () => {
   return (
