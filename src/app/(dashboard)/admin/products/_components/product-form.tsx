@@ -1,10 +1,7 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
 
 import { Editor } from "@/components/editor";
 import {
@@ -17,10 +14,6 @@ import {
 import FormProvider from "@/components/form/form-provider";
 import { SubmitButton } from "@/components/submit-button";
 import { PRODUCT_SIZE, PRODUCT_TAGS } from "@/constants/product";
-import api from "@/lib/api";
-import { API_ROUTES } from "@/lib/api-routes";
-import { toast } from "@/lib/toast-store";
-import { ProductSchema, productSchema } from "@/zod/product-schema";
 
 const Brand = [
   { id: 1, label: "Brand 1", value: "brand-1" },
@@ -28,24 +21,12 @@ const Brand = [
   { id: 3, label: "Brand 3", value: "brand-3" },
 ];
 
-export const ProductForm = () => {
-  const router = useRouter();
-  const methods = useForm<ProductSchema>({
-    resolver: zodResolver(productSchema),
-  });
+interface Props {
+  methods: any;
+  onSubmit: any;
+}
 
-  const onSubmit = async (data: ProductSchema) => {
-    const response = await api.post(API_ROUTES.products.create_product, {
-      body: JSON.stringify(data),
-    });
-
-    if (!response.success) {
-      toast.error(response.message);
-    } else {
-      toast.success(response.message);
-      router.replace("/admin/products");
-    }
-  };
+export const ProductForm = ({ methods, onSubmit }: Props) => {
 
   return (
     <FormProvider methods={methods} onSubmit={methods.handleSubmit(onSubmit)}>

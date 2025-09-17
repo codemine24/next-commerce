@@ -1,6 +1,7 @@
 import Cookies from "js-cookie";
 import React, { createContext, useEffect, useState, useCallback } from "react";
 
+import { addToCartForLogInUser, getCartForLogInUser, removedProductFromCartForLoginUser } from "@/actions/cart";
 import { useAuth } from "@/hooks/use-auth";
 import { Cart, CartItem, CartProduct } from "@/interfaces/cart";
 import { toast } from "@/lib/toast-store";
@@ -11,7 +12,6 @@ interface CartContextType {
   isAdding: boolean;
   isRemoving: boolean;
   isUpdating: boolean;
-  showCart: boolean;
   coupon: {
     isApplied: boolean;
     discount: number;
@@ -20,7 +20,6 @@ interface CartContextType {
   addToCart: (product: CartProduct, quantity?: number) => Promise<void>;
   removeFromCart: (itemId: string) => Promise<void>;
   clearCart: () => Promise<void>;
-  setShowCart: (show: boolean) => void;
   increaseQty: (itemId: string) => Promise<void>;
   decreaseQty: (itemId: string) => Promise<void>;
   setCoupon: (coupon: {
@@ -28,7 +27,6 @@ interface CartContextType {
     discount: number;
     value: string;
   }) => void;
-  syncCartWithServer: () => Promise<void>;
 }
 
 export const CartContext = createContext<CartContextType | undefined>(
@@ -63,7 +61,6 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const [isAdding, setIsAdding] = useState(false);
   const [isRemoving, setIsRemoving] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
-  const [showCart, setShowCart] = useState(false);
   const [coupon, setCoupon] = useState({
     isApplied: false,
     discount: 0,
@@ -71,7 +68,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   });
 
   // Fetch cart data
-  const fetchCart = useCallback(() => {
+  const fetchCart = useCallback(async (): Promise<Cart> => {
     if (!isAuthenticated) {
       const cartData = Cookies.get("cart");
       return cartData
@@ -80,8 +77,8 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     }
 
     try {
-      // const response = await getCartForLoggedInUser();
-      // return response.data;
+      const response = await getCartForLogInUser();
+      return response.data;
     } catch (error) {
       console.error("Error fetching cart:", error);
       const cartData = Cookies.get("cart");
@@ -132,13 +129,13 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
           newItems = prevCart.cart_items.map((item, index) =>
             index === existingItemIndex
               ? {
-                  ...item,
-                  quantity: item.quantity + quantity,
-                  total: calculateItemTotal(
-                    item.billing_price,
-                    item.quantity + quantity
-                  ),
-                }
+                ...item,
+                quantity: item.quantity + quantity,
+                total: calculateItemTotal(
+                  item.billing_price,
+                  item.quantity + quantity
+                ),
+              }
               : item
           );
         } else {
@@ -159,19 +156,15 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
         return updatedCart;
       });
 
-      setShowCart(true);
-
-      // Sync with backend if logged in
       if (isAuthenticated) {
-        try {
-          setIsAdding(true);
-          // await addToCartForLoggedInUser({
-          //     product_id: product.id,
-          //     quantity,
-          // });
-        } catch (error) {
-          console.error("Failed to add to cart via API:", error);
-          toast.error("Failed to add to cart");
+        setIsAdding(true);
+        const res = await addToCartForLogInUser([{
+          product_id: product.id,
+          quantity,
+        }]);
+
+        if (!res.success) {
+          toast.error(res.message);
           // Revert UI changes if API fails
           setCart((prevCart) => ({
             ...prevCart,
@@ -179,12 +172,13 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
               (item) => item.id !== cartItem.id
             ),
           }));
-        } finally {
-          setIsAdding(false);
+        } else {
+          toast.success(res.message);
         }
+        setIsAdding(false);
+      } else {
+        toast.success("Product added to cart");
       }
-
-      toast.success("Product added to cart");
     },
     [isAuthenticated]
   );
@@ -215,24 +209,27 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
 
       // Sync with backend if logged in
       if (isAuthenticated) {
-        try {
-          setIsRemoving(true);
-          // await removeFromCartForLoggedInUser(itemId);
-        } catch (error) {
-          console.error("Failed to remove from cart via API:", error);
-          toast.error("Failed to remove from cart");
+        setIsRemoving(true);
+        const res = await removedProductFromCartForLoginUser(itemId);
+
+        if (!res.success) {
+          console.error("Failed to remove from cart via API:", res.message);
+          toast.error(res.message);
           // Revert UI changes
           setCart((prevCart) => ({
             ...prevCart,
             cart_items: [...prevCart.cart_items, item],
             cart_total: calculateCartTotal(prevCart.cart_items),
           }));
-        } finally {
-          setIsRemoving(false);
+        } else {
+          toast.success(res.message);
         }
-      }
 
-      toast.success("Product removed from cart");
+        // Reset loading state
+        setIsRemoving(false);
+      } else {
+        toast.success("Product removed from cart");
+      }
     },
     [cart, isAuthenticated]
   );
@@ -249,10 +246,10 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
         const updatedItems = prevCart.cart_items.map((item) =>
           item.id === itemId
             ? {
-                ...item,
-                quantity: newQuantity,
-                total: calculateItemTotal(item.billing_price, newQuantity),
-              }
+              ...item,
+              quantity: newQuantity,
+              total: calculateItemTotal(item.billing_price, newQuantity),
+            }
             : item
         );
         const updatedCart = {
@@ -305,10 +302,10 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
         const updatedItems = prevCart.cart_items.map((item) =>
           item.id === itemId
             ? {
-                ...item,
-                quantity: newQuantity,
-                total: calculateItemTotal(item.billing_price, newQuantity),
-              }
+              ...item,
+              quantity: newQuantity,
+              total: calculateItemTotal(item.billing_price, newQuantity),
+            }
             : item
         );
         const updatedCart = {
@@ -382,45 +379,45 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, [cart, isAuthenticated]);
 
-  const syncCartWithServer = useCallback(async () => {
-    if (!isAuthenticated) return;
+  // const syncCartWithServer = useCallback(async () => {
+  //   if (!isAuthenticated) return;
 
-    try {
-      const cookieCart = Cookies.get("cart");
-      const localCart = cookieCart
-        ? JSON.parse(cookieCart)
-        : { id: "guest_cart", cart_items: [], cart_total: 0 };
+  //   try {
+  //     const cookieCart = Cookies.get("cart");
+  //     const localCart = cookieCart
+  //       ? JSON.parse(cookieCart)
+  //       : { id: "guest_cart", cart_items: [], cart_total: 0 };
 
-      // Skip sync if the local cart is already equal to the server cart
-      const cartIsAlreadySynced =
-        JSON.stringify(localCart.cart_items) ===
-        JSON.stringify(cart.cart_items);
-      if (cartIsAlreadySynced) return;
+  //     // Skip sync if the local cart is already equal to the server cart
+  //     const cartIsAlreadySynced =
+  //       JSON.stringify(localCart.cart_items) ===
+  //       JSON.stringify(cart.cart_items);
+  //     if (cartIsAlreadySynced) return;
 
-      if (localCart.cart_items.length > 0) {
-        // Merge guest cart with server by adding items individually
-        // for (const item of localCart.cart_items) {
-        //     try {
-        //         await addToCartForLoggedInUser({
-        //             product_id: item.product.id,
-        //             quantity: item.quantity,
-        //         });
-        //     } catch (error) {
-        //         console.error("Failed to merge item:", error);
-        //     }
-        // }
+  //     if (localCart.cart_items.length > 0) {
+  //       // Merge guest cart with server by adding items individually
+  //       // for (const item of localCart.cart_items) {
+  //       //     try {
+  //       //         await addToCartForLoggedInUser({
+  //       //             product_id: item.product.id,
+  //       //             quantity: item.quantity,
+  //       //         });
+  //       //     } catch (error) {
+  //       //         console.error("Failed to merge item:", error);
+  //       //     }
+  //       // }
 
-        // Clear guest cart after successful merge
-        Cookies.remove("cart");
-      }
+  //       // Clear guest cart after successful merge
+  //       Cookies.remove("cart");
+  //     }
 
-      // Refresh with server cart
-      const serverCart = await fetchCart();
-      setCart(serverCart);
-    } catch (error) {
-      console.error("Error syncing cart with server:", error);
-    }
-  }, [fetchCart, isAuthenticated, cart]);
+  //     // Refresh with server cart
+  //     const serverCart = await fetchCart();
+  //     setCart(serverCart);
+  //   } catch (error) {
+  //     console.error("Error syncing cart with server:", error);
+  //   }
+  // }, [fetchCart, isAuthenticated, cart]);
 
   const value: CartContextType = {
     cart,
@@ -428,16 +425,13 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     isAdding,
     isRemoving,
     isUpdating,
-    showCart,
     coupon,
     addToCart,
     removeFromCart,
     clearCart,
-    setShowCart,
     increaseQty,
     decreaseQty,
     setCoupon,
-    syncCartWithServer,
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
