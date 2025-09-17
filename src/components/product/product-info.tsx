@@ -1,29 +1,32 @@
 "use client";
+
 import { Chip } from "@mui/material";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
 
+import { ProductPrice } from "@/app/(main)/shop/_components/product-price";
 import { StarIcon } from "@/icons/star";
+import { Product } from "@/interfaces/product";
 
 import { ProductActionButton } from "./product-action-button";
 
 interface ProductInfoProps {
-  open: boolean;
+  product: Product;
   onClose?: () => void;
 }
 
-export const ProductInfo = ({ open, onClose }: ProductInfoProps) => {
+export const ProductInfo = ({ onClose, product }: ProductInfoProps) => {
   return (
     <Box>
-      <Chip label="In Stock" color="primary" variant="outlined" size="small"/>
+      <Chip label="In Stock" color="primary" variant="outlined" size="small" />
 
       <Typography
         variant="h4"
         mt={1}
         sx={{ "&:hover": { textDecoration: "underline" } }}
       >
-        Reddragon 59S5 RGB Speaker
+        {product.name}
       </Typography>
 
       {/* Rating & Stock */}
@@ -41,19 +44,12 @@ export const ProductInfo = ({ open, onClose }: ProductInfoProps) => {
       </Box>
 
       {/* Price */}
-      <Box display="flex" alignItems="center" gap={2} mt={4}>
-        <Typography variant="h4">Tk 1,200</Typography>
-        <Typography
-          variant="body1"
-          fontWeight={400}
-          sx={{ textDecoration: "line-through", color: "text.secondary" }}
-        >
-          Tk 1,500
-        </Typography>
+      <Box mt={3}>
+        <ProductPrice product={product} />
       </Box>
 
       {/* Action Button */}
-      <ProductActionButton open={open} onClose={onClose || (() => {})} />
+      <ProductActionButton open={false} onClose={onClose || (() => { })} />
     </Box>
   );
 };

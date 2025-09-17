@@ -7,6 +7,7 @@ export const API_ROUTES = {
     products: {
         get_products: "/product",
         create_product: "/product",
+        get_product_by_slug: (slug: string) => `/product/${slug}`,
         update_product: (id: string) => `/product/${id}`,
         delete_product: (id: string) => `/product/${id}`
     },
