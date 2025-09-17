@@ -54,3 +54,13 @@ export const orderIdGenerator = async (): Promise<string> => {
 
   return new_order_id;
 };
+
+export function minutesAgo(dateString: string | Date): number {
+  const inputTime = new Date(dateString);
+  const now = new Date();
+
+  const diffMs = now.getTime() - inputTime.getTime(); // difference in milliseconds
+  const diffMin = Math.floor(diffMs / 1000 / 60); // convert to minutes
+
+  return diffMin;
+}

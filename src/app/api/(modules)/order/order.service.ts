@@ -37,7 +37,7 @@ import {
   refundCalculator,
 } from "./order.utils";
 
-
+// ------------------------------------- PLACE ORDER (USER) ------------------------------------
 const placeOrderForRegisteredUser = async (
   user: User,
   data: OrderPayloadForRegisteredUser
@@ -133,15 +133,13 @@ const placeOrderForRegisteredUser = async (
     discountAmount = coupon.discount_amount;
   }
 
-  const totalAmount = subAmount - discountAmount;
   const deliveryCharge =
     delivery_method === DeliveryMethod.STORE_PICKUP ? 0 : HOME_DELIVERY_CHARGE;
-  const payableAmount = totalAmount + deliveryCharge + tax;
+  const totalAmount = subAmount - discountAmount + deliveryCharge + tax;
 
   const new_order_id = await orderIdGenerator();
 
   const orderInfo = {
-    address_id: savedAddress.id,
     order_id: new_order_id,
     user_id: user?.id as string,
     payment_type: payment_type || PaymentType.CASH_ON_DELIVERY,
@@ -150,7 +148,6 @@ const placeOrderForRegisteredUser = async (
     discount_amount: discountAmount,
     sub_amount: subAmount,
     total_amount: totalAmount,
-    payable_amount: payableAmount,
     tax,
     percentage_of_tax: CONFIG.tax,
     coupon_id: coupon?.id || null,
@@ -188,10 +185,29 @@ const placeOrderForRegisteredUser = async (
 
     //   GatewayPageURL = apiResponse.GatewayPageURL;
     // }
+    let addressId = savedAddress?.id;
+
+    if (!addressId) {
+      if (address) {
+        const newAddress = await tx.address.create({
+          data: {
+            ...address,
+            user_id: user.id,
+          },
+        });
+        addressId = newAddress.id;
+      } else {
+        throw new CustomizedError(
+          httpStatus.BAD_REQUEST,
+          "No address found to create order"
+        );
+      }
+    }
 
     const order = await tx.order.create({
       data: {
         ...orderInfo,
+        address_id: addressId as string,
         order_items: {
           create: orderItems,
         },
@@ -235,6 +251,7 @@ const placeOrderForRegisteredUser = async (
   return result;
 };
 
+// ------------------------------------- PLACE ORDER (GUEST) -----------------------------------
 const placeOrderForGuestUser = async (data: OrderPayloadForGuestUser) => {
   const {
     address,
@@ -292,7 +309,7 @@ const placeOrderForGuestUser = async (data: OrderPayloadForGuestUser) => {
   if (coupon_code) {
     coupon = await CouponServices.applyCoupon({
       code: coupon_code,
-      email: savedAddress.email as string,
+      email: savedAddress?.email || address?.email,
       order_amount: subAmount,
       product_amount: itemsToCreateOrder.length,
     });
@@ -300,24 +317,21 @@ const placeOrderForGuestUser = async (data: OrderPayloadForGuestUser) => {
   }
 
   // Step 8: Calculate final amounts
-  const totalAmount = subAmount - discountAmount;
   const deliveryCharge =
     delivery_method === DeliveryMethod.STORE_PICKUP ? 0 : HOME_DELIVERY_CHARGE;
-  const payableAmount = totalAmount + deliveryCharge + tax;
+  const totalAmount = subAmount - discountAmount + deliveryCharge + tax;
 
   // Step 9: Generate unique order ID
   const new_order_id = await orderIdGenerator();
 
   const orderInfo = {
     order_id: new_order_id,
-    address_id: savedAddress.id,
     payment_type: payment_type || PaymentType.CASH_ON_DELIVERY,
     delivery_method: delivery_method || DeliveryMethod.HOME_DELIVERY,
     delivery_charge: deliveryCharge,
     discount_amount: discountAmount,
     sub_amount: subAmount,
     total_amount: totalAmount,
-    payable_amount: payableAmount,
     tax,
     percentage_of_tax: CONFIG.tax,
     coupon_id: coupon?.id || null,
@@ -357,10 +371,29 @@ const placeOrderForGuestUser = async (data: OrderPayloadForGuestUser) => {
     //   GatewayPageURL = apiResponse.GatewayPageURL;
     // }
 
+    let addressId = savedAddress?.id;
+
+    if (!addressId) {
+      if (address) {
+        const newAddress = await tx.address.create({
+          data: {
+            ...address,
+          },
+        });
+        addressId = newAddress.id;
+      } else {
+        throw new CustomizedError(
+          httpStatus.BAD_REQUEST,
+          "No address found to create order"
+        );
+      }
+    }
+
     // Step 10.1: Create order with items
     const order = await tx.order.create({
       data: {
         ...orderInfo,
+        address_id: addressId,
         order_items: { create: itemsToCreateOrder },
       },
       select: { ...orderSelectedFields },
@@ -389,21 +422,10 @@ const placeOrderForGuestUser = async (data: OrderPayloadForGuestUser) => {
   return result;
 };
 
-const getOrderByOrderId = async (orderId: string) => {
-  const result = await prisma.order.findUniqueOrThrow({
-    where: {
-      order_id: orderId,
-    },
-  });
-
-  return result;
-};
-
-// check github
-
+// ------------------------------------- GET ALL ORDERS ----------------------------------------
 const getOrders = async (query: Record<string, any>) => {
   const {
-    searchTerm,
+    search_term,
     page,
     limit,
     sort_by,
@@ -429,12 +451,12 @@ const getOrders = async (query: Record<string, any>) => {
 
   const andConditions: Prisma.OrderWhereInput[] = [];
 
-  if (searchTerm) {
+  if (search_term) {
     andConditions.push({
       OR: [
         ...orderSearchableFields.map((field) => ({
           [field]: {
-            contains: searchTerm,
+            contains: search_term,
             mode: "insensitive",
           },
         })),
@@ -442,7 +464,7 @@ const getOrders = async (query: Record<string, any>) => {
           address: {
             OR: orderSearchableFieldsByAddress.map((field) => ({
               [field]: {
-                contains: searchTerm,
+                contains: search_term,
                 mode: "insensitive",
               },
             })),
@@ -453,7 +475,7 @@ const getOrders = async (query: Record<string, any>) => {
             some: {
               product: {
                 name: {
-                  contains: searchTerm,
+                  contains: search_term,
                   mode: "insensitive",
                 },
               },
@@ -463,7 +485,7 @@ const getOrders = async (query: Record<string, any>) => {
         {
           coupon: {
             code: {
-              contains: searchTerm,
+              contains: search_term,
               mode: "insensitive",
             },
           },
@@ -547,6 +569,7 @@ const getOrders = async (query: Record<string, any>) => {
   };
 };
 
+// ------------------------------------- GET ORDER BY ORDER ID ---------------------------------
 const getOrder = async (order_id: string, user: User) => {
   const result = await prisma.order.findUniqueOrThrow({
     where: {
@@ -988,24 +1011,13 @@ export const checkAddressInOrderFlow = async (
         });
       }
     }
-  } else if (address) {
-    // Step 3: No address_id → create new address
-    savedAddress = await prisma.address.create({ data: address });
   }
-
-  // Step 4: Ensure an address exists
-  if (!savedAddress)
-    throw new CustomizedError(
-      httpStatus.BAD_REQUEST,
-      "No address found to create order"
-    );
 
   return savedAddress;
 };
 
 export const OrderServices = {
   placeOrderForGuestUser,
-  getOrderByOrderId,
   placeOrderForRegisteredUser,
   getOrders,
   myOrder,

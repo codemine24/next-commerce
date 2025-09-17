@@ -18,8 +18,7 @@ export const createAddress = z.object({
     allowEmpty: true,
   }),
   email: z
-    .string()
-    .optional()
+    .string({ error: "Email should be a valid email" })
     .refine(
       (val) => !val || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val),
       "Invalid email"
