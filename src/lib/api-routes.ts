@@ -10,6 +10,12 @@ export const API_ROUTES = {
         update_product: (id: string) => `/product/${id}`,
         delete_product: (id: string) => `/product/${id}`
     },
+    categories: {
+        get_categories: "/category",
+        create_category: "/category",
+        update_category: (id: string) => `/category/${id}`,
+        delete_category: (id: string) => `/category/${id}`
+    },
     cart: {
         get_cart: "/cart",
         add_to_cart: "/cart",

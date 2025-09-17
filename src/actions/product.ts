@@ -11,3 +11,8 @@ export const addProduct = async (product: ProductSchema) => {
 
     return res;
 }
+
+export const getProducts = async () => {
+    const res = await api.get(API_ROUTES.products.get_products);
+    return res;
+}

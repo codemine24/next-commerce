@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
-import { addProduct } from "@/actions/product/admin.product";
+import { addProduct } from "@/actions/product";
 import { toast } from "@/lib/toast-store";
 import { ProductSchema, productSchema } from "@/zod/product-schema";
 

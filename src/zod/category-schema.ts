@@ -6,17 +6,24 @@ export const categorySchema = z
             .string({ error: "Category title is required" })
             .min(1, "Category title is required"),
         code: z
-            .string({ error: "Category code is required" })
-            .transform((val) => val.toUpperCase())
+            .string()
             .optional(),
         description: z
-            .string({ error: "Category description is required" })
+            .string()
             .optional(),
         parent_id: z
-            .uuid({ error: "Category parent id is required" })
+            .string()
             .optional()
             .nullable(),
-        icon: z.instanceof(File).optional(),
-    });
+        icon: z
+            .union([z.instanceof(File), z.string()])
+            .optional(),
+    })
+    .refine((data) => {
+        if (data.icon instanceof File) {
+            return data.icon.type.startsWith("image/");
+        }
+        return true;
+    }, "Icon must be an image");
 
 export type CategorySchema = z.infer<typeof categorySchema>;
