@@ -1,12 +1,16 @@
+import { UserRole } from "@prisma/client";
+import httpStatus from "http-status";
+import { NextRequest } from "next/server";
+
 import { catchAsync } from "@/app/api/(helpers)/shared/catch-async";
+import { successResponse } from "@/app/api/(helpers)/shared/response";
 import payloadValidator from "@/app/api/(helpers)/utils/payload-validator";
 import userAuthenticator from "@/app/api/(helpers)/utils/user-authenticator";
-import { UserRole } from "@prisma/client";
-import { NextRequest } from "next/server";
+
 import { CouponSchemas } from "../coupon.schema";
 import { CouponServices } from "../coupon.service";
-import { successResponse } from "@/app/api/(helpers)/shared/response";
-import httpStatus from "http-status";
+
+
 
 // ----------------------------------- UPDATE COUPON ----------------------------------------
 export const PATCH = catchAsync(

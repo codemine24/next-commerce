@@ -6,6 +6,20 @@ import {
   Prisma,
   User,
 } from "@prisma/client";
+import httpStatus from "http-status";
+
+import { CONFIG } from "../../(helpers)/config";
+import CustomizedError from "../../(helpers)/error/customized-error";
+import { prisma } from "../../(helpers)/shared/prisma";
+import { dateChecker } from "../../(helpers)/utils/date-checker";
+import filterAdder from "../../(helpers)/utils/filter-adder";
+import { orderIdGenerator } from "../../(helpers)/utils/helper";
+import paginationMaker from "../../(helpers)/utils/pagination-maker";
+import queryValidator from "../../(helpers)/utils/query-validator";
+import { AddressPayload } from "../address/address.interface";
+import { ApplyCouponResponse } from "../coupon/coupon.interface";
+import { CouponServices } from "../coupon/coupon.service";
+
 import {
   OrderItem,
   OrderPayloadForGuestUser,
@@ -13,17 +27,6 @@ import {
   UpdateOrderByAdminPayload,
   UpdateOrderByCustomerPayload,
 } from "./order.interface";
-import { prisma } from "../../(helpers)/shared/prisma";
-import CustomizedError from "../../(helpers)/error/customized-error";
-import httpStatus from "http-status";
-import { ApplyCouponResponse } from "../coupon/coupon.interface";
-import { CouponServices } from "../coupon/coupon.service";
-import queryValidator from "../../(helpers)/utils/query-validator";
-import paginationMaker from "../../(helpers)/utils/pagination-maker";
-import filterAdder from "../../(helpers)/utils/filter-adder";
-import { dateChecker } from "../../(helpers)/utils/date-checker";
-import { AddressPayload } from "../address/address.interface";
-import { CONFIG } from "../../(helpers)/config";
 import {
   HOME_DELIVERY_CHARGE,
   orderQueryValidationConfig,
@@ -33,7 +36,7 @@ import {
   pickAllowedTransitions,
   refundCalculator,
 } from "./order.utils";
-import { orderIdGenerator } from "../../(helpers)/utils/helper";
+
 
 const placeOrderForRegisteredUser = async (
   user: User,
@@ -280,7 +283,7 @@ const placeOrderForGuestUser = async (data: OrderPayloadForGuestUser) => {
   let coupon: ApplyCouponResponse | null = null;
 
   // Step 6: Handle address (update, create or validate)
-  let savedAddress: Address | null = await checkAddressInOrderFlow(
+  const savedAddress: Address | null = await checkAddressInOrderFlow(
     address_id,
     address
   );

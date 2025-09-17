@@ -1,5 +1,6 @@
-import CustomizedError from "../error/customized-error";
 import httpStatus from "http-status";
+
+import CustomizedError from "../error/customized-error";
 
 export const dateChecker = (
   date: string,

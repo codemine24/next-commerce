@@ -1,4 +1,5 @@
 import { BeneficiaryType, DiscountType } from "@prisma/client";
+
 import { SORT_ORDER_VALUE } from "../../(helpers)/constants/common";
 
 export const couponSortableFields = [

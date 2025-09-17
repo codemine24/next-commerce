@@ -20,7 +20,6 @@ import {
   getCampaignStatus,
 } from "./campaign.utils";
 
-
 // ---------------------------------- CREATE CAMPAIGN ----------------------------------
 const createCampaign = async (data: CampaignPayload) => {
   // Step 1: Destructure payload to separate relational fields and campaign timings
@@ -476,8 +475,11 @@ const getCampaignDetails = async (id: string, query: Record<string, any>) => {
 
   // 3. Exclude eligible_brands, eligible_categories and eligible_products from campaign
   const {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     eligible_brands,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     eligible_categories,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     eligible_products,
     ...remainingCampaign
   } = campaign;
