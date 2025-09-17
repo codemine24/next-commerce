@@ -35,8 +35,8 @@ export const ProductAddReview = () => {
   const path = usePathname();
   const isAuthenticated = true;
   const [open, setOpen] = useState(false);
-  const [rating, setRating] = useState<number | null>(5);
-  const [comment, setComment] = useState<string>("");
+  const [, setRating] = useState<number | null>(5);
+  const [, setComment] = useState<string>("");
 
   const {
     handleSubmit,
@@ -73,7 +73,8 @@ export const ProductAddReview = () => {
       return;
     }
     toast.success("Review submitted successfully");
-    reset(), setOpen(false);
+    reset();
+    setOpen(false);
   };
 
   return (
