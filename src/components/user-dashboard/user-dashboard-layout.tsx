@@ -3,8 +3,9 @@ import Box from "@mui/material/Box";
 import { BoxContainer } from "@/components/box-container";
 import { Navbar } from "@/components/navbar/nav-bar";
 
-import { UserSidebar } from "./user-sidebar";
 import Footer from "../footer";
+
+import { UserSidebar } from "./user-sidebar";
 
 export const UserDashboardLayout = ({
   children,

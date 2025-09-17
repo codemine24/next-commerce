@@ -1,24 +1,40 @@
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import Link from "next/link";
 
 import { OptimizeImage } from "@/components/optimize-image";
+import { Product } from "@/interfaces/product";
 import { currencyFormatter } from "@/utils/currency-formatter";
+import { makeImageUrl } from "@/utils/helper";
 
+import { AddToCartButton } from "./add-to-cart-button";
 import { AddToCartIconButton } from "./add-to-cart-icon-button";
 import { AddWishListButton } from "./add-wish-list-button";
 import { ProductDiscountLabel } from "./product-discount-label";
 import { ProductQuickViewButton } from "./product-quick-view-button";
 
-interface Product {
-  id: string;
-  name: string;
-  slug: string;
-  thumbnail: string;
-  price: number;
-  discount_price: number;
+const getProductPrice = (product: Product) => {
+  if (product.discount_price) {
+    return (
+      <Stack direction="row" spacing={3} alignItems="center" mt={1}>
+        <Typography variant="h4">
+          {currencyFormatter(product.discount_price)}
+        </Typography>
+        <Typography
+          variant="body2"
+          sx={{ textDecoration: "line-through", color: "text.secondary" }}
+        >
+          {currencyFormatter(product.price)}
+        </Typography>
+      </Stack>
+    );
+  }
+  return (
+    <Typography variant="h4">
+      {currencyFormatter(product.price)}
+    </Typography>
+  );
 }
 
 export const ProductCard = async ({
@@ -66,7 +82,7 @@ export const ProductCard = async ({
           }}
         >
           <OptimizeImage
-            src="/images/featured_image_1.svg"
+            src={makeImageUrl(product.thumbnail) || "/images/featured_image_1.svg"}
             alt={product.name}
             height={290}
             imageStyle={{ objectFit: "contain" }}
@@ -88,7 +104,7 @@ export const ProductCard = async ({
             }}
           >
             <AddWishListButton />
-            <AddToCartIconButton />
+            <AddToCartIconButton product={product} />
           </Stack>
         </Box>
 
@@ -105,26 +121,14 @@ export const ProductCard = async ({
 
       {/* Price and quick view */}
       <Stack direction="row" justifyContent="space-between" px={2}>
-        <Stack direction="row" spacing={3} alignItems="center" mt={1}>
-          <Typography variant="h4">
-            {currencyFormatter(product.discount_price)}
-          </Typography>
-          <Typography
-            variant="body2"
-            sx={{ textDecoration: "line-through", color: "text.secondary" }}
-          >
-            {currencyFormatter(product.price)}
-          </Typography>
-        </Stack>
+        {getProductPrice(product)}
         {!action && <ProductQuickViewButton />}
       </Stack>
 
       {/* Action buttons (Add to Cart etc) */}
       {action && (
         <Box display="flex" gap={1} mt={2} px={2}>
-          <Button variant="soft" color="primary" fullWidth>
-            Add to Cart
-          </Button>
+          <AddToCartButton product={product} />
           <ProductQuickViewButton />
         </Box>
       )}

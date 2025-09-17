@@ -1,22 +1,25 @@
 import { Prisma } from "@prisma/client";
+import httpStatus from "http-status";
+
+import CustomizedError from "../../(helpers)/error/customized-error";
 import { prisma } from "../../(helpers)/shared/prisma";
+import paginationMaker from "../../(helpers)/utils/pagination-maker";
 import queryValidator from "../../(helpers)/utils/query-validator";
 import { slugGenerator } from "../../(helpers)/utils/slug-generator";
-import { CampaignPayload } from "./campaign.interface";
-import {
-  campaignQueryValidationConfig,
-  campaignSearchableFields,
-  getCampaignStatus,
-} from "./campaign.utils";
-import CustomizedError from "../../(helpers)/error/customized-error";
-import httpStatus from "http-status";
-import paginationMaker from "../../(helpers)/utils/pagination-maker";
 import {
   brandSelectFieldsWithProduct,
   categorySelectFieldsWithProduct,
   productQueryValidationConfig,
   productSearchableFields,
 } from "../product/product.utils";
+
+import { CampaignPayload } from "./campaign.interface";
+import {
+  campaignQueryValidationConfig,
+  campaignSearchableFields,
+  getCampaignStatus,
+} from "./campaign.utils";
+
 
 // ---------------------------------- CREATE CAMPAIGN ----------------------------------
 const createCampaign = async (data: CampaignPayload) => {

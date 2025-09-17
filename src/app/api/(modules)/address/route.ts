@@ -2,12 +2,13 @@ import { UserRole } from "@prisma/client";
 import httpStatus from "http-status";
 import { NextRequest } from "next/server";
 
-import { AddressServices } from "./address.service";
-import { AddressValidations } from "./address.schema";
 import { catchAsync } from "../../(helpers)/shared/catch-async";
 import { successResponse } from "../../(helpers)/shared/response";
 import payloadValidator from "../../(helpers)/utils/payload-validator";
 import userAuthenticator from "../../(helpers)/utils/user-authenticator";
+
+import { AddressValidations } from "./address.schema";
+import { AddressServices } from "./address.service";
 
 export const POST = catchAsync(async (req: NextRequest) => {
   // Step 1: Authenticate user

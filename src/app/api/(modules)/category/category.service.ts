@@ -1,16 +1,17 @@
 import { Prisma } from "@prisma/client";
 import httpStatus from "http-status";
 
-import { CategoryPayload } from "./category.interface";
-import {
-  categoryQueryValidationConfig,
-  categorySearchableFields,
-} from "./category.utils";
 import CustomizedError from "../../(helpers)/error/customized-error";
 import { prisma } from "../../(helpers)/shared/prisma";
 import paginationMaker from "../../(helpers)/utils/pagination-maker";
 import queryValidator from "../../(helpers)/utils/query-validator";
 import { slugGenerator } from "../../(helpers)/utils/slug-generator";
+
+import { CategoryPayload } from "./category.interface";
+import {
+  categoryQueryValidationConfig,
+  categorySearchableFields,
+} from "./category.utils";
 
 // ------------------------------------ ADD CATEGORY -------------------------------------
 const addCategory = async (payload: CategoryPayload) => {

@@ -1,13 +1,15 @@
 import { UserRole } from "@prisma/client";
-import { catchAsync } from "../../(helpers)/shared/catch-async";
-import userAuthenticator from "../../(helpers)/utils/user-authenticator";
-import payloadValidator from "../../(helpers)/utils/payload-validator";
-import { CouponSchemas } from "./coupon.schema";
-import { CouponServices } from "./coupon.service";
-import { successResponse } from "../../(helpers)/shared/response";
 import httpStatus from "http-status";
 import { NextRequest } from "next/server";
+
+import { catchAsync } from "../../(helpers)/shared/catch-async";
+import { successResponse } from "../../(helpers)/shared/response";
 import { commonSchemas } from "../../(helpers)/shared/schema";
+import payloadValidator from "../../(helpers)/utils/payload-validator";
+import userAuthenticator from "../../(helpers)/utils/user-authenticator";
+
+import { CouponSchemas } from "./coupon.schema";
+import { CouponServices } from "./coupon.service";
 
 // ------------------------------------- CREATE COUPON ------------------------------------
 export const POST = catchAsync(async (req: Request) => {

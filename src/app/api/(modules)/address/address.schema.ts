@@ -98,20 +98,17 @@ export const updateAddressValidationSchema = z.object({
         .string({
           error: "City is required",
         })
-        .min(2, "City must be at least 2 characters long")
-        .optional(),
+        .min(2, "City must be at least 2 characters long"),
       district: z
         .string({
           error: "District is required",
         })
-        .min(4, "District must be at least 2 characters long")
-        .optional(),
+        .min(4, "District must be at least 2 characters long"),
       country: z
         .string({
           error: "Country must be a string",
         })
-        .default("bangladesh")
-        .optional(),
+        .default("bangladesh"),
       is_default: z
         .boolean({ error: "Is default must be a boolean" })
         .default(false),

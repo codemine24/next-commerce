@@ -1,5 +1,5 @@
-import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import Box from '@mui/material/Box';
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 
 import { Navbar } from '@/components/navbar/nav-bar';
 import { AppProvider } from '@/providers/app-provider';

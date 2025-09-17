@@ -1,6 +1,7 @@
-import z from "zod";
-import { createAddress } from "../address/address.schema";
 import { DeliveryMethod, PaymentType } from "@prisma/client";
+import z from "zod";
+
+import { createAddress } from "../address/address.schema";
 
 const placeOrderForRegisteredUser = z.object({
   body: z

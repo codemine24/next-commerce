@@ -1,14 +1,15 @@
 import { Prisma, User } from "@prisma/client";
 import httpStatus from "http-status";
 
-import {
-  AddressFieldsValidationConfig,
-  addressSearchableFields,
-} from "./address.constant";
 import CustomizedError from "../../(helpers)/error/customized-error";
 import { prisma } from "../../(helpers)/shared/prisma";
 import paginationMaker from "../../(helpers)/utils/pagination-maker";
 import queryValidator from "../../(helpers)/utils/query-validator";
+
+import {
+  AddressFieldsValidationConfig,
+  addressSearchableFields,
+} from "./address.constant";
 import { AddressPayload } from "./address.interface";
 
 const createAddress = async (data: AddressPayload, user: User) => {
