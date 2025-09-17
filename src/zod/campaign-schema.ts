@@ -15,14 +15,10 @@ export const campaignSchema = z.object({
         .optional()
         .nullable(),
     thumbnail: z
-        .string({
-            error: "Thumbnail should be a valid path",
-        })
-        .min(1, "Thumbnail is required"),
+        .union([z.string(), z.instanceof(File)])
+        .optional(),
     start_at: z
-        .string({
-            error: "Start date should be a text",
-        })
+        .string()
         .refine((value) => {
             const inputDate = new Date(value);
             const today = new Date();
@@ -34,9 +30,7 @@ export const campaignSchema = z.object({
             return inputDate >= today;
         }, "Start date must be today or in the future"),
     end_at: z
-        .string({
-            error: "End date should be a text",
-        })
+        .string()
         .refine((value) => {
             const inputDate = new Date(value);
             const today = new Date();
@@ -51,18 +45,17 @@ export const campaignSchema = z.object({
         .enum(Object.values(CampaignPlatform))
         .optional(),
     conditions: z
-        .array(z.string({ error: "Condition should be a text" }))
-        .optional()
-        .default([]),
-    note: z.string({ error: "Note should be a text" }).optional().nullable(),
+        .array(z.string({ error: "This field is required" }))
+        .optional(),
+    note: z.string().optional().nullable(),
     eligible_categories: z
-        .array(z.uuid({ error: "Category ID should be a valid uuid" }))
+        .array(z.string())
         .optional(),
     eligible_brands: z
-        .array(z.uuid({ error: "Brand ID should be a valid uuid" }))
+        .array(z.string())
         .optional(),
     eligible_products: z
-        .array(z.string({ error: "Product ID should be a valid uuid" }))
+        .array(z.string())
         .optional(),
 })
     .strict()
@@ -72,7 +65,7 @@ export const campaignSchema = z.object({
 
         if (!Number.isNaN(start) && !Number.isNaN(end) && end < start) {
             ctx.addIssue({
-                code: z.ZodIssueCode.custom,
+                code: "custom",
                 path: ["end_at"],
                 message: "End date must be later than start date",
             });

@@ -27,7 +27,7 @@ export const BrandForm = ({ methods, onSubmit }: BrandFormProps) => {
                 <Editor
                     label="Description"
                     placeholder="Write brand description here"
-                    defaultValue=""
+                    defaultValue={methods.getValues("description") || ""}
                     setValue={(value) => methods.setValue("description", value)}
                 />
                 <FileUploader
