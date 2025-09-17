@@ -19,3 +19,8 @@ export type CartProduct = {
   slug: string;
   thumbnail: string | undefined;
 };
+
+export interface CartPayload {
+  product_id: string;
+  quantity: number;
+}

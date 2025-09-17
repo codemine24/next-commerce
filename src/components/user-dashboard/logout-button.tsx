@@ -17,6 +17,7 @@ export const LogoutButton = () => {
     toast.error("User logged out");
     router.replace("/");
   };
+
   return (
     <Box px={3}>
       <Button

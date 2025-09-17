@@ -2,7 +2,7 @@ import z from "zod";
 
 const addToCart = z.object({
   body: z
-    .object({
+    .array(z.object({
       product_id: z.uuid({
         error: "Product id should be a valid uuid",
       }),
@@ -13,9 +13,8 @@ const addToCart = z.object({
         .nonnegative({ error: "Quantity should not be negative" })
         .default(1)
         .optional(),
-    })
-    .strict(),
-});
+    })).nonempty("At least one item is required")
+}).strict();
 
 const updateCartItem = z.object({
   body: z
