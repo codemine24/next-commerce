@@ -14,13 +14,12 @@ import { ProductDiscountLabel } from "./product-discount-label";
 import { ProductPrice } from "./product-price";
 import { ProductQuickViewButton } from "./product-quick-view-button";
 
-export const ProductCard = async ({
-  product,
-  action = false,
-}: {
+interface ProductCardProps {
   product: Product;
   action?: boolean;
-}) => {
+}
+
+export const ProductCard = async ({ product, action = false }: ProductCardProps) => {
   return (
     <Box
       sx={{
@@ -99,14 +98,14 @@ export const ProductCard = async ({
       {/* Price and quick view */}
       <Stack direction="row" justifyContent="space-between" px={2}>
         <ProductPrice product={product} />
-        {!action && <ProductQuickViewButton />}
+        {!action && <ProductQuickViewButton product={product} />}
       </Stack>
 
       {/* Action buttons (Add to Cart etc) */}
       {action && (
         <Box display="flex" gap={1} mt={2} px={2}>
           <AddToCartButton product={product} />
-          <ProductQuickViewButton />
+          <ProductQuickViewButton product={product} />
         </Box>
       )}
 

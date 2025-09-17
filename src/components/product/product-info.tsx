@@ -13,10 +13,9 @@ import { ProductActionButton } from "./product-action-button";
 
 interface ProductInfoProps {
   product: Product;
-  onClose?: () => void;
 }
 
-export const ProductInfo = ({ onClose, product }: ProductInfoProps) => {
+export const ProductInfo = ({ product }: ProductInfoProps) => {
   return (
     <Box>
       <Chip label="In Stock" color="primary" variant="outlined" size="small" />
@@ -49,7 +48,7 @@ export const ProductInfo = ({ onClose, product }: ProductInfoProps) => {
       </Box>
 
       {/* Action Button */}
-      <ProductActionButton open={false} onClose={onClose || (() => { })} />
+      <ProductActionButton product={product} />
     </Box>
   );
 };
