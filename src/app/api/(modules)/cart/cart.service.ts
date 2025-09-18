@@ -1,5 +1,7 @@
 import { User } from "@prisma/client";
+import httpStatus from "http-status";
 
+import CustomizedError from "../../(helpers)/error/customized-error";
 import { prisma } from "../../(helpers)/shared/prisma";
 
 import { AddToCartPayload } from "./cart.interface";
@@ -27,12 +29,23 @@ const addToCart = async (user: User, payload: AddToCartPayload[]) => {
         },
         select: {
           id: true,
+          name: true,
           price: true,
           discount_price: true,
+          stock: true,
         },
       });
 
       const quantity = item.quantity || 1;
+
+      if (product.stock < quantity) {
+        throw new CustomizedError(
+          httpStatus.BAD_REQUEST,
+          product.stock === 0
+            ? `${product.name} is out of stock`
+            : `${product.name} stock is not enough`
+        );
+      }
 
       await tx.cartItem.upsert({
         where: {

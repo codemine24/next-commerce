@@ -1,64 +1,169 @@
-import { DeliveryMethod, PaymentType } from "@prisma/client";
+import {
+  DeliveryMethod,
+  OrderStatus,
+  PaymentStatus,
+  PaymentType,
+} from "@prisma/client";
 import z from "zod";
 
-import { uuidRegex } from "../../(helpers)/constants/common";
-import { addressSchema } from "../address/address.schema";
+import { createAddress, updateAddress } from "../address/address.schema";
 
-const orderSchemaForRegisteredUser = z.object({
-    address: z.any(),
-    address_id: z
-        .string()
-        .regex(uuidRegex, "Invalid address id")
+const placeOrderForRegisteredUser = z.object({
+  body: z
+    .object({
+      address: createAddress.strict().optional().nullable(),
+      address_id: z
+        .uuid({
+          error: "Address id should be a valid uuid",
+        })
         .optional()
         .nullable(),
-    payment_type: z.enum(Object.values(PaymentType)).optional(),
-    delivery_method: z.enum(Object.values(DeliveryMethod)).optional(),
-    coupon_id: z.string().optional(),
-    comment: z.string().optional(),
-}).superRefine((data, ctx) => {
-    const hasAddressId = !!data.address_id;
-
-    if (!hasAddressId) {
-        // Validate addressSchema
-        const result = addressSchema.strict().safeParse(data.address);
-
-        if (!result.success) {
-            for (const issue of result.error.issues) {
-                ctx.addIssue({
-                    path: ['address', ...issue.path],
-                    message: issue.message,
-                    code: "custom"
-                });
-            }
-        }
-    }
+      payment_type: z
+        .enum(Object.values(PaymentType) as [string, ...string[]])
+        .optional(),
+      delivery_method: z
+        .enum(Object.values(DeliveryMethod) as [string, ...string[]])
+        .optional(),
+      coupon_code: z
+        .string({
+          error: "Coupon code should be a text",
+        })
+        .min(1, "Coupon code should not empty string")
+        .optional(),
+      comment: z.string({ error: "Comment should be a text" }).optional(),
+    })
+    .strict(),
 });
 
-
-const orderSchemaForGuestUser = z.object({
-    address: addressSchema.strict(),
-    payment_type: z.enum(Object.values(PaymentType)).optional(),
-    delivery_method: z.enum(Object.values(DeliveryMethod)).optional(),
-    coupon_id: z.string().optional(),
-    comment: z.string().optional(),
-    order_items: z.array(
-        z.object({
-            product_id: z
-                .string()
-                .regex(uuidRegex, "Invalid Product id"),
-            quantity: z
-                .number()
+const placeOrderForGuestUser = z.object({
+  body: z
+    .object({
+      address: createAddress.strict().optional().nullable(),
+      address_id: z
+        .uuid({
+          error: "Address id should be a valid uuid",
+        })
+        .optional()
+        .nullable(),
+      order_items: z
+        .array(
+          z
+            .object({
+              product_id: z.uuid({
+                error: "Product id should be a valid uuid",
+              }),
+              quantity: z
+                .number({ error: "Quantity should be a number" })
                 .nonnegative({ message: "Quantity must be a positive number" })
                 .optional(),
-        }).strict()
-    ).nonempty("Order items are required"),
-})
+            })
+            .strict(),
+          { message: "Order items must be an array of objects" }
+        )
+        .nonempty("At least one item is required"),
+      payment_type: z
+        .enum(Object.values(PaymentType) as [string, ...string[]])
+        .optional(),
+      delivery_method: z
+        .enum(Object.values(DeliveryMethod) as [string, ...string[]])
+        .optional(),
+      coupon_code: z
+        .string({
+          error: "Coupon code should be a text",
+        })
+        .min(1, "Coupon code should not empty string")
+        .optional(),
+      comment: z.string({ error: "Comment should be a text" }).optional(),
+    })
+    .strict()
+    .superRefine((data, ctx) => {
+      if (!data.address && !data.address_id) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "Either address or address_id is required",
+          path: ["address"],
+        });
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "Either address or address_id is required",
+          path: ["address_id"],
+        });
+      }
+    }),
+});
 
-export const OrderSchema = {
-    createOrderSchemaForRegisteredUser: z.object({
-        body: orderSchemaForRegisteredUser,
-    }).strict(),
-    createOrderSchemaForGuestUser: z.object({
-        body: orderSchemaForGuestUser,
-    }).strict(),
-}
+const updateOrderByAdmin = z.object({
+  body: z
+    .object({
+      delivery_method: z
+        .enum(Object.values(DeliveryMethod) as [string, ...string[]])
+        .optional(),
+      payment_type: z
+        .enum(Object.values(PaymentType) as [string, ...string[]])
+        .optional(),
+      order_status: z
+        .enum(Object.values(OrderStatus) as [string, ...string[]])
+        .optional(),
+      payment_status: z
+        .enum(Object.values(PaymentStatus) as [string, ...string[]])
+        .optional(),
+      comment: z.string({ error: "Comment should be a text" }).optional(),
+      order_history: z
+        .object({
+          remark: z.string().optional(),
+        })
+        .optional(),
+      shipped_info: z
+        .object({
+          courier_id: z.uuid({
+            error: "Courier ID should be a valid uuid",
+          }),
+          tracking_id: z
+            .string({
+              error: "Tracking ID should be a text",
+            })
+            .min(1, "Tracking ID is required"),
+        })
+        .optional()
+        .nullable(),
+      refund_info: z
+        .object({
+          penalty_charge: z
+            .number({ error: "Penalty charge should be a number" })
+            .nonnegative({ message: "Penalty charge should be greater than 0" })
+            .default(0)
+            .optional(),
+        })
+        .optional()
+        .nullable(),
+    })
+    .strict(),
+});
+
+const updateOrderByCustomer = z.object({
+  body: z
+    .object({
+      payment_type: z
+        .enum(Object.values(PaymentType) as [string, ...string[]])
+        .optional(),
+      delivery_method: z
+        .enum(Object.values(DeliveryMethod) as [string, ...string[]])
+        .optional(),
+      comment: z.string({ error: "Comment should be a text" }).optional(),
+      address: updateAddress.strict().optional().nullable(),
+      address_id: z
+        .uuid({
+          error: "Address id should be a valid uuid",
+        })
+        .optional()
+        .nullable(),
+    })
+    .strict(),
+});
+
+export const OrderSchemas = {
+  placeOrderForRegisteredUser,
+  placeOrderForGuestUser,
+  updateOrderByAdmin,
+  updateOrderByCustomer,
+};
