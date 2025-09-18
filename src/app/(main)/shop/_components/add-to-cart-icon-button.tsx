@@ -20,7 +20,13 @@ export const AddToCartIconButton = ({ product }: { product: Product }) => {
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    addToCart(product);
+    addToCart({
+      id: product.id,
+      name: product.name,
+      slug: product.slug,
+      price: product.discount_price || product.price,
+      thumbnail: product.thumbnail,
+    });
   };
 
   return (

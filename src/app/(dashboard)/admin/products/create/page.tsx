@@ -1,13 +1,19 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
-import { ProductFormContainer } from "../_components/product-form-container";
+import { getBrands } from "@/actions/brand";
 
-export default function CreateProduct() {
+import { CreateProduct } from "./_components/create-product";
+
+const CreateProductPage = async () => {
+    const brands = await getBrands();
+
     return (
         <Box pb={10}>
-            <Typography variant="h4">Create Product</Typography>
-            <ProductFormContainer />
+            <Typography variant="h4" sx={{ my: 4 }}>Create Product</Typography>
+            <CreateProduct brands={brands.data} />
         </Box>
     );
 }
+
+export default CreateProductPage;

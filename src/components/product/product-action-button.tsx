@@ -7,19 +7,28 @@ import Stack from "@mui/material/Stack";
 import { useState } from "react";
 
 import { ProductQuantityButton } from "@/components/product-quantity-button";
+import { useCart } from "@/hooks/use-cart";
 import { CartIcon } from "@/icons/cart-icon";
 import { PaymentIcon } from "@/icons/payment-icon";
+import { Product } from "@/interfaces/product";
 
 interface ProductActionButtonProps {
-  open: boolean;
-  onClose: () => void;
+  product: Product;
 }
 
-export const ProductActionButton = ({ onClose }: ProductActionButtonProps) => {
+export const ProductActionButton = ({ product }: ProductActionButtonProps) => {
   const [qty, setQty] = useState(1);
+  const { addToCart } = useCart();
 
   const handleAddToCart = () => {
-    onClose();
+    addToCart({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      slug: product.slug,
+      thumbnail: product.thumbnail,
+    },
+      qty);
   };
 
   return (
@@ -37,7 +46,6 @@ export const ProductActionButton = ({ onClose }: ProductActionButtonProps) => {
           startIcon={<PaymentIcon />}
           variant="contained"
           sx={{ width: 150, height: 50 }}
-          onClick={handleAddToCart}
         >
           Buy now
         </Button>

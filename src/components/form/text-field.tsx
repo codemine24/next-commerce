@@ -35,12 +35,14 @@ export const TextField = ({ name, helperText, type = "text", label, placeholder,
                         placeholder={placeholder || label}
                         // value={field.value}
                         // onChange={field.onChange}
-                        value={type === "number" && field.value === 0 ? "" : field.value}
+                        value={field.value ?? ""}
                         onChange={(event) => {
+                            const value = event.target.value;
+
                             if (type === "number") {
-                                field.onChange(Number(event.target.value));
+                                field.onChange(value === "" ? undefined : Number(value));
                             } else {
-                                field.onChange(event.target.value);
+                                field.onChange(value === "" ? undefined : value);
                             }
                         }}
                         error={Boolean(error)}

@@ -12,8 +12,6 @@ import React from "react"
 
 import { CloseIcon } from "@/icons/close"
 
-
-
 export const ProductQuestionForm = () => {
     const [open, setOpen] = React.useState(false)
     const handleClose = () => setOpen(false)

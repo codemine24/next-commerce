@@ -48,14 +48,22 @@ export const Select = ({ name, label, options, placeholder, ...other }: Props) =
                                 },
                             }}
                         >
-                            <MenuItem value="" disabled>
-                                <em>{placeholder || "Select an option"}</em>
-                            </MenuItem>
-                            {options.map((option) => (
+                            {options.length > 0 && (
+                                <MenuItem value="" disabled>
+                                    <em>{placeholder || "Select an option"}</em>
+                                </MenuItem>
+                            )}
+                            {options.length > 0 && options.map((option) => (
                                 <MenuItem key={option.value} value={option.value}>
                                     {option.label}
                                 </MenuItem>
                             ))}
+
+                            {options.length === 0 && (
+                                <MenuItem disabled>
+                                    No options available
+                                </MenuItem>
+                            )}
                         </MuiSelect>
                         <FormHelperText error>{error?.message}</FormHelperText>
                     </>

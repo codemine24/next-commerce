@@ -1,6 +1,7 @@
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 
+import { getProductBySlug } from "@/actions/product";
 import { BoxContainer } from "@/components/box-container";
 import { ProductCarousel } from "@/components/product/product-carousel";
 import { ProductInfo } from "@/components/product/product-info";
@@ -17,7 +18,12 @@ const images = [
   "https://placehold.co/600x400/png",
 ];
 
-const ProductDetail = () => {
+type Params = Promise<{ slug: string }>
+
+const ProductDetail = async ({ params }: { params: Params }) => {
+  const { slug } = await params
+  const product = await getProductBySlug(slug)
+
   return (
     <BoxContainer>
       <Typography variant="h4" fontWeight={600} gutterBottom>
@@ -29,12 +35,12 @@ const ProductDetail = () => {
           <ProductCarousel images={images} />
         </Grid>
         <Grid size={{ xs: 12, md: 6 }}>
-          <ProductInfo open={false} />
+          <ProductInfo product={product.data} />
         </Grid>
       </Grid>
 
       {/* Product Detail Info */}
-      <ProductDetailInfo />
+      <ProductDetailInfo product={product.data} />
     </BoxContainer>
   );
 };

@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 
-import { getProducts } from "@/actions/product/user.product";
+import { getProducts } from "@/actions/product";
 import { Product } from "@/interfaces/product";
 
 import { ProductCard } from "../shop/_components/product-card";
