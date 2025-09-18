@@ -1,4 +1,5 @@
 import { BrandIcon } from "@/icons/brand";
+import { CampaignIcon } from "@/icons/campaign";
 import { CategoriesIcon } from "@/icons/categories";
 import { CouponIcon } from "@/icons/coupon";
 import { CustomizationIcon } from "@/icons/customization";
@@ -53,6 +54,14 @@ export const ADMIN_NAVIGATION = [
         name: "Coupons",
         icon: <CouponIcon fontSize="small" />,
         path: "/admin/coupons"
+    },
+    {
+        name: "Campaigns",
+        icon: <CampaignIcon fontSize="small" />,
+        children: [
+            { name: "Campaign List", path: "/admin/campaigns" },
+            { name: "Create Campaign", path: "/admin/campaigns/create" }
+        ]
     },
     {
         name: "Reviews",

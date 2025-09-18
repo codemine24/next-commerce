@@ -1,4 +1,4 @@
-import { parsePhoneNumberFromString } from "libphonenumber-js"
+import { parsePhoneNumberFromString } from "libphonenumber-js";
 import { z } from "zod";
 
 type PhoneOptions = {
@@ -11,19 +11,24 @@ type PhoneOptionsRequired = { required: true; allowEmpty?: boolean };
 type PhoneOptionsOptional = { required?: false; allowEmpty?: boolean };
 
 export function phoneSchema(options: PhoneOptionsRequired): z.ZodString;
-export function phoneSchema(options?: PhoneOptionsOptional): z.ZodOptional<z.ZodString>;
+export function phoneSchema(
+  options?: PhoneOptionsOptional
+): z.ZodOptional<z.ZodString>;
 export function phoneSchema(options: PhoneOptions = {}) {
   const base = z
-    .string()
+    .string({ error: "Contact number should be a text" })
     .trim()
-    .refine((value) => {
-      if (!options.required && !value) return true;
+    .refine(
+      (value) => {
+        if (!options.required && !value) return true;
 
-      const phone = parsePhoneNumberFromString(value);
-      return phone?.isValid();
-    }, {
-      message: "Invalid phone number",
-    });
+        const phone = parsePhoneNumberFromString(value);
+        return phone?.isValid();
+      },
+      {
+        message: "Invalid phone number",
+      }
+    );
 
   if (!options.required) {
     return base.optional();
@@ -31,7 +36,6 @@ export function phoneSchema(options: PhoneOptions = {}) {
 
   return base;
 }
-
 
 // Delete records validation schema
 const deleteRecordsValidationSchema = z.object({
@@ -41,7 +45,8 @@ const deleteRecordsValidationSchema = z.object({
         .array(
           z.uuid({
             error: "ID should be a valid uuid",
-          })
+          }),
+          { message: "IDs must be an array of uuids" }
         )
         .min(1, "At least one ID is required"),
     })

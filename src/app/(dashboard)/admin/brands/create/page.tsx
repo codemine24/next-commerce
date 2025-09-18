@@ -1,13 +1,13 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
-import { BrandForm } from "../_components/brand-form";
+import { CreateBrand } from "./_components/create-brand";
 
 export default function BrandCreate() {
     return (
         <Box pb={10}>
-            <Typography variant="h4">Create Brand</Typography>
-            <BrandForm />
+            <Typography variant="h4" sx={{ my: 4 }}>Create Brand</Typography>
+            <CreateBrand />
         </Box>
     );
 }

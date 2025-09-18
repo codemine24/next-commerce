@@ -1,4 +1,3 @@
-
 import { UserRole } from "@prisma/client";
 import httpStatus from "http-status";
 import { NextRequest } from "next/server";
@@ -11,12 +10,13 @@ import userAuthenticator from "@/app/api/(helpers)/utils/user-authenticator";
 import { AddressValidations } from "../address.schema";
 import { AddressServices } from "../address.service";
 
-export const PATCH = catchAsync(async (req: NextRequest, { params }: { params: Promise<{ id: string }> }) => {
+export const PATCH = catchAsync(
+  async (req: NextRequest, { params }: { params: Promise<{ id: string }> }) => {
     // Step 1: Authenticate user
     const user = await userAuthenticator(req, [
-        UserRole.SUPER_ADMIN,
-        UserRole.ADMIN,
-        UserRole.CUSTOMER,
+      UserRole.SUPER_ADMIN,
+      UserRole.ADMIN,
+      UserRole.CUSTOMER,
     ]);
 
     // Step 2: Parse request body
@@ -24,15 +24,16 @@ export const PATCH = catchAsync(async (req: NextRequest, { params }: { params: P
     const { id } = await params;
 
     // Step 3: Validate request body against schema
-    await payloadValidator(AddressValidations.updateAddressValidationSchema, body);
+    await payloadValidator(AddressValidations.updateAddress, body);
 
     // Step 4: Call service to update address
     const result = await AddressServices.updateAddress(id, body, user);
 
     // Step 5: Return success response with address data
     return successResponse({
-        statusCode: httpStatus.OK,
-        message: "Address updated successfully",
-        data: result,
+      statusCode: httpStatus.OK,
+      message: "Address updated successfully",
+      data: result,
     });
-});
+  }
+);

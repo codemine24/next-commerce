@@ -119,7 +119,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
 
       // Update UI immediately for better UX
       setCart((prevCart) => {
-        const existingItemIndex = prevCart.cart_items.findIndex(
+        const existingItemIndex = prevCart?.cart_items?.findIndex(
           (item) => item.product.id === product.id
         );
 

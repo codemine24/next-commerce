@@ -69,7 +69,7 @@ export const DELETE = catchAsync(async (req: NextRequest) => {
   // Step 3: Delete categories from the service layer
   const result = await CategoryServices.deleteCategory(body);
 
-  // Step 4: Return success response with categories and metadata
+  // Step 4: Return success response
   return successResponse({
     statusCode: httpStatus.OK,
     message: "Categories deleted successfully",
