@@ -15,13 +15,22 @@ import {
 
 // ------------------------------------ ADD PRODUCT --------------------------------------
 const addProduct = async (payload: ProductPayload) => {
+  const { categories, ...rest } = payload;
   const productCode = "product-" + Math.random().toString(36).substring(2, 9);
 
   const product = await prisma.product.create({
     data: {
-      ...payload,
+      ...rest,
       slug: slugGenerator(payload.name),
       product_code: productCode,
+      ...(categories &&
+        categories.length > 0 && {
+          categories: {
+            connect: categories.map((c) => ({
+              id: c,
+            })),
+          },
+        }),
     },
   });
 
@@ -109,6 +118,7 @@ const getProduct = async (slug: string) => {
 
 // ------------------------------------ UPDATE PRODUCT -----------------------------------
 const updateProduct = async (slug: string, payload: ProductPayload) => {
+  const { categories, ...rest } = payload;
   if (payload.name) payload.slug = slugGenerator(payload.name);
   const result = await prisma.product.update({
     where: {
@@ -116,7 +126,15 @@ const updateProduct = async (slug: string, payload: ProductPayload) => {
     },
 
     data: {
-      ...payload,
+      ...rest,
+      ...(categories &&
+        categories.length > 0 && {
+          categories: {
+            connect: categories.map((c) => ({
+              id: c,
+            })),
+          },
+        }),
     },
   });
 
