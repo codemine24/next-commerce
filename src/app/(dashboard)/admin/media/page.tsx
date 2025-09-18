@@ -1,7 +1,7 @@
+import MediaView from "./_components/media-view";
+
 export default function MediaPage() {
     return (
-        <div>
-            <h1>Media</h1>
-        </div>
+        <MediaView />
     );
 }

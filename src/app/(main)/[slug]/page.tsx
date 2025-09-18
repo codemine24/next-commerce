@@ -5,7 +5,7 @@ import { getProductBySlug } from "@/actions/product";
 import { BoxContainer } from "@/components/box-container";
 import { ProductCarousel } from "@/components/product/product-carousel";
 import { ProductInfo } from "@/components/product/product-info";
-import { Box } from "@mui/material";
+
 import { ProductDetailInfo } from "./_components/product-detail-info";
 
 const images = [
