@@ -25,7 +25,7 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
         mt={1}
         sx={{ "&:hover": { textDecoration: "underline" } }}
       >
-        {product.name}
+        {product?.name}
       </Typography>
 
       {/* Rating & Stock */}

@@ -7,22 +7,20 @@ import { BoxContainer } from "@/components/box-container";
 import { AllProducts } from "./_components/all-products";
 import { ProductSidebar } from "./_components/products-sidebar";
 
-export const dynamic = "force-dynamic";
-
 const ShopPage = async () => {
-  const products = await getProducts();
+    const products = await getProducts();
 
-  return (
-    <BoxContainer>
-      <Suspense fallback={<div>Loading...</div>}>
-        <Box sx={{ display: "flex", gap: 2 }}>
-          <ProductSidebar />
-          {/* Ensure props are serializable */}
-          <AllProducts products={JSON.parse(JSON.stringify(products.data))} />
-        </Box>
-      </Suspense>
-    </BoxContainer>
-  );
+    return (
+        <BoxContainer>
+            <Suspense fallback={<div>Loading...</div>}>
+                <Box sx={{ display: "flex", gap: 2 }}>
+                    <ProductSidebar />
+                    {/* Ensure props are serializable */}
+                    <AllProducts products={products.data} />
+                </Box>
+            </Suspense>
+        </BoxContainer>
+    );
 };
 
 export default ShopPage;

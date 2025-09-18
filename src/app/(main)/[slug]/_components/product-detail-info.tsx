@@ -6,6 +6,8 @@ import { ProductDetailInfoNavbar } from "./product-detail-info-navbar";
 import { ProductQuestions } from "./product-question";
 import { ProductReviews } from "./product-reviews";
 import { ProductSpecification } from "./product-specifications";
+import { ProductVideo } from "./product-video";
+import { SimilarProducts } from "./similar-products";
 
 export const ProductDetailInfo = ({ product }: { product: Product }) => {
     return (
@@ -13,10 +15,12 @@ export const ProductDetailInfo = ({ product }: { product: Product }) => {
             <ProductDetailInfoNavbar />
 
             <Box my={2} display="flex" flexDirection="column" rowGap={5}>
-                <ProductDescription description={product.description} />
-                <ProductSpecification specification={product.specification} />
+                <ProductDescription description={product?.description} />
+                <ProductSpecification specification={product?.specification} />
                 <ProductReviews />
                 <ProductQuestions />
+                <ProductVideo videoUrl="" />
+                <SimilarProducts />
             </Box>
         </Box>
     )
