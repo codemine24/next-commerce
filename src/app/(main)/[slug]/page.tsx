@@ -5,7 +5,7 @@ import { getProductBySlug } from "@/actions/product";
 import { BoxContainer } from "@/components/box-container";
 import { ProductCarousel } from "@/components/product/product-carousel";
 import { ProductInfo } from "@/components/product/product-info";
-import { notFound } from "next/navigation";
+import { Box } from "@mui/material";
 import { ProductDetailInfo } from "./_components/product-detail-info";
 
 const images = [
@@ -25,7 +25,13 @@ const ProductDetail = async ({ params }: { params: Params }) => {
   const product = await getProductBySlug(slug)
 
   if (!product.success) {
-    return notFound()
+    return (
+      <BoxContainer>
+        <Typography variant="h4" fontWeight={600} align="center" gutterBottom>
+          Product Not Found
+        </Typography>
+      </BoxContainer>
+    )
   }
 
   return (
