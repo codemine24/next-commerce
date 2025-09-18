@@ -5,45 +5,21 @@ import Link from "next/link";
 
 import { OptimizeImage } from "@/components/optimize-image";
 import { Product } from "@/interfaces/product";
-import { currencyFormatter } from "@/utils/currency-formatter";
 import { makeImageUrl } from "@/utils/helper";
 
 import { AddToCartButton } from "./add-to-cart-button";
 import { AddToCartIconButton } from "./add-to-cart-icon-button";
 import { AddWishListButton } from "./add-wish-list-button";
 import { ProductDiscountLabel } from "./product-discount-label";
+import { ProductPrice } from "./product-price";
 import { ProductQuickViewButton } from "./product-quick-view-button";
 
-const getProductPrice = (product: Product) => {
-  if (product.discount_price) {
-    return (
-      <Stack direction="row" spacing={3} alignItems="center" mt={1}>
-        <Typography variant="h4">
-          {currencyFormatter(product.discount_price)}
-        </Typography>
-        <Typography
-          variant="body2"
-          sx={{ textDecoration: "line-through", color: "text.secondary" }}
-        >
-          {currencyFormatter(product.price)}
-        </Typography>
-      </Stack>
-    );
-  }
-  return (
-    <Typography variant="h4">
-      {currencyFormatter(product.price)}
-    </Typography>
-  );
-}
-
-export const ProductCard = async ({
-  product,
-  action = false,
-}: {
+interface ProductCardProps {
   product: Product;
   action?: boolean;
-}) => {
+}
+
+export const ProductCard = async ({ product, action = false }: ProductCardProps) => {
   return (
     <Box
       sx={{
@@ -121,15 +97,15 @@ export const ProductCard = async ({
 
       {/* Price and quick view */}
       <Stack direction="row" justifyContent="space-between" px={2}>
-        {getProductPrice(product)}
-        {!action && <ProductQuickViewButton />}
+        <ProductPrice product={product} />
+        {!action && <ProductQuickViewButton product={product} />}
       </Stack>
 
       {/* Action buttons (Add to Cart etc) */}
       {action && (
         <Box display="flex" gap={1} mt={2} px={2}>
           <AddToCartButton product={product} />
-          <ProductQuickViewButton />
+          <ProductQuickViewButton product={product} />
         </Box>
       )}
 

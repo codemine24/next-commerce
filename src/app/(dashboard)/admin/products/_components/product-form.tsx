@@ -2,6 +2,7 @@
 
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import { UseFormReturn } from "react-hook-form";
 
 import { Editor } from "@/components/editor";
 import {
@@ -12,21 +13,19 @@ import {
   TextField,
 } from "@/components/form";
 import FormProvider from "@/components/form/form-provider";
+import { MultiInputField } from "@/components/form/multi-input-field";
 import { SubmitButton } from "@/components/submit-button";
 import { PRODUCT_SIZE, PRODUCT_TAGS } from "@/constants/product";
+import { Brand as BrandType } from "@/interfaces/brand";
+import { ProductSchema } from "@/zod/product-schema";
 
-const Brand = [
-  { id: 1, label: "Brand 1", value: "brand-1" },
-  { id: 2, label: "Brand 2", value: "brand-2" },
-  { id: 3, label: "Brand 3", value: "brand-3" },
-];
-
-interface Props {
-  methods: any;
-  onSubmit: any;
+interface ProductFormProps {
+  methods: UseFormReturn<ProductSchema>;
+  onSubmit: (data: ProductSchema) => void;
+  brands: BrandType[];
 }
 
-export const ProductForm = ({ methods, onSubmit }: Props) => {
+export const ProductForm = ({ methods, onSubmit, brands }: ProductFormProps) => {
 
   return (
     <FormProvider methods={methods} onSubmit={methods.handleSubmit(onSubmit)}>
@@ -40,8 +39,8 @@ export const ProductForm = ({ methods, onSubmit }: Props) => {
           <Select
             name="brand_id"
             label="Brand"
-            options={Brand}
             placeholder="Select a brand"
+            options={brands?.map((brand) => ({ label: brand.name, value: brand.id })) || []}
           />
         </Box>
 
@@ -87,8 +86,31 @@ export const ProductForm = ({ methods, onSubmit }: Props) => {
         <Editor
           label="Description"
           placeholder="Write product description here"
-          defaultValue=""
+          defaultValue={methods.getValues("description") || ""}
           setValue={(value) => methods.setValue("description", value)}
+        />
+
+        {/* Specification */}
+        <Editor
+          label="Specification"
+          placeholder="Write product specification here"
+          defaultValue={methods.getValues("specification") || ""}
+          setValue={(value) => methods.setValue("specification", value)}
+        />
+
+        {/* Additional Information */}
+        <Editor
+          label="Additional Information"
+          placeholder="Write product additional information here"
+          defaultValue={methods.getValues("additional_information") || ""}
+          setValue={(value) => methods.setValue("additional_information", value)}
+        />
+
+        {/* Multi Input Field */}
+        <MultiInputField
+          name="key_features"
+          label="Key Features"
+          placeholder="Enter key feature"
         />
 
         {/* File Uploader */}
@@ -106,6 +128,14 @@ export const ProductForm = ({ methods, onSubmit }: Props) => {
             uploadBoxSx={{ width: "100%", height: "100%" }}
           />
         </Box>
+
+        {/* Video URL */}
+        <TextField
+          type="url"
+          name="video_url"
+          label="Video URL"
+          placeholder="Enter video URL"
+        />
 
         {/* Submit Button */}
         <Box display="flex" justifyContent="flex-end" gap={2}>

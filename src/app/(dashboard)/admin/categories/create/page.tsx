@@ -1,13 +1,19 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
-import { CategoryForm } from "../_components/category-form";
+import { getCategories } from "@/actions/category";
 
-export default function CategoryCreatePage() {
+import { CreateCategory } from "./_components/create-category";
+
+const CategoryCreatePage = async () => {
+    const categories = await getCategories();
+
     return (
         <Box pb={10}>
-            <Typography variant="h4">Create Category</Typography>
-            <CategoryForm />
+            <Typography variant="h4" sx={{ my: 4 }}>Create Category</Typography>
+            <CreateCategory categories={categories.data} />
         </Box>
     );
 }
+
+export default CategoryCreatePage;

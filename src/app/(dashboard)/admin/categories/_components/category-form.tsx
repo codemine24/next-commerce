@@ -1,26 +1,24 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import { useForm } from "react-hook-form";
+import { UseFormReturn } from "react-hook-form";
 
 import { Editor } from "@/components/editor";
-import { TextField } from "@/components/form";
+import { Select, TextField } from "@/components/form";
 import { FileUploader } from "@/components/form/file-uploader";
 import FormProvider from "@/components/form/form-provider";
 import { SubmitButton } from "@/components/submit-button";
-import { categorySchema, CategorySchema } from "@/zod/category-schema";
+import { Category } from "@/interfaces/category";
+import { CategorySchema } from "@/zod/category-schema";
 
-export const CategoryForm = () => {
-    const methods = useForm<CategorySchema>({
-        resolver: zodResolver(categorySchema),
-    });
+interface CreateCategoryProps {
+    methods: UseFormReturn<CategorySchema>;
+    onSubmit: (data: CategorySchema) => void;
+    categories: Category[];
+}
 
-    const onSubmit = async (data: CategorySchema) => {
-        console.log(data);
-    };
-
+export const CategoryForm = ({ methods, onSubmit, categories }: CreateCategoryProps) => {
     return (
         <FormProvider methods={methods} onSubmit={methods.handleSubmit(onSubmit)}>
             <Box display="flex" flexDirection="column" gap={4}>
@@ -31,10 +29,18 @@ export const CategoryForm = () => {
                 <Editor
                     label="Description"
                     placeholder="Write category description here"
-                    defaultValue=""
+                    defaultValue={methods.getValues("description") || ""}
                     setValue={(value) => methods.setValue("description", value)}
                 />
-                <TextField type="text" name="parent_id" label="Category Parent ID" />
+                <Select
+                    label="Parent Category"
+                    name="parent_id"
+                    placeholder="Select a parent category"
+                    options={categories?.map((category) => ({
+                        value: category.id,
+                        label: category.title,
+                    })) || []}
+                />
                 <FileUploader
                     label="Category Icon"
                     onFilesChange={(files) => methods.setValue("icon", files[0])}

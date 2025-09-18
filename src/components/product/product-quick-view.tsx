@@ -7,6 +7,7 @@ import Modal from "@mui/material/Modal";
 import { ProductCarousel } from "@/components/product/product-carousel";
 import { ProductInfo } from "@/components/product/product-info";
 import { CloseIcon } from "@/icons/close";
+import { Product } from "@/interfaces/product";
 
 const images = [
   "https://placehold.co/600x400/png",
@@ -21,9 +22,10 @@ const images = [
 interface ProductQuickViewProps {
   open: boolean;
   onClose: () => void;
+  product: Product;
 }
 
-export const ProductQuickView = ({ open, onClose }: ProductQuickViewProps) => {
+export const ProductQuickView = ({ open, onClose, product }: ProductQuickViewProps) => {
   return (
     <Modal
       open={open}
@@ -64,7 +66,7 @@ export const ProductQuickView = ({ open, onClose }: ProductQuickViewProps) => {
               <ProductCarousel images={images} thumbDirection="vertical" />
             </Grid>
             <Grid size={{ xs: 12, md: 6 }}>
-              <ProductInfo open={open} onClose={onClose} />
+              <ProductInfo product={product} />
             </Grid>
           </Grid>
         </Box>

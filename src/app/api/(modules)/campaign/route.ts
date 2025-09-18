@@ -15,7 +15,7 @@ import { CampaignServices } from "./campaign.service";
 // ---------------------------------- CREATE CAMPAIGN ----------------------------------
 export const POST = catchAsync(async (req: Request) => {
   // Step 1: Authenticate user
-  const user = await userAuthenticator(req, [
+  await userAuthenticator(req, [
     UserRole.SUPER_ADMIN,
     UserRole.ADMIN,
   ]);

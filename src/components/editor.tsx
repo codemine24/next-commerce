@@ -98,7 +98,7 @@ export const Editor = ({
                     ...sx,
                 }}
             >
-                <div ref={quillRef} style={{ minHeight: height || 150 }} />
+                <div ref={quillRef} style={{ minHeight: height || 120 }} />
             </Box>
         </Box>
     );
