@@ -5,7 +5,7 @@ import { getProductBySlug } from "@/actions/product";
 import { BoxContainer } from "@/components/box-container";
 import { ProductCarousel } from "@/components/product/product-carousel";
 import { ProductInfo } from "@/components/product/product-info";
-
+import { notFound } from "next/navigation";
 import { ProductDetailInfo } from "./_components/product-detail-info";
 
 const images = [
@@ -23,6 +23,10 @@ type Params = Promise<{ slug: string }>
 const ProductDetail = async ({ params }: { params: Params }) => {
   const { slug } = await params
   const product = await getProductBySlug(slug)
+
+  if (!product.success) {
+    return notFound()
+  }
 
   return (
     <BoxContainer>
