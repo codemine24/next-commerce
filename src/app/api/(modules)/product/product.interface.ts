@@ -3,6 +3,7 @@ export interface ProductPayload {
   slug: string;
   model?: string;
   brand_id?: string;
+  categories?: string[];
   size?: string;
   color?: string;
   tags?: string[];
@@ -10,7 +11,7 @@ export interface ProductPayload {
   warranty?: string;
   stock?: number;
   price: number;
-  discount_price?: number;  
+  discount_price?: number;
   thumbnail?: string;
   gallery?: string[];
   description?: string;
