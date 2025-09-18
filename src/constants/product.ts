@@ -7,3 +7,11 @@ export const PRODUCT_SIZE = [
 ];
 
 export const PRODUCT_TAGS = ["tag-1", "tag-2", "tag-3"];
+
+export const PRODUCT_NAV_ITEM = [
+    { value: 'product-description', label: "Description" },
+    { value: 'product-specifications', label: "Specifications" },
+    { value: 'product-video', label: "Video" },
+    { value: "product-reviews", label: "Rating & Reviews" },
+    { value: 'product-qna', label: "QnA" }
+]

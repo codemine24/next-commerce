@@ -19,9 +19,7 @@ export const addToCartForLogInUser = async (payload: CartPayload[]) => {
         body: JSON.stringify(payload),
     });
 
-    if (res.success) {
-        revalidateTag("cart");
-    }
+    if (res.success) revalidateTag("cart");
 
     return res;
 }
@@ -29,8 +27,6 @@ export const addToCartForLogInUser = async (payload: CartPayload[]) => {
 export const removedProductFromCartForLoginUser = async (id: string) => {
     const response = await api.delete(API_ROUTES.cart.remove_from_cart(id));
 
-    if (response.success) {
-        revalidateTag('cart');
-    }
+    if (response.success) revalidateTag('cart');
     return response;
 }

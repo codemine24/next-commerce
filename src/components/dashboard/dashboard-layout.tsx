@@ -16,13 +16,10 @@ export const AdminDashboardLayout = ({ children }: PropsWithChildren) => {
         <>
             <DashboardSidebar />
             <Box
-                sx={(theme) => ({
+                sx={{
                     transition: "margin-left 0.3s",
-                    marginLeft: sidebarCompact ? "86px" : "280px",
-                    [theme.breakpoints.down("lg")]: {
-                        marginLeft: 0
-                    }
-                })}
+                    ml: { xs: 0, lg: sidebarCompact ? "86px" : "280px" },
+                }}
             >
                 <DashboardNavbar />
                 <Box px={2} minHeight="calc(100svh - 50px)" overflow="auto">

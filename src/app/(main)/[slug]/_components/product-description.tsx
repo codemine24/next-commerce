@@ -1,3 +1,4 @@
+import { Typography } from "@mui/material";
 import Box from "@mui/material/Box"
 import DOMPurify from 'isomorphic-dompurify';
 
@@ -10,7 +11,8 @@ export const ProductDescription = ({ description }: { description: string | null
         <Box id="#product-description">
             <ProductSectionHeader title="Description" />
             <Box sx={{ bgcolor: "background.paper", p: { xs: 2, sm: 3 } }}>
-                <div dangerouslySetInnerHTML={{ __html: sanitizedDescription }} />
+                {sanitizedDescription && <div dangerouslySetInnerHTML={{ __html: sanitizedDescription }} />}
+                {!sanitizedDescription && <Typography variant="body2">No description available</Typography>}
             </Box>
         </Box>
     )
