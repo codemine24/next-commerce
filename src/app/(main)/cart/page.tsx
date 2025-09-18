@@ -2,7 +2,7 @@ import { BoxContainer } from "@/components/box-container";
 
 import { CartPageContainer } from "./_components/cart-page-container";
 
-const Cart = () => {
+const CartPage = () => {
   return (
     <BoxContainer>
       <CartPageContainer />
@@ -10,4 +10,4 @@ const Cart = () => {
   );
 };
 
-export default Cart;
+export default CartPage;

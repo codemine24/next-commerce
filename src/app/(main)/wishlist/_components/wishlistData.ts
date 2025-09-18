@@ -1,0 +1,73 @@
+// wishlistData.ts
+export const wishlistData = [
+  {
+    id: "p1",
+    name: "L23 Club Cabriole Sofa",
+    image: "/assets/images/wishlist/red-sofa.svg",
+    price: 999,
+    status: "in-stock",
+  },
+  {
+    id: "p2",
+    name: "HATIL Sofa Anderson-279",
+    image: "/assets/images/wishlist/sofa.svg",
+    price: 1499,
+    status: "in-stock",
+  },
+  {
+    id: "p3",
+    name: "House Hold Almirah Carnelian",
+    image: "/assets/images/wishlist/almirah.svg",
+    price: 399,
+    status: "out-of-stock",
+  },
+  {
+    id: "p4",
+    name: "L23 Club Cabriole Sofa",
+    image: "/assets/images/wishlist/red-sofa.svg",
+    price: 799,
+    status: "in-stock",
+  },
+  {
+    id: "p5",
+    name: "House Hold Almirah Carnelian",
+    image: "/assets/images/wishlist/almirah.svg",
+    price: 799,
+    status: "upcoming",
+  },
+  {
+    id: "p6",
+    name: "L23 Club Cabriole Sofa",
+    image: "/assets/images/wishlist/red-sofa.svg",
+    price: 950,
+    status: "in-stock",
+  },
+  {
+    id: "p7",
+    name: "House Hold Almirah Carnelian",
+    image: "/assets/images/wishlist/almirah.svg",
+    price: 1999,
+    status: "out-of-stock",
+  },
+  {
+    id: "p8",
+    name: "House Hold Almirah Carnelian",
+    image: "/assets/images/wishlist/almirah.svg",
+    price: 599,
+    status: "upcoming",
+  },
+  {
+    id: "p9",
+    name: "HATIL Sofa Anderson-279",
+    image: "/assets/images/wishlist/sofa.svg",
+    price: 120,
+    status: "in-stock",
+  },
+  {
+    id: "p10",
+    name: "House Hold Almirah Carnelian",
+    image: "/assets/images/wishlist/almirah.svg",
+    price: 1500,
+    status: "in-stock",
+  },
+];
