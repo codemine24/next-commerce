@@ -45,7 +45,8 @@ const deleteRecordsValidationSchema = z.object({
         .array(
           z.uuid({
             error: "ID should be a valid uuid",
-          })
+          }),
+          { message: "IDs must be an array of uuids" }
         )
         .min(1, "At least one ID is required"),
     })

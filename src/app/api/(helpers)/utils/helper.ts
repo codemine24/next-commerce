@@ -2,19 +2,30 @@ import { prisma } from "../shared/prisma";
 
 export function formDataToObject(formData: FormData): Record<string, any> {
   const obj: Record<string, any> = {};
+
   formData.forEach((value, key) => {
-    // Handle JSON fields
+    let parsedValue: any = value;
+
+    // If it's a string, try to parse JSON
     if (typeof value === "string") {
       try {
-        obj[key] = JSON.parse(value);
+        parsedValue = JSON.parse(value);
       } catch {
-        obj[key] = value;
+        parsedValue = value;
       }
+    }
+
+    // If key already exists, turn it into an array and push
+    if (obj[key]) {
+      if (!Array.isArray(obj[key])) {
+        obj[key] = [obj[key]];
+      }
+      obj[key].push(parsedValue);
     } else {
-      // Files stay as File objects
-      obj[key] = value;
+      obj[key] = parsedValue;
     }
   });
+
   return obj;
 }
 
