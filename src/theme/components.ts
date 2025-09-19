@@ -2,6 +2,7 @@ import { common } from "@mui/material/colors";
 import { alpha, Components, Theme } from "@mui/material/styles";
 
 import { colorPalette } from "./palette";
+import { BORDER_RADIUS } from "./shape";
 
 // ========================================================
 
@@ -204,7 +205,7 @@ export const components: Components<Theme> = {
   MuiIconButton: {
     styleOverrides: {
       root: {
-        borderRadius: 12,
+        borderRadius: BORDER_RADIUS.default,
       },
     },
   },
@@ -216,12 +217,20 @@ export const components: Components<Theme> = {
     },
   },
   MuiPopover: {
-    defaultProps: { elevation: 5 },
+    defaultProps: { elevation: 0 },
+    styleOverrides: {},
+  },
+  MuiPaper: {
     styleOverrides: {
-      paper: {
-        borderRadius: 8,
+      root: ({ theme }) => ({
         marginTop: 4,
-      },
+        backgroundColor: theme.palette.background.default,
+        borderRadius: 0,
+        elevation: 0,
+        boxShadow: "none",
+        border: "1px solid",
+        borderColor: theme.palette.divider,
+      }),
     },
   },
   MuiSlider: {

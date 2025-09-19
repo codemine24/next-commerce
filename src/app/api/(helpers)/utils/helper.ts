@@ -2,11 +2,16 @@ import { prisma } from "../shared/prisma";
 
 export function formDataToObject(formData: FormData): Record<string, any> {
   const obj: Record<string, any> = {};
+  const countMap: Record<string, number> = {};
+
+  // Count occurrences of each key
+  formData.forEach((_, key) => {
+    countMap[key] = (countMap[key] || 0) + 1;
+  });
 
   formData.forEach((value, key) => {
     let parsedValue: any = value;
 
-    // If it's a string, try to parse JSON
     if (typeof value === "string") {
       try {
         parsedValue = JSON.parse(value);
@@ -15,14 +20,17 @@ export function formDataToObject(formData: FormData): Record<string, any> {
       }
     }
 
-    // If key already exists, turn it into an array and push
     if (obj[key]) {
       if (!Array.isArray(obj[key])) {
         obj[key] = [obj[key]];
       }
       obj[key].push(parsedValue);
     } else {
-      obj[key] = parsedValue;
+      if (countMap[key] > 1 || key === "files") {
+        obj[key] = [parsedValue];
+      } else {
+        obj[key] = parsedValue;
+      }
     }
   });
 

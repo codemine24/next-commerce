@@ -1,9 +1,9 @@
 import Backdrop from "@mui/material/Backdrop"
 import Box from "@mui/material/Box";
-import Fade from "@mui/material/Fade"
 import Grid from "@mui/material/Grid";
 import Modal from "@mui/material/Modal";
 
+import { FadeTransition } from "@/components/fade-transition";
 import { ProductCarousel } from "@/components/product/product-carousel";
 import { ProductInfo } from "@/components/product/product-info";
 import { CloseIcon } from "@/icons/close";
@@ -40,7 +40,7 @@ export const ProductQuickView = ({ open, onClose, product }: ProductQuickViewPro
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Fade in={open} timeout={500}>
+      <FadeTransition in={open} timeout={500}>
         <Box
           sx={{
             position: "absolute",
@@ -70,7 +70,7 @@ export const ProductQuickView = ({ open, onClose, product }: ProductQuickViewPro
             </Grid>
           </Grid>
         </Box>
-      </Fade>
+      </FadeTransition>
     </Modal>
   );
 };

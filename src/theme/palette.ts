@@ -10,19 +10,20 @@ export const colorPalette: PaletteOptions = {
   secondary: { main: "#22BCA5" },
   background: {
     default: "#fff",
-    paper: "#F6F6F6",
+    paper: "#F9F9FA",
   },
   text: {
     primary: "#03140E",
     secondary: "#4B566B",
   },
-  divider: "#EFEDFA",
+  divider: "#ddd",
   common: {
     black: "#000",
     white: "#fff",
   },
   grey: {
+    400: "#8A9994",
     500: "#9CA3AF",
-    700: "#374151"
+    700: "#374151",
   },
 };

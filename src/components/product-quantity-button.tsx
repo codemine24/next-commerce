@@ -27,16 +27,16 @@ export const ProductQuantityButton = ({
         borderColor: "divider",
         overflow: "hidden",
         width: 110,
-        height: 30,
+        height: 45,
+        bgcolor: "transparent",
       }}
     >
       <IconButton
         onClick={onRemove}
         disabled={qty <= 1}
-        size="small"
         sx={{
           borderRadius: 0,
-          width: 40,
+          width: 30,
           color: "text.secondary",
         }}
       >
@@ -67,10 +67,9 @@ export const ProductQuantityButton = ({
       <IconButton
         onClick={onAdd}
         disabled={false}
-        size="small"
         sx={{
           borderRadius: 0,
-          width: 40,
+          width: 30,
           color: "text.secondary",
         }}
       >

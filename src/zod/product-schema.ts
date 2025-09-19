@@ -24,9 +24,9 @@ export const productSchema = z.object({
         .number()
         .nonnegative({ error: "Discount price should not be negative" })
         .optional(),
-    thumbnail: z.union([z.string(), z.instanceof(File)]).optional(),
+    thumbnail: z.union([z.string(), z.null()]).optional(),
     gallery: z
-        .array(z.union([z.string(), z.instanceof(File)]))
+        .array(z.union([z.string(), z.null()]))
         .optional(),
     description: z.string().optional(),
     specification: z.string().optional(),
