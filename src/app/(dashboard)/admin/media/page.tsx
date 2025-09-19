@@ -1,19 +1,11 @@
-import Box from "@mui/material/Box";
+import { Suspense } from "react";
 
-import { getFiles } from "@/actions/file";
+import MediaView from "./_components/media-view";
 
-import { MediaContent } from "./_components/media-content";
-import { MediaFilter } from "./_components/media-filter";
-import { MediaHeader } from "./_components/media-header";
-
-export default async function MediaPage() {
-    const data = await getFiles();
-
-    return (
-        <Box>
-            <MediaHeader />
-            <MediaFilter />
-            <MediaContent media={data?.data} />
-        </Box>
-    );
+export default function MediaPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <MediaView />
+    </Suspense>
+  );
 }
