@@ -22,7 +22,8 @@ export const colorPalette: PaletteOptions = {
     white: "#fff",
   },
   grey: {
+    400: "#8A9994",
     500: "#9CA3AF",
-    700: "#374151"
+    700: "#374151",
   },
 };
