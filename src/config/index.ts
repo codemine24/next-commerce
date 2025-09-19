@@ -1,5 +1,5 @@
 const CONFIG = {
-    bucket_url: process.env.NEXT_PUBLIC_BUCKET_URL ?? "",
+    bucket_url: process.env.NEXT_PUBLIC_SUPABASE_BUCKET_URL ?? "",
     general_bucket: process.env.NEXT_PUBLIC_GENERAL_BUCKET ?? "",
     user_bucket: process.env.NEXT_PUBLIC_USER_BUCKET ?? "",
     base_url: process.env.NEXT_PUBLIC_BASE_URL ?? "",
