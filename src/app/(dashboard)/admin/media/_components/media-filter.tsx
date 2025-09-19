@@ -111,7 +111,9 @@ export const MediaFilter = () => {
 
     return (
         <Box display="flex" gap={2} alignItems="center" justifyContent="space-between">
-            <MediaSearchBox searchText={searchText} handleSearch={handleSearch} />
+            <MediaSearchBox
+                searchText={searchText}
+                handleSearch={handleSearch} />
 
             <Box display="flex" gap={2} alignItems="center">
                 <CustomDatePicker
@@ -128,7 +130,11 @@ export const MediaFilter = () => {
                     onChangeDate={handleToDate}
                     endIcon={<ChevronDownIcon />}
                 />
-                <MediaFileType types={types} handleFilterType={handleFilterType} handleResetType={handleResetType} />
+                <MediaFileType
+                    types={types}
+                    handleFilterType={handleFilterType}
+                    handleResetType={handleResetType}
+                />
             </Box>
         </Box>
     );

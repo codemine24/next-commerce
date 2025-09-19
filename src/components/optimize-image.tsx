@@ -33,6 +33,8 @@ export const OptimizeImage = ({
   placeholder = blurDataURL ? "blur" : "empty",
 }: OptimizeImageProps) => {
   const srcImage = src || placeholderImage;
+
+  console.log(srcImage);
   return (
     <Box
       sx={{

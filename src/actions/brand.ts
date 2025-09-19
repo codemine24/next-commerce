@@ -2,13 +2,14 @@
 
 import { revalidateTag } from "next/cache";
 
+import { TAGS } from "@/constants/tags";
 import api from "@/lib/api";
 import { API_ROUTES } from "@/lib/api-routes";
 import { BrandSchema } from "@/zod/brand-schema";
 
 export const getBrands = async () => {
     const res = await api.get(API_ROUTES.brands.get_brands, {
-        next: { tags: ["brands"] }
+        next: { tags: [TAGS.brands] }
     });
     return res;
 }
@@ -18,7 +19,7 @@ export const addBrand = async (brand: BrandSchema) => {
         body: JSON.stringify(brand),
     });
 
-    if (res.success) revalidateTag("brands");
+    if (res.success) revalidateTag(TAGS.brands);
 
     return res;
 }
