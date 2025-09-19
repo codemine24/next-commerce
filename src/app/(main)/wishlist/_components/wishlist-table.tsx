@@ -1,7 +1,6 @@
 import {
   Box,
   Button,
-  Chip,
   IconButton,
   Stack,
   Table,
@@ -10,86 +9,23 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
   alpha,
   tableCellClasses,
 } from "@mui/material";
 import React from "react";
 
-import { AccessTimeIcon } from "@/icons/access-time";
-import { CheckCircle } from "@/icons/check-circle";
+import { StatusChip, WishlistProduct } from "@/components/status-chip";
 import { DeleteCircle } from "@/icons/delete-circle";
 import { ShoppingCart } from "@/icons/shopping-cart";
 import { BORDER_RADIUS } from "@/theme";
-
-type Product = {
-  id: string | number;
-  name: string;
-  image: string;
-  price: number;
-  status: "in-stock" | "out-of-stock" | "upcoming";
-};
+import { currencyFormatter } from "@/utils/currency-formatter";
 
 interface WishlistTableProps {
-  products: Product[];
+  products: WishlistProduct[];
 }
 
 export const WishlistTable: React.FC<WishlistTableProps> = ({ products }) => {
-  const renderStatusChip = (status: Product["status"]) => {
-    switch (status) {
-      case "in-stock":
-        return (
-          <Chip
-            icon={<CheckCircle />}
-            label="In Stock"
-            variant="outlined"
-            sx={{
-              color: "primary.main",
-              bgcolor: alpha("#3ECDA6", 0.1),
-              border: "1px solid #99FFDF",
-              borderRadius: BORDER_RADIUS.default,
-              "& .MuiChip-icon": {
-                color: "primary.main",
-              },
-            }}
-          />
-        );
-      case "out-of-stock":
-        return (
-          <Chip
-            icon={<DeleteCircle />}
-            label="Out of Stock"
-            variant="outlined"
-            sx={{
-              color: "#FF3030",
-              bgcolor: alpha("#FF3030", 0.1),
-              border: "1px solid #FF3030",
-              borderRadius: BORDER_RADIUS.default,
-              "& .MuiChip-icon": {
-                color: "#FF3030",
-              },
-            }}
-          />
-        );
-      case "upcoming":
-        return (
-          <Chip
-            icon={<AccessTimeIcon />}
-            label="Upcoming"
-            variant="outlined"
-            sx={{
-              color: "#00ADCC",
-              bgcolor: alpha("#00ADCC", 0.1),
-              border: "1px solid #00ADCC",
-              borderRadius: BORDER_RADIUS.default,
-              "& .MuiChip-icon": {
-                color: "#00ADCC",
-              },
-            }}
-          />
-        );
-    }
-  };
-
   return (
     <TableContainer sx={{ mt: 2 }}>
       <Table
@@ -117,10 +53,18 @@ export const WishlistTable: React.FC<WishlistTableProps> = ({ products }) => {
       >
         <TableHead>
           <TableRow>
-            <TableCell>Product</TableCell>
-            <TableCell>Price</TableCell>
-            <TableCell>Stock Status</TableCell>
-            <TableCell>Action</TableCell>
+            <TableCell>
+              <Typography variant="body1">Product</Typography>
+            </TableCell>
+            <TableCell>
+              <Typography variant="body1">Price</Typography>
+            </TableCell>
+            <TableCell>
+              <Typography variant="body1">Stock Status</Typography>
+            </TableCell>
+            <TableCell>
+              <Typography variant="body1">Action</Typography>
+            </TableCell>
           </TableRow>
         </TableHead>
 
@@ -139,13 +83,17 @@ export const WishlistTable: React.FC<WishlistTableProps> = ({ products }) => {
                       objectFit: "cover",
                     }}
                   />
-                  {product.name}
+                  <Typography>{product.name}</Typography>
                 </Box>
               </TableCell>
 
-              <TableCell>${product.price}</TableCell>
+              <TableCell>
+                <Typography>{currencyFormatter(product.price)}</Typography>
+              </TableCell>
 
-              <TableCell>{renderStatusChip(product.status)}</TableCell>
+              <TableCell>
+                <StatusChip status={product.status} />
+              </TableCell>
 
               <TableCell>
                 <Stack direction="row" spacing={2}>
