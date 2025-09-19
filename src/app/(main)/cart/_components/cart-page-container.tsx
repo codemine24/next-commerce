@@ -10,7 +10,10 @@ import Typography from "@mui/material/Typography";
 import { useCart } from "@/hooks/use-cart";
 import { BORDER_RADIUS } from "@/theme";
 
+import { SectionTitle } from "../../_components/section-title";
+
 import { CartItems } from "./cart-items";
+import { currencyFormatter } from "@/utils/currency-formatter";
 
 export const CartPageContainer = () => {
   const { cart } = useCart();
@@ -18,7 +21,7 @@ export const CartPageContainer = () => {
 
   return (
     <Box mt={2}>
-      <Typography variant="h3">Shopping Cart</Typography>
+      <SectionTitle title="Cart" />
 
       {/* Table */}
       <CartItems />
@@ -36,11 +39,11 @@ export const CartPageContainer = () => {
               pb: 1,
             }}
           >
-            <Typography fontWeight={600} width="60%" textAlign="right">
+            <Typography width="60%" textAlign="right">
               Subtotal:
             </Typography>
-            <Typography fontWeight={600} color="red">
-              TK {cart?.cart_total || 0}
+            <Typography color="primary.main">
+              {currencyFormatter(cart?.cart_total)}
             </Typography>
           </Stack>
           <Stack
@@ -53,11 +56,12 @@ export const CartPageContainer = () => {
               pb: 1,
             }}
           >
-            <Typography fontWeight={600} width="60%" textAlign="right">
+            <Typography width="60%" textAlign="right">
               Home Delivery:
             </Typography>
-            <Typography fontWeight={600} color="red">
-              TK {delivery}
+            <Typography color="primary.main">
+              {" "}
+              {currencyFormatter(delivery)}
             </Typography>
           </Stack>
           <Stack
@@ -68,8 +72,8 @@ export const CartPageContainer = () => {
             <Typography fontWeight={600} width="60%" textAlign="right">
               Total:
             </Typography>
-            <Typography fontWeight={700} color="red">
-              TK {cart?.cart_total + delivery || 0}
+            <Typography fontWeight={700} color="primary.main">
+              {currencyFormatter(cart?.cart_total + delivery)}
             </Typography>
           </Stack>
         </Box>

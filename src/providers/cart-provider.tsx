@@ -1,7 +1,11 @@
 import Cookies from "js-cookie";
-import React, { createContext, useEffect, useState, useCallback } from "react";
+import React, { createContext, useCallback, useEffect, useState } from "react";
 
-import { addToCartForLogInUser, getCartForLogInUser, removedProductFromCartForLoginUser } from "@/actions/cart";
+import {
+  addToCartForLogInUser,
+  getCartForLogInUser,
+  removedProductFromCartForLoginUser,
+} from "@/actions/cart";
 import { useAuth } from "@/hooks/use-auth";
 import { Cart, CartItem, CartProduct } from "@/interfaces/cart";
 import { toast } from "@/lib/toast-store";
@@ -129,17 +133,17 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
           newItems = prevCart.cart_items.map((item, index) =>
             index === existingItemIndex
               ? {
-                ...item,
-                quantity: item.quantity + quantity,
-                total: calculateItemTotal(
-                  item.billing_price,
-                  item.quantity + quantity
-                ),
-              }
+                  ...item,
+                  quantity: item.quantity + quantity,
+                  total: calculateItemTotal(
+                    item.billing_price,
+                    item.quantity + quantity
+                  ),
+                }
               : item
           );
         } else {
-          newItems = [...prevCart.cart_items, cartItem];
+          newItems = [...prevCart?.cart_items, cartItem];
         }
 
         const updatedCart = {
@@ -158,10 +162,12 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
 
       if (isAuthenticated) {
         setIsAdding(true);
-        const res = await addToCartForLogInUser([{
-          product_id: product.id,
-          quantity,
-        }]);
+        const res = await addToCartForLogInUser([
+          {
+            product_id: product.id,
+            quantity,
+          },
+        ]);
 
         if (!res.success) {
           toast.error(res.message);
@@ -246,10 +252,10 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
         const updatedItems = prevCart.cart_items.map((item) =>
           item.id === itemId
             ? {
-              ...item,
-              quantity: newQuantity,
-              total: calculateItemTotal(item.billing_price, newQuantity),
-            }
+                ...item,
+                quantity: newQuantity,
+                total: calculateItemTotal(item.billing_price, newQuantity),
+              }
             : item
         );
         const updatedCart = {
@@ -302,10 +308,10 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
         const updatedItems = prevCart.cart_items.map((item) =>
           item.id === itemId
             ? {
-              ...item,
-              quantity: newQuantity,
-              total: calculateItemTotal(item.billing_price, newQuantity),
-            }
+                ...item,
+                quantity: newQuantity,
+                total: calculateItemTotal(item.billing_price, newQuantity),
+              }
             : item
         );
         const updatedCart = {
@@ -378,46 +384,6 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
       }
     }
   }, [cart, isAuthenticated]);
-
-  // const syncCartWithServer = useCallback(async () => {
-  //   if (!isAuthenticated) return;
-
-  //   try {
-  //     const cookieCart = Cookies.get("cart");
-  //     const localCart = cookieCart
-  //       ? JSON.parse(cookieCart)
-  //       : { id: "guest_cart", cart_items: [], cart_total: 0 };
-
-  //     // Skip sync if the local cart is already equal to the server cart
-  //     const cartIsAlreadySynced =
-  //       JSON.stringify(localCart.cart_items) ===
-  //       JSON.stringify(cart.cart_items);
-  //     if (cartIsAlreadySynced) return;
-
-  //     if (localCart.cart_items.length > 0) {
-  //       // Merge guest cart with server by adding items individually
-  //       // for (const item of localCart.cart_items) {
-  //       //     try {
-  //       //         await addToCartForLoggedInUser({
-  //       //             product_id: item.product.id,
-  //       //             quantity: item.quantity,
-  //       //         });
-  //       //     } catch (error) {
-  //       //         console.error("Failed to merge item:", error);
-  //       //     }
-  //       // }
-
-  //       // Clear guest cart after successful merge
-  //       Cookies.remove("cart");
-  //     }
-
-  //     // Refresh with server cart
-  //     const serverCart = await fetchCart();
-  //     setCart(serverCart);
-  //   } catch (error) {
-  //     console.error("Error syncing cart with server:", error);
-  //   }
-  // }, [fetchCart, isAuthenticated, cart]);
 
   const value: CartContextType = {
     cart,
