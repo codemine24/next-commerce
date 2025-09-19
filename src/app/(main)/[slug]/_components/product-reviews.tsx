@@ -5,10 +5,12 @@ import Rating from "@mui/material/Rating";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import React from "react";
+
+import { getReviews } from "@/actions/review";
 import { StarIcon } from "@/icons/star";
+
 import { ProductAddReview } from "./product-add-review";
 import { ProductSectionHeader } from "./product-section-header";
-import { getReviews } from "@/actions/review";
 
 type Review = {
   id: string;
@@ -44,7 +46,6 @@ export const ProductReviews = async ({ productId }: ProductReviewsProps) => {
   const maxCount = Math.max(...distribution.map((d) => d.count));
 
   const allReviews = await getReviews(productId);
-  console.log(allReviews);
 
   return (
     <Box id="#product-reviews">
