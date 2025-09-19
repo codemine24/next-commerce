@@ -3,7 +3,6 @@ import {
   Button,
   Chip,
   IconButton,
-  Stack,
   Table,
   TableBody,
   TableCell,
@@ -11,7 +10,6 @@ import {
   TableHead,
   TableRow,
   alpha,
-  tableCellClasses,
 } from "@mui/material";
 import React from "react";
 
@@ -33,13 +31,13 @@ interface WishlistTableProps {
   products: Product[];
 }
 
-export const WishlistTable: React.FC<WishlistTableProps> = ({ products }) => {
+const WishlistTable: React.FC<WishlistTableProps> = ({ products }) => {
   const renderStatusChip = (status: Product["status"]) => {
     switch (status) {
       case "in-stock":
         return (
           <Chip
-            icon={<CheckCircle />}
+            icon={<CheckCircle sx={{}} />}
             label="In Stock"
             variant="outlined"
             sx={{
@@ -91,42 +89,52 @@ export const WishlistTable: React.FC<WishlistTableProps> = ({ products }) => {
   };
 
   return (
-    <TableContainer sx={{ mt: 2 }}>
+    <TableContainer
+      sx={{
+        mt: 2,
+        border: "1px solid #EFEDFA",
+        borderRadius: BORDER_RADIUS.default,
+      }}
+    >
       <Table
         sx={{
-          minWidth: 650,
-          borderCollapse: "collapse",
-          [`& .${tableCellClasses.root}`]: {
-            borderTop: "1px solid",
-            borderBottom: "1px solid",
-            borderColor: "divider",
-            "&:not(:first-of-type):not(:last-of-type)": {
-              borderLeft: "none",
-              borderRight: "none",
-            },
-          },
-          [`& .${tableCellClasses.root}:first-of-type`]: {
-            borderLeft: "1px solid",
-            borderColor: "divider",
-          },
-          [`& .${tableCellClasses.root}:last-of-type`]: {
-            borderRight: "1px solid",
-            borderColor: "divider",
+          "& .MuiTableHead-root": {
+            fontSize: 10,
           },
         }}
       >
         <TableHead>
-          <TableRow>
-            <TableCell>Product</TableCell>
+          <TableRow
+            sx={{
+              "& .MuiTableCell-root": {
+                borderBottom: "1px solid #EFEDFA",
+                fontSize: 16,
+                fontWeight: "400",
+              },
+            }}
+          >
+            <TableCell sx={{ borderBottom: "1px solid #EFEDFA" }}>
+              Product
+            </TableCell>
             <TableCell>Price</TableCell>
             <TableCell>Stock Status</TableCell>
             <TableCell>Action</TableCell>
           </TableRow>
         </TableHead>
-
         <TableBody>
           {products.map((product) => (
-            <TableRow key={product.id}>
+            <TableRow
+              key={product.id}
+              sx={{
+                "& .MuiTableCell-root": {
+                  borderBottom: "1px solid #EFEDFA",
+                  fontSize: "16px",
+                  fontWeight: 500,
+                  py: 1,
+                },
+              }}
+            >
+              {/* Product cell */}
               <TableCell>
                 <Box display="flex" alignItems="center" gap={2}>
                   <Box
@@ -143,12 +151,15 @@ export const WishlistTable: React.FC<WishlistTableProps> = ({ products }) => {
                 </Box>
               </TableCell>
 
+              {/* Price cell */}
               <TableCell>${product.price}</TableCell>
 
+              {/* Stock Status cell */}
               <TableCell>{renderStatusChip(product.status)}</TableCell>
 
+              {/* Action cell */}
               <TableCell>
-                <Stack direction="row" spacing={2}>
+                <Box display="flex" alignItems="center" gap={3}>
                   <Button
                     size="medium"
                     startIcon={<ShoppingCart />}
@@ -157,7 +168,9 @@ export const WishlistTable: React.FC<WishlistTableProps> = ({ products }) => {
                       borderRadius: BORDER_RADIUS.default,
                       bgcolor: "#F7FCFB",
                       color: "text.primary",
-                      "&:hover": { bgcolor: "#E6F2EE" },
+                      "&:hover": {
+                        bgcolor: "#E6F2EE",
+                      },
                     }}
                   >
                     Add to Cart
@@ -175,7 +188,7 @@ export const WishlistTable: React.FC<WishlistTableProps> = ({ products }) => {
                   >
                     <DeleteCircle />
                   </IconButton>
-                </Stack>
+                </Box>
               </TableCell>
             </TableRow>
           ))}
@@ -184,3 +197,5 @@ export const WishlistTable: React.FC<WishlistTableProps> = ({ products }) => {
     </TableContainer>
   );
 };
+
+export default WishlistTable;

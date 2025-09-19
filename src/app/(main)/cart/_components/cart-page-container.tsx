@@ -9,11 +9,11 @@ import Typography from "@mui/material/Typography";
 
 import { useCart } from "@/hooks/use-cart";
 import { BORDER_RADIUS } from "@/theme";
+import { currencyFormatter } from "@/utils/currency-formatter";
 
 import { SectionTitle } from "../../_components/section-title";
 
 import { CartItems } from "./cart-items";
-import { currencyFormatter } from "@/utils/currency-formatter";
 
 export const CartPageContainer = () => {
   const { cart } = useCart();
@@ -81,10 +81,8 @@ export const CartPageContainer = () => {
 
       {/* Discount */}
       <Box my={3}>
-        <Typography variant="h5" fontWeight={600}>
-          What would you like to do next?
-        </Typography>
-        <Typography variant="h6" color="text.primary" mt={1}>
+        <Typography variant="h4">What would you like to do next?</Typography>
+        <Typography variant="body1" color="text.secondary" mt={1}>
           Choose if you have a discount code or reward points you want to use or
           would like to estimate your delivery cost.
         </Typography>
@@ -93,62 +91,62 @@ export const CartPageContainer = () => {
       {/* Promo  */}
       <Stack
         direction="row"
-        spacing={2}
+        spacing={3}
         mb={4}
         sx={{
-          bgcolor: "background.paper",
-          p: 3,
+          bgcolor: "green.100",
+          px: 3,
+          py: 4,
           borderRadius: BORDER_RADIUS.default,
         }}
       >
-        <Stack direction="row" spacing={2} flex="1">
+        <Stack direction="row" spacing={1} flex="1">
           <TextField
             fullWidth
             placeholder="Promo / Coupon code"
             size="small"
             sx={{
               [`& .${inputBaseClasses.root}`]: {
-                borderRadius: BORDER_RADIUS.default,
+                bgcolor: "common.white",
               },
               [`& .${inputBaseClasses.input}`]: {
                 p: "5px 14px",
+                bgcolor: "common.white",
               },
             }}
           />
           <Button
-            variant="outlined"
+            variant="contained"
             sx={{
               whiteSpace: "nowrap",
-              color: "blue",
-              border: "1px solid blue",
-              borderRadius: BORDER_RADIUS.default,
+              bgcolor: "common.black",
+              px: 4,
             }}
           >
             Apply Coupon
           </Button>
         </Stack>
-        <Stack direction="row" spacing={2} flex="1">
+        <Stack direction="row" spacing={1} flex="1">
           <TextField
             fullWidth
-            placeholder="Enter your gift voucher code here"
+            placeholder="Promo / Coupon code"
             size="small"
             sx={{
               [`& .${inputBaseClasses.root}`]: {
-                borderRadius: BORDER_RADIUS.default,
+                bgcolor: "common.white",
               },
               [`& .${inputBaseClasses.input}`]: {
                 p: "5px 14px",
+                bgcolor: "common.white",
               },
             }}
           />
           <Button
-            variant="outlined"
+            variant="contained"
             sx={{
               whiteSpace: "nowrap",
-              color: "blue",
-              border: "1px solid blue",
-              borderRadius: BORDER_RADIUS.default,
-              px: "16px",
+              bgcolor: "common.black",
+              px: 4,
             }}
           >
             Apply Voucher
@@ -158,30 +156,8 @@ export const CartPageContainer = () => {
 
       {/* Action Buttons */}
       <Stack direction="row" justifyContent="space-between">
-        <Button
-          variant="outlined"
-          sx={{
-            whiteSpace: "nowrap",
-            bgcolor: "blue",
-            color: "#fff",
-            border: "1px solid blue",
-            borderRadius: BORDER_RADIUS.default,
-          }}
-        >
-          Continue Shopping
-        </Button>
-        <Button
-          variant="contained"
-          sx={{
-            whiteSpace: "nowrap",
-            bgcolor: "blue",
-            color: "#fff",
-            border: "1px solid blue",
-            borderRadius: BORDER_RADIUS.default,
-          }}
-        >
-          Confirm Order
-        </Button>
+        <Button variant="contained">Continue Shopping</Button>
+        <Button variant="contained">Confirm Order</Button>
       </Stack>
     </Box>
   );
