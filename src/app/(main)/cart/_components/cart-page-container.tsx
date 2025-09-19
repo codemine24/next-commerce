@@ -14,6 +14,7 @@ import { currencyFormatter } from "@/utils/currency-formatter";
 import { SectionTitle } from "../../_components/section-title";
 
 import { CartItems } from "./cart-items";
+import { alpha } from "@mui/material";
 
 export const CartPageContainer = () => {
   const { cart } = useCart();
@@ -94,7 +95,7 @@ export const CartPageContainer = () => {
         spacing={3}
         mb={4}
         sx={{
-          bgcolor: "green.100",
+          bgcolor: (theme) => alpha(theme.palette.primary.main, 0.1),
           px: 3,
           py: 4,
           borderRadius: BORDER_RADIUS.default,

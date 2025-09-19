@@ -21,9 +21,6 @@ export const colorPalette: PaletteOptions = {
     black: "#000",
     white: "#fff",
   },
-  green: {
-    100: "#D1F7E1",
-  },
   grey: {
     400: "#8A9994",
     500: "#9CA3AF",
