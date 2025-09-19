@@ -1,42 +1,47 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import Backdrop from "@mui/material/Backdrop";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Fade from "@mui/material/Fade";
-import IconButton from "@mui/material/IconButton";
-import Modal from "@mui/material/Modal";
-import Rating from "@mui/material/Rating";
-import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
+import {
+  Backdrop,
+  Box,
+  Button,
+  Fade,
+  IconButton,
+  Modal,
+  Rating,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-
 import { addReView } from "@/actions/review";
 import { CloseIcon } from "@/icons/close";
 import { PlusIcon } from "@/icons/plus";
 import { toast } from "@/lib/toast-store";
 import { reviewSchema, ReviewSchemaType } from "@/zod/review-schema";
+import { useAuth } from "@/hooks/use-auth";
 
 const style = {
-  position: "absolute",
+  position: "absolute" as const,
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 400,
   bgcolor: "background.paper",
   boxShadow: 24,
+  borderRadius: 2,
 };
 
-export const ProductAddReview = () => {
+interface ProductAddReviewProps {
+  productId: string;
+}
+
+export const ProductAddReview = ({ productId }: ProductAddReviewProps) => {
   const router = useRouter();
   const path = usePathname();
-  const isAuthenticated = true;
+  const { isAuthenticated } = useAuth();
   const [open, setOpen] = useState(false);
-  const [, setRating] = useState<number | null>(5);
-  const [, setComment] = useState<string>("");
 
   const {
     handleSubmit,
@@ -61,20 +66,22 @@ export const ProductAddReview = () => {
 
   const handleCloseReviewModal = () => {
     setOpen(false);
-    setComment("");
-    setRating(5);
+    reset();
   };
 
   const handleAddReview = async (data: ReviewSchemaType) => {
-    const response = await addReView(data);
-    console.log(response.data);
+    const response = await addReView({ ...data, product_id: productId });
+    console.log(response);
+
     if (!response.success) {
       toast.error(response.message || "Failed to add review");
       return;
     }
+
     toast.success("Review submitted successfully");
     reset();
     setOpen(false);
+    console.log(data);
   };
 
   return (
@@ -92,16 +99,12 @@ export const ProductAddReview = () => {
         onClose={handleCloseReviewModal}
         closeAfterTransition
         slots={{ backdrop: Backdrop }}
-        slotProps={{
-          backdrop: {
-            timeout: 500,
-          },
-        }}
+        slotProps={{ backdrop: { timeout: 500 } }}
         aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
       >
         <Fade in={open} timeout={500}>
           <Box sx={style}>
+            {/* Header */}
             <Box
               px={2}
               py={1}
@@ -119,39 +122,6 @@ export const ProductAddReview = () => {
               </IconButton>
             </Box>
 
-            {/* <Box p={2}>
-              <Typography variant="body1">Rate this product</Typography>
-
-              <MuiRating
-                value={rating}
-                precision={0.5}
-                onChange={(event, newValue) => setRating(newValue)}
-                readOnly={false}
-                sx={{ mt: 2 }}
-              />
-
-              <Box mt={2}>
-                <TextField
-                  fullWidth
-                  multiline
-                  rows={4}
-                  id="outlined-basic"
-                  placeholder="Write your review here"
-                  value={comment}
-                  onChange={(e) => setComment(e.target.value)}
-                />
-              </Box>
-
-              <Button
-                variant="contained"
-                color="primary"
-                size="medium"
-                onClick={handleAddReview}
-                sx={{ mt: 2 }}
-              >
-                Submit
-              </Button>
-            </Box> */}
             {/* Form */}
             <Box
               p={2}
@@ -172,6 +142,11 @@ export const ProductAddReview = () => {
                   />
                 )}
               />
+              {errors.rating && (
+                <Typography color="error" variant="caption">
+                  {errors.rating.message}
+                </Typography>
+              )}
 
               <Box mt={2}>
                 <Controller
