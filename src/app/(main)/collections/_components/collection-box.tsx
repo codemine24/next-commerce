@@ -9,7 +9,7 @@ interface CollectionBoxProps {
   href: string;
 }
 
-export const CollectionBox = ({ image, title, href }: CollectionBoxProps) => {
+export const CollectionCard = ({ image, title, href }: CollectionBoxProps) => {
   return (
     <Link href={href} style={{ textDecoration: "none" }}>
       <Box
@@ -20,7 +20,7 @@ export const CollectionBox = ({ image, title, href }: CollectionBoxProps) => {
           overflow: "hidden",
           cursor: "pointer",
           "&:hover .MuiTypography-root": {
-            transform: "translate(-100%, -8px)",
+            transform: "translateY(-8px)",
           },
           "&:hover .MuiTypography-root::after": {
             width: "100%",
@@ -52,8 +52,7 @@ export const CollectionBox = ({ image, title, href }: CollectionBoxProps) => {
           sx={{
             position: "absolute",
             bottom: 30,
-            left: "50%",
-            transform: "translateX(-100%)",
+            left: "5%",
             color: "white",
             fontWeight: 600,
             transition: "all 0.4s ease",
@@ -64,7 +63,6 @@ export const CollectionBox = ({ image, title, href }: CollectionBoxProps) => {
               height: "2px",
               bgcolor: "white",
               transition: "width 0.4s ease",
-              marginTop: "4px",
             },
           }}
         >
