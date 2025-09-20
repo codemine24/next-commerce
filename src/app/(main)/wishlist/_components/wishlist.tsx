@@ -1,7 +1,9 @@
-import { Box, Typography, Button } from "@mui/material";
+import { Box, Button, Stack } from "@mui/material";
 import React from "react";
 
-import WishlistTable from "./wishlist-table";
+import { SectionTitle } from "../../_components/section-title";
+
+import { WishlistTable } from "./wishlist-table";
 import { wishlistData } from "./wishlistData";
 
 const Wishlist: React.FC = () => {
@@ -9,25 +11,19 @@ const Wishlist: React.FC = () => {
 
   return (
     <Box sx={{ my: 5 }}>
-      <Box
-        display="flex"
-        justifyContent="space-between"
-        alignItems="center"
-        mb={5}
-      >
-        <Typography variant="h2" fontWeight="">
-          Your Wishlist
-        </Typography>
+      <Stack direction={"row"} justifyContent={"space-between"}>
+        <SectionTitle title="Your Wishlist" sx={{ mb: 0 }} />
         {hasProducts && (
           <Button
             sx={{
-              color: "primary.100",
+              color: "primary.main",
             }}
           >
             Clear Wishlist Data
           </Button>
         )}
-      </Box>
+      </Stack>
+
       <WishlistTable products={wishlistData as any} />
     </Box>
   );

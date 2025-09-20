@@ -44,7 +44,7 @@ export const CartDrawer = ({ open, onClose }: CartDrawerProps) => {
             borderColor="divider"
             pb={2}
           >
-            <Typography variant="h2">Your Cart</Typography>
+            <Typography variant="h3">Your Cart</Typography>
             <IconButton onClick={onClose}>
               <CloseIcon />
             </IconButton>
@@ -87,11 +87,14 @@ export const CartDrawer = ({ open, onClose }: CartDrawerProps) => {
                 onClick={() => removeFromCart(cart_item.id)}
                 sx={{
                   border: "1px solid",
-                  borderColor: "divider",
+                  borderColor: (theme) =>
+                    alpha(theme.palette.primary.main, 0.3),
                   color: "text.secondary",
-                  transition: "all 0.25s ease",
+                  bgcolor: (theme) => alpha(theme.palette.primary.main, 0.1),
                   "&:hover": {
                     bgcolor: (theme) => alpha(theme.palette.error.main, 0.1),
+                    borderColor: (theme) =>
+                      alpha(theme.palette.error.main, 0.3),
                   },
                   "&:hover svg": {
                     color: "error.light",
@@ -116,8 +119,8 @@ export const CartDrawer = ({ open, onClose }: CartDrawerProps) => {
               borderColor: "divider",
             }}
           >
-            <Typography variant="body2">Subtotal:</Typography>
-            <Typography variant="h4">$80.00</Typography>
+            <Typography variant="body1">Subtotal:</Typography>
+            <Typography variant="h6">$80.00</Typography>
           </Stack>
           <Stack direction="row" spacing={2}>
             <Button
@@ -125,9 +128,8 @@ export const CartDrawer = ({ open, onClose }: CartDrawerProps) => {
               variant="contained"
               sx={{
                 whiteSpace: "nowrap",
-                bgcolor: "blue",
-                color: "#fff",
-                border: "1px solid blue",
+                bgcolor: "primary",
+                color: "common.white",
                 borderRadius: BORDER_RADIUS.default,
               }}
               onClick={() => {
@@ -143,13 +145,12 @@ export const CartDrawer = ({ open, onClose }: CartDrawerProps) => {
               variant="contained"
               sx={{
                 whiteSpace: "nowrap",
-                bgcolor: "blue",
-                color: "#fff",
-                border: "1px solid blue",
+                bgcolor: "common.black",
+                color: "common.white",
                 borderRadius: BORDER_RADIUS.default,
               }}
             >
-              Check Out
+              Checkout
             </Button>
           </Stack>
         </Box>

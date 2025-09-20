@@ -15,6 +15,7 @@ export const DashboardNavbar = () => {
     <AppBar
       position="sticky"
       sx={(theme) => ({
+        mt: 0,
         zIndex: 11,
         pt: "1rem",
         pb: "1rem",

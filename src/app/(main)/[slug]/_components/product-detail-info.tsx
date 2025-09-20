@@ -6,18 +6,22 @@ import { ProductDetailInfoNavbar } from "./product-detail-info-navbar";
 import { ProductQuestions } from "./product-question";
 import { ProductReviews } from "./product-reviews";
 import { ProductSpecification } from "./product-specifications";
+import { ProductVideo } from "./product-video";
+import { SimilarProducts } from "./similar-products";
 
 export const ProductDetailInfo = ({ product }: { product: Product }) => {
-    return (
-        <Box mt={10}>
-            <ProductDetailInfoNavbar />
+  return (
+    <Box mt={10}>
+      <ProductDetailInfoNavbar />
 
-            <Box my={2} display="flex" flexDirection="column" rowGap={5}>
-                <ProductDescription description={product.description} />
-                <ProductSpecification specification={product.specification} />
-                <ProductReviews />
-                <ProductQuestions />
-            </Box>
-        </Box>
-    )
-}
+      <Box my={2} display="flex" flexDirection="column" rowGap={5}>
+        <ProductDescription description={product?.description} />
+        <ProductSpecification specification={product?.specification} />
+        <ProductReviews productId={product.id} />
+        <ProductQuestions />
+        <ProductVideo videoUrl="" />
+        <SimilarProducts />
+      </Box>
+    </Box>
+  );
+};

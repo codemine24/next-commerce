@@ -7,8 +7,6 @@ import { BoxContainer } from "@/components/box-container";
 import { AllProducts } from "./_components/all-products";
 import { ProductSidebar } from "./_components/products-sidebar";
 
-export const dynamic = "force-dynamic";
-
 const ShopPage = async () => {
   const products = await getProducts();
 
@@ -18,7 +16,7 @@ const ShopPage = async () => {
         <Box sx={{ display: "flex", gap: 2 }}>
           <ProductSidebar />
           {/* Ensure props are serializable */}
-          <AllProducts products={JSON.parse(JSON.stringify(products.data))} />
+          <AllProducts products={products.data} />
         </Box>
       </Suspense>
     </BoxContainer>

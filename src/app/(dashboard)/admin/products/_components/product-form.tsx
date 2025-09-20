@@ -8,11 +8,11 @@ import { Editor } from "@/components/editor";
 import {
   Autocomplete,
   ColorPicker,
-  FileUploader,
   Select,
   TextField,
 } from "@/components/form";
 import FormProvider from "@/components/form/form-provider";
+import { ImageUploader } from "@/components/form/image-uploader";
 import { MultiInputField } from "@/components/form/multi-input-field";
 import { SubmitButton } from "@/components/submit-button";
 import { PRODUCT_SIZE, PRODUCT_TAGS } from "@/constants/product";
@@ -26,7 +26,6 @@ interface ProductFormProps {
 }
 
 export const ProductForm = ({ methods, onSubmit, brands }: ProductFormProps) => {
-
   return (
     <FormProvider methods={methods} onSubmit={methods.handleSubmit(onSubmit)}>
       <Box display="flex" flexDirection="column" gap={4}>
@@ -115,17 +114,20 @@ export const ProductForm = ({ methods, onSubmit, brands }: ProductFormProps) => 
 
         {/* File Uploader */}
         <Box display="flex" flexDirection={{ xs: "column", sm: "row" }} gap={2}>
-          <FileUploader
+          <ImageUploader
             label="Thumbnail Image"
-            onFilesChange={(files) => methods.setValue("thumbnail", files[0])}
-            uploadBoxSx={{ width: 250, height: 200 }}
+            heading="Select Thumbnail Image"
+            subHeading="Select thumbnail image for the product"
+            name="thumbnail"
           />
-          <FileUploader
+
+          <ImageUploader
             multiple
             label="Gallery Images"
-            onFilesChange={(files) => methods.setValue("gallery", files)}
-            containerSx={{ flex: 1, width: "100%" }}
-            uploadBoxSx={{ width: "100%", height: "100%" }}
+            heading="Select Gallery Images"
+            subHeading="Select gallery images for the product"
+            name="gallery"
+            sx={{ flex: 1 }}
           />
         </Box>
 

@@ -2,12 +2,15 @@
 
 import { ThemeProvider } from "@emotion/react";
 import CssBaseline from "@mui/material/CssBaseline";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 
 import { theme } from "@/theme/theme";
 
 import { AuthProvider } from "./auth-provider";
 import { CartProvider } from "./cart-provider";
 import { ToastProvider } from "./toast-provider";
+
 
 export const AppProvider = ({
   children,
@@ -20,7 +23,9 @@ export const AppProvider = ({
       <ToastProvider>
         <AuthProvider>
           <CartProvider>
-            {children}
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              {children}
+            </LocalizationProvider>
           </CartProvider>
         </AuthProvider>
       </ToastProvider>

@@ -29,4 +29,8 @@ export const API_ROUTES = {
         update_brand: (id: string) => `/brand/${id}`,
         delete_brand: (id: string) => `/brand/${id}`
     },
+    files: {
+        get_files: "/file",
+        upload_files: "/file",
+    }
 }
