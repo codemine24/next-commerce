@@ -19,7 +19,7 @@ export const DashboardNavbar = () => {
         zIndex: 11,
         pt: "1rem",
         pb: "1rem",
-        bgcolor: "#ffffff",
+        bgcolor: "background.default",
         boxShadow: theme.shadows[2],
         color: theme.palette.text.primary,
       })}

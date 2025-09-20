@@ -51,7 +51,6 @@ export const NavItemButton = ({ active, ...props }: Active & any) => (
             transition: "all 0.15s ease",
             ...(active && {
                 color: theme.palette.primary.main,
-                backgroundColor: alpha(theme.palette.grey[800], 0.6),
                 "& .MuiSvgIcon-root .secondary": {
                     color: theme.palette.primary.main,
                     opacity: 1
@@ -212,7 +211,7 @@ export const SidebarAccordion = ({ item, children }: Props) => {
 
     return (
         <NavExpandRoot className="subMenu">
-            <NavItemButton active={hasActive} onClick={handleClick} sx={{ justifyContent: "space-between" }}>
+            <NavItemButton active={hasActive} onClick={handleClick} sx={{ justifyContent: "space-between", borderRadius: 0 }}>
                 <Box display="flex" alignItems="center">
                     {icon ? (
                         <ListIconWrapper>

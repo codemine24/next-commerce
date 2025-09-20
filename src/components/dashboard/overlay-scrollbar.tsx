@@ -16,7 +16,7 @@ const StyledScrollbar = styled(OverlayScrollbarsComponent)({
     height: "100%",
     ".os-theme-dark": {
         "--os-size": "9px",
-        "--os-handle-bg": "rgba(255, 255, 255, 0.4)",
+        "--os-handle-bg": "#C8C8C8",
     }
 });
 

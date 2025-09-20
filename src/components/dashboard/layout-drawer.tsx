@@ -9,21 +9,18 @@ const Wrapper = styled("div")(({ theme }) => ({
     width: "inherit",
     position: "fixed",
     overflow: "hidden",
-    boxShadow: theme.shadows[1],
     zIndex: theme.zIndex.drawer + 3,
-    color: theme.palette.common.white,
-    backgroundColor: theme.palette.grey[900]
+    color: "text.primary",
+    backgroundColor: "background.default",
 }));
 
-// ==========================================================
-interface Props extends PropsWithChildren {
+interface LayoutDrawerProps extends PropsWithChildren {
     open: boolean;
     onClose: () => void;
     drawerWidth?: number;
 }
-// ==========================================================
 
-export const LayoutDrawer = (props: Props) => {
+export const LayoutDrawer = (props: LayoutDrawerProps) => {
     const { children, open, onClose, drawerWidth = 280 } = props || {};
 
     return (

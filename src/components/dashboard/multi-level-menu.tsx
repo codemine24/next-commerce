@@ -11,11 +11,10 @@ import { ADMIN_NAVIGATION } from "./admin-navigation";
 import { OverlayScrollbar } from "./overlay-scrollbar";
 import { SidebarAccordion } from "./sidebar-accordion";
 
-
 export const MultiLevelMenu = () => {
     const pathname = usePathname();
     const theme = useTheme();
-    const { COMPACT, TOP_HEADER_AREA, handleCloseMobileSidebar } = useLayout();
+    const { COMPACT, handleCloseMobileSidebar } = useLayout();
 
     // HANDLE ACTIVE CURRENT PAGE
     const activeRoute = (path: string) => (pathname === path ? 1 : 0);
@@ -139,7 +138,7 @@ export const MultiLevelMenu = () => {
                         sx={(theme) => ({
                             height: 44,
                             width: "100%",
-                            borderRadius: 1,
+                            borderRadius: 0,
                             mb: 0.5,
                             px: "12px",
                             pl: "16px",
@@ -147,7 +146,7 @@ export const MultiLevelMenu = () => {
                             transition: "all 0.15s ease",
                             ...(activeRoute(item.path) && {
                                 color: theme.palette.primary.main,
-                                backgroundColor: alpha(theme.palette.grey[800], 0.6),
+                                backgroundColor: alpha(theme.palette.primary.main, 0.1),
                                 "& .MuiSvgIcon-root .secondary": {
                                     color: theme.palette.primary.main,
                                     opacity: 1
@@ -218,11 +217,13 @@ export const MultiLevelMenu = () => {
     return (
         <OverlayScrollbar
             sx={{
-                px: 2,
+                pl: COMPACT ? 0.5 : 0,
+                pb: 2,
                 overflowX: "hidden",
-                maxHeight: `calc(100vh - ${TOP_HEADER_AREA}px)`,
-                bgcolor: "primary.dark",
-                color: "primary.contrastText"
+                flex: 1,
+                maxHeight: "100%",
+                bgcolor: "background.default",
+                color: "text.primary"
             }}
         >
             {renderLevels(ADMIN_NAVIGATION)}

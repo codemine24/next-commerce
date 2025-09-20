@@ -3,8 +3,6 @@ import Box from "@mui/material/Box";
 
 import { ChevronLeftIcon } from "@/icons/chevron-left";
 import { useLayout } from "@/providers/layout-provider";
-// LOCAL CUSTOM HOOK
-
 
 export const LogoArea = () => {
     const { TOP_HEADER_AREA, COMPACT, sidebarCompact, handleSidebarCompactToggle } = useLayout();
@@ -24,7 +22,7 @@ export const LogoArea = () => {
                 sx={{
                     display: COMPACT ? "none" : "flex",
                     "&:hover": {
-                        backgroundColor: "rgba(255, 255, 255, 0.1)"
+                        backgroundColor: "action.selected"
                     }
                 }}
                 onClick={handleSidebarCompactToggle}
@@ -33,6 +31,8 @@ export const LogoArea = () => {
                     sx={{
                         transform: sidebarCompact ? "rotate(180deg)" : "rotate(0deg)",
                         transition: "all 0.3s ease",
+                        width: 28,
+                        height: 28,
                     }} />
             </IconButton>
         </Box>

@@ -10,7 +10,7 @@ const CreateProductPage = async () => {
 
     return (
         <Box pb={10}>
-            <Typography variant="h4" sx={{ my: 4 }}>Create Product</Typography>
+            <Typography variant="h3" mb={4}>Create Product</Typography>
             <CreateProduct brands={brands.data} />
         </Box>
     );

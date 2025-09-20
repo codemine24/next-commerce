@@ -7,11 +7,10 @@ import Image from "next/image";
 
 import { useLayout } from "@/providers/layout-provider";
 
+import { AdminProfile } from "./admin-profile";
 import { LayoutDrawer } from "./layout-drawer";
 import { LogoArea } from "./logo-area";
 import { MultiLevelMenu } from "./multi-level-menu";
-
-
 
 export const DashboardSidebar = () => {
     const {
@@ -31,8 +30,8 @@ export const DashboardSidebar = () => {
                 <Box
                     p={2}
                     maxHeight={TOP_HEADER_AREA}
-                    bgcolor="primary.dark"
-                    color="primary.contrastText"
+                    bgcolor="background.default"
+                    color="text.primary"
                     height="100%"
                 >
                     <Image
@@ -54,13 +53,17 @@ export const DashboardSidebar = () => {
             onMouseEnter={() => handleSidebarHover(true)}
             onMouseLeave={() => sidebarCompact && handleSidebarHover(false)}
             sx={(theme) => ({
-                width: sidebarCompact ? 86 : 280,
+                width: sidebarCompact ? 60 : 280,
                 height: "100vh",
                 position: "fixed",
                 transition: "all 0.2s ease",
                 zIndex: theme.zIndex.drawer,
-                bgcolor: "primary.dark",
-                color: "primary.contrastText",
+                bgcolor: "background.default",
+                color: "text.primary",
+                borderRight: 1,
+                borderColor: "divider",
+                display: "flex",
+                flexDirection: "column",
                 ...(sidebarCompact && {
                     "&:hover": {
                         width: 280
@@ -73,6 +76,9 @@ export const DashboardSidebar = () => {
 
             {/* SIDEBAR NAVIGATION SECTION */}
             <MultiLevelMenu />
+
+            {/* SIDEBAR ADMIN PROFILE SECTION */}
+            <AdminProfile />
         </Box>
     );
 };
