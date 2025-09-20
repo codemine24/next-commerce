@@ -18,11 +18,11 @@ const images = [
   "https://placehold.co/600x400/png",
 ];
 
-type Params = Promise<{ slug: string }>
+type Params = Promise<{ slug: string }>;
 
 const ProductDetail = async ({ params }: { params: Params }) => {
-  const { slug } = await params
-  const product = await getProductBySlug(slug)
+  const { slug } = await params;
+  const product = await getProductBySlug(slug);
 
   if (!product.success) {
     return (
@@ -31,7 +31,7 @@ const ProductDetail = async ({ params }: { params: Params }) => {
           Product Not Found
         </Typography>
       </BoxContainer>
-    )
+    );
   }
 
   return (
