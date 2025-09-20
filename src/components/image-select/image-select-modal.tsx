@@ -60,7 +60,7 @@ export const ImageSelectModal = (props: ImageSelectModalProps) => {
         if (!res.success) {
             toast.error(res.message);
         } else {
-            toast.success("Files uploaded successfully");
+            toast.success(res.message);
         }
 
         setLoading(false);

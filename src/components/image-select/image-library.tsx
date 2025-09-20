@@ -48,13 +48,13 @@ export const ImageLibrary = ({ multiple, selectedFiles, onSelectionChange }: Ima
             {/* Images Grid */}
             {data?.data?.length > 0 && (
                 <Grid container spacing={2}>
-                    {data?.data?.map((file: Media, index: number) => {
+                    {data?.data?.map((file: Media) => {
                         const selected = isSelected(file.path);
                         const SelectionControl = multiple ? Checkbox : Radio;
 
                         return (
                             <Grid
-                                key={index}
+                                key={file.id}
                                 size={{ xs: 6, sm: 4, md: 3, lg: 2 }}
                                 sx={{
                                     p: 1,

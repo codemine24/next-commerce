@@ -56,7 +56,7 @@ export const MediaTable = ({ media }: { media: Media[] }) => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {media.map((media) => (
+                    {media?.map((media) => (
                         <TableRow
                             key={media.id}
                             sx={{
