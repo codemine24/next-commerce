@@ -151,7 +151,7 @@ export const MultiLevelMenu = () => {
                             ...(activeRoute(item.path) && {
                                 color: "primary.main",
                                 backgroundColor: alpha(theme.palette.primary.main, 0.1),
-                                borderRight: 2,
+                                borderRight: COMPACT ? 0 : 2,
                                 borderRightColor: "primary.main",
                                 "& .MuiSvgIcon-root .secondary": {
                                     color: "primary.main",

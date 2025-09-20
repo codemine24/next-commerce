@@ -3,6 +3,7 @@ import { PaletteOptions } from "@mui/material/styles";
 export const colorPalette: PaletteOptions = {
   primary: {
     main: "#007B54",
+    light: "#C8FAD6",
     "100": "#3ECDA6",
     "50": "#e4f5ec",
     dark: "#272727",

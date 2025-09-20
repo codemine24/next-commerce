@@ -1,4 +1,4 @@
-import { tableCellClasses } from "@mui/material";
+import { tableCellClasses, tableRowClasses } from "@mui/material";
 import { common } from "@mui/material/colors";
 import { alpha, Components, Theme } from "@mui/material/styles";
 
@@ -301,6 +301,10 @@ export const components: Components<Theme> = {
   MuiTableRow: {
     styleOverrides: {
       root: ({ theme }) => ({
+        [`&.${tableRowClasses.selected}`]: {
+          backgroundColor: alpha(theme.palette.primary.main, 0.04),
+          '&:hover': { backgroundColor: alpha(theme.palette.primary.main, 0.08) },
+        },
         "&:first-of-type": { [`& .${tableCellClasses.root}`]: { borderTop: "1px solid", borderColor: theme.palette.divider } },
         '&:last-of-type': { [`& .${tableCellClasses.root}`]: { borderColor: 'transparent' } },
       }),
