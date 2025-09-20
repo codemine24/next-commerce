@@ -218,8 +218,11 @@ export const components: Components<Theme> = {
   },
   MuiPopover: {
     defaultProps: { elevation: 0 },
+    styleOverrides: {},
+  },
+  MuiPaper: {
     styleOverrides: {
-      paper: ({ theme }) => ({
+      root: ({ theme }) => ({
         marginTop: 4,
         backgroundColor: theme.palette.background.default,
         borderRadius: 0,
