@@ -401,6 +401,7 @@ CREATE TABLE "public"."campaigns" (
 CREATE TABLE "public"."qna" (
     "id" TEXT NOT NULL,
     "inquirer_id" TEXT NOT NULL,
+    "product_id" TEXT NOT NULL,
     "question" TEXT NOT NULL,
     "answer" TEXT,
     "is_approved" BOOLEAN NOT NULL DEFAULT false,
@@ -498,9 +499,6 @@ CREATE UNIQUE INDEX "carts_user_id_key" ON "public"."carts"("user_id");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "cart_items_cart_id_product_id_key" ON "public"."cart_items"("cart_id", "product_id");
-
--- CreateIndex
-CREATE UNIQUE INDEX "addresses_contact_number_key" ON "public"."addresses"("contact_number");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "orders_order_id_key" ON "public"."orders"("order_id");
@@ -642,6 +640,9 @@ ALTER TABLE "public"."wishlists" ADD CONSTRAINT "wishlists_product_id_fkey" FORE
 
 -- AddForeignKey
 ALTER TABLE "public"."qna" ADD CONSTRAINT "qna_inquirer_id_fkey" FOREIGN KEY ("inquirer_id") REFERENCES "public"."users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "public"."qna" ADD CONSTRAINT "qna_product_id_fkey" FOREIGN KEY ("product_id") REFERENCES "public"."products"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "public"."_EligibleBrandsCoupon" ADD CONSTRAINT "_EligibleBrandsCoupon_A_fkey" FOREIGN KEY ("A") REFERENCES "public"."brands"("id") ON DELETE CASCADE ON UPDATE CASCADE;

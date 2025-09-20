@@ -71,6 +71,7 @@ model Product {
   wishlist    Wishlist[]
   campaigns   Campaign[]         @relation("EligibleCampaignProducts")
   campaignId  String?
+  qna         QnA[]
 
   @@map("products")
 }
@@ -86,7 +87,7 @@ model Brand {
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt
 
-  products Product[]
+  products   Product[]
   menu_items MenuItem[]
   coupons    Coupon[]   @relation("EligibleBrandsCoupon")
   campaigns  Campaign[] @relation("EligibleCampaignBrands")
@@ -435,13 +436,15 @@ model Campaign {
 model QnA {
   id          String   @id @default(uuid())
   inquirer_id String
+  product_id  String
   question    String
   answer      String?
   is_approved Boolean  @default(false)
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt
 
-  inquirer User @relation(fields: [inquirer_id], references: [id])
+  inquirer User    @relation(fields: [inquirer_id], references: [id])
+  product  Product @relation(fields: [product_id], references: [id])
 
   @@map("qna")
 }
