@@ -5,8 +5,8 @@ import React from 'react';
 
 import { Media } from '@/interfaces/media';
 
-import { MediaTable } from './media-table';
 import { MediaFilter } from './media-filter';
+import { MediaTable } from './media-table';
 import { MediaTabs } from './media-tabs';
 
 export const MediaContent = ({ media }: { media: Media[] }) => {

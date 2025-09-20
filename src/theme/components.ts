@@ -1,9 +1,9 @@
+import { tableCellClasses } from "@mui/material";
 import { common } from "@mui/material/colors";
 import { alpha, Components, Theme } from "@mui/material/styles";
 
 import { colorPalette } from "./palette";
 import { BORDER_RADIUS } from "./shape";
-import { tableCellClasses, tableRowClasses } from "@mui/material";
 
 // ========================================================
 

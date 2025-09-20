@@ -12,9 +12,9 @@ import TableRow from '@mui/material/TableRow';
 import React from 'react';
 
 import { OptimizeImage } from '@/components/optimize-image';
+import { DeleteIcon } from '@/icons/delete-icon';
 import { Media } from '@/interfaces/media';
 import { makeImageUrl } from '@/utils/helper';
-import { DeleteIcon } from '@/icons/delete-icon';
 
 const formatSize = (size: number) => `${(size / 1024).toFixed(2)} KB`;
 const formatDate = (dateStr: string) => new Date(dateStr).toLocaleDateString();

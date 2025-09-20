@@ -1,10 +1,10 @@
+import Box from "@mui/material/Box";
 import { Suspense } from "react";
 
 import { getFiles } from "@/actions/file";
 
 import { MediaContent } from "./_components/media-content";
 import { MediaHeader } from "./_components/media-header";
-import Box from "@mui/material/Box";
 
 export default async function MediaPage() {
   const media = await getFiles();
