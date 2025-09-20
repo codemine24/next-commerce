@@ -144,11 +144,17 @@ export const MultiLevelMenu = () => {
                             pl: "16px",
                             justifyContent: "flex-start",
                             transition: "all 0.15s ease",
-                            ...(activeRoute(item.path) && {
-                                color: theme.palette.primary.main,
+                            "&:hover": {
+                                color: "primary.main",
                                 backgroundColor: alpha(theme.palette.primary.main, 0.1),
+                            },
+                            ...(activeRoute(item.path) && {
+                                color: "primary.main",
+                                backgroundColor: alpha(theme.palette.primary.main, 0.1),
+                                borderRight: 2,
+                                borderRightColor: "primary.main",
                                 "& .MuiSvgIcon-root .secondary": {
-                                    color: theme.palette.primary.main,
+                                    color: "primary.main",
                                     opacity: 1
                                 }
                             })

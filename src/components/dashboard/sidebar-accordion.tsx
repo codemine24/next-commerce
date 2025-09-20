@@ -29,7 +29,7 @@ export const SidebarWrapper = ({ compact, ...props }: Compact & any) => (
             color: theme.palette.common.white,
             backgroundColor: theme.palette.grey[900],
             ...(compact && {
-                width: 86,
+                width: 60,
                 "&:hover": { width: 280 }
             })
         })}
@@ -49,6 +49,10 @@ export const NavItemButton = ({ active, ...props }: Active & any) => (
             pl: "16px",
             justifyContent: "flex-start",
             transition: "all 0.15s ease",
+            "&:hover": {
+                color: "primary.main",
+                backgroundColor: alpha(theme.palette.primary.main, 0.1),
+            },
             ...(active && {
                 color: theme.palette.primary.main,
                 "& .MuiSvgIcon-root .secondary": {
