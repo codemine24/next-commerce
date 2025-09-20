@@ -7,6 +7,9 @@ const baseProductSchema = {
     .min(1, "Product name is required"),
   model: z.string({ error: "Model should be a text" }).optional(),
   brand_id: z.uuid({ error: "Brand id should be a valid uuid" }).optional(),
+  categories: z
+    .array(z.uuid({ error: "Category id should be a valid uuid" }))
+    .optional(),
   size: z.string({ error: "Size should be a text" }).optional(),
   color: z.string({ error: "Color should be a text" }).optional(),
   tags: z

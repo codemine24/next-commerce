@@ -9,7 +9,7 @@ export const AllProducts = ({ products }: { products: Product[] }) => {
   return (
     <Box flex={1}>
       <Grid container spacing={2}>
-        {products.map((product) => (
+        {products?.map((product) => (
           <Grid size={{ xs: 6, md: 4 }} key={product.id}>
             <ProductCard product={product} action={true} />
           </Grid>

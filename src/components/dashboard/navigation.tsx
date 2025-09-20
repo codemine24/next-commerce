@@ -3,6 +3,7 @@ import { CategoriesIcon } from "@/icons/categories";
 import { CouponIcon } from "@/icons/coupon";
 import { CustomizationIcon } from "@/icons/customization";
 import { DashboardIcon } from "@/icons/dashboard";
+import { MediaIcon } from "@/icons/media";
 import { OrdersIcon } from "@/icons/orders";
 import { ProductsIcon } from "@/icons/products";
 import { ReviewIcon } from "@/icons/review";
@@ -48,6 +49,11 @@ export const ADMIN_NAVIGATION = [
             { name: "Brand List", path: "/admin/brands" },
             { name: "Create Brand", path: "/admin/brands/create" }
         ]
+    },
+    {
+        name: "Media",
+        icon: <MediaIcon fontSize="small" />,
+        path: "/admin/media"
     },
     {
         name: "Coupons",
