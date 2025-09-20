@@ -9,8 +9,8 @@ type OptimizeImageProps = {
   src?: string | StaticImageData;
   alt?: string;
   sx?: SxProps;
-  height?: number;
-  width?: number;
+  height?: number | string;
+  width?: number | string;
   imageStyle?: CSSProperties;
   quality?: number;
   priority?: boolean;

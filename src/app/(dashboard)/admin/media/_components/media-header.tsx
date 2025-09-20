@@ -22,7 +22,11 @@ export const MediaHeader = () => {
                 Upload
             </Button>
 
-            <MediaUploadDialog open={open} onClose={() => setOpen(false)} />
+            <MediaUploadDialog
+                title="Upload Media"
+                open={open}
+                onClose={() => setOpen(false)}
+            />
         </Box>
     );
 };

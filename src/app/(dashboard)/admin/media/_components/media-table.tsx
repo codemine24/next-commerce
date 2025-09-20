@@ -1,6 +1,6 @@
 "use client";
 
-import { Box } from '@mui/material';
+import Box from '@mui/material/Box';
 import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
 import Paper from '@mui/material/Paper';
@@ -12,42 +12,78 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import React from 'react';
 
+import { deleteFiles } from '@/actions/file';
+import { DeleteModal } from '@/components/delete-modal';
 import { OptimizeImage } from '@/components/optimize-image';
 import { TableSelectedAction } from '@/components/table-selection-action';
 import { DeleteIcon } from '@/icons/delete-icon';
 import { Media } from '@/interfaces/media';
+import { toast } from '@/lib/toast-store';
 import { makeImageUrl } from '@/utils/helper';
+import { formatDate, formatSize } from '@/utils/media-file';
 
-const formatSize = (size: number) => `${(size / 1024).toFixed(2)} KB`;
-const formatDate = (dateStr: string) => new Date(dateStr).toLocaleDateString();
+import { MediaActionPopover } from './media-action-popover';
+import { MediaDetails } from './media-details';
 
 export const MediaTable = ({ media }: { media: Media[] }) => {
+    const [openMediaDetails, setOpenMediaDetails] = React.useState(false);
+    const [selectedMedia, setSelectedMedia] = React.useState<Media | null>(null);
     const [selectedRows, setSelectedRows] = React.useState<string[]>([]);
+    const [openDeleteModal, setOpenDeleteModal] = React.useState(false);
+    const [loading, setLoading] = React.useState(false);
 
     const handleSelectAllClick = (checked: boolean) => {
         if (checked) {
-            const newSelected = media.map((n: Media) => n.id);
+            const newSelected = media.map((n: Media) => n.path);
             setSelectedRows(newSelected);
             return;
         }
         setSelectedRows([]);
     };
 
-    const handleSelectRow = (id: string) => {
-        if (selectedRows.includes(id)) {
-            setSelectedRows(selectedRows.filter((rowId) => rowId !== id));
+    const handleSelectRow = (path: string) => {
+        if (selectedRows.includes(path)) {
+            setSelectedRows(selectedRows.filter((rowId) => rowId !== path));
         } else {
-            setSelectedRows([...selectedRows, id]);
+            setSelectedRows([...selectedRows, path]);
         }
     };
+
+    const handleDeleteMedia = async () => {
+        setLoading(true);
+        const res = await deleteFiles(selectedRows);
+        setLoading(false);
+
+        if (res.success) {
+            setSelectedRows([]);
+            toast.success(res.message);
+            setOpenDeleteModal(false);
+        } else {
+            toast.error(res.message);
+        }
+    };
+
+    const handleViewMedia = (media: Media) => {
+        setSelectedMedia(media);
+        setOpenMediaDetails(true);
+    }
+
+    const mediaDeleteButton = () => {
+        return (
+            <IconButton color="error" onClick={() => setOpenDeleteModal(true)}>
+                <DeleteIcon />
+            </IconButton>
+        )
+    }
 
     return (
         <Box position="relative">
             {/* Selected Table Rows */}
             <TableSelectedAction
-                rowCount={media.length}
-                numSelected={selectedRows.length}
+                rowCount={media?.length}
+                numSelected={selectedRows?.length}
                 onSelectAllRows={handleSelectAllClick}
+                action={mediaDeleteButton()}
             />
 
             {/* Media Table */}
@@ -58,7 +94,7 @@ export const MediaTable = ({ media }: { media: Media[] }) => {
                             <TableCell padding="checkbox">
                                 <Checkbox
                                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleSelectAllClick(event.target.checked)}
-                                    checked={selectedRows.length === media.length}
+                                    checked={selectedRows?.length > 0 && selectedRows?.length === media?.length}
                                 />
                             </TableCell>
                             <TableCell>Image</TableCell>
@@ -70,16 +106,23 @@ export const MediaTable = ({ media }: { media: Media[] }) => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {media?.map((media) => (
+                        {media?.length === 0 && (
+                            <TableRow>
+                                <TableCell colSpan={7} align="center" sx={{ fontWeight: 500 }}>
+                                    No media found
+                                </TableCell>
+                            </TableRow>
+                        )}
+                        {media?.length > 0 && media?.map((media) => (
                             <TableRow
                                 hover
-                                key={media.id}
-                                selected={selectedRows.includes(media.id)}
+                                key={media?.id}
+                                selected={selectedRows.includes(media.path)}
                             >
                                 <TableCell padding="checkbox">
                                     <Checkbox
-                                        onChange={() => handleSelectRow(media.id)}
-                                        checked={selectedRows.includes(media.id)}
+                                        onChange={() => handleSelectRow(media.path)}
+                                        checked={selectedRows.includes(media.path)}
                                     />
                                 </TableCell>
                                 <TableCell>
@@ -90,15 +133,28 @@ export const MediaTable = ({ media }: { media: Media[] }) => {
                                 <TableCell>{media.type.split('/')[1]}</TableCell>
                                 <TableCell>{formatDate(media.created_at)}</TableCell>
                                 <TableCell>
-                                    <IconButton color="error" onClick={() => alert(`Delete ${media.id}`)}>
-                                        <DeleteIcon />
-                                    </IconButton>
+                                    <MediaActionPopover media={media} onView={handleViewMedia} />
                                 </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
                 </Table>
             </TableContainer>
+
+            {openMediaDetails && <MediaDetails
+                media={selectedMedia!}
+                open={openMediaDetails}
+                onClose={() => setOpenMediaDetails(false)}
+            />}
+
+            {openDeleteModal && <DeleteModal
+                open={openDeleteModal}
+                onClose={() => setOpenDeleteModal(false)}
+                title="Delete Media"
+                description="Are you sure you want to delete this media?"
+                onConfirm={handleDeleteMedia}
+                loading={loading}
+            />}
         </Box>
     );
 }
