@@ -14,6 +14,7 @@ export const MediaSearchBox = ({ searchText, handleSearch }: MediaSearchBoxProps
             value={searchText}
             onChange={handleSearch}
             placeholder="Search..."
+            size="small"
             slotProps={{
                 input: {
                     startAdornment: (

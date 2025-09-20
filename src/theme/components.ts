@@ -3,6 +3,7 @@ import { alpha, Components, Theme } from "@mui/material/styles";
 
 import { colorPalette } from "./palette";
 import { BORDER_RADIUS } from "./shape";
+import { tableCellClasses, tableRowClasses } from "@mui/material";
 
 // ========================================================
 
@@ -236,7 +237,7 @@ export const components: Components<Theme> = {
   MuiPaper: {
     styleOverrides: {
       root: ({ theme }) => ({
-        marginTop: 4,
+        marginTop: 0,
         backgroundColor: theme.palette.background.default,
         borderRadius: 0,
         elevation: 0,
@@ -264,16 +265,64 @@ export const components: Components<Theme> = {
     styleOverrides: {
       root: {
         borderRadius: "6px",
-        // cursor: "pointer",
         position: "relative",
         boxShadow: "0px 1px 3px rgba(3, 0, 71, 0.09)",
         transition: "all 0.2s ease-in-out",
-        // ":hover": {
-        //   boxShadow:
-        //     "rgba(43, 52, 69, 0.05) 0px 0px 24px 0px, rgba(43, 52, 69, 0.05) 0px 3px 6px 0px",
-        // },
         backgroundColor: "background.paper",
       },
     },
   },
+
+  MuiTabs: {
+    styleOverrides: {
+      root: ({ theme }) => ({
+        borderBottom: "1px solid",
+        borderColor: theme.palette.divider,
+      }),
+    },
+  },
+  MuiTab: {
+    styleOverrides: {
+      root: {
+        textTransform: "none",
+      },
+    },
+  },
+  // TableCell border
+  MuiTable: {
+    styleOverrides: {
+      root: ({ theme }) => ({
+        borderSpacing: "0px !important",
+        border: "1px solid", borderColor: theme.palette.divider,
+        borderCollapse: 'separate'
+      }),
+    },
+  },
+  MuiTableRow: {
+    styleOverrides: {
+      root: ({ theme }) => ({
+        "&:first-of-type": { [`& .${tableCellClasses.root}`]: { borderTop: "1px solid", borderColor: theme.palette.divider } },
+        '&:last-of-type': { [`& .${tableCellClasses.root}`]: { borderColor: 'transparent' } },
+      }),
+    },
+  },
+  MuiTableCell: {
+    styleOverrides: {
+      root: ({ theme }) => ({
+        fontSize: 14,
+        borderBottom: "1px solid",
+        borderColor: theme.palette.divider,
+      }),
+      head: ({ theme }) => ({
+        fontSize: 14,
+        fontWeight: theme.typography.fontWeightMedium,
+        color: theme.palette.text.primary,
+        backgroundColor: theme.palette.background.paper,
+      }),
+      stickyHeader: ({ theme }) => ({
+        backgroundColor: theme.palette.background.paper,
+      }),
+      paddingCheckbox: ({ theme }) => ({ paddingLeft: theme.spacing(1) }),
+    },
+  }
 };

@@ -34,7 +34,6 @@ export const OptimizeImage = ({
 }: OptimizeImageProps) => {
   const srcImage = src || placeholderImage;
 
-  console.log(srcImage);
   return (
     <Box
       sx={{

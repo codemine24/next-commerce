@@ -21,8 +21,14 @@ export const AdminDashboardLayout = ({ children }: PropsWithChildren) => {
                 }}
             >
                 <DashboardNavbar />
-                <Box bgcolor="background.paper" p={4} minHeight="calc(100svh - 50px)" overflow="auto">
-                    <Box maxWidth="lg" mx="auto" p={4}>{children}</Box>
+                <Box
+                    px={{ xs: 2, md: 3, lg: 5 }}
+                    py={{ xs: 2, md: 3 }}
+                    bgcolor="background.paper"
+                    minHeight="calc(100svh - 50px)"
+                    overflow="auto"
+                >
+                    <Box maxWidth="lg" mx="auto">{children}</Box>
                 </Box>
             </Box>
         </>

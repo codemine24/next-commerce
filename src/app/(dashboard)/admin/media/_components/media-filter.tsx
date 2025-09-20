@@ -128,7 +128,13 @@ export const MediaFilter = () => {
   );
 
   return (
-    <Box display="flex" gap={2} alignItems="center" justifyContent="space-between">
+    <Box
+      display="flex"
+      p={2}
+      gap={2}
+      alignItems="center"
+      justifyContent="space-between"
+    >
       <MediaSearchBox
         searchText={searchText}
         handleSearch={handleSearch} />

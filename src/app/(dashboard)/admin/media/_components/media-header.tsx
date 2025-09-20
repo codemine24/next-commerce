@@ -12,8 +12,8 @@ import { MediaUploadDialog } from "./media-upload-dialog";
 export const MediaHeader = () => {
     const [open, setOpen] = useState(false);
     return (
-        <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
-            <Typography variant="h4" sx={{ my: 4 }}>Media</Typography>
+        <Box display="flex" justifyContent="space-between" alignItems="center">
+            <Typography variant="h4">Media</Typography>
             <Button
                 onClick={() => setOpen(true)}
                 variant="contained"
