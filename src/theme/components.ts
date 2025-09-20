@@ -113,6 +113,19 @@ export const components: Components<Theme> = {
       root: { marginLeft: 0 },
     },
   },
+  MuiCheckbox: {
+    styleOverrides: {
+      root: ({ theme }) => ({
+        transition: "all 0.3s",
+        height: 36,
+        width: 36,
+        "&:hover": {
+          borderRadius: 0,
+          backgroundColor: alpha(theme.palette.primary.main, 0.1),
+        },
+      }),
+    },
+  },
   MuiButton: {
     variants: [
       {
