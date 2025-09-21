@@ -2,7 +2,6 @@
 
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
-import Dialog from "@mui/material/Dialog"
 import DialogActions from "@mui/material/DialogActions"
 import DialogContent from "@mui/material/DialogContent"
 import DialogTitle from "@mui/material/DialogTitle"
@@ -15,9 +14,8 @@ import { Uploader } from "@/app/(dashboard)/admin/media/_components/uploader/upl
 import { UploadCloudIcon } from "@/icons/upload-cloud";
 import { toast } from "@/lib/toast-store";
 
-import { FadeTransition } from "../fade-transition";
-
 import { ImageLibrary } from "./image-library";
+import { AnimatedDialog } from "../modal/animate-dialog";
 
 const TABS = [
     { label: "Library", value: "library" },
@@ -33,7 +31,7 @@ interface ImageSelectModalProps {
     onFilesSelect: (file: string) => void;
 }
 
-export const ImageSelectModal = (props: ImageSelectModalProps) => {
+export const ImageSelectDialog = (props: ImageSelectModalProps) => {
     const { open, multiple, onClose, selectedFiles, onSelect, onFilesSelect } = props;
     const [selectedTab, setSelectedTab] = useState(TABS[0].value);
     const [files, setFiles] = useState<(File | string)[]>([]);
@@ -68,17 +66,11 @@ export const ImageSelectModal = (props: ImageSelectModalProps) => {
     };
 
     return (
-        <Dialog
+        <AnimatedDialog
             open={open}
             onClose={onClose}
             fullWidth
             maxWidth={selectedTab === "library" ? "lg" : "sm"}
-            slots={{ transition: FadeTransition }}
-            slotProps={{
-                transition: {
-                    timeout: 500,
-                },
-            }}
             sx={{ minHeight: 240 }}
         >
             <DialogTitle>{selectedTab === "library" ? "Select Image" : "Upload Image"}</DialogTitle>
@@ -145,6 +137,6 @@ export const ImageSelectModal = (props: ImageSelectModalProps) => {
                     </>
                 )}
             </DialogActions>
-        </Dialog>
+        </AnimatedDialog>
     )
 }   

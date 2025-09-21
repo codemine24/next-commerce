@@ -56,7 +56,7 @@ export const components: Components<Theme> = {
   MuiDialog: {
     styleOverrides: {
       paper: {
-        borderRadius: 12,
+        borderRadius: 0,
         boxShadow: "none",
       },
     },

@@ -9,7 +9,7 @@ import { Controller, useFormContext } from "react-hook-form";
 import { MediaIcon } from "@/icons/media";
 
 import { ImagePreview } from "../image-select/image-preview";
-import { ImageSelectModal } from "../image-select/image-select-modal";
+import { ImageSelectDialog } from "../image-select/image-select-dialog";
 
 import { InputLabel } from "./input-label";
 
@@ -99,7 +99,7 @@ export const ImageUploader = ({ sx, label, required, heading, subHeading, multip
             />
 
             {/* Image Select Modal */}
-            <ImageSelectModal
+            <ImageSelectDialog
                 multiple={multiple}
                 open={openUploadModal}
                 selectedFiles={selectedImages}

@@ -13,7 +13,7 @@ import TableRow from '@mui/material/TableRow';
 import React from 'react';
 
 import { deleteFiles } from '@/actions/file';
-import { DeleteModal } from '@/components/delete-modal';
+import { ConfirmDialog } from '@/components/confirm-dialog';
 import { OptimizeImage } from '@/components/optimize-image';
 import { TableSelectedAction } from '@/components/table-selection-action';
 import { DeleteIcon } from '@/icons/delete-icon';
@@ -87,7 +87,7 @@ export const MediaTable = ({ media }: { media: Media[] }) => {
             />
 
             {/* Media Table */}
-            <TableContainer component={Paper} sx={{ border: 'none' }}>
+            <TableContainer component={Paper} sx={{ border: 'none', borderTop: 1, borderColor: 'divider' }}>
                 <Table sx={{ border: 'none' }}>
                     <TableHead>
                         <TableRow>
@@ -147,7 +147,7 @@ export const MediaTable = ({ media }: { media: Media[] }) => {
                 onClose={() => setOpenMediaDetails(false)}
             />}
 
-            {openDeleteModal && <DeleteModal
+            {openDeleteModal && <ConfirmDialog
                 open={openDeleteModal}
                 onClose={() => setOpenDeleteModal(false)}
                 title="Delete Media"

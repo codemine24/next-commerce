@@ -1,7 +1,6 @@
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import type { DialogProps } from '@mui/material/Dialog';
-import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -17,9 +16,9 @@ import { UploadCloudIcon } from '@/icons/upload-cloud';
 import { toast } from '@/lib/toast-store';
 
 import { Uploader } from './uploader/uploader';
+import { OverlayScrollbar } from '@/components/dashboard/overlay-scrollbar';
+import { AnimatedDialog } from '@/components/modal/animate-dialog';
 
-
-// ----------------------------------------------------------------------
 
 interface MediaUploadDialogProps extends DialogProps {
     open: boolean;
@@ -49,6 +48,11 @@ export function MediaUploadDialog(props: MediaUploadDialogProps) {
     };
 
     const handleUpload = async () => {
+        if (!files.length) {
+            handleClose();
+            return;
+        }
+
         // Calculate total file size
         const fileSize = files.reduce((total, file) => total + (file instanceof File ? file.size : 0), 0);
 
@@ -85,8 +89,15 @@ export function MediaUploadDialog(props: MediaUploadDialogProps) {
     };
 
     return (
-        <Dialog fullWidth maxWidth="sm" open={open} onClose={handleClose} {...other}>
-            <Box position="relative">
+        <AnimatedDialog fullWidth maxWidth="sm" open={open} onClose={handleClose} {...other}>
+            <Box
+                position="relative"
+                sx={{
+                    overflow: "hidden !important",
+                    display: "flex",
+                    flexDirection: "column",
+                }}
+            >
                 <DialogTitle sx={{ p: 2, bgcolor: "background.default" }}>{title}</DialogTitle>
 
                 <IconButton
@@ -100,26 +111,36 @@ export function MediaUploadDialog(props: MediaUploadDialogProps) {
                     <CloseIcon />
                 </IconButton>
 
-                <DialogContent dividers sx={{ pt: 1, pb: 0, border: 'none', bgcolor: "background.default" }}>
-                    {(onCreate || onUpdate) && (
-                        <TextField
-                            fullWidth
-                            label="Folder name"
-                            value={folderName}
-                            onChange={onChangeFolderName}
-                            sx={{ mb: 3 }}
-                        />
-                    )}
+                <OverlayScrollbar>
+                    <DialogContent
+                        dividers
+                        sx={{
+                            pt: 1,
+                            pb: 0,
+                            border: 'none',
+                            bgcolor: "background.default",
+                            flexGrow: 1,
+                        }}>
+                        {(onCreate || onUpdate) && (
+                            <TextField
+                                fullWidth
+                                label="Folder name"
+                                value={folderName}
+                                onChange={onChangeFolderName}
+                                sx={{ mb: 3 }}
+                            />
+                        )}
 
-                    {/* Upload Area */}
-                    <Uploader
-                        multiple
-                        accept={{ 'image/*': [] }}
-                        value={files}
-                        onDrop={handleDrop}
-                        onRemove={handleRemoveFile}
-                    />
-                </DialogContent>
+                        {/* Upload Area */}
+                        <Uploader
+                            multiple
+                            accept={{ 'image/*': [] }}
+                            value={files}
+                            onDrop={handleDrop}
+                            onRemove={handleRemoveFile}
+                        />
+                    </DialogContent>
+                </OverlayScrollbar>
 
                 {/* Dialog Actions */}
                 <DialogActions
@@ -166,6 +187,6 @@ export function MediaUploadDialog(props: MediaUploadDialogProps) {
                     </Box>
                 </DialogActions>
             </Box>
-        </Dialog>
+        </AnimatedDialog>
     );
 }
