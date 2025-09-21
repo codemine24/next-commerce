@@ -1,9 +1,8 @@
 import Box from "@mui/material/Box";
 
 import { BoxContainer } from "@/components/box-container";
+import Footer from "@/components/footer";
 import { Navbar } from "@/components/navbar/nav-bar";
-
-import Footer from "../footer";
 
 import { UserSidebar } from "./user-sidebar";
 

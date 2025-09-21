@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
-import { CustomDatePicker } from "@/components/custom-date-picker/custom-date-picker";
+import { CustomDatePicker } from "@/components/custom-date-picker";
 import { useDebounce } from "@/hooks/use-debounce";
 import { ChevronDownIcon } from "@/icons/chevron-down";
 import { dateIsAfter, getDateTime } from "@/utils/date-formatter";
