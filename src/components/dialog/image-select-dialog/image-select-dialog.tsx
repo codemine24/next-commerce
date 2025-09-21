@@ -49,6 +49,12 @@ export const ImageSelectDialog = (props: ImageSelectModalProps) => {
     // Remove All Files
     const handleRemoveAll = () => setFiles([]);
 
+    // Handle Close
+    const handleClose = () => {
+        setFiles([]);
+        onClose();
+    };
+
     // Handle Upload to Server
     const handleUpload = async () => {
         // Calculate total file size
@@ -81,10 +87,16 @@ export const ImageSelectDialog = (props: ImageSelectModalProps) => {
     return (
         <AnimatedDialog
             open={open}
-            onClose={onClose}
+            onClose={handleClose}
             fullWidth
-            maxWidth={selectedTab === "library" ? "lg" : "sm"}
-            sx={{ minHeight: 240 }}
+            maxWidth={false}
+            sx={{
+                "& .MuiDialog-paper": {
+                    minHeight: 240,
+                    width: selectedTab === "library" ? 1200 : 600,
+                    transition: "width 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
+                }
+            }}
         >
             <DialogTitle>{selectedTab === "library" ? "Select Image" : "Upload Image"}</DialogTitle>
             <DialogContent>
@@ -119,11 +131,7 @@ export const ImageSelectDialog = (props: ImageSelectModalProps) => {
             </DialogContent>
 
             {/* Dialog Actions */}
-            <DialogActions
-                sx={{
-                    justifyContent: selectedTab === "upload" ? "space-between" : "flex-end"
-                }}
-            >
+            <DialogActions sx={{ justifyContent: selectedTab === "upload" ? "space-between" : "flex-end" }}>
                 {selectedTab === "upload" && (
                     <Typography variant="subtitle2" fontWeight={500} color="error">
                         Max file size: 3MB
@@ -134,8 +142,8 @@ export const ImageSelectDialog = (props: ImageSelectModalProps) => {
                     {/* Action Buttons for Library Tab */}
                     {selectedTab === "library" && (
                         <>
-                            <Button onClick={onClose} variant="outlined">Cancel</Button>
-                            <Button onClick={onSelect} variant="contained">Select</Button>
+                            <Button onClick={handleClose} variant="outlined">Cancel</Button>
+                            <Button onClick={onSelect} variant="contained" disabled={selectedFiles.length === 0}>Select</Button>
                         </>
                     )}
 

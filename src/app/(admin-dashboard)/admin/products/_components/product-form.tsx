@@ -115,6 +115,7 @@ export const ProductForm = ({ methods, onSubmit, brands }: ProductFormProps) => 
         {/* File Uploader */}
         <Box display="flex" flexDirection={{ xs: "column", sm: "row" }} gap={2}>
           <ImageUploader
+            required
             label="Thumbnail Image"
             heading="Select Thumbnail Image"
             subHeading="Select thumbnail image for the product"
@@ -123,6 +124,7 @@ export const ProductForm = ({ methods, onSubmit, brands }: ProductFormProps) => 
 
           <ImageUploader
             multiple
+            required
             label="Gallery Images"
             heading="Select Gallery Images"
             subHeading="Select gallery images for the product"

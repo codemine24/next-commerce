@@ -2,6 +2,7 @@
 
 import { SxProps, Theme } from "@mui/material";
 import Box from "@mui/material/Box";
+import FormHelperText from "@mui/material/FormHelperText";
 import Stack from "@mui/material/Stack";
 import { useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
@@ -29,6 +30,7 @@ export const ImageUploader = (props: ImageUploaderProps) => {
     const { control, setValue, watch, resetField } = useFormContext();
     const selectedImages = watch(name);;
 
+    // Handle image selection
     const handleSelectImage = (image: string) => {
         if (multiple) {
             const newSelectedImage = selectedImages.includes(image) ? selectedImages.filter((img: string) => img !== image) : [...selectedImages, image];
@@ -38,11 +40,13 @@ export const ImageUploader = (props: ImageUploaderProps) => {
         }
     };
 
+    // Handle modal close
     const handleOnClose = () => {
         resetField(name);
         setOpenUploadModal(false);
     };
 
+    // Handle select
     const handleSelect = () => {
         setValue(name, selectedImages);
         setOpenUploadModal(false);
@@ -54,8 +58,9 @@ export const ImageUploader = (props: ImageUploaderProps) => {
             <Controller
                 name={name}
                 control={control}
-                render={({ field }) => (
+                render={({ field, fieldState }) => (
                     <>
+                        {/* Image upload button */}
                         <Box
                             p={4}
                             display="flex"
@@ -81,6 +86,11 @@ export const ImageUploader = (props: ImageUploaderProps) => {
                             </Stack>
                         </Box>
 
+                        {/* Error message */}
+                        {fieldState.error && <FormHelperText sx={{ color: 'error.main' }}>
+                            {fieldState.error.message}
+                        </FormHelperText>}
+
                         {/* Selected Images preview */}
                         <Box width="fit-content" mt={2}>
                             {/* For Multiple Images Preview */}
@@ -103,9 +113,9 @@ export const ImageUploader = (props: ImageUploaderProps) => {
             <ImageSelectDialog
                 multiple={multiple}
                 open={openUploadModal}
-                selectedFiles={selectedImages}
                 onClose={handleOnClose}
                 onSelect={handleSelect}
+                selectedFiles={selectedImages}
                 onFilesSelect={(files) => handleSelectImage(files)}
             />
         </Box>
