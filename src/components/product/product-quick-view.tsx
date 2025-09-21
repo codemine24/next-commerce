@@ -5,7 +5,8 @@ import { ProductCarousel } from "@/components/product/product-carousel";
 import { ProductInfo } from "@/components/product/product-info";
 import { CloseIcon } from "@/icons/close";
 import { Product } from "@/interfaces/product";
-import { AnimatedDialog } from "../modal/animate-dialog";
+
+import { AnimatedDialog } from "../dialog/animate-dialog";
 
 const images = [
   "https://placehold.co/600x400/png",

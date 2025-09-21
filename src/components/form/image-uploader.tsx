@@ -8,8 +8,7 @@ import { Controller, useFormContext } from "react-hook-form";
 
 import { MediaIcon } from "@/icons/media";
 
-import { ImagePreview } from "../image-select/image-preview";
-import { ImageSelectDialog } from "../image-select/image-select-dialog";
+import { ImagePreviewCard, ImageSelectDialog } from "../dialog/image-select-dialog";
 
 import { InputLabel } from "./input-label";
 
@@ -23,7 +22,9 @@ interface ImageUploaderProps {
     name: string;
 }
 
-export const ImageUploader = ({ sx, label, required, heading, subHeading, multiple = false, name }: ImageUploaderProps) => {
+export const ImageUploader = (props: ImageUploaderProps) => {
+    const { sx, label, required, heading, subHeading, multiple = false, name } = props;
+
     const [openUploadModal, setOpenUploadModal] = useState(false);
     const { control, setValue, watch, resetField } = useFormContext();
     const selectedImages = watch(name);;
@@ -85,13 +86,13 @@ export const ImageUploader = ({ sx, label, required, heading, subHeading, multip
                             {/* For Multiple Images Preview */}
                             <Stack direction="row" spacing={2}>
                                 {field.value?.length > 0 && multiple && field.value.map((image: string) => (
-                                    <ImagePreview key={image} path={image} field={field} multiple setValue={setValue} />
+                                    <ImagePreviewCard key={image} path={image} field={field} multiple setValue={setValue} />
                                 ))}
                             </Stack>
 
                             {/* For Single Image Preview */}
                             {field.value && !multiple && (
-                                <ImagePreview path={field.value} field={field} setValue={setValue} />
+                                <ImagePreviewCard path={field.value} field={field} setValue={setValue} />
                             )}
                         </Box>
                     </>

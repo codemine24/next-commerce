@@ -37,7 +37,9 @@ export const ToastProvider = ({ children }: { children: React.ReactNode }) => {
                 autoHideDuration={4000}
                 onClose={handleClose}
                 anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-                TransitionComponent={SlideTransition}
+                slots={{
+                    transition: SlideTransition,
+                }}
             >
                 <Alert severity={severity} onClose={handleClose} variant="filled">
                     {message}

@@ -1,35 +1,42 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 
-export function useFetch<T = any>(
-    fn: () => Promise<T>,
-) {
-    const [data, setData] = useState<T | null>(null);
-    const [loading, setLoading] = useState<boolean>(false);
-    const [error, setError] = useState<Error | null>(null);
+import api from "@/lib/api";
+
+export const useFetch = (url: string): {
+    data: any;
+    error: string | null;
+    isLoading: boolean;
+    revalidate: () => void;
+} => {
+    const [data, setData] = useState(null);
+    const [error, setError] = useState<string | null>(null);
+    const [isLoading, setIsLoading] = useState(false);
 
     const fetchData = useCallback(async () => {
-        setLoading(true);
-
         try {
-            const result = await fn();
-            setData(result);
+            setIsLoading(true);
+            const response = await api.get(url);
+            setData(response.data);
+
+            // Set error if response is not successful
+            if (!response.success) setError(response.message);
         } catch (err) {
-            setError(err as Error);
+            setError((err as Error).message);
         } finally {
-            setLoading(false);
+            setIsLoading(false);
         }
-    }, [fn]);
+    }, [url]);
 
     useEffect(() => {
         fetchData();
     }, [fetchData]);
 
-    return {
-        data,
-        loading,
-        error,
-        refetch: fetchData,
-    };
-}
+    // Revalidate data
+    const revalidate = useCallback(() => {
+        fetchData();
+    }, [fetchData]);
+
+    return { data, error, isLoading, revalidate };
+};
