@@ -53,7 +53,7 @@ export const DashboardSidebar = () => {
             onMouseEnter={() => handleSidebarHover(true)}
             onMouseLeave={() => sidebarCompact && handleSidebarHover(false)}
             sx={(theme) => ({
-                width: sidebarCompact ? 60 : 280,
+                width: sidebarCompact ? 60 : 260,
                 height: "100vh",
                 position: "fixed",
                 transition: "all 0.2s ease",
@@ -66,7 +66,7 @@ export const DashboardSidebar = () => {
                 flexDirection: "column",
                 ...(sidebarCompact && {
                     "&:hover": {
-                        width: 280
+                        width: 260
                     }
                 })
             })}

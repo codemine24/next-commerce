@@ -17,7 +17,7 @@ export const AdminDashboardLayout = ({ children }: PropsWithChildren) => {
             <Box
                 sx={{
                     transition: "margin-left 0.3s",
-                    ml: { xs: 0, lg: sidebarCompact ? "60px" : "280px" },
+                    ml: { xs: 0, lg: sidebarCompact ? "60px" : "260px" },
                 }}
             >
                 <DashboardNavbar />
