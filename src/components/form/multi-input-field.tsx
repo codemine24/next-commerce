@@ -61,6 +61,7 @@ export const MultiInputField = ({
                                     type={type}
                                     value={value}
                                     fullWidth
+                                    size="small"
                                     placeholder={placeholder || label}
                                     onChange={(event) => handleChange(event, index)}
                                     error={Boolean(error)}

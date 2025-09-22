@@ -1,5 +1,6 @@
 "use client";
 
+import { alpha } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { inputBaseClasses } from "@mui/material/InputBase";
@@ -14,7 +15,6 @@ import { currencyFormatter } from "@/utils/currency-formatter";
 import { SectionTitle } from "../../_components/section-title";
 
 import { CartItems } from "./cart-items";
-import { alpha } from "@mui/material";
 
 export const CartPageContainer = () => {
   const { cart } = useCart();

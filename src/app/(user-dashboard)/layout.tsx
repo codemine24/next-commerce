@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
-import { UserDashboardLayout } from "@/components/user-dashboard/user-dashboard-layout";
 import { AppProvider } from "@/providers/app-provider";
+
+import { UserDashboardLayout } from "./_components/user-dashboard-layout";
 
 import "@/styles/globals.css";
 

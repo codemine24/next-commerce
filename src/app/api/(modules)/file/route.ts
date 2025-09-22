@@ -78,7 +78,7 @@ export const DELETE = catchAsync(async (req: NextRequest) => {
   // Step 4: Return success response
   return successResponse({
     statusCode: httpStatus.OK,
-    message: "Categories deleted successfully",
+    message: "Files deleted successfully",
     data: result,
   });
 });

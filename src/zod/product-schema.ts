@@ -24,10 +24,12 @@ export const productSchema = z.object({
         .number()
         .nonnegative({ error: "Discount price should not be negative" })
         .optional(),
-    thumbnail: z.union([z.string(), z.null()]).optional(),
+    thumbnail: z
+        .string({ error: "Thumbnail is required" })
+        .min(1, "Thumbnail is required"),
     gallery: z
-        .array(z.union([z.string(), z.null()]))
-        .optional(),
+        .array(z.string({ error: "Gallery is required" }))
+        .nonempty({ error: "Gallery is required" }),
     description: z.string().optional(),
     specification: z.string().optional(),
     additional_information: z.string().optional(),
