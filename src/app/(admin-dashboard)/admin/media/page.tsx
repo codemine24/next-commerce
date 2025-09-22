@@ -6,6 +6,7 @@ import { SearchParams } from "@/interfaces/common";
 
 import { MediaContent } from "./_components/media-content";
 import { MediaFilter } from "./_components/media-filter";
+import { MediaFilterSkeleton } from "./_components/media-filter-skeleton";
 import { MediaHeader } from "./_components/media-header";
 import { MediaTabs } from "./_components/media-tabs";
 
@@ -15,7 +16,13 @@ export default async function MediaPage({ searchParams }: { searchParams: Promis
       <MediaHeader />
       <Box bgcolor="background.default" border={1} borderColor="divider">
         <MediaTabs />
-        <MediaFilter />
+
+        {/* Media Filter */}
+        <Suspense fallback={<MediaFilterSkeleton />}>
+          <MediaFilter />
+        </Suspense>
+
+        {/* Media Content */}
         <Suspense fallback={<LoadingSpinner />}>
           <MediaContent searchParams={searchParams} />
         </Suspense>
