@@ -1,20 +1,24 @@
-"use client";
+import { Box, Typography } from '@mui/material';
+import React, { use } from 'react';
 
-import Box from "@mui/material/Box";
-import React from 'react';
+import { getFiles } from '@/actions/file';
+import { SearchParams } from '@/interfaces/common';
 
-import { Media } from '@/interfaces/media';
-
-import { MediaFilter } from './media-filter';
 import { MediaTable } from './media-table';
-import { MediaTabs } from './media-tabs';
 
-export const MediaContent = ({ media }: { media: Media[] }) => {
+export const MediaContent = ({ searchParams }: { searchParams: Promise<SearchParams> }) => {
+    const query = use(searchParams);
+    const data = use(getFiles(query));
+
+    if (!data.success) {
+        return (
+            <Box>
+                <Typography variant="h6">No media found</Typography>
+            </Box>
+        )
+    }
+
     return (
-        <Box bgcolor="background.default" border={1} borderColor="divider">
-            <MediaTabs />
-            <MediaFilter />
-            <MediaTable media={media} />
-        </Box>
+        <MediaTable media={data.data} meta={data.meta} />
     );
 }

@@ -51,6 +51,7 @@ export const CustomDatePicker = (props: CustomDatePickerProps) => {
                     horizontal: 'left',
                 }}
             >
+                {error && <FormHelperText error sx={{ p: 2, pb: 0 }}>{error}</FormHelperText>}
                 <DateCalendar
                     value={dayjs(date)}
                     onChange={(newValue) => {
@@ -62,8 +63,6 @@ export const CustomDatePicker = (props: CustomDatePickerProps) => {
                         }
                     }}
                 />
-
-                {error && <FormHelperText error sx={{ p: 2, pt: 0 }}>{error}</FormHelperText>}
             </Popover>
         </>
     );

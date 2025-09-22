@@ -3,11 +3,19 @@
 import { revalidateTag } from "next/cache";
 
 import { TAGS } from "@/constants/tags";
+import { SearchParams } from "@/interfaces/common";
 import api from "@/lib/api";
 import { API_ROUTES } from "@/lib/api-routes";
 
-export const getFiles = async () => {
-    const res = await api.get(API_ROUTES.files.get_files, {
+export const getFiles = async (queries: SearchParams) => {
+    let url = API_ROUTES.files.get_files;
+    const queriesString = Object.entries(queries)
+        .map(([key, value]) => `${key}=${value}`)
+        .join("&");
+
+    if (queriesString) url += `?${queriesString}`;
+
+    const res = await api.get(url, {
         next: { tags: [TAGS.files] }
     });
     return res;

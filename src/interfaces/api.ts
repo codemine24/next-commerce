@@ -8,12 +8,19 @@ export interface RequestOptions extends RequestInit {
     timeout?: number;
 }
 
+export interface Meta {
+    total: number;
+    page: number;
+    limit: number;
+}
+
 // ApiResponse
 export type ApiResponse<T> = {
     success: true;
     data: T;
     statusCode: number;
     message: string;
+    meta: Meta;
 } | {
     success: false;
     statusCode: number;

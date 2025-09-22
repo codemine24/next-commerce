@@ -1,20 +1,25 @@
 import Box from "@mui/material/Box";
 import { Suspense } from "react";
 
-import { getFiles } from "@/actions/file";
+import { LoadingSpinner } from "@/components/loading-spinner";
+import { SearchParams } from "@/interfaces/common";
 
 import { MediaContent } from "./_components/media-content";
+import { MediaFilter } from "./_components/media-filter";
 import { MediaHeader } from "./_components/media-header";
+import { MediaTabs } from "./_components/media-tabs";
 
-export default async function MediaPage() {
-  const media = await getFiles();
-
+export default async function MediaPage({ searchParams }: { searchParams: Promise<SearchParams> }) {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <Box display="flex" flexDirection="column" gap={2}>
-        <MediaHeader />
-        <MediaContent media={media.data} />
+    <Box display="flex" flexDirection="column" gap={2}>
+      <MediaHeader />
+      <Box bgcolor="background.default" border={1} borderColor="divider">
+        <MediaTabs />
+        <MediaFilter />
+        <Suspense fallback={<LoadingSpinner />}>
+          <MediaContent searchParams={searchParams} />
+        </Suspense>
       </Box>
-    </Suspense>
+    </Box>
   );
 }

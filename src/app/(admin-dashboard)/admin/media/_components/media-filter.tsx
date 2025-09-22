@@ -19,12 +19,12 @@ export const MediaFilter = () => {
 
   const [dateError, setDateError] = useState("");
   const [searchText, setSearchText] = useState(
-    searchParams.get("searchText") || ""
+    searchParams.get("search_term") || ""
   );
   const [fromDate, setFromDate] = useState(searchParams.get("fromDate"));
   const [toDate, setToDate] = useState(searchParams.get("toDate"));
-  const [types, setTypes] = useState(
-    searchParams.get("types")?.split(",") || []
+  const [type, setType] = useState(
+    searchParams.get("type")?.split(",") || []
   );
   const debouncedSearchText = useDebounce(searchText, 500);
 
@@ -46,7 +46,7 @@ export const MediaFilter = () => {
 
   // Sync debounced search text once it settles
   useEffect(() => {
-    updateSearchParams({ searchText: debouncedSearchText });
+    updateSearchParams({ search_term: debouncedSearchText });
   }, [debouncedSearchText, updateSearchParams]);
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -92,11 +92,11 @@ export const MediaFilter = () => {
   // handle filter type
   const handleFilterType = useCallback(
     (newValue: string) => {
-      setTypes((prev) => {
+      setType((prev) => {
         const newTypes = prev.includes(newValue)
           ? prev.filter((v) => v !== newValue)
           : [...prev, newValue];
-        updateSearchParams({ types: newTypes.join(",") });
+        updateSearchParams({ type: newTypes.join(",") });
         return newTypes;
       });
     },
@@ -105,8 +105,8 @@ export const MediaFilter = () => {
 
   // handle reset type
   const handleResetType = useCallback(() => {
-    setTypes([]);
-    updateSearchParams({ types: null });
+    setType([]);
+    updateSearchParams({ type: null });
   }, [updateSearchParams]);
 
   // memoize date objects
@@ -129,9 +129,9 @@ export const MediaFilter = () => {
 
   return (
     <Box
-      display="flex"
       p={2}
       gap={2}
+      display="flex"
       alignItems="center"
       justifyContent="space-between"
     >
@@ -155,7 +155,7 @@ export const MediaFilter = () => {
           endIcon={<ChevronDownIcon />}
         />
         <MediaFileType
-          types={types}
+          types={type}
           handleFilterType={handleFilterType}
           handleResetType={handleResetType}
         />
