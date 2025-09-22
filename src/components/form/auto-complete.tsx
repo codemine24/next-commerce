@@ -22,7 +22,7 @@ export const Autocomplete = <
     DisableClearable extends boolean | undefined,
     FreeSolo extends boolean | undefined
 >({
-    size,
+    size = "small",
     name,
     label,
     options,
@@ -41,6 +41,7 @@ export const Autocomplete = <
                     <MuiAutocomplete
                         {...field}
                         options={options}
+                        size={size}
                         onChange={(_, newValue) => setValue(name, newValue, { shouldValidate: true })}
                         renderInput={(params) => (
                             <TextField
@@ -54,16 +55,6 @@ export const Autocomplete = <
                         )}
                         {...other}
                         slotProps={{
-                            paper: {
-                                sx: {
-                                    backgroundColor: "background.default",
-                                    borderRadius: 0,
-                                    elevation: 0,
-                                    boxShadow: "none",
-                                    border: "1px solid",
-                                    borderColor: "divider",
-                                },
-                            },
                             chip: {
                                 sx: {
                                     backgroundColor: "primary.main",

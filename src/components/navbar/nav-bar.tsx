@@ -17,13 +17,13 @@ export const Navbar = () => {
       elevation={0}
       sx={{
         py: "10px !important",
-        bgcolor: "#fff",
-        color: "#000",
-        
+        bgcolor: "background.default",
+        color: "text.primary",
+
       }}
     >
       <BoxContainer sx={{ height: "100%" }}>
-        <Box  display="flex" alignItems="center">
+        <Box display="flex" alignItems="center">
           <Logo />
           <SearchBox />
           <WishlistButton />

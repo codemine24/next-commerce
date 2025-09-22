@@ -32,5 +32,6 @@ export const API_ROUTES = {
     files: {
         get_files: "/file",
         upload_files: "/file",
+        delete_files: "/file",
     }
 }

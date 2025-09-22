@@ -32,9 +32,8 @@ export const TextField = ({ name, helperText, type = "text", label, placeholder,
                         {...field}
                         type={inputType}
                         fullWidth
+                        size="small"
                         placeholder={placeholder || label}
-                        // value={field.value}
-                        // onChange={field.onChange}
                         value={field.value ?? ""}
                         onChange={(event) => {
                             const value = event.target.value;
