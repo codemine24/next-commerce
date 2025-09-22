@@ -3,7 +3,7 @@ import { SvgIcon, SvgIconProps } from "@mui/material";
 export const BrandIcon = (props: SvgIconProps) => {
     return (
         <SvgIcon {...props}>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12 21.35l-1.45-1.45L5 12l-1.45 1.45L3 15.7l7-6.35L12 3.05l4.3 7.48L19 12l-1.45-1.45L21 15.7z" /></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="4" /><path strokeLinecap="round" d="m8.534 14l-4.5-8M11.5 21.5l4-7.5M12 8h9" /></g></svg>
         </SvgIcon>
     );
 };

@@ -24,3 +24,13 @@ export const uploadFiles = async (formData: FormData) => {
 
     return res;
 };
+
+export const deleteFiles = async (ids: string[]) => {
+    const res = await api.delete(API_ROUTES.files.delete_files, {
+        body: JSON.stringify({ files_path: ids }),
+        next: { tags: [TAGS.files] }
+    });
+
+    if (res.success) revalidateTag(TAGS.files);
+    return res;
+};

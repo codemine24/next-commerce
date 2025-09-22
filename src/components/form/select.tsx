@@ -35,6 +35,7 @@ export const Select = ({ name, label, options, placeholder, ...other }: Props) =
                             displayEmpty
                             {...field}
                             {...other}
+                            size="small"
                             MenuProps={{
                                 PaperProps: {
                                     sx: {
