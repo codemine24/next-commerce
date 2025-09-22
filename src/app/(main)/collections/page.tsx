@@ -1,6 +1,9 @@
 import { Box, Divider, Grid, Typography } from "@mui/material";
+import { Suspense } from "react";
+
 import { getCategories } from "@/actions/category";
 import { BoxContainer } from "@/components/box-container";
+
 import { CollectionCard } from "./_components/collection-box";
 import { CollectionView } from "./_components/collection-view";
 
@@ -10,7 +13,7 @@ const CollectionsPage = async () => {
   console.log(categories);
 
   return (
-    <>
+    <Suspense fallback={<div>Loading...</div>}>
       <BoxContainer sx={{ py: "60px" }}>
         <Box sx={{ mb: 6 }}>
           <Typography variant="h1" sx={{ textAlign: "center" }}>
@@ -19,7 +22,7 @@ const CollectionsPage = async () => {
         </Box>
 
         <Grid container spacing={4}>
-          {categories.map((cat: any) => (
+          {categories?.map((cat: any) => (
             <Grid size={{ xs: 12, md: 4 }} key={cat.id}>
               <CollectionCard
                 image="/images/collections/collections.webp"
@@ -35,7 +38,7 @@ const CollectionsPage = async () => {
           <CollectionView />
         </Box>
       </BoxContainer>
-    </>
+    </Suspense>
   );
 };
 
