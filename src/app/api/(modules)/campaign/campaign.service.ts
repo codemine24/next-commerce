@@ -421,7 +421,7 @@ const getProductsForCampaign = async (query: Record<string, any>) => {
         attributes: {
           select: {
             title: true,
-            value: true,
+            // value: true,
           },
         },
       },
