@@ -1,3 +1,5 @@
+"use client";
+
 import { DialogProps, GrowProps, ZoomProps, FadeProps, SlideProps } from '@mui/material';
 import Backdrop from '@mui/material/Backdrop';
 import Dialog from '@mui/material/Dialog';

@@ -110,14 +110,14 @@ export const ImageUploader = (props: ImageUploaderProps) => {
             />
 
             {/* Image Select Modal */}
-            <ImageSelectDialog
+            {openUploadModal && <ImageSelectDialog
                 multiple={multiple}
                 open={openUploadModal}
                 onClose={handleOnClose}
                 onSelect={handleSelect}
                 selectedFiles={selectedImages}
                 onFilesSelect={(files) => handleSelectImage(files)}
-            />
+            />}
         </Box>
     )
 }

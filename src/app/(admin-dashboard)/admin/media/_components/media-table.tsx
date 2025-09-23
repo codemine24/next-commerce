@@ -15,17 +15,19 @@ import React from 'react';
 import { deleteFiles } from '@/actions/file';
 import { ConfirmDialog } from '@/components/dialog/confirm-dialog';
 import { OptimizeImage } from '@/components/optimize-image';
+import { Pagination } from '@/components/pagination';
 import { TableSelectedAction } from '@/components/table-selection-action';
 import { DeleteIcon } from '@/icons/delete-icon';
+import { Meta } from '@/interfaces/api';
 import { Media } from '@/interfaces/media';
 import { toast } from '@/lib/toast-store';
 import { makeImageUrl } from '@/utils/helper';
 import { formatDate, formatSize } from '@/utils/media-file';
 
 import { MediaActionPopover } from './media-action-popover';
-import { MediaDetails } from './media-details';
+import { MediaDetailsSidebar } from './media-details-sidebar';
 
-export const MediaTable = ({ media }: { media: Media[] }) => {
+export const MediaTable = ({ media, meta }: { media: Media[]; meta: Meta }) => {
     const [openMediaDetails, setOpenMediaDetails] = React.useState(false);
     const [selectedMedia, setSelectedMedia] = React.useState<Media | null>(null);
     const [selectedRows, setSelectedRows] = React.useState<string[]>([]);
@@ -141,7 +143,13 @@ export const MediaTable = ({ media }: { media: Media[] }) => {
                 </Table>
             </TableContainer>
 
-            {openMediaDetails && <MediaDetails
+            <Pagination
+                page={meta.page}
+                total={meta.total}
+                limit={meta.limit}
+            />
+
+            {openMediaDetails && <MediaDetailsSidebar
                 media={selectedMedia!}
                 open={openMediaDetails}
                 onClose={() => setOpenMediaDetails(false)}

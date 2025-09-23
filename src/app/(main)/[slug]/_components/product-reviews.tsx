@@ -57,11 +57,11 @@ export const ProductReviews = async ({ productId }: ProductReviewsProps) => {
         gap={2}
       >
         <ProductSectionHeader title="Customer Reviews" />
-        <ProductAddReview productId={productId} />
+        {/* <ProductAddReview productId={productId} /> */}
       </Box>
 
       {/* Body */}
-      <Box bgcolor="transparent">
+      <Box>
         {/* Top stats + distribution */}
         <Stack
           direction={{ xs: "column", md: "row" }}
@@ -73,6 +73,7 @@ export const ProductReviews = async ({ productId }: ProductReviewsProps) => {
             direction="row"
             gap={2}
             flexWrap="wrap"
+            flexGrow={1}
             sx={{ width: { xs: "100%", md: "55%" } }}
           >
             <StatCard label="Total Reviews" value={total.toLocaleString()} />
@@ -91,86 +92,86 @@ export const ProductReviews = async ({ productId }: ProductReviewsProps) => {
                 />
               }
             />
-          </Stack>
-
-          <Box
-            sx={{
-              p: 2,
-              flex: 1,
-              width: { xs: "100%", md: "50%" },
-              bgcolor: "background.paper",
-            }}
-            aria-label="Rating distribution"
-          >
-            <Stack gap={1.25}>
-              {distribution.map((item) => {
-                const width = Math.max(
-                  6,
-                  Math.round((item.count / maxCount) * 100)
-                );
-                return (
-                  <Stack
-                    key={item.stars}
-                    direction="row"
-                    alignItems="center"
-                    gap={2}
-                    sx={{ width: "100%" }}
-                  >
-                    <Box
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        width: 20,
-                        color: "text.secondary",
-                        fontWeight: 600,
-                        gap: 0.5,
-                      }}
-                      aria-hidden
-                    >
-                      <Typography component="span">{item.stars}</Typography>
-                      <StarIcon sx={{ fontSize: 16, color: "#f59e0b" }} />
-                    </Box>
-                    <Box
-                      sx={{
-                        position: "relative",
-                        flex: 1,
-                        height: 8,
-                        bgcolor: "grey.100",
-                        borderRadius: 999,
-                        overflow: "hidden",
-                      }}
-                      role="progressbar"
-                      aria-valuenow={item.count}
-                      aria-valuemin={0}
-                      aria-valuemax={maxCount}
-                      aria-label={`${item.stars} star reviews`}
+            <Box
+              sx={{
+                p: 2,
+                flex: 1,
+                width: { xs: "100%", md: "50%" },
+                border: "1px solid #E6F2EE",
+                borderRadius: "8px",
+              }}
+              aria-label="Rating distribution"
+            >
+              <Stack gap={1.25}>
+                {distribution.map((item) => {
+                  const width = Math.max(
+                    6,
+                    Math.round((item.count / maxCount) * 100)
+                  );
+                  return (
+                    <Stack
+                      key={item.stars}
+                      direction="row"
+                      alignItems="center"
+                      gap={2}
+                      sx={{ width: "100%" }}
                     >
                       <Box
                         sx={{
-                          position: "absolute",
-                          left: 0,
-                          top: 0,
-                          bottom: 0,
-                          width: `${width}%`,
-                          bgcolor: item.color,
+                          display: "flex",
+                          alignItems: "center",
+                          width: 20,
+                          color: "text.secondary",
+                          fontWeight: 600,
+                          gap: 0.5,
                         }}
-                      />
-                    </Box>
-                    <Typography
-                      variant="body2"
-                      sx={{
-                        width: 34,
-                        textAlign: "right",
-                        color: "text.secondary",
-                      }}
-                    >
-                      {item.count}
-                    </Typography>
-                  </Stack>
-                );
-              })}
-            </Stack>
-          </Box>
+                        aria-hidden
+                      >
+                        <Typography component="span">{item.stars}</Typography>
+                        <StarIcon sx={{ fontSize: 16, color: "#f59e0b" }} />
+                      </Box>
+                      <Box
+                        sx={{
+                          position: "relative",
+                          flex: 1,
+                          height: 8,
+                          bgcolor: "grey.100",
+                          borderRadius: 999,
+                          overflow: "hidden",
+                        }}
+                        role="progressbar"
+                        aria-valuenow={item.count}
+                        aria-valuemin={0}
+                        aria-valuemax={maxCount}
+                        aria-label={`${item.stars} star reviews`}
+                      >
+                        <Box
+                          sx={{
+                            position: "absolute",
+                            left: 0,
+                            top: 0,
+                            bottom: 0,
+                            width: `${width}%`,
+                            bgcolor: item.color,
+                          }}
+                        />
+                      </Box>
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          width: 34,
+                          textAlign: "right",
+                          color: "text.secondary",
+                        }}
+                      >
+                        {item.count}
+                      </Typography>
+                    </Stack>
+                  );
+                })}
+              </Stack>
+            </Box>
+          </Stack>
         </Stack>
 
         {/* Reviews list */}
@@ -267,20 +268,34 @@ function StatCard({
         flex: 1,
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        bgcolor: "background.paper",
+        border: "1px solid #E6F2EE",
+        borderRadius: "8px",
       }}
       role="group"
       aria-label={label}
     >
       <Typography
         variant="h4"
-        sx={{ color: "text.secondary", fontWeight: 400, mb: 0.5 }}
+        sx={{
+          fontSize: "16px",
+          color: "#222625",
+          fontWeight: 400,
+          mb: 0.5,
+        }}
       >
         {label}
       </Typography>
-      <Typography variant="h2">{value}</Typography>
+      <Typography
+        variant="h2"
+        sx={{
+          fontSize: "20px",
+          color: "#222625",
+          fontWeight: 600,
+          mb: 0.5,
+        }}
+      >
+        {value}
+      </Typography>
       {extra}
     </Box>
   );

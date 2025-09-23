@@ -4,11 +4,10 @@ export interface UserNavItem {
     name: string;
 }
 
-export type FileUploadType = File | string | null;
-export type FilesUploadType = (File | string)[];
-
 export interface ExtendFile extends File {
     path?: string;
     preview?: string;
     lastModifiedDate?: Date;
 }
+
+export type SearchParams = { [key: string]: string | string[] | undefined }

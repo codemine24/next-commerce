@@ -3,13 +3,21 @@
 import { revalidateTag } from "next/cache";
 
 import { TAGS } from "@/constants/tags";
+import { SearchParams } from "@/interfaces/common";
 import api from "@/lib/api";
 import { API_ROUTES } from "@/lib/api-routes";
 
-export const getFiles = async () => {
-    const res = await api.get(API_ROUTES.files.get_files, {
-        next: { tags: [TAGS.files] }
-    });
+export const getFiles = async (queries: SearchParams) => {
+    let url = API_ROUTES.files.get_files;
+
+    if (Object.keys(queries).length > 0) {
+        const queriesString = Object.entries(queries)
+            .map(([key, value]) => `${key}=${value}`)
+            .join("&");
+        url += `?${queriesString}`;
+    }
+
+    const res = await api.get(url, { next: { tags: [TAGS.files] } });
     return res;
 }
 

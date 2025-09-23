@@ -1,20 +1,22 @@
 "use client";
 
-import Box from "@mui/material/Box";
-import React from 'react';
+import React, { use } from 'react';
 
-import { Media } from '@/interfaces/media';
+import { getFiles } from '@/actions/file';
+import { ErrorComponent } from '@/components/error';
+import { SearchParams } from '@/interfaces/common';
 
-import { MediaFilter } from './media-filter';
 import { MediaTable } from './media-table';
-import { MediaTabs } from './media-tabs';
 
-export const MediaContent = ({ media }: { media: Media[] }) => {
+export const MediaContent = ({ searchParams }: { searchParams: Promise<SearchParams> }) => {
+    const query = use(searchParams);
+    const data = use(getFiles(query));
+
+    if (!data.success) {
+        return <ErrorComponent />
+    }
+
     return (
-        <Box bgcolor="background.default" border={1} borderColor="divider">
-            <MediaTabs />
-            <MediaFilter />
-            <MediaTable media={media} />
-        </Box>
+        <MediaTable media={data.data} meta={data.meta} />
     );
 }
