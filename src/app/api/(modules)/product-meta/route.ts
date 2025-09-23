@@ -8,7 +8,7 @@ import userAuthenticator from "../../(helpers)/utils/user-authenticator";
 
 import { ProductMetaServices } from "./product-meta.service";
 
-// ---------------------------------- GET WISHLIST --------------------------------------
+// ---------------------------------- GET PRODUCT META --------------------------------------
 export const GET = catchAsync(async (req: NextRequest) => {
   // Step 1: Authenticate user
   await userAuthenticator(req, [UserRole.SUPER_ADMIN, UserRole.ADMIN]);

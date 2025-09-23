@@ -62,11 +62,11 @@ model Product {
 
   brand      Brand?     @relation(fields: [brand_id], references: [id])
   categories Category[] @relation("ProductCategories")
+  attributes AttributeValue[] @relation("AttributeValues")
   categoryId String?
   cart_items  CartItem[]
   order_items OrderItem[]
   reviews     Review[]
-  attributes  ProductAttribute[]
   coupons     Coupon[]           @relation("EligibleProductsCoupon")
   wishlist    Wishlist[]
   campaigns   Campaign[]         @relation("EligibleCampaignProducts")
@@ -353,13 +353,25 @@ model UserOTP {
 
 model ProductAttribute {
   id         String   @id @default(uuid())
-  title      String
-  value      String[]
-  product_id String
+  name       String
+  type       AttributeType
+  status     AttributeStatus
 
-  product Product @relation(fields: [product_id], references: [id], onDelete: Cascade)
+  attribute_values AttributeValue[]
 
   @@map("product_attributes")
+}
+
+model AttributeValue {
+  id           String @id @default(uuid())
+  attribute_id String
+  title        String
+  position     Int    @default(0)
+
+  attribute ProductAttribute @relation(fields: [attribute_id], references: [id])
+  products Product[] @relation("AttributeValues")
+
+  @@map("attribute_values")
 }
 
 model ProductMeta {
@@ -501,8 +513,13 @@ enum ProductMetaType {
 }
 
 enum AttributeType {
-  SINGLE
-  MULTIPLE
+  SINGLE_SELECT
+  MULTIPLE_SELECT
+}
+
+enum AttributeStatus {
+  PUBLISHED
+  DRAFT
 }
 
 enum CampaignPlatform {
