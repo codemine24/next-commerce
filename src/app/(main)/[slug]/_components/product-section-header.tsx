@@ -1,9 +1,15 @@
-import Typography from "@mui/material/Typography"
+import Typography from "@mui/material/Typography";
 
 export const ProductSectionHeader = ({ title }: { title: string }) => {
-    return (
-        <Typography variant="h5" fontWeight={600} gutterBottom>
-            {title}
-        </Typography>
-    )
-}
+  return (
+    <Typography
+      variant="h2"
+      component="h2"
+      color="#222625"
+      fontWeight={400}
+      gutterBottom
+    >
+      {title}
+    </Typography>
+  );
+};
