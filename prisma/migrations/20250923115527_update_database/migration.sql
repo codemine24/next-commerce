@@ -23,7 +23,10 @@ CREATE TYPE "public"."BeneficiaryType" AS ENUM ('NEW_USER', 'EXISTING_USER', 'AL
 CREATE TYPE "public"."ProductMetaType" AS ENUM ('WARRANTY', 'TAG');
 
 -- CreateEnum
-CREATE TYPE "public"."AttributeType" AS ENUM ('SINGLE', 'MULTIPLE');
+CREATE TYPE "public"."AttributeType" AS ENUM ('SINGLE_SELECT', 'MULTIPLE_SELECT');
+
+-- CreateEnum
+CREATE TYPE "public"."AttributeStatus" AS ENUM ('PUBLISHED', 'DRAFT');
 
 -- CreateEnum
 CREATE TYPE "public"."CampaignPlatform" AS ENUM ('ONLINE', 'OFFLINE', 'ALL');
@@ -329,11 +332,21 @@ CREATE TABLE "public"."user_otp" (
 -- CreateTable
 CREATE TABLE "public"."product_attributes" (
     "id" TEXT NOT NULL,
-    "title" TEXT NOT NULL,
-    "value" TEXT[],
-    "product_id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "type" "public"."AttributeType" NOT NULL,
+    "status" "public"."AttributeStatus" NOT NULL,
 
     CONSTRAINT "product_attributes_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "public"."attribute_values" (
+    "id" TEXT NOT NULL,
+    "attribute_id" TEXT NOT NULL,
+    "title" TEXT NOT NULL,
+    "position" INTEGER NOT NULL DEFAULT 0,
+
+    CONSTRAINT "attribute_values_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -401,6 +414,7 @@ CREATE TABLE "public"."campaigns" (
 CREATE TABLE "public"."qna" (
     "id" TEXT NOT NULL,
     "inquirer_id" TEXT NOT NULL,
+    "product_id" TEXT NOT NULL,
     "question" TEXT NOT NULL,
     "answer" TEXT,
     "is_approved" BOOLEAN NOT NULL DEFAULT false,
@@ -448,6 +462,14 @@ CREATE TABLE "public"."_EligibleProductsCoupon" (
     "B" TEXT NOT NULL,
 
     CONSTRAINT "_EligibleProductsCoupon_AB_pkey" PRIMARY KEY ("A","B")
+);
+
+-- CreateTable
+CREATE TABLE "public"."_AttributeValues" (
+    "A" TEXT NOT NULL,
+    "B" TEXT NOT NULL,
+
+    CONSTRAINT "_AttributeValues_AB_pkey" PRIMARY KEY ("A","B")
 );
 
 -- CreateTable
@@ -500,9 +522,6 @@ CREATE UNIQUE INDEX "carts_user_id_key" ON "public"."carts"("user_id");
 CREATE UNIQUE INDEX "cart_items_cart_id_product_id_key" ON "public"."cart_items"("cart_id", "product_id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "addresses_contact_number_key" ON "public"."addresses"("contact_number");
-
--- CreateIndex
 CREATE UNIQUE INDEX "orders_order_id_key" ON "public"."orders"("order_id");
 
 -- CreateIndex
@@ -552,6 +571,9 @@ CREATE INDEX "_EligibleCategoriesCoupon_B_index" ON "public"."_EligibleCategorie
 
 -- CreateIndex
 CREATE INDEX "_EligibleProductsCoupon_B_index" ON "public"."_EligibleProductsCoupon"("B");
+
+-- CreateIndex
+CREATE INDEX "_AttributeValues_B_index" ON "public"."_AttributeValues"("B");
 
 -- CreateIndex
 CREATE INDEX "_EligibleCampaignCategories_B_index" ON "public"."_EligibleCampaignCategories"("B");
@@ -620,7 +642,7 @@ ALTER TABLE "public"."shipped_info" ADD CONSTRAINT "shipped_info_order_id_fkey" 
 ALTER TABLE "public"."shipped_info" ADD CONSTRAINT "shipped_info_courier_id_fkey" FOREIGN KEY ("courier_id") REFERENCES "public"."couriers"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "public"."product_attributes" ADD CONSTRAINT "product_attributes_product_id_fkey" FOREIGN KEY ("product_id") REFERENCES "public"."products"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "public"."attribute_values" ADD CONSTRAINT "attribute_values_attribute_id_fkey" FOREIGN KEY ("attribute_id") REFERENCES "public"."product_attributes"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "public"."menu_items" ADD CONSTRAINT "menu_items_parent_id_fkey" FOREIGN KEY ("parent_id") REFERENCES "public"."menu_items"("id") ON DELETE SET NULL ON UPDATE CASCADE;
@@ -642,6 +664,9 @@ ALTER TABLE "public"."wishlists" ADD CONSTRAINT "wishlists_product_id_fkey" FORE
 
 -- AddForeignKey
 ALTER TABLE "public"."qna" ADD CONSTRAINT "qna_inquirer_id_fkey" FOREIGN KEY ("inquirer_id") REFERENCES "public"."users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "public"."qna" ADD CONSTRAINT "qna_product_id_fkey" FOREIGN KEY ("product_id") REFERENCES "public"."products"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "public"."_EligibleBrandsCoupon" ADD CONSTRAINT "_EligibleBrandsCoupon_A_fkey" FOREIGN KEY ("A") REFERENCES "public"."brands"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -672,6 +697,12 @@ ALTER TABLE "public"."_EligibleProductsCoupon" ADD CONSTRAINT "_EligibleProducts
 
 -- AddForeignKey
 ALTER TABLE "public"."_EligibleProductsCoupon" ADD CONSTRAINT "_EligibleProductsCoupon_B_fkey" FOREIGN KEY ("B") REFERENCES "public"."products"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "public"."_AttributeValues" ADD CONSTRAINT "_AttributeValues_A_fkey" FOREIGN KEY ("A") REFERENCES "public"."attribute_values"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "public"."_AttributeValues" ADD CONSTRAINT "_AttributeValues_B_fkey" FOREIGN KEY ("B") REFERENCES "public"."products"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "public"."_EligibleCampaignCategories" ADD CONSTRAINT "_EligibleCampaignCategories_A_fkey" FOREIGN KEY ("A") REFERENCES "public"."campaigns"("id") ON DELETE CASCADE ON UPDATE CASCADE;

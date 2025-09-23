@@ -1,9 +1,6 @@
 "use client";
 
-import Box from "@mui/material/Box";
-import IconButton from "@mui/material/IconButton";
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
+import { Button, buttonBaseClasses, ButtonGroup } from "@mui/material";
 
 type ProductQuantityButtonProps = {
   qty: number;
@@ -17,64 +14,29 @@ export const ProductQuantityButton = ({
   onRemove,
 }: ProductQuantityButtonProps) => {
   return (
-    <Paper
-      elevation={0}
+    <ButtonGroup
+      variant="outlined"
+      aria-label="product quantity button group"
       sx={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        border: "1px solid",
-        borderColor: "divider",
-        overflow: "hidden",
-        width: 110,
-        height: 45,
-        bgcolor: "transparent",
+        [`& .${buttonBaseClasses.root}`]: {
+          width: 48,
+          height: 48,
+          borderColor: "#E6F2EE",
+          fontSize: 16,
+          "&:first-of-type": {},
+        },
+        [`& .${buttonBaseClasses.disabled}`]: {
+          color: "text.primary",
+        },
       }}
     >
-      <IconButton
-        onClick={onRemove}
-        disabled={qty <= 1}
-        sx={{
-          borderRadius: 0,
-          width: 30,
-          color: "text.secondary",
-        }}
-      >
+      <Button onClick={onRemove} disabled={qty <= 1}>
         -
-      </IconButton>
+      </Button>
 
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          flexGrow: 1,
-          borderLeft: "1px solid",
-          borderRight: "1px solid",
-          borderColor: "divider",
-          height: "100%",
-        }}
-      >
-        <Typography
-          variant="body1"
-          fontWeight={600}
-          sx={{ color: "text.secondary" }}
-        >
-          {qty}
-        </Typography>
-      </Box>
+      <Button disabled>{qty}</Button>
 
-      <IconButton
-        onClick={onAdd}
-        disabled={false}
-        sx={{
-          borderRadius: 0,
-          width: 30,
-          color: "text.secondary",
-        }}
-      >
-        +
-      </IconButton>
-    </Paper>
+      <Button onClick={onAdd}>+</Button>
+    </ButtonGroup>
   );
 };
