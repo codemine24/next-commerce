@@ -6,37 +6,33 @@ import api from "@/lib/api";
 
 export const useFetch = (url: string): {
     data: any;
-    error: string | null;
+    success: boolean;
+    message: string;
     isLoading: boolean;
     revalidate: () => void;
 } => {
     const [data, setData] = useState(null);
-    const [error, setError] = useState<string | null>(null);
+    const [success, setSuccess] = useState(false);
+    const [message, setMessage] = useState("");
     const [isLoading, setIsLoading] = useState(false);
 
     const fetchData = useCallback(async () => {
-        try {
-            setIsLoading(true);
-            const response = await api.get(url);
-            setData(response.data);
-
-            // Set error if response is not successful
-            if (!response.success) setError(response.message);
-        } catch (err) {
-            setError((err as Error).message);
-        } finally {
-            setIsLoading(false);
-        }
+        console.log("Fetching data...");
+        setIsLoading(true);
+        const response = await api.get(url);
+        setIsLoading(false);
+        setData(response.data);
+        setSuccess(response.success);
+        setMessage(response.message);
     }, [url]);
+
+    const revalidate = useCallback(() => {
+        fetchData();
+    }, [fetchData]);
 
     useEffect(() => {
         fetchData();
     }, [fetchData]);
 
-    // Revalidate data
-    const revalidate = useCallback(() => {
-        fetchData();
-    }, [fetchData]);
-
-    return { data, error, isLoading, revalidate };
+    return { data, success, message, isLoading, revalidate };
 };

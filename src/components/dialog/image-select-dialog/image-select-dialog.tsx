@@ -1,6 +1,6 @@
 "use client";
 
-import { Typography } from "@mui/material";
+import { IconButton, Typography } from "@mui/material";
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
 import DialogActions from "@mui/material/DialogActions"
@@ -12,7 +12,10 @@ import { useCallback, useState } from "react"
 
 import { uploadFiles } from "@/actions/file";
 import { Uploader } from "@/components/uploader/uploader";
+import { useFetch } from "@/hooks/use-fetch";
+import { CloseIcon } from "@/icons/close";
 import { UploadCloudIcon } from "@/icons/upload-cloud";
+import { API_ROUTES } from "@/lib/api-routes";
 import { toast } from "@/lib/toast-store";
 
 import { AnimatedDialog } from "../animate-dialog";
@@ -35,6 +38,8 @@ interface ImageSelectModalProps {
 
 export const ImageSelectDialog = (props: ImageSelectModalProps) => {
     const { open, multiple, onClose, selectedFiles, onSelect, onFilesSelect } = props;
+    const { data, success, message, isLoading, revalidate } = useFetch(API_ROUTES.files.get_files);
+
     const [selectedTab, setSelectedTab] = useState(TABS[0].value);
     const [files, setFiles] = useState<(File | string)[]>([]);
     const [loading, setLoading] = useState(false);
@@ -76,6 +81,7 @@ export const ImageSelectDialog = (props: ImageSelectModalProps) => {
         if (!res.success) {
             toast.error(res.message);
         } else {
+            revalidate();
             toast.success(res.message);
         }
 
@@ -98,7 +104,15 @@ export const ImageSelectDialog = (props: ImageSelectModalProps) => {
                 }
             }}
         >
+            {/* Close Button */}
+            <IconButton onClick={handleClose} sx={{ position: 'absolute', top: 10, right: 10 }}>
+                <CloseIcon />
+            </IconButton>
+
+            {/* Dialog Title */}
             <DialogTitle>{selectedTab === "library" ? "Select Image" : "Upload Image"}</DialogTitle>
+
+            {/* Dialog Content */}
             <DialogContent>
                 {/* Tabs */}
                 <Tabs
@@ -117,6 +131,10 @@ export const ImageSelectDialog = (props: ImageSelectModalProps) => {
                         <ImageLibrary
                             multiple={multiple}
                             selectedFiles={selectedFiles}
+                            data={data}
+                            success={success}
+                            message={message}
+                            isLoading={isLoading}
                             onSelectionChange={(file) => onFilesSelect(file)}
                         />
                     )}
@@ -143,7 +161,7 @@ export const ImageSelectDialog = (props: ImageSelectModalProps) => {
                     {selectedTab === "library" && (
                         <>
                             <Button onClick={handleClose} variant="outlined">Cancel</Button>
-                            <Button onClick={onSelect} variant="contained" disabled={selectedFiles.length === 0}>Select</Button>
+                            <Button onClick={onSelect} variant="contained" disabled={!selectedFiles?.length}>Select</Button>
                         </>
                     )}
 
@@ -153,14 +171,14 @@ export const ImageSelectDialog = (props: ImageSelectModalProps) => {
                             <Button
                                 onClick={handleRemoveAll}
                                 variant="outlined"
-                                disabled={files.length === 0 || loading}
+                                disabled={!files.length || loading}
                             >
                                 Remove All
                             </Button>
                             <Button
                                 onClick={handleUpload}
                                 variant="contained"
-                                disabled={files.length === 0 || loading}
+                                disabled={!files.length || loading}
                                 startIcon={<UploadCloudIcon />}
                             >
                                 {loading ? 'Uploading...' : 'Upload'}

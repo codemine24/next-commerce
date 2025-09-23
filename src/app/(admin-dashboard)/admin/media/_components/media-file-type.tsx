@@ -1,5 +1,6 @@
 "use client";
 
+import { alpha } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import CardActionArea from "@mui/material/CardActionArea";
@@ -21,13 +22,32 @@ export const MediaFileType = ({ types, handleFilterType, handleResetType }: Medi
     const anchorRef = useRef<HTMLButtonElement | null>(null);
 
     const handleClose = () => setOpen(false);
+
     return (
         <>
             <Button
                 color="inherit"
                 onClick={() => setOpen(true)}
                 ref={anchorRef}
-                endIcon={<ChevronDownIcon />}
+                sx={{ gap: 1 }}
+                endIcon={
+                    <Box display="flex" alignItems="center" gap={1}>
+                        {types.length > 0 && <Box
+                            sx={{
+                                height: 24,
+                                width: 24,
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                fontSize: 14,
+                                bgcolor: (theme) => alpha(theme.palette.primary.main, 0.1),
+                                color: (theme) => theme.palette.primary.main,
+                            }}>
+                            +{types.length}
+                        </Box>}
+                        <ChevronDownIcon />
+                    </Box>
+                }
             >
                 File Type
             </Button>
@@ -55,8 +75,9 @@ export const MediaFileType = ({ types, handleFilterType, handleResetType }: Medi
                                         p: 1,
                                         borderRadius: 1,
                                         cursor: 'pointer',
-                                        border: 'solid 1px',
-                                        ...(selected && { bgcolor: 'action.selected' }),
+                                        border: 1,
+                                        borderColor: 'divider',
+                                        ...(selected && { bgcolor: "primary.main", color: "primary.contrastText" }),
                                     }}
                                 >
                                     <Stack
@@ -65,6 +86,7 @@ export const MediaFileType = ({ types, handleFilterType, handleResetType }: Medi
                                         alignItems="center"
                                         sx={{
                                             typography: 'caption',
+                                            fontWeight: 500,
                                             textTransform: 'capitalize',
                                             ...(selected && { fontWeight: 'fontWeightSemiBold' }),
                                         }}
@@ -77,7 +99,7 @@ export const MediaFileType = ({ types, handleFilterType, handleResetType }: Medi
                     </Box>
 
                     <Stack spacing={1.5} direction="row" alignItems="center" justifyContent="flex-end">
-                        <Button variant="outlined" color="inherit" onClick={handleResetType}>
+                        <Button variant="outlined" onClick={handleResetType}>
                             Clear
                         </Button>
 

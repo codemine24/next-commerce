@@ -6,7 +6,6 @@ import { Controller, useFormContext } from "react-hook-form";
 
 import { InputLabel } from "./input-label";
 
-
 type Option = {
     value: string;
     label: string;

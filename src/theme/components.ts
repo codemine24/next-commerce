@@ -301,6 +301,9 @@ export const components: Components<Theme> = {
   MuiTableRow: {
     styleOverrides: {
       root: ({ theme }) => ({
+        [`&.${tableRowClasses.root}`]: {
+          backgroundColor: theme.palette.background.default,
+        },
         [`&.${tableRowClasses.selected}`]: {
           backgroundColor: alpha(theme.palette.primary.main, 0.04),
           '&:hover': { backgroundColor: alpha(theme.palette.primary.main, 0.08) },
