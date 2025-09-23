@@ -2,8 +2,6 @@
 
 import Box from '@mui/material/Box';
 import Checkbox from '@mui/material/Checkbox';
-import IconButton from '@mui/material/IconButton';
-import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -16,7 +14,6 @@ import { Pagination } from '@/components/pagination';
 import { Meta } from '@/interfaces/api';
 import { Category } from '@/interfaces/category';
 import { makeImageUrl } from '@/utils/helper';
-import { formatSize } from '@/utils/media-file';
 
 interface CategoryTableProps {
     categories: Category[];

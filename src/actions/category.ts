@@ -8,7 +8,7 @@ import api from "@/lib/api";
 import { API_ROUTES } from "@/lib/api-routes";
 import { CategorySchema } from "@/zod/category-schema";
 
-export const getCategories = async (queries: SearchParams) => {
+export const getCategories = async (queries?: SearchParams) => {
     let url = API_ROUTES.categories.get_categories;
 
     if (queries && Object.keys(queries).length > 0) {
