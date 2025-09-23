@@ -25,6 +25,9 @@ export const ProductQuantityButton = ({
           fontSize: 16,
           "&:first-of-type": {},
         },
+        [`& .${buttonBaseClasses.disabled}`]: {
+          color: "text.primary",
+        },
       }}
     >
       <Button onClick={onRemove} disabled={qty <= 1}>

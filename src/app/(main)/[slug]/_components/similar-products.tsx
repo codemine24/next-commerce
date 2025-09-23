@@ -49,10 +49,8 @@ export const SimilarProducts = () => {
         <Grid
           container
           spacing={2}
-          bgcolor="background.paper"
           sx={{
-            p: { xs: 2, sm: 3 },
-            mt: 2,
+            mt: 3,
           }}
         >
           {Products.map((product) => (

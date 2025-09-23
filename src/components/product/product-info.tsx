@@ -22,7 +22,6 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
     <Box>
       <Typography
         variant="h3"
-        mt={1}
         sx={{ "&:hover": { textDecoration: "underline" } }}
       >
         {product?.name}

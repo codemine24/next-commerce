@@ -21,6 +21,6 @@ export const ProductPrice = ({ product }: { product: Product }) => {
     );
   }
   return (
-    <Typography variant="h4">{currencyFormatter(product?.price)}</Typography>
+    <Typography variant="h3">{currencyFormatter(product?.price)}</Typography>
   );
 };
