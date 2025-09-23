@@ -13,6 +13,9 @@ const FORMAT_AUDIO = ['wav', 'aif', 'mp3', 'aac'];
 const FORMAT_IMG = ['jpg', 'jpeg', 'gif', 'bmp', 'png', 'svg', 'webp'];
 const FORMAT_VIDEO = ['m4v', 'avi', 'mpg', 'mp4', 'webm'];
 
+export const formatSize = (size: number) => `${(size / 1024).toFixed(2)} KB`;
+export const formatDate = (dateStr: string) => new Date(dateStr).toLocaleDateString();
+
 export function fileFormat(fileUrl: string) {
     let format;
 
