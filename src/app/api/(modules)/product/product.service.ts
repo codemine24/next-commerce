@@ -1,4 +1,4 @@
-import { Prisma } from "@prisma/client";
+import { Prisma, ProductMetaType } from "@prisma/client";
 
 import { prisma } from "@/app/api/(helpers)/shared/prisma";
 
@@ -33,6 +33,30 @@ const addProduct = async (payload: ProductPayload) => {
         }),
     },
   });
+
+  // Handle tags
+  if (product && payload.tags && payload.tags.length > 0) {
+    const normalizedTags = payload.tags.map((tag) => tag.toLowerCase());
+    const existingMetas = await prisma.productMeta.findMany({
+      where: {
+        type: ProductMetaType.TAG,
+        value: {
+          in: normalizedTags,
+        },
+      },
+    });
+    const existingTags = new Set(existingMetas.map((meta) => meta.value));
+    const missingTags = normalizedTags.filter((t) => !existingTags.has(t));
+    if (missingTags.length > 0) {
+      await prisma.productMeta.createMany({
+        data: missingTags.map((tag) => ({
+          type: ProductMetaType.TAG,
+          value: tag,
+        })),
+        skipDuplicates: true,
+      });
+    }
+  }
 
   return product;
 };
