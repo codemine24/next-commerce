@@ -9,15 +9,15 @@ import { API_ROUTES } from "@/lib/api-routes";
 
 export const getFiles = async (queries: SearchParams) => {
     let url = API_ROUTES.files.get_files;
-    const queriesString = Object.entries(queries)
-        .map(([key, value]) => `${key}=${value}`)
-        .join("&");
 
-    if (queriesString) url += `?${queriesString}`;
+    if (Object.keys(queries).length > 0) {
+        const queriesString = Object.entries(queries)
+            .map(([key, value]) => `${key}=${value}`)
+            .join("&");
+        url += `?${queriesString}`;
+    }
 
-    const res = await api.get(url, {
-        next: { tags: [TAGS.files] }
-    });
+    const res = await api.get(url, { next: { tags: [TAGS.files] } });
     return res;
 }
 

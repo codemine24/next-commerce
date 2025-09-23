@@ -1,7 +1,9 @@
-import { Box, Typography } from '@mui/material';
+"use client";
+
 import React, { use } from 'react';
 
 import { getFiles } from '@/actions/file';
+import { ErrorComponent } from '@/components/error';
 import { SearchParams } from '@/interfaces/common';
 
 import { MediaTable } from './media-table';
@@ -11,11 +13,7 @@ export const MediaContent = ({ searchParams }: { searchParams: Promise<SearchPar
     const data = use(getFiles(query));
 
     if (!data.success) {
-        return (
-            <Box>
-                <Typography variant="h6">No media found</Typography>
-            </Box>
-        )
+        return <ErrorComponent />
     }
 
     return (
