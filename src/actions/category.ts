@@ -6,16 +6,15 @@ import { TAGS } from "@/constants/tags";
 import { SearchParams } from "@/interfaces/common";
 import api from "@/lib/api";
 import { API_ROUTES } from "@/lib/api-routes";
+import { makeQueryParams } from "@/utils/helper";
 import { CategorySchema } from "@/zod/category-schema";
 
 export const getCategories = async (queries?: SearchParams) => {
     let url = API_ROUTES.categories.get_categories;
 
     if (queries && Object.keys(queries).length > 0) {
-        const queriesString = Object.entries(queries)
-            .map(([key, value]) => `${key}=${value}`)
-            .join("&");
-        url += `?${queriesString}`;
+        const queryParams = makeQueryParams(queries);
+        url += `?${queryParams}`;
     }
 
     const res = await api.get(url, { next: { tags: [TAGS.categories] } });

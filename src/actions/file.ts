@@ -6,15 +6,14 @@ import { TAGS } from "@/constants/tags";
 import { SearchParams } from "@/interfaces/common";
 import api from "@/lib/api";
 import { API_ROUTES } from "@/lib/api-routes";
+import { makeQueryParams } from "@/utils/helper";
 
 export const getFiles = async (queries: SearchParams) => {
     let url = API_ROUTES.files.get_files;
 
     if (Object.keys(queries).length > 0) {
-        const queriesString = Object.entries(queries)
-            .map(([key, value]) => `${key}=${value}`)
-            .join("&");
-        url += `?${queriesString}`;
+        const queryParams = makeQueryParams(queries);
+        url += `?${queryParams}`;
     }
 
     const res = await api.get(url, { next: { tags: [TAGS.files] } });
