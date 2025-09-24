@@ -355,7 +355,7 @@ model ProductAttribute {
   id         String   @id @default(uuid())
   name       String
   type       AttributeType
-  status     AttributeStatus
+  status     AttributeStatus @default(PUBLISHED)
 
   attribute_values AttributeValue[]
 
