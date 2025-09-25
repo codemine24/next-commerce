@@ -100,11 +100,7 @@ export const MediaFileType = ({ types, handleFilterType, handleResetType }: Medi
 
                     <Stack spacing={1.5} direction="row" alignItems="center" justifyContent="flex-end">
                         <Button variant="outlined" onClick={handleResetType}>
-                            Clear
-                        </Button>
-
-                        <Button variant="contained" onClick={handleClose}>
-                            Apply
+                            Clear All
                         </Button>
                     </Stack>
                 </Stack>

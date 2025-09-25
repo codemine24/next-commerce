@@ -5,17 +5,17 @@ import { SadIcon } from "@/icons/sad"
 
 interface NotDataFoundProps {
     message?: string;
-    showIcon?: boolean;
+    hideIcon?: boolean;
     icon?: React.ReactNode;
 }
 
-export const NotDataFound = ({ message, showIcon = true, icon }: NotDataFoundProps) => {
+export const NotDataFound = ({ message, hideIcon = false, icon }: NotDataFoundProps) => {
     const notDataFoundMessage = message || "No data found";
     const iconComponent = icon || <SadIcon sx={{ height: 48, width: 48, color: "primary.main" }} />;
 
     return (
         <Box display="flex" justifyContent="center" alignItems="center" flexDirection="column" gap={1} p={2}>
-            {showIcon && iconComponent}
+            {!hideIcon && iconComponent}
             <Typography variant="h4" color="text.secondary">{notDataFoundMessage}</Typography>
         </Box>
     )

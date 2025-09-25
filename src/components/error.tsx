@@ -5,17 +5,17 @@ import { ErrorIcon } from "@/icons/error"
 
 interface ErrorComponentProps {
     message?: string;
-    showIcon?: boolean;
+    hideIcon?: boolean;
     icon?: React.ReactNode;
 }
 
-export const ErrorComponent = ({ message, showIcon = true, icon }: ErrorComponentProps) => {
+export const ErrorComponent = ({ message, hideIcon = false, icon }: ErrorComponentProps) => {
     const errorMessage = message || "Something went wrong";
     const iconComponent = icon || <ErrorIcon sx={{ height: 48, width: 48, color: "error.main" }} />;
 
     return (
         <Box display="flex" justifyContent="center" alignItems="center" flexDirection="column" gap={1} p={2}>
-            {showIcon && iconComponent}
+            {!hideIcon && iconComponent}
             <Typography variant="h4" color="text.secondary">{errorMessage}</Typography>
         </Box>
     )

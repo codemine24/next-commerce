@@ -94,7 +94,7 @@ export const MediaTable = ({ media }: { media: Media[] }) => {
                 selectedKeys={selectedRows}
                 onToggleRow={handleSelectRow}
                 onToggleAll={handleSelectAllClick}
-                emptyState={<NotDataFound message="No media found" />}
+                emptyState={<NotDataFound hideIcon message="No media found" />}
                 sx={{ border: "none", borderTop: 1, borderColor: "divider" }}
             />
 

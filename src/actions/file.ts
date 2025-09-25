@@ -1,6 +1,6 @@
 "use server";
 
-import { revalidateTag } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 
 import { TAGS } from "@/constants/tags";
 import { SearchParams } from "@/interfaces/common";
@@ -18,6 +18,27 @@ export const getFiles = async (queries: SearchParams) => {
 
     const res = await api.get(url, { next: { tags: [TAGS.files] } });
     return res;
+}
+
+export async function updateMediaFilters(formData: FormData) {
+    const searchParams = new URLSearchParams();
+
+    // Add all filter values to URLSearchParams
+    const filters = {
+        search_term: formData.get("search_term"),
+        fromDate: formData.get("fromDate"),
+        toDate: formData.get("toDate"),
+        type: formData.get("type"),
+    };
+
+    Object.entries(filters).forEach(([key, value]) => {
+        if (value && value !== "") {
+            searchParams.set(key, value.toString());
+        }
+    });
+
+    // Revalidate the page with new params
+    revalidatePath(`/media?${searchParams.toString()}`);
 }
 
 export const uploadFiles = async (formData: FormData) => {
