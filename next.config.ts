@@ -9,15 +9,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
-        hostname: "*.storage.supabase.co",
-      },
-      {
-        protocol: "https",
-        hostname: "pkyityryfjyqgfyslppv.storage.supabase.co",
-      },
-      {
-        protocol: "https",
-        hostname: "xmcpekfvrnuasngktvbn.storage.supabase.co",
+        hostname: "*.supabase.co",
       }
     ],
   },
