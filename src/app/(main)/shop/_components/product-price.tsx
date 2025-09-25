@@ -12,8 +12,12 @@ export const ProductPrice = ({ product }: { product: Product }) => {
           {currencyFormatter(product?.discount_price)}
         </Typography>
         <Typography
-          variant="body2"
-          sx={{ textDecoration: "line-through", color: "text.secondary" }}
+          variant="h3"
+          sx={{
+            textDecoration: "line-through",
+            color: "#A4B2AE",
+            fontWeight: 400,
+          }}
         >
           {currencyFormatter(product?.price)}
         </Typography>
