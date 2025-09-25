@@ -23,9 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable}`}>
-        <AppRootLayout>
-          {children}
-        </AppRootLayout>
+        <AppRootLayout>{children}</AppRootLayout>
       </body>
     </html>
   );
