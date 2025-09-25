@@ -15,9 +15,11 @@ interface CreateCategoryProps {
     methods: UseFormReturn<CategorySchema>;
     onSubmit: (data: CategorySchema) => void;
     categories: Category[];
+    hideActionButtons?: boolean;
 }
 
-export const CategoryForm = ({ methods, onSubmit, categories }: CreateCategoryProps) => {
+export const CategoryForm = ({ methods, onSubmit, categories, hideActionButtons = false }: CreateCategoryProps) => {
+
     return (
         <FormProvider methods={methods} onSubmit={methods.handleSubmit(onSubmit)}>
             <Box display="flex" flexDirection="column" gap={4}>
@@ -47,7 +49,7 @@ export const CategoryForm = ({ methods, onSubmit, categories }: CreateCategoryPr
                     subHeading="Select category icon for the category"
                 />
 
-                <Box display="flex" justifyContent="flex-end" gap={2}>
+                {!hideActionButtons && <Box display="flex" justifyContent="flex-end" gap={2}>
                     <Button
                         variant="outlined"
                         sx={{
@@ -67,7 +69,7 @@ export const CategoryForm = ({ methods, onSubmit, categories }: CreateCategoryPr
                             textTransform: "none",
                         }}
                     />
-                </Box>
+                </Box>}
             </Box>
         </FormProvider>
     );

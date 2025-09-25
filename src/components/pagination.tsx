@@ -75,7 +75,7 @@ export const Pagination = ({ page = 1, total, limit = 10, sx, ...others }: Props
                         </Select>
                     </Box>
 
-                    <Box display="flex" alignItems="center" gap={1}>
+                    {totalPage > 1 && <Box display="flex" alignItems="center" gap={1}>
                         <Typography variant="caption" color="text.secondary">Go to</Typography>
                         <TextField
                             type="number"
@@ -101,7 +101,7 @@ export const Pagination = ({ page = 1, total, limit = 10, sx, ...others }: Props
                             }}
                             onChange={(event) => handleChange(event, parseInt(event.target.value, 10))}
                         />
-                    </Box>
+                    </Box>}
                 </Box>
                 <Paginate
                     count={totalPage}
@@ -119,6 +119,9 @@ export const Pagination = ({ page = 1, total, limit = 10, sx, ...others }: Props
                         "& .MuiPaginationItem-root.Mui-selected": {
                             color: "primary.contrastText",
                             backgroundColor: "primary.main",
+                        },
+                        "& .MuiPaginationItem-root:hover": {
+                            backgroundColor: "primary.dark",
                         },
                     }}
                 />

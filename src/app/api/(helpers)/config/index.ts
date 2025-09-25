@@ -9,5 +9,6 @@ export const CONFIG = {
   supabase_service_role_key: process.env.SUPABASE_SERVICE_ROLE_KEY,
   user_bucket: process.env.USER_BUCKET,
   general_bucket: process.env.GENERAL_BUCKET,
+  direct_db_url: process.env.DIRECT_DB_URL,
   tax: Number(process.env.TAX) || 5,
 };

@@ -316,6 +316,7 @@ export const components: Components<Theme> = {
   MuiTableCell: {
     styleOverrides: {
       root: ({ theme }) => ({
+        padding: "12px",
         fontSize: 14,
         borderBottom: "1px solid",
         borderColor: theme.palette.divider,

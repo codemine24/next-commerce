@@ -11,6 +11,7 @@ import { MediaHeader } from "./_components/media-header";
 import { MediaTabs } from "./_components/media-tabs";
 
 export default async function MediaPage({ searchParams }: { searchParams: Promise<SearchParams> }) {
+
   return (
     <Box display="flex" flexDirection="column" gap={2}>
       <MediaHeader />

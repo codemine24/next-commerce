@@ -6,16 +6,15 @@ import { TAGS } from "@/constants/tags";
 import { SearchParams } from "@/interfaces/common";
 import api from "@/lib/api";
 import { API_ROUTES } from "@/lib/api-routes";
+import { makeQueryParams } from "@/utils/helper";
 import { CategorySchema } from "@/zod/category-schema";
 
 export const getCategories = async (queries?: SearchParams) => {
     let url = API_ROUTES.categories.get_categories;
 
     if (queries && Object.keys(queries).length > 0) {
-        const queriesString = Object.entries(queries)
-            .map(([key, value]) => `${key}=${value}`)
-            .join("&");
-        url += `?${queriesString}`;
+        const queryParams = makeQueryParams(queries);
+        url += `?${queryParams}`;
     }
 
     const res = await api.get(url, { next: { tags: [TAGS.categories] } });
@@ -29,5 +28,22 @@ export const addCategory = async (category: CategorySchema) => {
 
     if (res.success) revalidateTag(TAGS.categories);
 
+    return res;
+}
+
+export const updateCategory = async (category: CategorySchema, id: string) => {
+    const res = await api.patch(API_ROUTES.categories.update_category(id), {
+        body: JSON.stringify(category),
+    });
+
+    if (res.success) revalidateTag(TAGS.categories);
+    return res;
+}
+
+export const deleteCategory = async (ids: string[]) => {
+    const res = await api.delete(API_ROUTES.categories.delete_category, {
+        body: JSON.stringify({ ids }),
+    });
+    if (res.success) revalidateTag(TAGS.categories);
     return res;
 }
