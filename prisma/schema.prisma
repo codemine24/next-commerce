@@ -108,12 +108,13 @@ model Category {
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt
 
-  parent     Category?  @relation("CategoryToParent", fields: [parent_id], references: [id])
-  children   Category[] @relation("CategoryToParent")
-  products   Product[]  @relation("ProductCategories")
-  coupons    Coupon[]   @relation("EligibleCategoriesCoupon")
+  parent     Category?          @relation("CategoryToParent", fields: [parent_id], references: [id])
+  children   Category[]         @relation("CategoryToParent")
+  products   Product[]          @relation("ProductCategories")
+  coupons    Coupon[]           @relation("EligibleCategoriesCoupon")
   menu_items MenuItem[]
-  campaign   Campaign[] @relation("EligibleCampaignCategories")
+  campaign   Campaign[]         @relation("EligibleCampaignCategories")
+  attributes ProductAttribute[]
 
   @@map("categories")
 }
@@ -353,11 +354,13 @@ model UserOTP {
 }
 
 model ProductAttribute {
-  id     String          @id @default(uuid())
-  name   String
-  type   AttributeType
-  status AttributeStatus
+  id          String          @id @default(uuid())
+  name        String
+  type        AttributeType
+  status      AttributeStatus @default(PUBLISHED)
+  category_id String?
 
+  category         Category?        @relation(fields: [category_id], references: [id])
   attribute_values AttributeValue[]
 
   @@map("product_attributes")

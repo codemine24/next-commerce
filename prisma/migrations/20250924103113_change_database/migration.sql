@@ -334,7 +334,8 @@ CREATE TABLE "public"."product_attributes" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "type" "public"."AttributeType" NOT NULL,
-    "status" "public"."AttributeStatus" NOT NULL,
+    "status" "public"."AttributeStatus" NOT NULL DEFAULT 'PUBLISHED',
+    "category_id" TEXT,
 
     CONSTRAINT "product_attributes_pkey" PRIMARY KEY ("id")
 );
@@ -640,6 +641,9 @@ ALTER TABLE "public"."shipped_info" ADD CONSTRAINT "shipped_info_order_id_fkey" 
 
 -- AddForeignKey
 ALTER TABLE "public"."shipped_info" ADD CONSTRAINT "shipped_info_courier_id_fkey" FOREIGN KEY ("courier_id") REFERENCES "public"."couriers"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "public"."product_attributes" ADD CONSTRAINT "product_attributes_category_id_fkey" FOREIGN KEY ("category_id") REFERENCES "public"."categories"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "public"."attribute_values" ADD CONSTRAINT "attribute_values_attribute_id_fkey" FOREIGN KEY ("attribute_id") REFERENCES "public"."product_attributes"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
