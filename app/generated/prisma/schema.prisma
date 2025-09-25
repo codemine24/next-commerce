@@ -1,0 +1,557 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                  String         @id @default(uuid())
+  first_name          String
+  last_name           String?
+  email               String         @unique
+  contact_number      String?
+  password            String
+  avatar              String?
+  role                UserRole       @default(CUSTOMER)
+  status              UserStatus     @default(ACTIVE)
+  is_deleted          Boolean        @default(false)
+  password_changed_at DateTime?
+  created_at          DateTime       @default(now())
+  updated_at          DateTime       @updatedAt
+  files               File[]
+  cart                Cart?
+  addresses           Address[]
+  orders              Order[]
+  reviews             Review[]
+  order_histories     OrderHistory[]
+  wishlist            Wishlist[]
+  QnA                 QnA[]
+
+  @@map("users")
+}
+
+model Product {
+  id                     String   @id @default(uuid())
+  name                   String   @unique
+  slug                   String   @unique
+  model                  String?
+  brand_id               String?
+  size                   String?
+  color                  String?
+  tags                   String[] @default([])
+  product_code           String?  @unique
+  warranty               String?
+  stock                  Int      @default(0)
+  price                  Float
+  discount_price         Float?
+  thumbnail              String?
+  gallery                String[] @default([])
+  description            String? //html
+  specification          String? //html
+  additional_information String? //html
+  key_features           String[] @default([])
+  video_url              String?
+  is_published           Boolean  @default(true)
+  is_featured            Boolean  @default(false)
+  is_deleted             Boolean  @default(false)
+  created_at             DateTime @default(now())
+  updated_at             DateTime @updatedAt
+
+  brand       Brand?           @relation(fields: [brand_id], references: [id])
+  categories  Category[]       @relation("ProductCategories")
+  attributes  AttributeValue[] @relation("AttributeValues")
+  categoryId  String?
+  cart_items  CartItem[]
+  order_items OrderItem[]
+  reviews     Review[]
+  coupons     Coupon[]         @relation("EligibleProductsCoupon")
+  wishlist    Wishlist[]
+  campaigns   Campaign[]       @relation("EligibleCampaignProducts")
+  campaignId  String?
+  qna         QnA[]
+
+  @@map("products")
+}
+
+model Brand {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  slug        String   @unique
+  code        String?  @unique
+  icon        String?
+  description String?
+  featured    Boolean  @default(false)
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+
+  products   Product[]
+  menu_items MenuItem[]
+  coupons    Coupon[]   @relation("EligibleBrandsCoupon")
+  campaigns  Campaign[] @relation("EligibleCampaignBrands")
+
+  @@map("brands")
+}
+
+model Category {
+  id          String   @id @default(uuid())
+  title       String
+  slug        String   @unique
+  code        String?  @unique
+  icon        String?
+  featured    Boolean  @default(false)
+  description String?
+  parent_id   String?
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+
+  parent     Category?          @relation("CategoryToParent", fields: [parent_id], references: [id])
+  children   Category[]         @relation("CategoryToParent")
+  products   Product[]          @relation("ProductCategories")
+  coupons    Coupon[]           @relation("EligibleCategoriesCoupon")
+  menu_items MenuItem[]
+  campaign   Campaign[]         @relation("EligibleCampaignCategories")
+  attributes ProductAttribute[]
+
+  @@map("categories")
+}
+
+model Cart {
+  id         String   @id @default(uuid())
+  user_id    String   @unique
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  cart_items CartItem[]
+  user       User       @relation(fields: [user_id], references: [id])
+
+  @@map("carts")
+}
+
+model CartItem {
+  id         String @id @default(uuid())
+  cart_id    String
+  product_id String
+  quantity   Int    @default(1)
+
+  cart    Cart    @relation(fields: [cart_id], references: [id])
+  product Product @relation(fields: [product_id], references: [id])
+
+  @@unique([cart_id, product_id], name: "cart_id_product_id")
+  @@map("cart_items")
+}
+
+model File {
+  id          String   @id @default(uuid())
+  user_id     String?
+  name        String
+  alt_text    String
+  type        String
+  size        Int
+  width       Int
+  height      Int
+  path        String
+  bucket_id   String
+  bucket_name String
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+
+  uploaded_by User? @relation(fields: [user_id], references: [id])
+
+  @@map("images")
+}
+
+model Address {
+  id                       String   @id @default(uuid())
+  user_id                  String?
+  name                     String
+  contact_number           String
+  secondary_contact_number String?
+  email                    String?
+  address                  String
+  postal_code              String?
+  city                     String
+  district                 String
+  country                  String   @default("bangladesh")
+  is_default               Boolean  @default(false)
+  created_at               DateTime @default(now())
+  updated_at               DateTime @updatedAt
+
+  orders Order[]
+
+  user User? @relation(fields: [user_id], references: [id])
+
+  @@map("addresses")
+}
+
+model Order {
+  id                String         @id @default(uuid())
+  order_id          String         @unique
+  user_id           String?
+  address_id        String
+  payment_type      PaymentType    @default(CASH_ON_DELIVERY)
+  delivery_method   DeliveryMethod @default(HOME_DELIVERY)
+  order_status      OrderStatus    @default(PENDING)
+  payment_status    PaymentStatus  @default(DUE)
+  delivery_charge   Int
+  discount_amount   Int            @default(0)
+  sub_amount        Int
+  total_amount      Int
+  tax               Int            @default(0)
+  percentage_of_tax Float          @default(0)
+  coupon_id         String?
+  comment           String?
+  created_at        DateTime       @default(now())
+  updated_at        DateTime       @updatedAt
+
+  user         User?          @relation(fields: [user_id], references: [id])
+  address      Address        @relation(fields: [address_id], references: [id])
+  coupon       Coupon?        @relation(fields: [coupon_id], references: [id])
+  order_items  OrderItem[]
+  history      OrderHistory[]
+  shipped_info ShippedInfo?
+  payment      Payment?
+  refund       Refund?
+
+  @@map("orders")
+}
+
+model OrderItem {
+  id         String @id @default(uuid())
+  order_id   String
+  product_id String
+  quantity   Int    @default(1)
+  price      Int
+
+  order   Order   @relation(fields: [order_id], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [product_id], references: [id])
+
+  @@map("order_items")
+}
+
+model OrderHistory {
+  id         String      @id @default(uuid())
+  user_id    String?
+  order_id   String
+  status     OrderStatus
+  remark     String?
+  created_at DateTime    @default(now())
+
+  order      Order @relation(fields: [order_id], references: [id], onDelete: Cascade)
+  created_by User? @relation(fields: [user_id], references: [id])
+
+  @@unique([order_id, status], name: "order_id_status")
+  @@map("order_histories")
+}
+
+model Payment {
+  id             String         @id @default(uuid())
+  order_id       String         @unique
+  amount         Int
+  gateway        PaymentGateway
+  status         PaymentStatus  @default(PENDING)
+  transaction_id String?
+  paid_at        DateTime?
+  error_message  String?
+  metadata       Json?
+  created_at     DateTime       @default(now())
+  updated_at     DateTime       @updatedAt
+
+  order Order @relation(fields: [order_id], references: [id])
+
+  @@map("payments")
+}
+
+model Refund {
+  id             String   @id @default(uuid())
+  order_id       String   @unique
+  paid_amount    Float
+  refund_amount  Float
+  penalty_charge Float    @default(0)
+  reason         String?
+  refunded_at    DateTime @default(now())
+
+  order Order @relation(fields: [order_id], references: [id])
+
+  @@map("refunds")
+}
+
+model Review {
+  id         String   @id @default(uuid())
+  user_id    String
+  product_id String
+  rating     Float    @default(5)
+  comment    String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  user    User    @relation(fields: [user_id], references: [id])
+  product Product @relation(fields: [product_id], references: [id])
+
+  @@map("reviews")
+}
+
+model Coupon {
+  id                  String          @id @default(uuid())
+  code                String          @unique
+  discount_type       DiscountType    @default(AMOUNT)
+  discount_value      Float
+  maximum_value       Float?
+  start_date          DateTime        @default(now())
+  expiration_date     DateTime
+  usage_limit         Int?
+  per_user_limit      Int?
+  min_order_amount    Float?
+  is_active           Boolean         @default(true)
+  used_count          Int             @default(0)
+  beneficiary_type    BeneficiaryType @default(ALL)
+  eligible_categories Category[]      @relation("EligibleCategoriesCoupon")
+  eligible_brands     Brand[]         @relation("EligibleBrandsCoupon")
+  eligible_products   Product[]       @relation("EligibleProductsCoupon")
+  created_at          DateTime        @default(now())
+  updated_at          DateTime        @updatedAt
+  order               Order[]
+}
+
+model Courier {
+  id             String        @id @default(uuid())
+  name           String
+  address        String?
+  contact_number String?
+  email          String?
+  created_at     DateTime      @default(now())
+  shipped_info   ShippedInfo[]
+
+  @@map("couriers")
+}
+
+model ShippedInfo {
+  id          String   @id @default(uuid())
+  order_id    String   @unique
+  courier_id  String
+  tracking_id String?
+  created_at  DateTime @default(now())
+
+  order   Order   @relation(fields: [order_id], references: [id], onDelete: Cascade)
+  courier Courier @relation(fields: [courier_id], references: [id])
+
+  @@map("shipped_info")
+}
+
+model UserOTP {
+  id             String   @id @default(uuid())
+  name           String
+  email          String?
+  contact_number String
+  otp            Int      @unique
+  expires_at     String
+  created_at     DateTime @default(now())
+
+  @@map("user_otp")
+}
+
+model ProductAttribute {
+  id          String          @id @default(uuid())
+  name        String
+  type        AttributeType
+  status      AttributeStatus @default(PUBLISHED)
+  category_id String?
+
+  category         Category?        @relation(fields: [category_id], references: [id])
+  attribute_values AttributeValue[]
+
+  @@map("product_attributes")
+}
+
+model AttributeValue {
+  id           String @id @default(uuid())
+  attribute_id String
+  title        String
+  position     Int    @default(0)
+
+  attribute ProductAttribute @relation(fields: [attribute_id], references: [id], onDelete: Cascade)
+  products  Product[]        @relation("AttributeValues")
+
+  @@map("attribute_values")
+}
+
+model ProductMeta {
+  id    String          @id @default(uuid())
+  type  ProductMetaType @default(TAG)
+  value String
+
+  @@unique([type, value], name: "type_value")
+  @@map("product_meta")
+}
+
+model Menu {
+  id         String     @id @default(uuid())
+  name       String     @unique
+  menu_items MenuItem[]
+
+  @@map("menus")
+}
+
+model MenuItem {
+  id          String     @id @default(uuid())
+  title       String
+  slug        String     @unique
+  menu_id     String
+  category_id String?
+  brand_id    String?
+  position    Int
+  parent_id   String?
+  parent      MenuItem?  @relation("MenuChildren", fields: [parent_id], references: [id])
+  children    MenuItem[] @relation("MenuChildren")
+
+  menu     Menu      @relation(fields: [menu_id], references: [id])
+  category Category? @relation(fields: [category_id], references: [id])
+  brand    Brand?    @relation(fields: [brand_id], references: [id])
+
+  @@map("menu_items")
+}
+
+model Wishlist {
+  id         String   @id @default(uuid())
+  user_id    String
+  product_id String
+  created_at DateTime @default(now())
+
+  user    User    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [product_id], references: [id], onDelete: Cascade)
+
+  @@unique([user_id, product_id])
+  @@map("wishlists")
+}
+
+model Campaign {
+  id                  String           @id @default(uuid())
+  slug                String
+  title               String           @unique
+  sub_title           String?
+  description         String?
+  thumbnail           String
+  start_at            DateTime
+  end_at              DateTime
+  platform            CampaignPlatform @default(ALL)
+  conditions          String[]         @default([])
+  note                String?
+  eligible_categories Category[]       @relation("EligibleCampaignCategories")
+  eligible_brands     Brand[]          @relation("EligibleCampaignBrands")
+  eligible_products   Product[]        @relation("EligibleCampaignProducts")
+  status              CampaignStatus
+  created_at          DateTime         @default(now())
+  updated_at          DateTime         @updatedAt
+
+  @@map("campaigns")
+}
+
+model QnA {
+  id          String   @id @default(uuid())
+  inquirer_id String
+  product_id  String
+  question    String
+  answer      String?
+  is_approved Boolean  @default(false)
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+
+  inquirer User    @relation(fields: [inquirer_id], references: [id])
+  product  Product @relation(fields: [product_id], references: [id])
+
+  @@map("qna")
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  REFUNDED
+  CANCELLED
+}
+
+enum PaymentType {
+  CASH_ON_DELIVERY
+  ONLINE_PAYMENT
+}
+
+enum PaymentGateway {
+  STRIPE
+  BANK
+  CASH
+}
+
+enum DeliveryMethod {
+  STORE_PICKUP
+  HOME_DELIVERY
+}
+
+enum PaymentStatus {
+  DUE
+  PENDING
+  PAID
+  FAILED
+  CANCELLED
+  REFUNDED
+}
+
+enum DiscountType {
+  PERCENTAGE
+  AMOUNT
+}
+
+enum BeneficiaryType {
+  NEW_USER
+  EXISTING_USER
+  ALL
+}
+
+enum ProductMetaType {
+  WARRANTY
+  TAG
+}
+
+enum AttributeType {
+  SINGLE_SELECT
+  MULTIPLE_SELECT
+}
+
+enum AttributeStatus {
+  PUBLISHED
+  DRAFT
+}
+
+enum CampaignPlatform {
+  ONLINE
+  OFFLINE
+  ALL
+}
+
+enum CampaignStatus {
+  ACTIVE
+  UPCOMING
+  CLOSED
+}
+
+enum UserRole {
+  SUPER_ADMIN
+  ADMIN
+  CUSTOMER
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+  BLOCKED
+}
