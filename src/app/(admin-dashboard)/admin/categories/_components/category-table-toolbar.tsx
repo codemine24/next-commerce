@@ -1,10 +1,11 @@
 "use client";
 
-import { Box, FormControl } from "@mui/material";
-import { Button } from "@mui/material";
-import { MenuItem } from "@mui/material";
-import { Select } from "@mui/material";
-import { Link } from "next/link";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import FormControl from "@mui/material/FormControl";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import Link from "next/link";
 
 import { PlusIcon } from "@/icons/plus";
 
