@@ -1,3 +1,3 @@
-export default function BrandList() {
+export default async function BrandList() {
     return <div>Brand List</div>;
 }

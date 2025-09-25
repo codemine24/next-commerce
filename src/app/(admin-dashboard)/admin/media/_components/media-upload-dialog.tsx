@@ -16,8 +16,6 @@ import { CloseIcon } from '@/icons/close';
 import { UploadCloudIcon } from '@/icons/upload-cloud';
 import { toast } from '@/lib/toast-store';
 
-
-
 interface MediaUploadDialogProps extends DialogProps {
     open: boolean;
     title?: string;

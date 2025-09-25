@@ -27,19 +27,24 @@ export const MediaFilter = () => {
   const fromDate = searchParams.get("fromDate") || "";
   const toDate = searchParams.get("toDate") || "";
 
-  // --- Debounced search ---
-  useDebounce(searchText, 500, () => {
+  // --- Search ---
+  const doSearch = useCallback(() => {
     const params = new URLSearchParams(searchParams.toString());
+    const current = params.get("search_term") || "";
+
     if (searchText) {
-      if (params.get("search_term") !== searchText) {
+      if (current !== searchText) {
         params.set("search_term", searchText);
         router.replace(`?${params.toString()}`);
       }
-    } else if (params.has("search_term")) {
+    } else if (current) {
       params.delete("search_term");
       router.replace(`?${params.toString()}`);
     }
-  });
+  }, [searchParams, router, searchText]);
+
+  // --- Debounced search ---
+  useDebounce(searchText, 500, doSearch);
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) =>
     setSearchText(e.target.value);
