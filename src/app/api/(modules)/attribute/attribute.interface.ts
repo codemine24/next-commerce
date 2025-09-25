@@ -8,5 +8,6 @@ export interface AttributeValue {
 export interface AttributePayload {
   name: string;
   type: AttributeType;
+  category_id?: string;
   attribute_values: AttributeValue[];
 }

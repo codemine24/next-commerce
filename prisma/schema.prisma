@@ -371,7 +371,7 @@ model AttributeValue {
   title        String
   position     Int    @default(0)
 
-  attribute ProductAttribute @relation(fields: [attribute_id], references: [id])
+  attribute ProductAttribute @relation(fields: [attribute_id], references: [id], onDelete: Cascade)
   products Product[] @relation("AttributeValues")
 
   @@map("attribute_values")

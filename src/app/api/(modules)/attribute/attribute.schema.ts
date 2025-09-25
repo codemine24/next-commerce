@@ -13,6 +13,11 @@ const createAttribute = z.object({
           " or "
         )}`
       ),
+      category_id: z
+        .uuid({
+          error: "Category id should be a valid uuid",
+        })
+        .optional(),
       attribute_values: z.array(
         z
           .object({
