@@ -8,8 +8,8 @@ export const API_ROUTES = {
         get_products: "/product",
         create_product: "/product",
         get_product_by_slug: (slug: string) => `/product/${slug}`,
-        update_product: (id: string) => `/product/${id}`,
-        delete_product: (id: string) => `/product/${id}`
+        update_product: (slug: string) => `/product/${slug}`,
+        delete_product: "/product"
     },
     categories: {
         get_categories: "/category",

@@ -4,26 +4,24 @@ import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
 import IconButton from "@mui/material/IconButton"
 import Popover from "@mui/material/Popover"
+import Link from "next/link";
 import React from "react"
 
-import { deleteBrand } from "@/actions/brand";
+import { deleteProduct } from "@/actions/product";
 import { ConfirmDialog } from "@/components/dialog/confirm-dialog";
 import { DeleteIcon } from "@/icons/delete-icon";
 import { DotVerticalIcon } from "@/icons/dot-vertical"
 import { EditIcon } from "@/icons/edit";
-import { Brand } from "@/interfaces/brand";
+import { Product } from "@/interfaces/product";
 import { toast } from "@/lib/toast-store";
 
-import { BrandEditDialog } from "./brand-edit-dialog";
-
-interface BrandActionPopoverProps {
-    brand: Brand;
+interface ProductActionPopoverProps {
+    product: Product;
 }
 
-export const BrandActionPopover = ({ brand }: BrandActionPopoverProps) => {
+export const ProductActionPopover = ({ product }: ProductActionPopoverProps) => {
     const [loading, setLoading] = React.useState(false);
     const [openConfirmModal, setOpenConfirmModal] = React.useState(false);
-    const [openEditModal, setOpenEditModal] = React.useState(false);
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -33,12 +31,11 @@ export const BrandActionPopover = ({ brand }: BrandActionPopoverProps) => {
     const handleClose = () => {
         setAnchorEl(null);
         setOpenConfirmModal(false);
-        setOpenEditModal(false);
     };
 
     const handleDelete = async () => {
         setLoading(true);
-        const res = await deleteBrand([brand.id]);
+        const res = await deleteProduct([product.id]);
         setLoading(false);
         if (res.success) {
             toast.success(res.message);
@@ -72,7 +69,8 @@ export const BrandActionPopover = ({ brand }: BrandActionPopoverProps) => {
                         startIcon={<EditIcon />}
                         variant="text"
                         color="inherit"
-                        onClick={() => setOpenEditModal(true)}
+                        component={Link}
+                        href={`/admin/products/edit/${product.slug}`}
                         sx={{
                             pl: 2,
                             textTransform: "none",
@@ -102,16 +100,10 @@ export const BrandActionPopover = ({ brand }: BrandActionPopoverProps) => {
             {openConfirmModal && <ConfirmDialog
                 open={openConfirmModal}
                 onClose={handleClose}
-                title="Delete Brand"
-                description="Are you sure you want to delete this brand?"
+                title="Delete Product"
+                description="Are you sure you want to delete this product?"
                 onConfirm={handleDelete}
                 loading={loading}
-            />}
-
-            {openEditModal && <BrandEditDialog
-                open={openEditModal}
-                onClose={handleClose}
-                brand={brand}
             />}
         </>
     )

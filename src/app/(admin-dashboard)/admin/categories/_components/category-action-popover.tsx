@@ -102,8 +102,8 @@ export const CategoryActionPopover = ({ category }: CategoryActionPopoverProps) 
             {openConfirmModal && <ConfirmDialog
                 open={openConfirmModal}
                 onClose={handleClose}
-                title="Delete Media"
-                description="Are you sure you want to delete this media?"
+                title="Delete Category"
+                description="Are you sure you want to delete this category?"
                 onConfirm={handleDelete}
                 loading={loading}
             />}
