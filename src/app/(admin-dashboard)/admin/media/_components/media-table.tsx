@@ -2,7 +2,7 @@
 
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
-import React from "react";
+import { useState, useTransition } from "react";
 
 import { deleteFiles } from "@/actions/file";
 import { ConfirmDialog } from "@/components/dialog/confirm-dialog";
@@ -20,11 +20,11 @@ import { MediaActionPopover } from "./media-action-popover";
 import { MediaDetailsSidebar } from "./media-details-sidebar";
 
 export const MediaTable = ({ media }: { media: Media[] }) => {
-    const [openMediaDetails, setOpenMediaDetails] = React.useState(false);
-    const [selectedMedia, setSelectedMedia] = React.useState<Media | null>(null);
-    const [selectedRows, setSelectedRows] = React.useState<string[]>([]);
-    const [openDeleteModal, setOpenDeleteModal] = React.useState(false);
-    const [loading, setLoading] = React.useState(false);
+    const [openMediaDetails, setOpenMediaDetails] = useState(false);
+    const [selectedMedia, setSelectedMedia] = useState<Media | null>(null);
+    const [selectedRows, setSelectedRows] = useState<string[]>([]);
+    const [openDeleteModal, setOpenDeleteModal] = useState(false);
+    const [loading, startTransition] = useTransition();
 
     const handleSelectAllClick = (checked: boolean) => {
         setSelectedRows(checked ? media.map((m) => m.path) : []);
@@ -37,17 +37,16 @@ export const MediaTable = ({ media }: { media: Media[] }) => {
     };
 
     const handleDeleteMedia = async () => {
-        setLoading(true);
-        const res = await deleteFiles(selectedRows);
-        setLoading(false);
-
-        if (res.success) {
-            setSelectedRows([]);
-            setOpenDeleteModal(false);
-            toast.success(res.message);
-        } else {
-            toast.error(res.message);
-        }
+        startTransition(async () => {
+            const res = await deleteFiles(selectedRows);
+            if (res.success) {
+                setSelectedRows([]);
+                setOpenDeleteModal(false);
+                toast.success(res.message);
+            } else {
+                toast.error(res.message);
+            }
+        });
     };
 
     const handleViewMedia = (m: Media) => {

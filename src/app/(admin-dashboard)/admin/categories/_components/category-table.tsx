@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import DOMPurify from 'isomorphic-dompurify';
-import { useState } from 'react';
+import { useState, useTransition } from 'react';
 
 import { deleteCategory } from '@/actions/category';
 import { ConfirmDialog } from '@/components/dialog/confirm-dialog';
@@ -26,7 +26,7 @@ interface CategoryTableProps {
 export const CategoryTable = ({ categories }: CategoryTableProps) => {
     const [selectedRows, setSelectedRows] = useState<string[]>([]);
     const [openDeleteModal, setOpenDeleteModal] = useState(false);
-    const [loading, setLoading] = useState(false);
+    const [loading, startTransition] = useTransition();
 
     const handleSelectAllClick = (checked: boolean) => {
         setSelectedRows(checked ? categories.map((m) => m.id) : []);
@@ -39,17 +39,16 @@ export const CategoryTable = ({ categories }: CategoryTableProps) => {
     };
 
     const handleDeleteCategory = async () => {
-        setLoading(true);
-        const res = await deleteCategory(selectedRows);
-        setLoading(false);
-
-        if (res.success) {
-            setSelectedRows([]);
-            setOpenDeleteModal(false);
-            toast.success(res.message);
-        } else {
-            toast.error(res.message);
-        }
+        startTransition(async () => {
+            const res = await deleteCategory(selectedRows);
+            if (res.success) {
+                setSelectedRows([]);
+                setOpenDeleteModal(false);
+                toast.success(res.message);
+            } else {
+                toast.error(res.message);
+            }
+        });
     };
 
     const columns: Column<Category>[] = [

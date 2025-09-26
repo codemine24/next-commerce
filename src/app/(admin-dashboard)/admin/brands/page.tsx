@@ -11,6 +11,7 @@ import { BrandContent } from "./_components/brand-content";
 import { BrandHeader } from "./_components/brand-header";
 
 export default async function BrandPage({ searchParams }: { searchParams: Promise<SearchParams> }) {
+
     return (
         <Box>
             <BrandHeader />

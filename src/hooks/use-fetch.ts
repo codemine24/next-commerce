@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useTransition } from "react";
 
 import api from "@/lib/api";
 
@@ -14,23 +14,22 @@ export const useFetch = (url: string): {
     const [data, setData] = useState(null);
     const [success, setSuccess] = useState(false);
     const [message, setMessage] = useState("");
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, startTransition] = useTransition();
 
     const fetchData = useCallback(async () => {
-        console.log("Fetching data...");
-        setIsLoading(true);
-        const response = await api.get(url);
-        setIsLoading(false);
-        setData(response.data);
-        setSuccess(response.success);
-        setMessage(response.message);
+        startTransition(async () => {
+            const response = await api.get(url, { cache: "no-store" });
+            setData(response.data);
+            setSuccess(response.success);
+            setMessage(response.message);
+        });
     }, [url]);
 
-    const revalidate = useCallback(() => {
+    useEffect(() => {
         fetchData();
     }, [fetchData]);
 
-    useEffect(() => {
+    const revalidate = useCallback(() => {
         fetchData();
     }, [fetchData]);
 

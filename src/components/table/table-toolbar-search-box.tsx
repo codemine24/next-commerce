@@ -15,8 +15,9 @@ export const TableToolbarSearchBox = () => {
     const searchParams = useSearchParams();
     const [searchText, setSearchText] = useState("");
 
+    // Search handler
     const doSearch = useCallback(() => {
-        const params = new URLSearchParams(searchParams.toString());
+        const params = new URLSearchParams(searchParams);
         const current = params.get("search_term") || "";
 
         if (searchText) {
@@ -30,12 +31,15 @@ export const TableToolbarSearchBox = () => {
         }
     }, [searchParams, router, searchText]);
 
+    // Debounce search text
     const debouncedSearchText = useDebounce(searchText, 500);
 
+    // Run when search text changes
     useEffect(() => {
         doSearch();
     }, [debouncedSearchText, doSearch]);
 
+    // Clear search
     const handleClearSearch = () => {
         setSearchText("");
         doSearch();

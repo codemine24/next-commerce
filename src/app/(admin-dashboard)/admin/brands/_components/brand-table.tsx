@@ -4,9 +4,8 @@ import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import DOMPurify from 'isomorphic-dompurify';
-import { useState } from 'react';
+import { useState, useTransition } from 'react';
 
-// import { deleteBrand } from '@/actions/brand';
 import { deleteBrand } from '@/actions/brand';
 import { ConfirmDialog } from '@/components/dialog/confirm-dialog';
 import { NotDataFound } from '@/components/not-data-found';
@@ -27,9 +26,7 @@ interface BrandTableProps {
 export const BrandTable = ({ brands }: BrandTableProps) => {
     const [selectedRows, setSelectedRows] = useState<string[]>([]);
     const [openDeleteModal, setOpenDeleteModal] = useState(false);
-    const [loading, setLoading] = useState(false);
-
-    console.log(brands);
+    const [loading, startTransition] = useTransition();
 
     const handleSelectAllClick = (checked: boolean) => {
         setSelectedRows(checked ? brands.map((m) => m.id) : []);
@@ -42,17 +39,16 @@ export const BrandTable = ({ brands }: BrandTableProps) => {
     };
 
     const handleDeleteBrand = async () => {
-        setLoading(true);
-        const res = await deleteBrand(selectedRows);
-        setLoading(false);
-
-        if (res.success) {
-            setSelectedRows([]);
-            setOpenDeleteModal(false);
-            toast.success(res.message);
-        } else {
-            toast.error(res.message);
-        }
+        startTransition(async () => {
+            const res = await deleteBrand(selectedRows);
+            if (res.success) {
+                setSelectedRows([]);
+                setOpenDeleteModal(false);
+                toast.success(res.message);
+            } else {
+                toast.error(res.message);
+            }
+        });
     };
 
     const columns: Column<Brand>[] = [
