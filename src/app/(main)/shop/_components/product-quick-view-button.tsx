@@ -1,5 +1,6 @@
 "use client";
 
+import { alpha } from "@mui/material";
 import Button from "@mui/material/Button";
 import { useState } from "react";
 
@@ -16,13 +17,21 @@ export const ProductQuickViewButton = ({ product }: { product: Product }) => {
         color="primary"
         onClick={() => setOpen(true)}
         sx={{
-          border: "none",
+          color: "#08996B",
+          borderColor: "#08996B",
+          bgcolor: alpha("#08996B", 0.06),
           px: 1,
+          width: 40,
+          height: 40,
         }}
       >
         <EyeIcon sx={{ color: "primary.main", fontSize: 20 }} />
       </Button>
-      <ProductQuickView open={open} onClose={() => setOpen(false)} product={product} />
+      <ProductQuickView
+        open={open}
+        onClose={() => setOpen(false)}
+        product={product}
+      />
     </>
   );
 };
