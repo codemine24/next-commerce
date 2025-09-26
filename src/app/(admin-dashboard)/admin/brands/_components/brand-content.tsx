@@ -16,7 +16,7 @@ export const BrandContent = async ({ searchParams }: { searchParams: Promise<Sea
             {/* Error Component */}
             {!data.success && <ErrorComponent message={data.message} />}
 
-            {/* Category Table */}
+            {/* Brand Table */}
             {data.success && (
                 <>
                     <BrandTable brands={data.data} />

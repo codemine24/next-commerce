@@ -16,7 +16,7 @@ export const ProductContent = async ({ searchParams }: { searchParams: Promise<S
             {/* Error Component */}
             {!data.success && <ErrorComponent message={data.message} />}
 
-            {/* Category Table */}
+            {/* Product Table */}
             {data.success && (
                 <>
                     <ProductTable products={data.data} />

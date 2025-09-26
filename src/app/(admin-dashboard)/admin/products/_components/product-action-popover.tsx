@@ -12,6 +12,7 @@ import { ConfirmDialog } from "@/components/dialog/confirm-dialog";
 import { DeleteIcon } from "@/icons/delete-icon";
 import { DotVerticalIcon } from "@/icons/dot-vertical"
 import { EditIcon } from "@/icons/edit";
+import { EyeIcon } from "@/icons/eye";
 import { Product } from "@/interfaces/product";
 import { toast } from "@/lib/toast-store";
 
@@ -20,7 +21,7 @@ interface ProductActionPopoverProps {
 }
 
 export const ProductActionPopover = ({ product }: ProductActionPopoverProps) => {
-    const [loading, setLoading] = React.useState(false);
+    const [loading, startTransition] = React.useTransition();
     const [openConfirmModal, setOpenConfirmModal] = React.useState(false);
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
@@ -34,15 +35,15 @@ export const ProductActionPopover = ({ product }: ProductActionPopoverProps) => 
     };
 
     const handleDelete = async () => {
-        setLoading(true);
-        const res = await deleteProduct([product.id]);
-        setLoading(false);
-        if (res.success) {
-            toast.success(res.message);
-            handleClose();
-        } else {
-            toast.error(res.message);
-        }
+        startTransition(async () => {
+            const res = await deleteProduct([product.id]);
+            if (res.success) {
+                toast.success(res.message);
+                handleClose();
+            } else {
+                toast.error(res.message);
+            }
+        });
     }
 
     return (
@@ -65,6 +66,20 @@ export const ProductActionPopover = ({ product }: ProductActionPopoverProps) => 
                 }}
             >
                 <Box width={200} display="flex" flexDirection="column" p={0.5}>
+                    <Button
+                        startIcon={<EyeIcon />}
+                        variant="text"
+                        color="inherit"
+                        component={Link}
+                        href={`/${product.slug}`}
+                        sx={{
+                            pl: 2,
+                            textTransform: "none",
+                            justifyContent: "flex-start"
+                        }}
+                    >
+                        View
+                    </Button>
                     <Button
                         startIcon={<EditIcon />}
                         variant="text"

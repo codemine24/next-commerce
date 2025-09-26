@@ -22,9 +22,9 @@ export const ADMIN_NAVIGATION = [
         path: "/admin/orders"
     },
     {
-        name: "Customers",
+        name: "Users",
         icon: <UsersIcon fontSize="small" />,
-        path: "/admin/customers"
+        path: "/admin/users"
     },
     {
         name: "Products",
