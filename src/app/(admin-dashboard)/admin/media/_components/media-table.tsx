@@ -5,11 +5,11 @@ import IconButton from "@mui/material/IconButton";
 import React from "react";
 
 import { deleteFiles } from "@/actions/file";
-import { Column, DataTable } from "@/components/data-table";
 import { ConfirmDialog } from "@/components/dialog/confirm-dialog";
 import { NotDataFound } from "@/components/not-data-found";
 import { OptimizeImage } from "@/components/optimize-image";
-import { TableSelectedAction } from "@/components/table-selection-action";
+import { Column, DataTable } from "@/components/table/data-table";
+import { TableSelectedAction } from "@/components/table/table-selection-action";
 import { DeleteIcon } from "@/icons/delete-icon";
 import { Media } from "@/interfaces/media";
 import { toast } from "@/lib/toast-store";
