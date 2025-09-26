@@ -35,17 +35,12 @@ export const ProductQuestions = () => {
   return (
     <Box id="#product-qna">
       {/* Section header */}
-      <Box
-        display="flex"
-        alignItems="center"
-        justifyContent="space-between"
-        gap={2}
-      >
+      <Box display="flex" alignItems="center" justifyContent="space-between">
         <ProductSectionHeader title="Customer Questions" />
         {/* <ProductQuestionForm /> */}
       </Box>
 
-      <Stack spacing={1} mt={2}>
+      <Stack spacing={1} mt={5}>
         {questions.map((q, index) => (
           <React.Fragment key={q.question}>
             <QuestionCard {...q} />
