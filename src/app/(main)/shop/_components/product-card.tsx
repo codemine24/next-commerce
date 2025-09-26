@@ -19,7 +19,10 @@ interface ProductCardProps {
   action?: boolean;
 }
 
-export const ProductCard = async ({ product, action = false }: ProductCardProps) => {
+export const ProductCard = async ({
+  product,
+  action = false,
+}: ProductCardProps) => {
   return (
     <Box
       sx={{
@@ -58,7 +61,9 @@ export const ProductCard = async ({ product, action = false }: ProductCardProps)
           }}
         >
           <OptimizeImage
-            src={makeImageUrl(product.thumbnail) || "/images/featured_image_1.svg"}
+            src={
+              makeImageUrl(product.thumbnail) || "/images/featured_image_1.svg"
+            }
             alt={product.name}
             height={290}
             imageStyle={{ objectFit: "contain" }}
@@ -85,7 +90,7 @@ export const ProductCard = async ({ product, action = false }: ProductCardProps)
         </Box>
 
         {/* Product name */}
-        <Box height={80} mt={2} px={2}>
+        <Box height={60} mt={2} px={3}>
           <Typography
             variant="h4"
             sx={{ "&:hover": { textDecoration: "underline" } }}
@@ -96,7 +101,7 @@ export const ProductCard = async ({ product, action = false }: ProductCardProps)
       </Box>
 
       {/* Price and quick view */}
-      <Stack direction="row" justifyContent="space-between" px={2}>
+      <Stack direction="row" justifyContent="space-between" px={3}>
         <ProductPrice product={product} />
         {!action && <ProductQuickViewButton product={product} />}
       </Stack>
