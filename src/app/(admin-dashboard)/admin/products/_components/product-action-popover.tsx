@@ -4,26 +4,25 @@ import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
 import IconButton from "@mui/material/IconButton"
 import Popover from "@mui/material/Popover"
+import Link from "next/link";
 import React from "react"
 
-import { deleteCategory } from "@/actions/category";
+import { deleteProduct } from "@/actions/product";
 import { ConfirmDialog } from "@/components/dialog/confirm-dialog";
 import { DeleteIcon } from "@/icons/delete-icon";
 import { DotVerticalIcon } from "@/icons/dot-vertical"
 import { EditIcon } from "@/icons/edit";
-import { Category } from "@/interfaces/category";
+import { EyeIcon } from "@/icons/eye";
+import { Product } from "@/interfaces/product";
 import { toast } from "@/lib/toast-store";
 
-import { CategoryEditDialog } from "./category-edit-dialog";
-
-interface CategoryActionPopoverProps {
-    category: Category;
+interface ProductActionPopoverProps {
+    product: Product;
 }
 
-export const CategoryActionPopover = ({ category }: CategoryActionPopoverProps) => {
-    const [loading, setLoading] = React.useState(false);
+export const ProductActionPopover = ({ product }: ProductActionPopoverProps) => {
+    const [loading, startTransition] = React.useTransition();
     const [openConfirmModal, setOpenConfirmModal] = React.useState(false);
-    const [openEditModal, setOpenEditModal] = React.useState(false);
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -33,19 +32,18 @@ export const CategoryActionPopover = ({ category }: CategoryActionPopoverProps) 
     const handleClose = () => {
         setAnchorEl(null);
         setOpenConfirmModal(false);
-        setOpenEditModal(false);
     };
 
     const handleDelete = async () => {
-        setLoading(true);
-        const res = await deleteCategory([category.id]);
-        setLoading(false);
-        if (res.success) {
-            toast.success(res.message);
-            handleClose();
-        } else {
-            toast.error(res.message);
-        }
+        startTransition(async () => {
+            const res = await deleteProduct([product.id]);
+            if (res.success) {
+                toast.success(res.message);
+                handleClose();
+            } else {
+                toast.error(res.message);
+            }
+        });
     }
 
     return (
@@ -69,10 +67,25 @@ export const CategoryActionPopover = ({ category }: CategoryActionPopoverProps) 
             >
                 <Box width={200} display="flex" flexDirection="column" p={0.5}>
                     <Button
+                        startIcon={<EyeIcon />}
+                        variant="text"
+                        color="inherit"
+                        component={Link}
+                        href={`/${product.slug}`}
+                        sx={{
+                            pl: 2,
+                            textTransform: "none",
+                            justifyContent: "flex-start"
+                        }}
+                    >
+                        View
+                    </Button>
+                    <Button
                         startIcon={<EditIcon />}
                         variant="text"
                         color="inherit"
-                        onClick={() => setOpenEditModal(true)}
+                        component={Link}
+                        href={`/admin/products/edit/${product.slug}`}
                         sx={{
                             pl: 2,
                             textTransform: "none",
@@ -102,16 +115,10 @@ export const CategoryActionPopover = ({ category }: CategoryActionPopoverProps) 
             {openConfirmModal && <ConfirmDialog
                 open={openConfirmModal}
                 onClose={handleClose}
-                title="Delete Category"
-                description="Are you sure you want to delete this category?"
+                title="Delete Product"
+                description="Are you sure you want to delete this product?"
                 onConfirm={handleDelete}
                 loading={loading}
-            />}
-
-            {openEditModal && <CategoryEditDialog
-                open={openEditModal}
-                onClose={handleClose}
-                category={category}
             />}
         </>
     )

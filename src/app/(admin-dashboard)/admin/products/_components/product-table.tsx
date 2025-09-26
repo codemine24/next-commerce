@@ -3,33 +3,33 @@
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import DOMPurify from 'isomorphic-dompurify';
-import { useState, useTransition } from 'react';
+import { useTransition, useState } from 'react';
 
-import { deleteCategory } from '@/actions/category';
+import { deleteProduct } from '@/actions/product';
 import { ConfirmDialog } from '@/components/dialog/confirm-dialog';
 import { NotDataFound } from '@/components/not-data-found';
 import { OptimizeImage } from '@/components/optimize-image';
 import { Column, DataTable } from '@/components/table/data-table';
 import { TableSelectedAction } from '@/components/table/table-selection-action';
 import { DeleteIcon } from '@/icons/delete-icon';
-import { Category } from '@/interfaces/category';
+import { Product } from '@/interfaces/product';
 import { toast } from '@/lib/toast-store';
+import { currencyFormatter } from '@/utils/currency-formatter';
 import { makeImageUrl } from '@/utils/helper';
 
-import { CategoryActionPopover } from './category-action-popover';
+import { ProductActionPopover } from './product-action-popover';
 
-interface CategoryTableProps {
-    categories: Category[];
+interface ProductTableProps {
+    products: Product[];
 }
 
-export const CategoryTable = ({ categories }: CategoryTableProps) => {
-    const [selectedRows, setSelectedRows] = useState<string[]>([]);
+export const ProductTable = ({ products }: ProductTableProps) => {
     const [openDeleteModal, setOpenDeleteModal] = useState(false);
     const [loading, startTransition] = useTransition();
+    const [selectedRows, setSelectedRows] = useState<string[]>([]);
 
     const handleSelectAllClick = (checked: boolean) => {
-        setSelectedRows(checked ? categories.map((m) => m.id) : []);
+        setSelectedRows(checked ? products.map((p) => p.id) : []);
     };
 
     const handleSelectRow = (id: string) => {
@@ -38,9 +38,9 @@ export const CategoryTable = ({ categories }: CategoryTableProps) => {
         );
     };
 
-    const handleDeleteCategory = async () => {
+    const handleDeleteProduct = async () => {
         startTransition(async () => {
-            const res = await deleteCategory(selectedRows);
+            const res = await deleteProduct(selectedRows);
             if (res.success) {
                 setSelectedRows([]);
                 setOpenDeleteModal(false);
@@ -51,52 +51,47 @@ export const CategoryTable = ({ categories }: CategoryTableProps) => {
         });
     };
 
-    const columns: Column<Category>[] = [
+    const columns: Column<Product>[] = [
         {
-            label: "Icon",
-            key: "icon",
-            render: (row: Category) => (
-                <OptimizeImage src={makeImageUrl(row.icon)} alt={row.title} height={40} width={50} />
+            label: "Image",
+            key: "thumbnail",
+            render: (row: Product) => (
+                <OptimizeImage src={makeImageUrl(row.thumbnail)} alt={row.name} height={40} width={50} />
             )
         },
         {
-            label: "Title",
-            key: "title",
-            render: (row: Category) => (
+            label: "Name",
+            key: "name",
+            render: (row: Product) => (
                 <Box minWidth={200}>
                     <Typography variant="h6">
-                        {row.title}
+                        {row.name}
                     </Typography>
-                    <Box
-                        component="div"
-                        mt={1}
-                        fontSize={13}
-                        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(row.description || '') }}
-                    />
                 </Box>
             )
         },
         {
-            label: "Parent",
-            key: "parent_id",
-            render: (row: Category) => <Typography>{row.parent_id || "-"}</Typography>
+            label: "Price",
+            key: "price",
+            render: (row: Product) => currencyFormatter(row.price)
         },
         {
-            label: "Code",
-            key: "code"
+            label: "Discount Price",
+            key: "discount_price",
+            render: (row: Product) => row.discount_price ? currencyFormatter(row.discount_price) : '-'
         },
         {
             label: "Action",
-            render: (row: Category) => (
-                <CategoryActionPopover category={row} />
-            ),
-        },
+            render: (row: Product) => (
+                <ProductActionPopover product={row} />
+            )
+        }
     ]
 
     return (
         <Box position="relative">
             <TableSelectedAction
-                rowCount={categories.length}
+                rowCount={products.length}
                 numSelected={selectedRows.length}
                 onSelectAllRows={handleSelectAllClick}
                 action={
@@ -106,10 +101,10 @@ export const CategoryTable = ({ categories }: CategoryTableProps) => {
                 }
             />
             <DataTable
-                rows={categories}
+                rows={products}
                 columns={columns}
                 rowKey="id"
-                emptyState={<NotDataFound hideIcon message="No categories found" />}
+                emptyState={<NotDataFound hideIcon message="No products found" />}
                 selectedKeys={selectedRows}
                 onToggleRow={handleSelectRow}
                 onToggleAll={handleSelectAllClick}
@@ -120,9 +115,9 @@ export const CategoryTable = ({ categories }: CategoryTableProps) => {
                 <ConfirmDialog
                     open={openDeleteModal}
                     onClose={() => setOpenDeleteModal(false)}
-                    title="Delete Category"
-                    description="Are you sure you want to delete this category?"
-                    onConfirm={handleDeleteCategory}
+                    title="Delete Product"
+                    description="Are you sure you want to delete this product?"
+                    onConfirm={handleDeleteProduct}
                     loading={loading}
                 />
             )}

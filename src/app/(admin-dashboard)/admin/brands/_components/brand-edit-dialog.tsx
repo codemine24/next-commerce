@@ -10,40 +10,35 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { useForm } from "react-hook-form";
 
-import { updateCategory } from "@/actions/category";
+import { updateBrand } from "@/actions/brand";
 import { AnimatedDialog } from "@/components/dialog/animate-dialog";
 import { SubmitButton } from "@/components/submit-button";
-import { useFetch } from "@/hooks/use-fetch";
 import { CloseIcon } from "@/icons/close";
-import { Category } from "@/interfaces/category";
-import { API_ROUTES } from "@/lib/api-routes";
+import { Brand } from "@/interfaces/brand";
 import { toast } from "@/lib/toast-store";
-import { categorySchema, CategorySchema } from "@/zod/category-schema";
+import { brandSchema, BrandSchema } from "@/zod/brand-schema";
 
-import { CategoryForm } from "./category-form";
+import { BrandForm } from "./brand-form";
 
-interface CategoryEditDialogProps {
+interface BrandEditDialogProps {
     open: boolean;
     onClose: () => void;
-    category: Category;
+    brand: Brand;
 }
 
-export const CategoryEditDialog = ({ open, onClose, category }: CategoryEditDialogProps) => {
-    const { data } = useFetch(API_ROUTES.categories.get_categories);
-
-    const methods = useForm<CategorySchema>({
-        resolver: zodResolver(categorySchema),
+export const BrandEditDialog = ({ open, onClose, brand }: BrandEditDialogProps) => {
+    const methods = useForm<BrandSchema>({
+        resolver: zodResolver(brandSchema),
         defaultValues: {
-            title: category.title,
-            code: category.code,
-            description: category.description,
-            parent_id: category.parent_id,
-            icon: category.icon,
+            name: brand.name,
+            code: brand.code,
+            description: brand.description,
+            icon: brand.icon,
         },
     });
 
-    const onSubmit = async (data: CategorySchema) => {
-        const res = await updateCategory(category.id, data);
+    const onSubmit = async (data: BrandSchema) => {
+        const res = await updateBrand(brand.id, data);
 
         if (res.success) {
             toast.success(res.message);
@@ -57,7 +52,7 @@ export const CategoryEditDialog = ({ open, onClose, category }: CategoryEditDial
         <AnimatedDialog
             open={open}
             onClose={onClose}
-            title="Edit Category"
+            title="Edit Brand"
             maxWidth="md"
             fullWidth
             sx={{ overflowX: "hidden" }}
@@ -66,15 +61,14 @@ export const CategoryEditDialog = ({ open, onClose, category }: CategoryEditDial
                 <CloseIcon />
             </IconButton>
             <DialogTitle>
-                <Typography variant="h4">Edit Category</Typography>
+                <Typography variant="h4">Edit Brand</Typography>
             </DialogTitle>
 
             <DialogContent sx={{ borderTop: 1, borderBottom: 1, borderColor: "divider" }}>
                 <Box pt={2}>
-                    <CategoryForm
+                    <BrandForm
                         methods={methods}
                         onSubmit={onSubmit}
-                        categories={data || []}
                         hideActionButtons
                     />
                 </Box>

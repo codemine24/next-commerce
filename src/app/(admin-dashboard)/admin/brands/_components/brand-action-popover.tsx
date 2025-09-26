@@ -6,21 +6,21 @@ import IconButton from "@mui/material/IconButton"
 import Popover from "@mui/material/Popover"
 import React from "react"
 
-import { deleteCategory } from "@/actions/category";
+import { deleteBrand } from "@/actions/brand";
 import { ConfirmDialog } from "@/components/dialog/confirm-dialog";
 import { DeleteIcon } from "@/icons/delete-icon";
 import { DotVerticalIcon } from "@/icons/dot-vertical"
 import { EditIcon } from "@/icons/edit";
-import { Category } from "@/interfaces/category";
+import { Brand } from "@/interfaces/brand";
 import { toast } from "@/lib/toast-store";
 
-import { CategoryEditDialog } from "./category-edit-dialog";
+import { BrandEditDialog } from "./brand-edit-dialog";
 
-interface CategoryActionPopoverProps {
-    category: Category;
+interface BrandActionPopoverProps {
+    brand: Brand;
 }
 
-export const CategoryActionPopover = ({ category }: CategoryActionPopoverProps) => {
+export const BrandActionPopover = ({ brand }: BrandActionPopoverProps) => {
     const [loading, setLoading] = React.useState(false);
     const [openConfirmModal, setOpenConfirmModal] = React.useState(false);
     const [openEditModal, setOpenEditModal] = React.useState(false);
@@ -38,7 +38,7 @@ export const CategoryActionPopover = ({ category }: CategoryActionPopoverProps) 
 
     const handleDelete = async () => {
         setLoading(true);
-        const res = await deleteCategory([category.id]);
+        const res = await deleteBrand([brand.id]);
         setLoading(false);
         if (res.success) {
             toast.success(res.message);
@@ -102,16 +102,16 @@ export const CategoryActionPopover = ({ category }: CategoryActionPopoverProps) 
             {openConfirmModal && <ConfirmDialog
                 open={openConfirmModal}
                 onClose={handleClose}
-                title="Delete Category"
-                description="Are you sure you want to delete this category?"
+                title="Delete Brand"
+                description="Are you sure you want to delete this brand?"
                 onConfirm={handleDelete}
                 loading={loading}
             />}
 
-            {openEditModal && <CategoryEditDialog
+            {openEditModal && <BrandEditDialog
                 open={openEditModal}
                 onClose={handleClose}
-                category={category}
+                brand={brand}
             />}
         </>
     )

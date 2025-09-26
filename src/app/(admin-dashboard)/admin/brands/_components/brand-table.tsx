@@ -6,30 +6,30 @@ import Typography from '@mui/material/Typography';
 import DOMPurify from 'isomorphic-dompurify';
 import { useState, useTransition } from 'react';
 
-import { deleteCategory } from '@/actions/category';
+import { deleteBrand } from '@/actions/brand';
 import { ConfirmDialog } from '@/components/dialog/confirm-dialog';
 import { NotDataFound } from '@/components/not-data-found';
 import { OptimizeImage } from '@/components/optimize-image';
 import { Column, DataTable } from '@/components/table/data-table';
 import { TableSelectedAction } from '@/components/table/table-selection-action';
 import { DeleteIcon } from '@/icons/delete-icon';
-import { Category } from '@/interfaces/category';
+import { Brand } from '@/interfaces/brand';
 import { toast } from '@/lib/toast-store';
 import { makeImageUrl } from '@/utils/helper';
 
-import { CategoryActionPopover } from './category-action-popover';
+import { BrandActionPopover } from './brand-action-popover';
 
-interface CategoryTableProps {
-    categories: Category[];
+interface BrandTableProps {
+    brands: Brand[];
 }
 
-export const CategoryTable = ({ categories }: CategoryTableProps) => {
+export const BrandTable = ({ brands }: BrandTableProps) => {
     const [selectedRows, setSelectedRows] = useState<string[]>([]);
     const [openDeleteModal, setOpenDeleteModal] = useState(false);
     const [loading, startTransition] = useTransition();
 
     const handleSelectAllClick = (checked: boolean) => {
-        setSelectedRows(checked ? categories.map((m) => m.id) : []);
+        setSelectedRows(checked ? brands.map((m) => m.id) : []);
     };
 
     const handleSelectRow = (id: string) => {
@@ -38,9 +38,9 @@ export const CategoryTable = ({ categories }: CategoryTableProps) => {
         );
     };
 
-    const handleDeleteCategory = async () => {
+    const handleDeleteBrand = async () => {
         startTransition(async () => {
-            const res = await deleteCategory(selectedRows);
+            const res = await deleteBrand(selectedRows);
             if (res.success) {
                 setSelectedRows([]);
                 setOpenDeleteModal(false);
@@ -51,21 +51,21 @@ export const CategoryTable = ({ categories }: CategoryTableProps) => {
         });
     };
 
-    const columns: Column<Category>[] = [
+    const columns: Column<Brand>[] = [
         {
             label: "Icon",
             key: "icon",
-            render: (row: Category) => (
-                <OptimizeImage src={makeImageUrl(row.icon)} alt={row.title} height={40} width={50} />
+            render: (row: Brand) => (
+                <OptimizeImage src={makeImageUrl(row.icon)} alt={row.name} height={40} width={50} />
             )
         },
         {
-            label: "Title",
-            key: "title",
-            render: (row: Category) => (
+            label: "Name",
+            key: "name",
+            render: (row: Brand) => (
                 <Box minWidth={200}>
                     <Typography variant="h6">
-                        {row.title}
+                        {row.name}
                     </Typography>
                     <Box
                         component="div"
@@ -77,18 +77,13 @@ export const CategoryTable = ({ categories }: CategoryTableProps) => {
             )
         },
         {
-            label: "Parent",
-            key: "parent_id",
-            render: (row: Category) => <Typography>{row.parent_id || "-"}</Typography>
-        },
-        {
             label: "Code",
             key: "code"
         },
         {
             label: "Action",
-            render: (row: Category) => (
-                <CategoryActionPopover category={row} />
+            render: (row: Brand) => (
+                <BrandActionPopover brand={row} />
             ),
         },
     ]
@@ -96,7 +91,7 @@ export const CategoryTable = ({ categories }: CategoryTableProps) => {
     return (
         <Box position="relative">
             <TableSelectedAction
-                rowCount={categories.length}
+                rowCount={brands.length}
                 numSelected={selectedRows.length}
                 onSelectAllRows={handleSelectAllClick}
                 action={
@@ -106,10 +101,10 @@ export const CategoryTable = ({ categories }: CategoryTableProps) => {
                 }
             />
             <DataTable
-                rows={categories}
+                rows={brands}
                 columns={columns}
                 rowKey="id"
-                emptyState={<NotDataFound hideIcon message="No categories found" />}
+                emptyState={<NotDataFound hideIcon message="No brands found" />}
                 selectedKeys={selectedRows}
                 onToggleRow={handleSelectRow}
                 onToggleAll={handleSelectAllClick}
@@ -120,9 +115,9 @@ export const CategoryTable = ({ categories }: CategoryTableProps) => {
                 <ConfirmDialog
                     open={openDeleteModal}
                     onClose={() => setOpenDeleteModal(false)}
-                    title="Delete Category"
-                    description="Are you sure you want to delete this category?"
-                    onConfirm={handleDeleteCategory}
+                    title="Delete Brand"
+                    description="Are you sure you want to delete this brand?"
+                    onConfirm={handleDeleteBrand}
                     loading={loading}
                 />
             )}
