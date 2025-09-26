@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -65,16 +66,18 @@ export const CategoryEditDialog = ({ open, onClose, category }: CategoryEditDial
                 <CloseIcon />
             </IconButton>
             <DialogTitle>
-                <Typography>Edit Category</Typography>
+                <Typography variant="h4">Edit Category</Typography>
             </DialogTitle>
 
-            <DialogContent>
-                <CategoryForm
-                    methods={methods}
-                    onSubmit={onSubmit}
-                    categories={data || []}
-                    hideActionButtons
-                />
+            <DialogContent sx={{ borderTop: 1, borderBottom: 1, borderColor: "divider" }}>
+                <Box pt={2}>
+                    <CategoryForm
+                        methods={methods}
+                        onSubmit={onSubmit}
+                        categories={data || []}
+                        hideActionButtons
+                    />
+                </Box>
             </DialogContent>
 
             <DialogActions>

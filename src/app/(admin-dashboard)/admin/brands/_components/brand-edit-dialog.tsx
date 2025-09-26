@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -60,15 +61,17 @@ export const BrandEditDialog = ({ open, onClose, brand }: BrandEditDialogProps) 
                 <CloseIcon />
             </IconButton>
             <DialogTitle>
-                <Typography>Edit Brand</Typography>
+                <Typography variant="h4">Edit Brand</Typography>
             </DialogTitle>
 
-            <DialogContent>
-                <BrandForm
-                    methods={methods}
-                    onSubmit={onSubmit}
-                    hideActionButtons
-                />
+            <DialogContent sx={{ borderTop: 1, borderBottom: 1, borderColor: "divider" }}>
+                <Box pt={2}>
+                    <BrandForm
+                        methods={methods}
+                        onSubmit={onSubmit}
+                        hideActionButtons
+                    />
+                </Box>
             </DialogContent>
 
             <DialogActions>
