@@ -4,6 +4,12 @@ export const API_ROUTES = {
         register: "/auth/register",
         refresh_token: "/auth/refresh-token",
     },
+    users: {
+        get_users: "/user",
+        create_user: "/user",
+        update_user: (id: string) => `/user/${id}`,
+        delete_user: "/user"
+    },
     products: {
         get_products: "/product",
         create_product: "/product",

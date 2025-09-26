@@ -26,6 +26,7 @@ export const GET = catchAsync(async (request: NextRequest) => {
   return successResponse({
     statusCode: httpStatus.OK,
     message: "Profile fetched successfully",
-    data: result,
+    meta: result.meta,
+    data: result.data,
   });
 });

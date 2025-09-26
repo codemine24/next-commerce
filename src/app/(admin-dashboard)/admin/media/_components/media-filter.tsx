@@ -67,7 +67,6 @@ export const MediaFilter = () => {
     [updateParam]
   );
 
-
   const handleResetType = useCallback(() => {
     setType([]);
     updateParam("type", "");

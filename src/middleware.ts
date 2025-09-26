@@ -13,7 +13,9 @@ export async function middleware(request: NextRequest) {
 
     const decodedToken = jwtDecode(token) as { role: string };
 
-    if (isAdminRoute && decodedToken.role !== "ADMIN") {
+    const adminOrSuperAdmin = decodedToken.role === "ADMIN" || decodedToken.role === "SUPER_ADMIN";
+
+    if (isAdminRoute && !adminOrSuperAdmin) {
         return NextResponse.redirect(new URL("/not-found", request.url));
     }
 
