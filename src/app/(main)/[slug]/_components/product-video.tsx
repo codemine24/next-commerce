@@ -3,7 +3,6 @@ import Image from "next/image";
 
 import productVideoThumbnail from "@/../public/assets/product-video-thumbnail.svg";
 
-import { BORDER_RADIUS } from "@/theme";
 
 export const ProductVideo = ({
   videoUrl,
