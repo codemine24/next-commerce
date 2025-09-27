@@ -5,6 +5,8 @@ export const TAGS = {
     campaign: 'campaign',
     campaigns: 'campaigns',
     categories: "categories",
+    coupons: "coupons",
+    coupon: "coupon",
     files: "files",
     cart: "cart",
     reviews: "reviews",

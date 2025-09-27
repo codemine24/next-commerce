@@ -39,3 +39,22 @@ export const PATCH = catchAsync(
     });
   }
 );
+
+// ------------------------------------- GET COUPON ------------------------------------------
+export const GET = catchAsync(async (request: NextRequest, { params }: { params: Promise<{ id: string }> }) => {
+  // Step 1: Authenticate user
+  await userAuthenticator(request, [UserRole.SUPER_ADMIN, UserRole.ADMIN]);
+
+  // Step 2: Extract id from route params
+  const id = (await params).id;
+
+  // Step 3: Call service layer to get coupon from database
+  const result = await CouponServices.getSingleCoupon(id);
+
+  // Step 4: Return success response with coupon
+  return successResponse({
+    statusCode: httpStatus.OK,
+    message: "Coupon fetched successfully",
+    data: result,
+  });
+})

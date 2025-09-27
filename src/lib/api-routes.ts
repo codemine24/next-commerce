@@ -36,6 +36,13 @@ export const API_ROUTES = {
         remove_from_cart: (id: string) => `/cart/cart-item/${id}`,
         update_cart: (id: string) => `/cart/${id}`,
     },
+    coupons: {
+        get_coupons: "/coupon",
+        create_coupon: "/coupon",
+        get_coupon_by_id: (id: string) => `/coupon/${id}`,
+        update_coupon: (id: string) => `/coupon/${id}`,
+        delete_coupon: "/coupon"
+    },
     brands: {
         get_brands: "/brand",
         create_brand: "/brand",

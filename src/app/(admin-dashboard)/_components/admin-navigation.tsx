@@ -67,7 +67,10 @@ export const ADMIN_NAVIGATION = [
     {
         name: "Coupons",
         icon: <CouponIcon fontSize="small" />,
-        path: "/admin/coupons"
+        children: [
+            { name: "Coupon List", path: "/admin/coupons" },
+            { name: "Create Coupon", path: "/admin/coupons/create" }
+        ]
     },
     {
         name: "Reviews",
