@@ -1,4 +1,5 @@
 import { BrandIcon } from "@/icons/brand";
+import { CampaignIcon } from "@/icons/campaign";
 import { CategoriesIcon } from "@/icons/categories";
 import { CouponIcon } from "@/icons/coupon";
 import { CustomizationIcon } from "@/icons/customization";
@@ -9,7 +10,6 @@ import { ProductsIcon } from "@/icons/products";
 import { ReviewIcon } from "@/icons/review";
 import { SettingsIcon } from "@/icons/settings";
 import { UsersIcon } from "@/icons/users";
-import { CampaignIcon } from "@/icons/campaign";
 
 export const ADMIN_NAVIGATION = [
     {

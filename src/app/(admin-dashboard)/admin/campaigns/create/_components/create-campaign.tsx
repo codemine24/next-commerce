@@ -11,7 +11,9 @@ import { Product } from "@/interfaces/product";
 import { campaignSchema, CampaignSchema } from "@/zod/campaign-schema";
 
 import { CampaignForm } from "../../_components/campaign-form";
-
+import { createCampaign } from "@/actions/campaign";
+import { useRouter } from "next/navigation";
+import { toast } from "@/lib/toast-store";
 
 interface CreateCampaignProps {
     products: Product[];
@@ -20,6 +22,7 @@ interface CreateCampaignProps {
 }
 
 export const CreateCampaign = ({ products, brands, categories }: CreateCampaignProps) => {
+    const router = useRouter();
     const methods = useForm<CampaignSchema>({
         resolver: zodResolver(campaignSchema),
         defaultValues: {
@@ -38,8 +41,19 @@ export const CreateCampaign = ({ products, brands, categories }: CreateCampaignP
         }
     });
 
-    const onSubmit = (data: CampaignSchema) => {
-        console.log(data);
+    // console.log(methods.formState.errors)
+    // console.log(methods.getValues())
+
+    const onSubmit = async (data: CampaignSchema) => {
+        const res = await createCampaign(data);
+
+        if (!res.success) {
+            toast.error(res.message);
+            return;
+        }
+
+        toast.success(res.message);
+        router.replace("/admin/campaigns");
     };
 
     return (

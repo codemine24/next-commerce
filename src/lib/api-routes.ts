@@ -23,6 +23,12 @@ export const API_ROUTES = {
         update_category: (id: string) => `/category/${id}`,
         delete_category: "/category"
     },
+    campaigns: {
+        get_campaigns: "/campaign",
+        create_campaign: "/campaign",
+        update_campaign: (id: string) => `/campaign/${id}`,
+        delete_campaign: "/campaign"
+    },
     cart: {
         get_cart: "/cart",
         add_to_cart: "/cart",

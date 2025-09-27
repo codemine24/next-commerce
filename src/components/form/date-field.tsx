@@ -1,7 +1,7 @@
-import { Controller, useFormContext } from "react-hook-form";
 import { Box, TextFieldProps } from "@mui/material";
 import { DatePicker as MuiDatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs, { Dayjs } from "dayjs";
+import { Controller, useFormContext } from "react-hook-form";
 
 import { InputLabel } from "./input-label";
 
@@ -38,8 +38,8 @@ export const DateField = ({ name, label, placeholder, required, helperText, minD
                                 size: "small",
                                 sx: {
                                     "& .MuiPickersInputBase-root": {
-                                        borderRadius: 0,
                                         py: 1,
+                                        borderRadius: 0,
                                     },
                                 },
                                 ...other,
