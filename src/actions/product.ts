@@ -35,11 +35,7 @@ export const addProduct = async (product: ProductSchema) => {
         body: JSON.stringify(product),
     });
 
-    if (res.success) {
-        revalidateTag(TAGS.products);
-        revalidateTag(TAGS.product);
-    }
-
+    if (res.success) revalidateTag(TAGS.products);
     return res;
 }
 

@@ -31,7 +31,7 @@ export const GET = catchAsync(
     return successResponse({
       statusCode: httpStatus.OK,
       message: "Campaign details fetched successfully",
-      meta: result.meta,
+      // meta: result.meta,
       data: result.data,
     });
   }

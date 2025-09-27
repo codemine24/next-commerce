@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
 
 import { getCampaigns } from "@/actions/campaign";
-import { ErrorComponent } from "@/components/error";
+import { ErrorComponent } from "@/components/error-component";
 import { Pagination } from "@/components/pagination";
 import { SearchParams } from "@/interfaces/common";
 

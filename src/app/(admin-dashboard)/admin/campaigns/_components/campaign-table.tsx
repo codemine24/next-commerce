@@ -3,7 +3,6 @@
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import DOMPurify from 'isomorphic-dompurify';
 import { useState, useTransition } from 'react';
 
 import { deleteCampaign } from '@/actions/campaign';
@@ -64,15 +63,12 @@ export const CampaignTable = ({ campaigns }: CampaignTableProps) => {
             key: "title",
             render: (row: Campaign) => (
                 <Box minWidth={200}>
-                    <Typography variant="h6">
+                    <Typography variant="h6" gutterBottom>
                         {row.title}
                     </Typography>
-                    <Box
-                        component="div"
-                        mt={1}
-                        fontSize={13}
-                        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(row.description || '') }}
-                    />
+                    <Typography variant="body2">
+                        {row.sub_title}
+                    </Typography>
                 </Box>
             )
         },

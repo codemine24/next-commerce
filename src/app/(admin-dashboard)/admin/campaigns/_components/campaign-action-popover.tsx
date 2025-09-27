@@ -4,6 +4,7 @@ import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
 import IconButton from "@mui/material/IconButton"
 import Popover from "@mui/material/Popover"
+import Link from "next/link";
 import { useState, useTransition } from "react"
 
 import { deleteCampaign } from "@/actions/campaign";
@@ -68,7 +69,8 @@ export const CampaignActionPopover = ({ campaign }: CampaignActionPopoverProps) 
                         startIcon={<EditIcon />}
                         variant="text"
                         color="inherit"
-                        onClick={() => { }}
+                        component={Link}
+                        href={`/admin/campaigns/edit/${campaign.id}`}
                         sx={{
                             pl: 2,
                             textTransform: "none",

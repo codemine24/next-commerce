@@ -16,11 +16,11 @@ export async function middleware(request: NextRequest) {
     const adminOrSuperAdmin = decodedToken.role === "ADMIN" || decodedToken.role === "SUPER_ADMIN";
 
     if (isAdminRoute && !adminOrSuperAdmin) {
-        return NextResponse.redirect(new URL("/not-found", request.url));
+        return NextResponse.redirect(new URL("/", request.url));
     }
 
     if (isUserRoute && decodedToken.role !== "USER") {
-        return NextResponse.redirect(new URL("/not-found", request.url));
+        return NextResponse.redirect(new URL("/", request.url));
     }
 
     return NextResponse.next();

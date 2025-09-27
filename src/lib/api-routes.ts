@@ -26,6 +26,7 @@ export const API_ROUTES = {
     campaigns: {
         get_campaigns: "/campaign",
         create_campaign: "/campaign",
+        get_campaign_by_id: (id: string) => `/campaign/${id}`,
         update_campaign: (id: string) => `/campaign/${id}`,
         delete_campaign: "/campaign"
     },

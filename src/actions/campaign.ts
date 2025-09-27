@@ -21,6 +21,11 @@ export const getCampaigns = async (queries?: SearchParams) => {
     return res;
 }
 
+export const getCampaignById = async (id: string) => {
+    const res = await api.get(API_ROUTES.campaigns.get_campaign_by_id(id), { next: { tags: [TAGS.campaign] } });
+    return res;
+}
+
 export const createCampaign = async (data: CampaignSchema) => {
     const payload = {
         ...data,
@@ -37,11 +42,20 @@ export const createCampaign = async (data: CampaignSchema) => {
 }
 
 export const updateCampaign = async (id: string, data: CampaignSchema) => {
-    const res = await api.put(API_ROUTES.campaigns.update_campaign(id), {
-        body: JSON.stringify(data),
+    const payload = {
+        ...data,
+        eligible_categories: data.eligible_categories?.map((item) => item.value),
+        eligible_brands: data.eligible_brands?.map((item) => item.value),
+        eligible_products: data.eligible_products?.map((item) => item.value),
+    };
+    const res = await api.patch(API_ROUTES.campaigns.update_campaign(id), {
+        body: JSON.stringify(payload),
     });
 
-    if (res.success) revalidateTag(TAGS.campaigns);
+    if (res.success) {
+        revalidateTag(TAGS.campaigns);
+        revalidateTag(TAGS.campaign);
+    }
     return res;
 }
 
@@ -50,6 +64,9 @@ export const deleteCampaign = async (ids: string[]) => {
         body: JSON.stringify({ ids }),
     });
 
-    if (res.success) revalidateTag(TAGS.campaigns);
+    if (res.success) {
+        revalidateTag(TAGS.campaigns);
+        revalidateTag(TAGS.campaign);
+    }
     return res;
 }

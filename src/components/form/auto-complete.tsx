@@ -47,8 +47,7 @@ export const Autocomplete = <
             }
             renderInput={(params) => (
               <TextField
-                // label={label}
-                placeholder={placeholder}
+                placeholder={field.value ? "" : placeholder}
                 error={Boolean(error)}
                 helperText={error?.message || ""}
                 {...params}

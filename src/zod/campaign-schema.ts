@@ -18,7 +18,8 @@ export const campaignSchema = z.object({
         .string({ error: "Thumbnail is required" })
         .min(1, "Thumbnail is required"),
     start_at: z
-        .string()
+        .string({ error: "Start date is required" })
+        .min(1, "Start date is required")
         .refine((value) => {
             const inputDate = new Date(value);
             const today = new Date();
@@ -30,7 +31,8 @@ export const campaignSchema = z.object({
             return inputDate >= today;
         }, "Start date must be today or in the future"),
     end_at: z
-        .string()
+        .string({ error: "End date is required" })
+        .min(1, "End date is required")
         .refine((value) => {
             const inputDate = new Date(value);
             const today = new Date();
