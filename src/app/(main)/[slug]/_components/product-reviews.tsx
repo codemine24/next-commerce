@@ -9,7 +9,6 @@ import React from "react";
 import { getReviews } from "@/actions/review";
 import { StarIcon } from "@/icons/star";
 
-import { ProductAddReview } from "./product-add-review";
 import { ProductSectionHeader } from "./product-section-header";
 
 type Review = {
