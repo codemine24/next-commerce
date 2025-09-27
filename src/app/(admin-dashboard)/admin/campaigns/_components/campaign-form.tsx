@@ -5,7 +5,7 @@ import { CampaignPlatform } from "@prisma/client";
 import { UseFormReturn } from "react-hook-form";
 
 import { Editor } from "@/components/editor";
-import { ImageUploader, Select, TextField, MultiInputField, Autocomplete } from "@/components/form";
+import { ImageUploader, Select, TextField, MultiInputField, Autocomplete, DateField } from "@/components/form";
 import FormProvider from "@/components/form/form-provider";
 import { SubmitButton } from "@/components/submit-button";
 import { Brand } from "@/interfaces/brand";
@@ -30,8 +30,8 @@ export const CampaignForm = ({ methods, onSubmit, products, brands, categories }
 
                 {/* Campaign Start and End Date */}
                 <Box display="flex" gap={2} flexDirection={{ xs: "column", sm: "row" }}>
-                    <TextField type="date" name="start_at" label="Campaign Start Date" required />
-                    <TextField type="date" name="end_at" label="Campaign End Date" required />
+                    <DateField name="start_at" label="Campaign Start Date" minDate={new Date()} required />
+                    <DateField name="end_at" label="Campaign End Date" minDate={new Date()} required />
                 </Box>
 
                 {/* Platform */}

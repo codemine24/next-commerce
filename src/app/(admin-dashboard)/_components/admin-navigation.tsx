@@ -9,6 +9,7 @@ import { ProductsIcon } from "@/icons/products";
 import { ReviewIcon } from "@/icons/review";
 import { SettingsIcon } from "@/icons/settings";
 import { UsersIcon } from "@/icons/users";
+import { CampaignIcon } from "@/icons/campaign";
 
 export const ADMIN_NAVIGATION = [
     {
@@ -48,6 +49,14 @@ export const ADMIN_NAVIGATION = [
         children: [
             { name: "Brand List", path: "/admin/brands" },
             { name: "Create Brand", path: "/admin/brands/create" }
+        ]
+    },
+    {
+        name: "Campaigns",
+        icon: <CampaignIcon fontSize="small" />,
+        children: [
+            { name: "Campaign List", path: "/admin/campaigns" },
+            { name: "Create Campaign", path: "/admin/campaigns/create" }
         ]
     },
     {
