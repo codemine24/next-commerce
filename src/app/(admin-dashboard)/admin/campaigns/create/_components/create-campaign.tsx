@@ -3,17 +3,17 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
+import { createCampaign } from "@/actions/campaign";
 import { Brand } from "@/interfaces/brand";
 import { Category } from "@/interfaces/category";
 import { Product } from "@/interfaces/product";
+import { toast } from "@/lib/toast-store";
 import { campaignSchema, CampaignSchema } from "@/zod/campaign-schema";
 
 import { CampaignForm } from "../../_components/campaign-form";
-import { createCampaign } from "@/actions/campaign";
-import { useRouter } from "next/navigation";
-import { toast } from "@/lib/toast-store";
 
 interface CreateCampaignProps {
     products: Product[];
@@ -40,9 +40,6 @@ export const CreateCampaign = ({ products, brands, categories }: CreateCampaignP
             eligible_products: [],
         }
     });
-
-    // console.log(methods.formState.errors)
-    // console.log(methods.getValues())
 
     const onSubmit = async (data: CampaignSchema) => {
         const res = await createCampaign(data);

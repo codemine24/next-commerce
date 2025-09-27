@@ -1,12 +1,13 @@
 "use server";
 
+import { revalidateTag } from "next/cache";
+
+import { TAGS } from "@/constants/tags";
 import { SearchParams } from "@/interfaces/common";
-import { CampaignSchema } from "@/zod/campaign-schema";
 import api from "@/lib/api";
 import { API_ROUTES } from "@/lib/api-routes";
 import { makeQueryParams } from "@/utils/helper";
-import { TAGS } from "@/constants/tags";
-import { revalidateTag } from "next/cache";
+import { CampaignSchema } from "@/zod/campaign-schema";
 
 export const getCampaigns = async (queries?: SearchParams) => {
     let url = API_ROUTES.campaigns.get_campaigns;

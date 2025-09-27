@@ -6,24 +6,21 @@ import IconButton from "@mui/material/IconButton"
 import Popover from "@mui/material/Popover"
 import { useState, useTransition } from "react"
 
-import { deleteCategory } from "@/actions/category";
+import { deleteCampaign } from "@/actions/campaign";
 import { ConfirmDialog } from "@/components/dialog/confirm-dialog";
 import { DeleteIcon } from "@/icons/delete-icon";
 import { DotVerticalIcon } from "@/icons/dot-vertical"
 import { EditIcon } from "@/icons/edit";
-import { Category } from "@/interfaces/category";
+import { Campaign } from "@/interfaces/campaign";
 import { toast } from "@/lib/toast-store";
 
-import { CategoryEditDialog } from "./category-edit-dialog";
-
-interface CategoryActionPopoverProps {
-    category: Category;
+interface CampaignActionPopoverProps {
+    campaign: Campaign;
 }
 
-export const CategoryActionPopover = ({ category }: CategoryActionPopoverProps) => {
+export const CampaignActionPopover = ({ campaign }: CampaignActionPopoverProps) => {
     const [loading, startTransition] = useTransition();
     const [openConfirmModal, setOpenConfirmModal] = useState(false);
-    const [openEditModal, setOpenEditModal] = useState(false);
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -33,12 +30,11 @@ export const CategoryActionPopover = ({ category }: CategoryActionPopoverProps) 
     const handleClose = () => {
         setAnchorEl(null);
         setOpenConfirmModal(false);
-        setOpenEditModal(false);
     };
 
     const handleDelete = async () => {
         startTransition(async () => {
-            const res = await deleteCategory([category.id]);
+            const res = await deleteCampaign([campaign.id]);
             if (res.success) {
                 toast.success(res.message);
                 handleClose();
@@ -72,7 +68,7 @@ export const CategoryActionPopover = ({ category }: CategoryActionPopoverProps) 
                         startIcon={<EditIcon />}
                         variant="text"
                         color="inherit"
-                        onClick={() => setOpenEditModal(true)}
+                        onClick={() => { }}
                         sx={{
                             pl: 2,
                             textTransform: "none",
@@ -102,16 +98,10 @@ export const CategoryActionPopover = ({ category }: CategoryActionPopoverProps) 
             {openConfirmModal && <ConfirmDialog
                 open={openConfirmModal}
                 onClose={handleClose}
-                title="Delete Category"
-                description="Are you sure you want to delete this category?"
+                title="Delete Campaign"
+                description="Are you sure you want to delete this campaign?"
                 onConfirm={handleDelete}
                 loading={loading}
-            />}
-
-            {openEditModal && <CategoryEditDialog
-                open={openEditModal}
-                onClose={handleClose}
-                category={category}
             />}
         </>
     )
