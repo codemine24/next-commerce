@@ -19,7 +19,7 @@ export const Navbar = () => {
         py: "10px !important",
         bgcolor: "background.default",
         color: "text.primary",
-
+        borderBottom: "none",
       }}
     >
       <BoxContainer sx={{ height: "100%" }}>

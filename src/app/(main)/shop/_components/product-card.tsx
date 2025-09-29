@@ -8,8 +8,7 @@ import { Product } from "@/interfaces/product";
 import { makeImageUrl } from "@/utils/helper";
 
 import { AddToCartButton } from "./add-to-cart-button";
-import { AddToCartIconButton } from "./add-to-cart-icon-button";
-import { AddWishListButton } from "./add-wish-list-button";
+import BuyNowButton from "./buy-now-button";
 import { ProductDiscountLabel } from "./product-discount-label";
 import { ProductPrice } from "./product-price";
 import { ProductQuickViewButton } from "./product-quick-view-button";
@@ -70,7 +69,7 @@ export const ProductCard = async ({
           />
 
           {/* Action icons */}
-          <Stack
+          {/* <Stack
             direction="column"
             spacing={1}
             className="action-icons"
@@ -86,7 +85,7 @@ export const ProductCard = async ({
           >
             <AddWishListButton />
             <AddToCartIconButton product={product} />
-          </Stack>
+          </Stack> */}
         </Box>
 
         {/* Product name */}
@@ -99,10 +98,13 @@ export const ProductCard = async ({
           </Typography>
         </Box>
       </Box>
+      <Box sx={{ textAlign: "center" }}>
+        <ProductPrice product={product} />
+      </Box>
 
       {/* Price and quick view */}
-      <Stack direction="row" justifyContent="space-between" px={3}>
-        <ProductPrice product={product} />
+      <Stack direction="row" justifyContent="center" gap={1} px={3} mt={1}>
+        <BuyNowButton />
         {!action && <ProductQuickViewButton product={product} />}
       </Stack>
 

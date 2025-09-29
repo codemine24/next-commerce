@@ -12,16 +12,17 @@ import { Services } from "./_components/services";
 
 export default function Home() {
   return (
-    <BoxContainer>
+    <BoxContainer sx={{ py: 2 }}>
       <HeroSection />
       <FeaturedProductCard />
-      <NewArrivals />
-      <Banner />
       <HotDeals />
+      <Banner />
+      <NewArrivals />
       <CustomerReviewSection />
       <NewsLetter />
       <RecentBlogs />
       <Services />
+      {/* <Footer /> */}
     </BoxContainer>
   );
 }

@@ -8,11 +8,11 @@ export const NewsLetter = () => {
     <Box
       my={5}
       sx={{
-        bgcolor: "primary.dark",
-        backgroundImage: "url('/assets/news-letter.png')",
-        backgroundSize: "cover",
-        backgroundPosition: "center center",
-        height: { xs: 200, md: 300 },
+        bgcolor: "#03140E",
+        // backgroundImage: "url('/assets/news-letter.png')",
+        // backgroundSize: "cover",
+        // backgroundPosition: "center center",
+        height: { xs: "auto", md: 150 },
         width: "100%",
         display: "flex",
         alignItems: "center",
@@ -23,8 +23,10 @@ export const NewsLetter = () => {
         color="white"
         display="flex"
         alignItems="center"
-        justifyContent="space-between"
+        justifyContent="end"
         gap={4}
+        width="100%"
+        flexDirection={{ xs: "column", sm: "row" }}
       >
         <Box flex={1}>
           <Typography variant="h3" fontWeight={600}>
@@ -35,15 +37,9 @@ export const NewsLetter = () => {
             arrivals, special offers, and more.
           </Typography>
         </Box>
-        <Box
-          flex={1}
-          display="flex"
-          alignItems="center"
-          justifyContent="space-between"
-        >
+        <Box flex={1} display="flex" alignItems="center">
           <TextField
             placeholder="Enter your email"
-            fullWidth
             variant="outlined"
             sx={{
               bgcolor: "white",

@@ -43,17 +43,18 @@ export const Services = () => {
             sx={{
               display: "flex",
               flexDirection: "column",
-              alignItems: "center",
+              alignItems: { xs: "center", md: "flex-start" },
+              justifyContent: "space-between",
               gap: 1,
             }}
           >
-            {item.icon}
-            <Typography variant="h5">
-              {item.title}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {item.description}
-            </Typography>
+            <Box sx={{ textAlign: "center" }}>
+              {item.icon}
+              <Typography variant="h5">{item.title}</Typography>
+              <Typography variant="body2" color="text.secondary">
+                {item.description}
+              </Typography>
+            </Box>
           </Box>
         </Grid>
       ))}
