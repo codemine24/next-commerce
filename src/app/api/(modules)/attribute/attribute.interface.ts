@@ -2,7 +2,7 @@ import { AttributeType } from "@prisma/client";
 
 export interface AttributeValue {
   title: string;
-  position: number;
+  position?: number;
 }
 
 export interface AttributePayload {
