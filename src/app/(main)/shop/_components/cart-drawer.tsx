@@ -9,10 +9,13 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { useRouter } from "next/navigation";
 
+import { OptimizeImage } from "@/components/optimize-image";
 import { useCart } from "@/hooks/use-cart";
 import { CloseIcon } from "@/icons/close";
 import { DeleteIcon } from "@/icons/delete-icon";
 import { BORDER_RADIUS } from "@/theme";
+import { currencyFormatter } from "@/utils/currency-formatter";
+import { makeImageUrl } from "@/utils/helper";
 
 interface CartDrawerProps {
   open: boolean;
@@ -61,26 +64,19 @@ export const CartDrawer = ({ open, onClose }: CartDrawerProps) => {
               spacing={2}
               sx={{ mb: 2 }}
             >
-              <Box
-                component="img"
-                src={
-                  cart_item.product.thumbnail ||
-                  "https://placehold.co/80x80/png"
-                }
+              <OptimizeImage
+                src={makeImageUrl(cart_item.product.thumbnail)}
                 alt={cart_item.product.name}
-                sx={{
-                  width: 80,
-                  height: 80,
-                  objectFit: "cover",
-                  borderRadius: BORDER_RADIUS.default,
-                }}
+                width={60}
+                height={60}
               />
+
               <Box sx={{ flex: 1 }}>
                 <Typography variant="h5" mb={1}>
                   {cart_item.product.name}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  Price: TK {cart_item.product.price}
+                  Price: TK <Typography component="span" fontWeight={600}>{currencyFormatter(cart_item.product.price)}</Typography>
                 </Typography>
               </Box>
               <IconButton
