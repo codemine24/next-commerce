@@ -134,6 +134,7 @@ export const ImageSelectDialog = (props: ImageSelectModalProps) => {
                             success={success}
                             message={message}
                             isLoading={isLoading}
+                            revalidate={revalidate}
                             onSelectionChange={(file) => onFilesSelect(file)}
                         />
                     )}

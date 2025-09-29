@@ -6,10 +6,8 @@ import { TableToolbar } from "@/components/table/table-toolbar";
 import { TableToolbarSkeleton } from "@/components/table/table-toolbar-skeleton";
 import { SearchParams } from "@/interfaces/common";
 
-
 import { CategoryContent } from "./_components/category-content";
 import { CategoryHeader } from "./_components/category-header";
-
 
 export default async function CategoryPage({ searchParams }: { searchParams: Promise<SearchParams> }) {
     return (
