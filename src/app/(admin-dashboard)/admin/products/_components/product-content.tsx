@@ -20,11 +20,7 @@ export const ProductContent = async ({ searchParams }: { searchParams: Promise<S
             {data.success && (
                 <>
                     <ProductTable products={data.data} />
-                    <Box
-                        p={2}
-                        bgcolor="background.default"
-                        borderTop={1}
-                        borderColor="divider"
+                    <Box p={2} bgcolor="background.default"
                     >
                         <Pagination
                             page={data.meta.page}
