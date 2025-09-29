@@ -130,7 +130,7 @@ export const ProductCarousel = ({
                 flex: "0 0 100%",
                 minWidth: 0,
                 paddingLeft: "1rem",
-                height: 350,
+                height: 375,
               }}
             >
               <Image
@@ -190,7 +190,7 @@ const ThumbImage = forwardRef<HTMLDivElement, ThumbImagePropType>(
           flex:
             direction === "vertical"
               ? "0 0 80px"
-              : { xs: "0 0 22%", sm: "0 0 17%" },
+              : { xs: "0 0 22%", sm: "0 0 25%" },
           minWidth: 0,
           padding: direction === "vertical" ? "0 0 0.8rem 0" : "0 0.8rem 0 0",
         }}
@@ -205,12 +205,13 @@ const ThumbImage = forwardRef<HTMLDivElement, ThumbImagePropType>(
             textDecoration: "none",
             cursor: "pointer",
             border: "1px solid",
-            borderColor: selected ? "primary.main" : "transparent",
+            borderColor: selected ? "primary.main" : "#E6F2EE",
             padding: 0,
             margin: 0,
             height: direction === "vertical" ? 70 : { xs: 70, sm: 135 },
             width: direction === "vertical" ? 80 : "100%",
             borderRadius: 0,
+            pl: 2,
           }}
         >
           <Image

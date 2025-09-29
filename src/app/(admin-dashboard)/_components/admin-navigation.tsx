@@ -1,4 +1,5 @@
 import { BrandIcon } from "@/icons/brand";
+import { CampaignIcon } from "@/icons/campaign";
 import { CategoriesIcon } from "@/icons/categories";
 import { CouponIcon } from "@/icons/coupon";
 import { CustomizationIcon } from "@/icons/customization";
@@ -22,9 +23,9 @@ export const ADMIN_NAVIGATION = [
         path: "/admin/orders"
     },
     {
-        name: "Customers",
+        name: "Users",
         icon: <UsersIcon fontSize="small" />,
-        path: "/admin/customers"
+        path: "/admin/users"
     },
     {
         name: "Products",
@@ -51,6 +52,14 @@ export const ADMIN_NAVIGATION = [
         ]
     },
     {
+        name: "Campaigns",
+        icon: <CampaignIcon fontSize="small" />,
+        children: [
+            { name: "Campaign List", path: "/admin/campaigns" },
+            { name: "Create Campaign", path: "/admin/campaigns/create" }
+        ]
+    },
+    {
         name: "Media",
         icon: <MediaIcon fontSize="small" />,
         path: "/admin/media"
@@ -58,7 +67,10 @@ export const ADMIN_NAVIGATION = [
     {
         name: "Coupons",
         icon: <CouponIcon fontSize="small" />,
-        path: "/admin/coupons"
+        children: [
+            { name: "Coupon List", path: "/admin/coupons" },
+            { name: "Create Coupon", path: "/admin/coupons/create" }
+        ]
     },
     {
         name: "Reviews",

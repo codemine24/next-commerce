@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -36,13 +37,13 @@ export const CategoryEditDialog = ({ open, onClose, category }: CategoryEditDial
             title: category.title,
             code: category.code,
             description: category.description,
-            parent_id: category.parent_id,
+            parent_id: category.parent_id || "",
             icon: category.icon,
         },
     });
 
     const onSubmit = async (data: CategorySchema) => {
-        const res = await updateCategory(data, category.id);
+        const res = await updateCategory(category.id, data);
 
         if (res.success) {
             toast.success(res.message);
@@ -65,16 +66,18 @@ export const CategoryEditDialog = ({ open, onClose, category }: CategoryEditDial
                 <CloseIcon />
             </IconButton>
             <DialogTitle>
-                <Typography>Edit Category</Typography>
+                <Typography variant="h4">Edit Category</Typography>
             </DialogTitle>
 
-            <DialogContent>
-                <CategoryForm
-                    methods={methods}
-                    onSubmit={onSubmit}
-                    categories={data || []}
-                    hideActionButtons
-                />
+            <DialogContent sx={{ borderTop: 1, borderBottom: 1, borderColor: "divider" }}>
+                <Box pt={2}>
+                    <CategoryForm
+                        methods={methods}
+                        onSubmit={onSubmit}
+                        categories={data || []}
+                        hideActionButtons
+                    />
+                </Box>
             </DialogContent>
 
             <DialogActions>

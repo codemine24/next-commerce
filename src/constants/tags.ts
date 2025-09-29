@@ -1,10 +1,15 @@
 export const TAGS = {
     products: 'products',
+    product: 'product',
     brands: 'brands',
-    categories: "categories",
-    files: "files",
+    campaign: 'campaign',
     cart: "cart",
-    reviews: "reviews",
+    campaigns: 'campaigns',
+    categories: "categories",
+    coupons: "coupons",
+    coupon: "coupon",
+    files: "files",
     orders: "orders",
+    reviews: "reviews",
     users: "users",
 }

@@ -55,9 +55,11 @@ export const Carousel: React.FC<CarouselProps> = ({
   children,
 }) => {
   const autoplayPlugin = React.useRef(
-    Autoplay(
-      { delay: autoplayDelay, stopOnInteraction: false, stopOnMouseEnter: false },
-    )
+    Autoplay({
+      delay: autoplayDelay,
+      stopOnInteraction: false,
+      stopOnMouseEnter: false,
+    })
   );
 
   const plugins = autoplay ? [autoplayPlugin.current] : [];
@@ -282,7 +284,7 @@ export const CarouselDots: React.FC<CarouselDotsProps> = ({
   if (!api) return null;
 
   return (
-    <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
+    <Box sx={{ display: "flex", justifyContent: "center" }}>
       <Box
         sx={{
           display: "flex",

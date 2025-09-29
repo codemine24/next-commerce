@@ -6,7 +6,9 @@ import Typography from "@mui/material/Typography";
 import Image from "next/image";
 
 import { FacebookIcon } from "@/icons/facebook";
+import { Google } from "@/icons/google";
 import { InstagramIcon } from "@/icons/instagram";
+import { Twitter } from "@/icons/twitter";
 import { YoutubeIcon } from "@/icons/youtube";
 
 import { BoxContainer } from "./box-container";
@@ -30,9 +32,10 @@ const customerCareLinks = [
 
 const paymentLinks = [
   { label: "Visa", href: "/images/visa.svg" },
+  { label: "Amex", href: "/images/Amex.svg" },
   { label: "Mastercard", href: "/images/mastercard.svg" },
-  { label: "Nagad", href: "/images/nagad.svg" },
-  { label: "bKash", href: "/images/bkash.svg" },
+  { label: "PayPal", href: "/images/PayPal.svg" },
+  { label: "GooglePay", href: "/images/GooglePay.svg" },
 ];
 
 const contactInfo = [
@@ -50,7 +53,7 @@ export default function Footer() {
           {/* Logo & Description */}
           <Grid size={{ xs: 12, md: 3 }}>
             <LogoWhite />
-            <Typography variant="body2" sx={{ my: 2 }}>
+            <Typography variant="body2" sx={{ my: 2, lineHeight: "30px" }}>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Auctor
               libero id et, in gravida. Sit diam duis mauris nulla cursus. Erat
               et lectus vel ut sollicitudin elit at amet.
@@ -142,31 +145,51 @@ export default function Footer() {
               <FacebookIcon
                 sx={{
                   color: "common.white",
-                  bgcolor: "grey.700",
-                  width: 30,
-                  height: 30,
+                  bgcolor: "#08996B",
+                  width: 32,
+                  height: 32,
                   borderRadius: "50%",
-                  p: 0.5,
+                  p: "7px",
+                }}
+              />
+              <Twitter
+                sx={{
+                  color: "common.white",
+                  bgcolor: "#08996B",
+                  width: 32,
+                  height: 32,
+                  borderRadius: "50%",
+                  padding: "7px",
                 }}
               />
               <InstagramIcon
                 sx={{
                   color: "common.white",
-                  bgcolor: "grey.700",
-                  width: 30,
-                  height: 30,
+                  bgcolor: "#08996B",
+                  width: 32,
+                  height: 32,
                   borderRadius: "50%",
-                  p: 0.5,
+                  padding: "7px",
                 }}
               />
               <YoutubeIcon
                 sx={{
                   color: "common.white",
-                  bgcolor: "grey.700",
-                  width: 30,
-                  height: 30,
+                  bgcolor: "#08996B",
+                  width: 32,
+                  height: 32,
                   borderRadius: "50%",
-                  p: 0.5,
+                  padding: "7px",
+                }}
+              />
+              <Google
+                sx={{
+                  color: "common.white",
+                  bgcolor: "#08996B",
+                  width: 32,
+                  height: 32,
+                  borderRadius: "50%",
+                  padding: "7px",
                 }}
               />
             </Stack>

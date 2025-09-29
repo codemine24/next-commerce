@@ -188,6 +188,38 @@ const getCoupons = async (query: Record<string, any>) => {
   };
 };
 
+// ------------------------------------- GET COUPON --------------------------------------
+const getSingleCoupon = async (id: string) => {
+  const result = await prisma.coupon.findUniqueOrThrow({
+    where: { id },
+    include: {
+      eligible_categories: {
+        select: {
+          id: true,
+          title: true,
+          icon: true,
+        },
+      },
+      eligible_brands: {
+        select: {
+          id: true,
+          name: true,
+          icon: true,
+        },
+      },
+      eligible_products: {
+        select: {
+          id: true,
+          name: true,
+          thumbnail: true,
+        },
+      },
+    },
+  });
+
+  return result;
+};
+
 // ------------------------------------- UPDATE COUPONS -----------------------------------
 const updateCoupon = async (id: string, payload: Record<string, any>) => {
   const {
@@ -439,6 +471,7 @@ const deleteCoupons = async ({ ids }: { ids: string[] }) => {
 export const CouponServices = {
   createCoupon,
   getCoupons,
+  getSingleCoupon,
   updateCouponActiveStatus,
   applyCoupon,
   updateCoupon,

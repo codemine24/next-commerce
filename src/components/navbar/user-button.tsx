@@ -27,11 +27,13 @@ export const UserButton = () => {
             sx={{
               px: 0,
               minWidth: "auto",
+              color: "text.primary",
+              fontSize: 12,
+              fontWeight: 300,
               "&:hover": {
                 textDecoration: "underline",
                 backgroundColor: "transparent !important",
               },
-              color: "text.primary",
             }}
           >
             Login

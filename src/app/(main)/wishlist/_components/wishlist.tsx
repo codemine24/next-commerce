@@ -6,7 +6,7 @@ import { SectionTitle } from "../../_components/section-title";
 import { WishlistTable } from "./wishlist-table";
 import { wishlistData } from "./wishlistData";
 
-const Wishlist: React.FC = () => {
+const Wishlist = () => {
   const hasProducts = wishlistData.length > 0;
 
   return (

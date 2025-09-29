@@ -3,7 +3,7 @@
 import { alpha } from "@mui/material";
 import Box from "@mui/material/Box";
 import Tab, { tabClasses } from "@mui/material/Tab";
-import Tabs from "@mui/material/Tabs";
+import Tabs, { tabsClasses } from "@mui/material/Tabs";
 
 type TabItem = { value: string; label: string };
 
@@ -29,9 +29,13 @@ export const CustomTab = ({ tabs, value, onChange }: CustomTabProps) => {
             [`& .${tabClasses.selected}`]: {
               color: "#08996B",
               bgcolor: alpha("#08996B", 0.1),
+              borderColor: "red",
             },
             [`& .${tabClasses.root}`]: {
               flexGrow: 1,
+            },
+            [`& .${tabsClasses.indicator}`]: {
+              bgcolor: "#08996B",
             },
           }}
         >

@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 
 import { DetailsCard } from "./details-card";
 import { ProductSectionHeader } from "./product-section-header";

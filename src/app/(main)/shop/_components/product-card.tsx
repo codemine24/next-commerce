@@ -8,8 +8,7 @@ import { Product } from "@/interfaces/product";
 import { makeImageUrl } from "@/utils/helper";
 
 import { AddToCartButton } from "./add-to-cart-button";
-import { AddToCartIconButton } from "./add-to-cart-icon-button";
-import { AddWishListButton } from "./add-wish-list-button";
+import BuyNowButton from "./buy-now-button";
 import { ProductDiscountLabel } from "./product-discount-label";
 import { ProductPrice } from "./product-price";
 import { ProductQuickViewButton } from "./product-quick-view-button";
@@ -19,7 +18,10 @@ interface ProductCardProps {
   action?: boolean;
 }
 
-export const ProductCard = async ({ product, action = false }: ProductCardProps) => {
+export const ProductCard = async ({
+  product,
+  action = false,
+}: ProductCardProps) => {
   return (
     <Box
       sx={{
@@ -58,14 +60,16 @@ export const ProductCard = async ({ product, action = false }: ProductCardProps)
           }}
         >
           <OptimizeImage
-            src={makeImageUrl(product.thumbnail) || "/images/featured_image_1.svg"}
+            src={
+              makeImageUrl(product.thumbnail) || "/images/featured_image_1.svg"
+            }
             alt={product.name}
             height={290}
             imageStyle={{ objectFit: "contain" }}
           />
 
           {/* Action icons */}
-          <Stack
+          {/* <Stack
             direction="column"
             spacing={1}
             className="action-icons"
@@ -81,11 +85,11 @@ export const ProductCard = async ({ product, action = false }: ProductCardProps)
           >
             <AddWishListButton />
             <AddToCartIconButton product={product} />
-          </Stack>
+          </Stack> */}
         </Box>
 
         {/* Product name */}
-        <Box height={80} mt={2} px={2}>
+        <Box height={60} mt={2} px={3}>
           <Typography
             variant="h4"
             sx={{ "&:hover": { textDecoration: "underline" } }}
@@ -94,10 +98,13 @@ export const ProductCard = async ({ product, action = false }: ProductCardProps)
           </Typography>
         </Box>
       </Box>
+      <Box sx={{ textAlign: "center" }}>
+        <ProductPrice product={product} />
+      </Box>
 
       {/* Price and quick view */}
-      <Stack direction="row" justifyContent="space-between" px={2}>
-        <ProductPrice product={product} />
+      <Stack direction="row" justifyContent="center" gap={1} px={3} mt={1}>
+        <BuyNowButton />
         {!action && <ProductQuickViewButton product={product} />}
       </Stack>
 
