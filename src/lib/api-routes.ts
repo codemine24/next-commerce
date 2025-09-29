@@ -53,5 +53,9 @@ export const API_ROUTES = {
         get_files: "/file",
         upload_files: "/file",
         delete_files: "/file",
+    },
+    order: {
+        create_order_for_user: "/order",
+        create_order_for_guest_user: "/order/guest",
     }
 }

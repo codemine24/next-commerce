@@ -495,7 +495,7 @@ const getCampaignDetails = async (id: string, query: Record<string, any>) => {
     };
   }
 
-  return campaign;
+  return { data: campaign };
 };
 
 export const CampaignServices = {

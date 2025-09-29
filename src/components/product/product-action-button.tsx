@@ -47,6 +47,7 @@ export const ProductActionButton = ({ product }: ProductActionButtonProps) => {
         <Button
           startIcon={<CartIcon />}
           variant="contained"
+          onClick={handleAddToCart}
           sx={{ height: 48, flexGrow: 1 }}
         >
           Add to cart
