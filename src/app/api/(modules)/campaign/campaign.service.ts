@@ -456,42 +456,46 @@ const getCampaignDetails = async (id: string, query: Record<string, any>) => {
     },
   });
 
-  // 2. Fetch eligible products
-  const products = await getProductsForCampaign({
-    ...query,
-    product_id:
-      campaign.eligible_products.length > 0
-        ? campaign.eligible_products.map((p) => p.id).join(",")
-        : undefined,
-    brand_id:
-      campaign.eligible_brands.length > 0
-        ? campaign.eligible_brands.map((b) => b.id).join(",")
-        : undefined,
-    category_id:
-      campaign.eligible_categories.length > 0
-        ? campaign.eligible_categories.map((c) => c.id).join(",")
-        : undefined,
-  });
+  if (query?.products) {
+    // 2. Fetch eligible products
+    const products = await getProductsForCampaign({
+      ...query,
+      product_id:
+        campaign.eligible_products.length > 0
+          ? campaign.eligible_products.map((p) => p.id).join(",")
+          : undefined,
+      brand_id:
+        campaign.eligible_brands.length > 0
+          ? campaign.eligible_brands.map((b) => b.id).join(",")
+          : undefined,
+      category_id:
+        campaign.eligible_categories.length > 0
+          ? campaign.eligible_categories.map((c) => c.id).join(",")
+          : undefined,
+    });
 
-  // 3. Exclude eligible_brands, eligible_categories and eligible_products from campaign
-  const {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    eligible_brands,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    eligible_categories,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    eligible_products,
-    ...remainingCampaign
-  } = campaign;
+    // 3. Exclude eligible_brands, eligible_categories and eligible_products from campaign
+    const {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      eligible_brands,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      eligible_categories,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      eligible_products,
+      ...remainingCampaign
+    } = campaign;
 
-  // 4. Return campaign + products with pagination meta
-  return {
-    meta: products.meta,
-    data: {
-      ...remainingCampaign,
-      products: products.data,
-    },
-  };
+    // 4. Return campaign + products with pagination meta
+    return {
+      meta: products.meta,
+      data: {
+        ...remainingCampaign,
+        products: products.data,
+      },
+    };
+  }
+
+  return campaign;
 };
 
 export const CampaignServices = {

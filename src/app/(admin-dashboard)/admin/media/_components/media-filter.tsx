@@ -5,21 +5,17 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
 
 import { CustomDatePicker } from "@/components/custom-date-picker";
-import { useDebounce } from "@/hooks/use-debounce";
+import { TableToolbarSearchBox } from "@/components/table/table-toolbar-search-box";
 import { ChevronDownIcon } from "@/icons/chevron-down";
 import { dateIsAfter, getDateTime } from "@/utils/date-formatter";
 
 import { MediaFileType } from "./media-file-type";
-import { MediaSearchBox } from "./media-search-box";
 
 export const MediaFilter = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
   const [dateError, setDateError] = useState("");
-  const [searchText, setSearchText] = useState(
-    searchParams.get("search_term") || ""
-  );
   const [type, setType] = useState(
     searchParams.get("type")?.split(",") || []
   );
@@ -27,30 +23,8 @@ export const MediaFilter = () => {
   const fromDate = searchParams.get("fromDate") || "";
   const toDate = searchParams.get("toDate") || "";
 
-  // --- Search ---
-  const doSearch = useCallback(() => {
-    const params = new URLSearchParams(searchParams.toString());
-    const current = params.get("search_term") || "";
-
-    if (searchText) {
-      if (current !== searchText) {
-        params.set("search_term", searchText);
-        router.replace(`?${params.toString()}`);
-      }
-    } else if (current) {
-      params.delete("search_term");
-      router.replace(`?${params.toString()}`);
-    }
-  }, [searchParams, router, searchText]);
-
-  // --- Debounced search ---
-  useDebounce(searchText, 500, doSearch);
-
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setSearchText(e.target.value);
-
   const updateParam = useCallback((key: string, value: string) => {
-    const params = new URLSearchParams(searchParams.toString());
+    const params = new URLSearchParams(searchParams);
     if (value) params.set(key, value);
     else params.delete(key);
     router.replace(`?${params.toString()}`);
@@ -82,7 +56,6 @@ export const MediaFilter = () => {
     return true;
   }, [fromDate, updateParam]);
 
-
   const handleFilterType = useCallback(
     (newValue: string) => {
       setType((prev) => {
@@ -94,7 +67,6 @@ export const MediaFilter = () => {
     [updateParam]
   );
 
-
   const handleResetType = useCallback(() => {
     setType([]);
     updateParam("type", "");
@@ -102,7 +74,7 @@ export const MediaFilter = () => {
 
   return (
     <Box p={2} gap={2} display="flex" alignItems="center" justifyContent="space-between">
-      <MediaSearchBox searchText={searchText} handleSearch={handleSearch} />
+      <TableToolbarSearchBox />
 
       <Box display="flex" gap={2} alignItems="center">
         <CustomDatePicker

@@ -1,4 +1,4 @@
-import { Prisma, User } from "@prisma/client";
+import { Prisma, User, UserRole, UserStatus } from "@prisma/client";
 import httpStatus from "http-status";
 import sharp from "sharp";
 
@@ -139,10 +139,10 @@ const getUsers = async (query: Record<string, any>) => {
   }
 
   // Apply role filter if role is provided
-  if (role) andConditions.push({ role });
+  if (role) andConditions.push({ role: { equals: role.toUpperCase() as UserRole } });
 
   // Apply status filter if status is provided
-  if (status) andConditions.push({ status });
+  if (status) andConditions.push({ status: { equals: status.toUpperCase() as UserStatus } });
 
   // Combine all AND conditions for Prisma query
   const whereConditions: Prisma.UserWhereInput = { AND: andConditions };

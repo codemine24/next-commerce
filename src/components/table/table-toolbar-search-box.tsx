@@ -4,18 +4,20 @@ import Box from "@mui/material/Box";
 import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState, useCallback } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 import { useDebounce } from "@/hooks/use-debounce";
+import { CloseIcon } from "@/icons/close";
 import { SearchIcon } from "@/icons/search";
 
-export const CategorySearchBox = () => {
+export const TableToolbarSearchBox = () => {
     const router = useRouter();
     const searchParams = useSearchParams();
     const [searchText, setSearchText] = useState("");
 
+    // Search handler
     const doSearch = useCallback(() => {
-        const params = new URLSearchParams(searchParams.toString());
+        const params = new URLSearchParams(searchParams);
         const current = params.get("search_term") || "";
 
         if (searchText) {
@@ -29,7 +31,19 @@ export const CategorySearchBox = () => {
         }
     }, [searchParams, router, searchText]);
 
-    useDebounce(searchText, 500, doSearch);
+    // Debounce search text
+    const debouncedSearchText = useDebounce(searchText, 500);
+
+    // Run when search text changes
+    useEffect(() => {
+        doSearch();
+    }, [debouncedSearchText, doSearch]);
+
+    // Clear search
+    const handleClearSearch = () => {
+        setSearchText("");
+        doSearch();
+    };
 
     return (
         <Box>
@@ -43,6 +57,11 @@ export const CategorySearchBox = () => {
                         startAdornment: (
                             <InputAdornment position="start">
                                 <SearchIcon />
+                            </InputAdornment>
+                        ),
+                        endAdornment: searchText && (
+                            <InputAdornment position="end">
+                                <CloseIcon onClick={handleClearSearch} cursor="pointer" />
                             </InputAdornment>
                         ),
                     },

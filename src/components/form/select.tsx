@@ -16,14 +16,15 @@ type Props = SelectProps & {
     label: string;
     options: Option[];
     placeholder?: string;
+    required?: boolean;
 };
 
-export const Select = ({ name, label, options, placeholder, ...other }: Props) => {
+export const Select = ({ name, label, options, placeholder, required, ...other }: Props) => {
     const { control } = useFormContext();
 
     return (
         <Box flex={1} width="100%">
-            <InputLabel label={label} />
+            <InputLabel required={required} label={label} />
             <Controller
                 name={name}
                 control={control}
