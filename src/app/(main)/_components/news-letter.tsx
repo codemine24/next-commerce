@@ -37,7 +37,7 @@ export const NewsLetter = () => {
             arrivals, special offers, and more.
           </Typography>
         </Box>
-        <Box flex={1} display="flex" alignItems="center">
+        <Box flex={1} display="flex" alignItems="center" justifyContent={"end"}>
           <TextField
             placeholder="Enter your email"
             variant="outlined"
