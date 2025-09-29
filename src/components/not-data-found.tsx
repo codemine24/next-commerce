@@ -7,10 +7,9 @@ interface NotDataFoundProps {
     message?: string;
     hideIcon?: boolean;
     icon?: React.ReactNode;
-    action?: React.ReactNode;
 }
 
-export const NotDataFound = ({ message, hideIcon = false, icon, action }: NotDataFoundProps) => {
+export const NotDataFound = ({ message, hideIcon = false, icon }: NotDataFoundProps) => {
     const notDataFoundMessage = message || "No data found";
     const iconComponent = icon || <SadIcon sx={{ height: 48, width: 48, color: "primary.main" }} />;
 
@@ -18,7 +17,6 @@ export const NotDataFound = ({ message, hideIcon = false, icon, action }: NotDat
         <Box display="flex" justifyContent="center" alignItems="center" flexDirection="column" gap={1} p={2}>
             {!hideIcon && iconComponent}
             <Typography variant="h4" color="text.secondary">{notDataFoundMessage}</Typography>
-            {action}
         </Box>
     )
 }

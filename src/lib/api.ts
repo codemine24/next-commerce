@@ -104,7 +104,7 @@ class ApiClient {
     options: RequestOptions
   ): Promise<Response> {
     const cacheStrategy =
-      options.method === "GET" ? options.cache || "force-cache" : undefined;
+      options.method === "GET" ? options.cache || "no-store" : undefined;
 
     // Convert headers to object
     const headers = this.convertHeadersToObject(options.headers);

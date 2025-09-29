@@ -28,7 +28,7 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
       </Typography>
 
       {/* Rating & Stock */}
-      <Box display="flex" alignItems="center" gap={2} mt={2.8}>
+      <Box display="flex" alignItems="center" gap={2} mt={1}>
         <Box display="flex" alignItems="center" color="#A4B2AE">
           {Array(5)
             .fill(0)
@@ -58,19 +58,10 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
         />
       </Box>
 
-      <Box mt={5.9}>
+      <Box mt={3}>
         <ProductPrice product={product} />
       </Box>
-      <Box
-        mt={5.9}
-        sx={{
-          borderBottom: "1px solid",
-          borderTop: "1px solid",
-          borderColor: "divider",
-          pt: 1,
-          pb: 2,
-        }}
-      >
+      <Box mt={3}>
         <ProductOptions />
       </Box>
 

@@ -2,11 +2,11 @@ import Box from "@mui/material/Box";
 import { Suspense } from "react";
 
 import { LoadingSpinner } from "@/components/loading-spinner";
-import { TableToolbarSkeleton } from "@/components/table/table-toolbar-skeleton";
 import { SearchParams } from "@/interfaces/common";
 
 import { MediaContent } from "./_components/media-content";
 import { MediaFilter } from "./_components/media-filter";
+import { MediaFilterSkeleton } from "./_components/media-filter-skeleton";
 import { MediaHeader } from "./_components/media-header";
 import { MediaTabs } from "./_components/media-tabs";
 
@@ -19,7 +19,7 @@ export default async function MediaPage({ searchParams }: { searchParams: Promis
         <MediaTabs />
 
         {/* Media Filter */}
-        <Suspense fallback={<TableToolbarSkeleton />}>
+        <Suspense fallback={<MediaFilterSkeleton />}>
           <MediaFilter />
         </Suspense>
 

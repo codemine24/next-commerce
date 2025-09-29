@@ -39,7 +39,6 @@ export const FeaturedProducts = () => {
         <Box
           key={product.id}
           display="flex"
-          flexGrow={1}
           gap={1}
           p={2}
           height={200}

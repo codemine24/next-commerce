@@ -31,7 +31,7 @@ export const addCategory = async (category: CategorySchema) => {
     return res;
 }
 
-export const updateCategory = async (id: string, category: CategorySchema) => {
+export const updateCategory = async (category: CategorySchema, id: string) => {
     const res = await api.patch(API_ROUTES.categories.update_category(id), {
         body: JSON.stringify(category),
     });
@@ -44,7 +44,6 @@ export const deleteCategory = async (ids: string[]) => {
     const res = await api.delete(API_ROUTES.categories.delete_category, {
         body: JSON.stringify({ ids }),
     });
-
     if (res.success) revalidateTag(TAGS.categories);
     return res;
 }

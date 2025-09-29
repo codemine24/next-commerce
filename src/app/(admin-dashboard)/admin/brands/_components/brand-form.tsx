@@ -13,10 +13,9 @@ import { BrandSchema } from "@/zod/brand-schema";
 interface BrandFormProps {
     methods: UseFormReturn<BrandSchema>;
     onSubmit: (data: BrandSchema) => void;
-    hideActionButtons?: boolean;
 }
 
-export const BrandForm = ({ methods, onSubmit, hideActionButtons = false }: BrandFormProps) => {
+export const BrandForm = ({ methods, onSubmit }: BrandFormProps) => {
     return (
         <FormProvider methods={methods} onSubmit={methods.handleSubmit(onSubmit)}>
             <Box display="flex" flexDirection="column" gap={4}>
@@ -39,30 +38,27 @@ export const BrandForm = ({ methods, onSubmit, hideActionButtons = false }: Bran
                 />
 
                 {/* Submit Button */}
-                {!hideActionButtons && (
-                    <Box display="flex" justifyContent="flex-end" gap={2}>
-                        <Button
-                            variant="outlined"
-                            disabled={methods.formState.isSubmitting}
-                            sx={{
-                                width: 200,
-                                height: 50,
-                                textTransform: "none",
-                            }}
-                        >
-                            Cancel
-                        </Button>
-                        <SubmitButton
-                            label="Submit"
-                            isLoading={methods.formState.isSubmitting}
-                            sx={{
-                                width: 200,
-                                height: 50,
-                                textTransform: "none",
-                            }}
-                        />
-                    </Box>
-                )}
+                <Box display="flex" justifyContent="flex-end" gap={2}>
+                    <Button
+                        variant="outlined"
+                        sx={{
+                            width: 200,
+                            height: 50,
+                            textTransform: "none",
+                        }}
+                    >
+                        Cancel
+                    </Button>
+                    <SubmitButton
+                        label="Submit"
+                        isLoading={methods.formState.isSubmitting}
+                        sx={{
+                            width: 200,
+                            height: 50,
+                            textTransform: "none",
+                        }}
+                    />
+                </Box>
             </Box>
         </FormProvider>
     )

@@ -4,7 +4,7 @@ import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
 import IconButton from "@mui/material/IconButton"
 import Popover from "@mui/material/Popover"
-import { useState, useTransition } from "react"
+import React from "react"
 
 import { deleteCategory } from "@/actions/category";
 import { ConfirmDialog } from "@/components/dialog/confirm-dialog";
@@ -21,10 +21,10 @@ interface CategoryActionPopoverProps {
 }
 
 export const CategoryActionPopover = ({ category }: CategoryActionPopoverProps) => {
-    const [loading, startTransition] = useTransition();
-    const [openConfirmModal, setOpenConfirmModal] = useState(false);
-    const [openEditModal, setOpenEditModal] = useState(false);
-    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const [loading, setLoading] = React.useState(false);
+    const [openConfirmModal, setOpenConfirmModal] = React.useState(false);
+    const [openEditModal, setOpenEditModal] = React.useState(false);
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
@@ -37,15 +37,15 @@ export const CategoryActionPopover = ({ category }: CategoryActionPopoverProps) 
     };
 
     const handleDelete = async () => {
-        startTransition(async () => {
-            const res = await deleteCategory([category.id]);
-            if (res.success) {
-                toast.success(res.message);
-                handleClose();
-            } else {
-                toast.error(res.message);
-            }
-        });
+        setLoading(true);
+        const res = await deleteCategory([category.id]);
+        setLoading(false);
+        if (res.success) {
+            toast.success(res.message);
+            handleClose();
+        } else {
+            toast.error(res.message);
+        }
     }
 
     return (
@@ -102,8 +102,8 @@ export const CategoryActionPopover = ({ category }: CategoryActionPopoverProps) 
             {openConfirmModal && <ConfirmDialog
                 open={openConfirmModal}
                 onClose={handleClose}
-                title="Delete Category"
-                description="Are you sure you want to delete this category?"
+                title="Delete Media"
+                description="Are you sure you want to delete this media?"
                 onConfirm={handleDelete}
                 loading={loading}
             />}

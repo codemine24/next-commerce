@@ -100,6 +100,7 @@ model Category {
   id          String   @id @default(uuid())
   title       String
   slug        String   @unique
+  code        String?  @unique
   icon        String?
   featured    Boolean  @default(false)
   description String?

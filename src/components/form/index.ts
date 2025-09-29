@@ -5,4 +5,3 @@ export * from "./select";
 export * from "./color-picker";
 export * from "./image-uploader";
 export * from "./multi-input-field";
-export * from "./date-field";

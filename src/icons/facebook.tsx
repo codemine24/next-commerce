@@ -1,19 +1,9 @@
 import SvgIcon, { SvgIconProps } from "@mui/material/SvgIcon";
 
 export const FacebookIcon = (props: SvgIconProps) => {
-  return (
-    <SvgIcon {...props}>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width={24}
-        height={24}
-        viewBox="0 0 24 24"
-      >
-        <path
-          fill="currentColor"
-          d="M14 13.5h2.5l1-4H14v-2c0-1.03 0-2 2-2h1.5V2.14c-.326-.043-1.557-.14-2.857-.14C11.928 2 10 3.657 10 6.7v2.8H7v4h3V22h4z"
-        ></path>
-      </svg>
-    </SvgIcon>
-  );
+    return (
+        <SvgIcon {...props}>
+            <path fill="currentColor" d="M12 2.04c-5.5 0-10 4.49-10 10.02c0 5 3.66 9.15 8.44 9.9v-7H7.9v-2.9h2.54V9.85c0-2.51 1.49-3.89 3.78-3.89c1.09 0 2.23.19 2.23.19v2.47h-1.26c-1.24 0-1.63.77-1.63 1.56v1.88h2.78l-.45 2.9h-2.33v7a10 10 0 0 0 8.44-9.9c0-5.53-4.5-10.02-10-10.02" />
+        </SvgIcon>
+    );
 };

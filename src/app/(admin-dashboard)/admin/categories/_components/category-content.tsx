@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
 
 import { getCategories } from "@/actions/category";
-import { ErrorComponent } from "@/components/error-component";
+import { ErrorComponent } from "@/components/error";
 import { Pagination } from "@/components/pagination";
 import { SearchParams } from "@/interfaces/common";
 

@@ -15,11 +15,10 @@ export const campaignSchema = z.object({
         .optional()
         .nullable(),
     thumbnail: z
-        .string({ error: "Thumbnail is required" })
-        .min(1, "Thumbnail is required"),
+        .union([z.string(), z.instanceof(File)])
+        .optional(),
     start_at: z
-        .string({ error: "Start date is required" })
-        .min(1, "Start date is required")
+        .string()
         .refine((value) => {
             const inputDate = new Date(value);
             const today = new Date();
@@ -31,8 +30,7 @@ export const campaignSchema = z.object({
             return inputDate >= today;
         }, "Start date must be today or in the future"),
     end_at: z
-        .string({ error: "End date is required" })
-        .min(1, "End date is required")
+        .string()
         .refine((value) => {
             const inputDate = new Date(value);
             const today = new Date();
@@ -51,13 +49,13 @@ export const campaignSchema = z.object({
         .optional(),
     note: z.string().optional().nullable(),
     eligible_categories: z
-        .array(z.object({ label: z.string(), value: z.string() }))
+        .array(z.string())
         .optional(),
     eligible_brands: z
-        .array(z.object({ label: z.string(), value: z.string() }))
+        .array(z.string())
         .optional(),
     eligible_products: z
-        .array(z.object({ label: z.string(), value: z.string() }))
+        .array(z.string())
         .optional(),
 })
     .strict()

@@ -35,7 +35,10 @@ const ProductDetail = async ({ params }: { params: Params }) => {
   }
 
   return (
-    <BoxContainer sx={{ py: 6 }}>
+    <BoxContainer>
+      <Typography variant="h4" fontWeight={600} gutterBottom>
+        Product Detail
+      </Typography>
       {/* Product Image & Info */}
       <Grid container spacing={4}>
         <Grid size={{ xs: 12, md: 6 }}>

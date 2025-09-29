@@ -8,7 +8,7 @@ import DialogContent from "@mui/material/DialogContent"
 import DialogTitle from "@mui/material/DialogTitle"
 import Tab from "@mui/material/Tab"
 import Tabs from "@mui/material/Tabs"
-import { useCallback, useState, useTransition } from "react"
+import { useCallback, useState } from "react"
 
 import { uploadFiles } from "@/actions/file";
 import { Uploader } from "@/components/uploader/uploader";
@@ -42,7 +42,7 @@ export const ImageSelectDialog = (props: ImageSelectModalProps) => {
 
     const [selectedTab, setSelectedTab] = useState(TABS[0].value);
     const [files, setFiles] = useState<(File | string)[]>([]);
-    const [loading, startTransition] = useTransition();
+    const [loading, setLoading] = useState(false);
 
     const handleDrop = useCallback(
         (acceptedFiles: File[]) => {
@@ -71,22 +71,23 @@ export const ImageSelectDialog = (props: ImageSelectModalProps) => {
             return;
         }
 
-        startTransition(async () => {
-            const formData = new FormData();
-            files.forEach(file => formData.append("files", file));
+        setLoading(true);
+        const formData = new FormData();
 
-            const res = await uploadFiles(formData);
+        files.forEach(file => formData.append("files", file));
 
-            if (!res.success) {
-                toast.error(res.message);
-            } else {
-                revalidate();
-                toast.success(res.message);
-            }
+        const res = await uploadFiles(formData);
 
-            setFiles([]);
-            setSelectedTab(TABS[0].value);
-        });
+        if (!res.success) {
+            toast.error(res.message);
+        } else {
+            revalidate();
+            toast.success(res.message);
+        }
+
+        setLoading(false);
+        setFiles([]);
+        setSelectedTab(TABS[0].value);
     };
 
     return (
@@ -134,7 +135,6 @@ export const ImageSelectDialog = (props: ImageSelectModalProps) => {
                             success={success}
                             message={message}
                             isLoading={isLoading}
-                            revalidate={revalidate}
                             onSelectionChange={(file) => onFilesSelect(file)}
                         />
                     )}

@@ -52,7 +52,6 @@ export const CategoryForm = ({ methods, onSubmit, categories, hideActionButtons 
                 {!hideActionButtons && <Box display="flex" justifyContent="flex-end" gap={2}>
                     <Button
                         variant="outlined"
-                        disabled={methods.formState.isSubmitting}
                         sx={{
                             width: 200,
                             height: 50,

@@ -1,5 +1,6 @@
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
+import Pagination from "@mui/material/Pagination";
 import Rating from "@mui/material/Rating";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
@@ -7,8 +8,6 @@ import React from "react";
 
 import { getReviews } from "@/actions/review";
 import { StarIcon } from "@/icons/star";
-
-import CustomPagination from "../../shop/_components/custom-pagination";
 
 import { ProductAddReview } from "./product-add-review";
 import { ProductSectionHeader } from "./product-section-header";
@@ -47,10 +46,10 @@ export const ProductReviews = async ({ productId }: ProductReviewsProps) => {
   const maxCount = Math.max(...distribution.map((d) => d.count));
 
   const allReviews = await getReviews(productId);
-  console.log("allReviews", allReviews);
 
   return (
     <Box id="#product-reviews">
+      {/* Header */}
       <Box
         display="flex"
         alignItems="center"
@@ -58,10 +57,12 @@ export const ProductReviews = async ({ productId }: ProductReviewsProps) => {
         gap={2}
       >
         <ProductSectionHeader title="Customer Reviews" />
-        <ProductAddReview productId={productId} />
+        {/* <ProductAddReview productId={productId} /> */}
       </Box>
 
+      {/* Body */}
       <Box>
+        {/* Top stats + distribution */}
         <Stack
           direction={{ xs: "column", md: "row" }}
           gap={2}
@@ -86,7 +87,7 @@ export const ProductReviews = async ({ productId }: ProductReviewsProps) => {
                   precision={0.5}
                   readOnly
                   size="small"
-                  sx={{ color: "#FFCD4E" }}
+                  sx={{ color: "#f59e0b" }}
                   aria-label={"Average rating " + avg}
                 />
               }
@@ -127,7 +128,7 @@ export const ProductReviews = async ({ productId }: ProductReviewsProps) => {
                         aria-hidden
                       >
                         <Typography component="span">{item.stars}</Typography>
-                        <StarIcon sx={{ fontSize: 16, color: "#FFCD4E" }} />
+                        <StarIcon sx={{ fontSize: 16, color: "#f59e0b" }} />
                       </Box>
                       <Box
                         sx={{
@@ -174,12 +175,12 @@ export const ProductReviews = async ({ productId }: ProductReviewsProps) => {
         </Stack>
 
         {/* Reviews list */}
-        <Stack sx={{ mt: 2 }}>
+        <Stack sx={{ mt: 2 }} bgcolor="background.paper">
           {allReviews.data.map((r: Review, index: number) => (
             <React.Fragment key={r.id}>
               <Box
                 sx={{
-                  p: 1,
+                  p: 3,
                   borderRadius: 0,
                   overflow: "hidden",
                 }}
@@ -207,14 +208,9 @@ export const ProductReviews = async ({ productId }: ProductReviewsProps) => {
                     precision={0.5}
                     size="small"
                     sx={{ color: "#f59e0b" }}
-                    icon={
-                      <StarIcon fontSize="inherit" sx={{ color: "#FFCD4E" }} />
-                    }
+                    icon={<StarIcon fontSize="inherit" />}
                     emptyIcon={
-                      <StarIcon
-                        fontSize="inherit"
-                        sx={{ opacity: 0.25, border: "1px solid #FFCD4E" }}
-                      />
+                      <StarIcon fontSize="inherit" sx={{ opacity: 0.25 }} />
                     }
                     aria-label={`Rating ${r.rating} out of 5`}
                   />
@@ -223,12 +219,12 @@ export const ProductReviews = async ({ productId }: ProductReviewsProps) => {
                     By {r.user.first_name}
                   </Typography>
                   <Separator />
-                  <Typography variant="body2">{r.updated_at}</Typography>
+                  <Typography variant="body2">{r.date}</Typography>
                 </Stack>
               </Box>
 
-              {index < allReviews.data.length && (
-                <Divider sx={{ my: 2, borderColor: "#E6F2EE" }} />
+              {index < allReviews.data.length - 1 && (
+                <Divider sx={{ my: 2, bgcolor: "divider" }} />
               )}
             </React.Fragment>
           ))}
@@ -243,7 +239,13 @@ export const ProductReviews = async ({ productId }: ProductReviewsProps) => {
           }}
           aria-label="Reviews pagination"
         >
-          <CustomPagination />
+          <Pagination
+            count={4}
+            page={1}
+            shape="rounded"
+            variant="outlined"
+            color="primary"
+          />
         </Box>
       </Box>
     </Box>
@@ -304,10 +306,7 @@ function Separator() {
     <Divider
       orientation="vertical"
       flexItem
-      sx={{
-        borderColor: "divider",
-        margin: "0 !important",
-      }}
+      sx={{ borderColor: "divider", mx: 0.25 }}
       aria-hidden
     />
   );

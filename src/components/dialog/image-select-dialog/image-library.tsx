@@ -6,7 +6,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Grid from "@mui/material/Grid";
 import Radio from "@mui/material/Radio";
 
-import { ErrorComponent } from "@/components/error-component";
+import { ErrorComponent } from "@/components/error";
 import { NotDataFound } from "@/components/not-data-found";
 import { Media } from "@/interfaces/media";
 import { makeImageUrl } from "@/utils/helper";
@@ -22,11 +22,10 @@ interface ImageLibraryProps {
     message: string;
     isLoading: boolean;
     onSelectionChange: (selectedFiles: string) => void;
-    revalidate: () => void;
 }
 
 export const ImageLibrary = (props: ImageLibraryProps) => {
-    const { multiple, selectedFiles, data, success, message, isLoading, onSelectionChange, revalidate } = props;
+    const { multiple, selectedFiles, data, success, message, isLoading, onSelectionChange } = props;
 
     const isSelected = (file: string) => {
         if (multiple) {
@@ -39,7 +38,7 @@ export const ImageLibrary = (props: ImageLibraryProps) => {
     if (isLoading) return <LoadingSpinner />;
 
     // Error Component
-    if (!success) return <ErrorComponent message={message} onRetry={() => revalidate()} />;
+    if (!success) return <ErrorComponent message={message} />;
 
     return (
         <Box>

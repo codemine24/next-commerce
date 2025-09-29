@@ -12,7 +12,6 @@ export const LoadingSpinner = ({ sx }: { sx?: SxProps<Theme> }) => {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                bgcolor: "background.default",
                 ...sx,
             }}
         >

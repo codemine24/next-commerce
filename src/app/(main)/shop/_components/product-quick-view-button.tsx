@@ -4,39 +4,25 @@ import Button from "@mui/material/Button";
 import { useState } from "react";
 
 import { ProductQuickView } from "@/components/product/product-quick-view";
+import { EyeIcon } from "@/icons/eye";
 import { Product } from "@/interfaces/product";
-import { BORDER_RADIUS } from "@/theme";
 
 export const ProductQuickViewButton = ({ product }: { product: Product }) => {
   const [open, setOpen] = useState(false);
   return (
     <>
       <Button
-        variant="contained"
+        variant="soft"
         color="primary"
         onClick={() => setOpen(true)}
         sx={{
-          color: "text.primary",
-          fontSize: "1rem",
-          bgcolor: "rgb(235 236 237)",
+          border: "none",
           px: 1,
-          flexGrow: 1,
-          borderRadius: BORDER_RADIUS.default,
-          boxShadow: "none",
-          transition: "all 0.3s",
-          "&:hover": {
-            bgcolor: "primary.dark",
-            color: "common.white",
-          },
         }}
       >
-        Quick view
+        <EyeIcon sx={{ color: "primary.main", fontSize: 20 }} />
       </Button>
-      <ProductQuickView
-        open={open}
-        onClose={() => setOpen(false)}
-        product={product}
-      />
+      <ProductQuickView open={open} onClose={() => setOpen(false)} product={product} />
     </>
   );
 };

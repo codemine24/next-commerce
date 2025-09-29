@@ -1,17 +1,18 @@
-"use client";
-
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
-import Stack from "@mui/material/Stack";
-import { alpha } from "@mui/material/styles";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Typography from "@mui/material/Typography";
+import {
+  Box,
+  Button,
+  IconButton,
+  Stack,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+  alpha,
+  tableCellClasses,
+} from "@mui/material";
 import React from "react";
 
 import { StatusChip, WishlistProduct } from "@/components/status-chip";
@@ -24,23 +25,45 @@ interface WishlistTableProps {
   products: WishlistProduct[];
 }
 
-export const WishlistTable = ({ products }: WishlistTableProps) => {
+export const WishlistTable: React.FC<WishlistTableProps> = ({ products }) => {
   return (
     <TableContainer sx={{ mt: 2 }}>
-      <Table>
+      <Table
+        sx={{
+          minWidth: 650,
+          borderCollapse: "collapse",
+          [`& .${tableCellClasses.root}`]: {
+            borderTop: "1px solid",
+            borderBottom: "1px solid",
+            borderColor: "divider",
+            "&:not(:first-of-type):not(:last-of-type)": {
+              borderLeft: "none",
+              borderRight: "none",
+            },
+          },
+          [`& .${tableCellClasses.root}:first-of-type`]: {
+            borderLeft: "1px solid",
+            borderColor: "divider",
+          },
+          [`& .${tableCellClasses.root}:last-of-type`]: {
+            borderRight: "1px solid",
+            borderColor: "divider",
+          },
+        }}
+      >
         <TableHead>
           <TableRow>
             <TableCell>
-              Product
+              <Typography variant="body1">Product</Typography>
             </TableCell>
             <TableCell>
-              Price
+              <Typography variant="body1">Price</Typography>
             </TableCell>
             <TableCell>
-              Stock Status
+              <Typography variant="body1">Stock Status</Typography>
             </TableCell>
-            <TableCell align="center">
-              Action
+            <TableCell>
+              <Typography variant="body1">Action</Typography>
             </TableCell>
           </TableRow>
         </TableHead>
@@ -72,8 +95,8 @@ export const WishlistTable = ({ products }: WishlistTableProps) => {
                 <StatusChip status={product.status} />
               </TableCell>
 
-              <TableCell align="center">
-                <Stack direction="row" justifyContent="center" spacing={2}>
+              <TableCell>
+                <Stack direction="row" spacing={2}>
                   <Button
                     size="medium"
                     startIcon={<ShoppingCart />}

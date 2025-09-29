@@ -13,14 +13,12 @@ export async function middleware(request: NextRequest) {
 
     const decodedToken = jwtDecode(token) as { role: string };
 
-    const adminOrSuperAdmin = decodedToken.role === "ADMIN" || decodedToken.role === "SUPER_ADMIN";
-
-    if (isAdminRoute && !adminOrSuperAdmin) {
-        return NextResponse.redirect(new URL("/", request.url));
+    if (isAdminRoute && decodedToken.role !== "ADMIN") {
+        return NextResponse.redirect(new URL("/not-found", request.url));
     }
 
     if (isUserRoute && decodedToken.role !== "USER") {
-        return NextResponse.redirect(new URL("/", request.url));
+        return NextResponse.redirect(new URL("/not-found", request.url));
     }
 
     return NextResponse.next();

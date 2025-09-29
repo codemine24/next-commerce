@@ -14,7 +14,7 @@ interface SubmitButtonProps extends ButtonProps {
 
 export const SubmitButton = ({ isLoading, label, sx, loadingLabel = "Loading...", disabled = false, ...props }: SubmitButtonProps) => {
     return (
-        <Button disabled={isLoading || disabled} type="submit" variant="contained" sx={{ height: 50, ...sx }} {...props}>
+        <Button disabled={isLoading || disabled} type="submit" sx={{ height: 50, ...sx }} {...props}>
             {
                 isLoading
                     ? <Box display="flex" alignItems="center" gap={2}>

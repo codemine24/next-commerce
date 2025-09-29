@@ -10,15 +10,13 @@ export const AddToCartButton = ({ product }: { product: Product }) => {
 
   return (
     <Button
-      onClick={() =>
-        addToCart({
-          id: product.id,
-          name: product.name,
-          slug: product.slug,
-          price: product.discount_price || product.price,
-          thumbnail: product.thumbnail,
-        })
-      }
+      onClick={() => addToCart({
+        id: product.id,
+        name: product.name,
+        slug: product.slug,
+        price: product.discount_price || product.price,
+        thumbnail: product.thumbnail,
+      })}
       variant="soft"
       color="primary"
       fullWidth

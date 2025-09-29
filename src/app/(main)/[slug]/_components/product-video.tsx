@@ -3,20 +3,22 @@ import Image from "next/image";
 
 import productVideoThumbnail from "@/../public/assets/product-video-thumbnail.svg";
 
+import { BORDER_RADIUS } from "@/theme";
+
 export const ProductVideo = ({
   videoUrl,
 }: {
   videoUrl: string | null | undefined;
 }) => {
   return (
-    <Box id="#product-video" sx={{ p: { xs: 2, sm: 3 } }}>
+    <Box id="#product-video" sx={{ p: { xs: 2, sm: 3 }, bgcolor: "background.paper" }}>
       <Box
         sx={{
           width: "100%",
           height: 560,
           overflow: "hidden",
           position: "relative",
-          borderRadius: "10px",
+          borderRadius: BORDER_RADIUS.default,
         }}
       >
         {videoUrl ? (

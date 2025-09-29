@@ -23,25 +23,18 @@ export const ProductQuantityButton = ({
           height: 48,
           borderColor: "#E6F2EE",
           fontSize: 16,
+          "&:first-of-type": {},
+        },
+        [`& .${buttonBaseClasses.disabled}`]: {
+          color: "text.primary",
         },
       }}
     >
-      <Button
-        onClick={onRemove}
-        disabled={qty <= 1}
-        sx={{ "&:hover": { borderRightColor: "#E6F2EE !important" } }}
-      >
+      <Button onClick={onRemove} disabled={qty <= 1}>
         -
       </Button>
 
-      <Button
-        disabled
-        sx={{
-          color: "#222625 !important",
-        }}
-      >
-        {qty}
-      </Button>
+      <Button disabled>{qty}</Button>
 
       <Button onClick={onAdd}>+</Button>
     </ButtonGroup>

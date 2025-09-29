@@ -1,47 +1,9 @@
 import SvgIcon, { SvgIconProps } from "@mui/material/SvgIcon";
 
 export const YoutubeIcon = (props: SvgIconProps) => {
-  return (
-    <SvgIcon {...props}>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width={24}
-        height={24}
-        viewBox="0 0 24 24"
-      >
-        <path fill="currentColor" fillOpacity={0} d="M12 11L12 12L12 13z">
-          <animate
-            fill="freeze"
-            attributeName="d"
-            begin="0.6s"
-            dur="0.2s"
-            values="M12 11L12 12L12 13z;M10 8.5L16 12L10 15.5z"
-          ></animate>
-          <set
-            fill="freeze"
-            attributeName="fill-opacity"
-            begin="0.6s"
-            to={1}
-          ></set>
-        </path>
-        <path
-          fill="none"
-          stroke="currentColor"
-          strokeDasharray={64}
-          strokeDashoffset={64}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M12 5c9 0 9 0 9 7c0 7 0 7 -9 7c-9 0 -9 0 -9 -7c0 -7 0 -7 9 -7Z"
-        >
-          <animate
-            fill="freeze"
-            attributeName="stroke-dashoffset"
-            dur="0.6s"
-            values="64;0"
-          ></animate>
-        </path>
-      </svg>
-    </SvgIcon>
-  );
+    return (
+        <SvgIcon {...props}>
+            <path fill="currentColor" d="m10 15l5.19-3L10 9zm11.56-7.83c.13.47.22 1.1.28 1.9c.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83c-.25.9-.83 1.48-1.73 1.73c-.47.13-1.33.22-2.65.28c-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44c-.9-.25-1.48-.83-1.73-1.73c-.13-.47-.22-1.1-.28-1.9c-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83c.25-.9.83-1.48 1.73-1.73c.47-.13 1.33-.22 2.65-.28c1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44c.9.25 1.48.83 1.73 1.73" />
+        </SvgIcon>
+    );
 };

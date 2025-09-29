@@ -15,6 +15,7 @@ type Props = TextFieldProps & {
     label: string;
     placeholder?: string;
     required?: boolean;
+    defaultValues?: (string | number)[];
 };
 
 export const MultiInputField = ({
@@ -22,12 +23,13 @@ export const MultiInputField = ({
     label,
     placeholder,
     required,
+    defaultValues = [],
     helperText,
     type = "text",
     ...other
 }: Props) => {
-    const { control, setValue, getValues } = useFormContext();
-    const [values, setValues] = useState<(string | number)[]>(getValues(name));
+    const { control, setValue } = useFormContext();
+    const [values, setValues] = useState<(string | number)[]>(defaultValues);
 
     const handleAddItem = () => {
         setValues((prev) => [...prev, ""]);
@@ -49,7 +51,7 @@ export const MultiInputField = ({
             <InputLabel required={required} label={label} />
             <Box mb={1}>
                 {values.length > 0 && values.map((value, index) => (
-                    <Box key={index} display="flex" alignItems="start" marginBottom={1} gap={2}>
+                    <Box key={index} display="flex" alignItems="start" marginBottom={2} gap={2}>
                         <Controller
                             name={`${name}[${index}]`}
                             control={control}
@@ -87,6 +89,7 @@ export const MultiInputField = ({
                 variant="contained"
                 color="primary"
                 onClick={handleAddItem}
+                sx={{ width: 150 }}
                 startIcon={<PlusIcon />}
             >
                 Add Item

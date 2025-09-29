@@ -4,14 +4,14 @@ import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import DOMPurify from 'isomorphic-dompurify';
-import { useState, useTransition } from 'react';
+import { useState } from 'react';
 
 import { deleteCategory } from '@/actions/category';
+import { Column, DataTable } from '@/components/data-table';
 import { ConfirmDialog } from '@/components/dialog/confirm-dialog';
 import { NotDataFound } from '@/components/not-data-found';
 import { OptimizeImage } from '@/components/optimize-image';
-import { Column, DataTable } from '@/components/table/data-table';
-import { TableSelectedAction } from '@/components/table/table-selection-action';
+import { TableSelectedAction } from '@/components/table-selection-action';
 import { DeleteIcon } from '@/icons/delete-icon';
 import { Category } from '@/interfaces/category';
 import { toast } from '@/lib/toast-store';
@@ -26,7 +26,9 @@ interface CategoryTableProps {
 export const CategoryTable = ({ categories }: CategoryTableProps) => {
     const [selectedRows, setSelectedRows] = useState<string[]>([]);
     const [openDeleteModal, setOpenDeleteModal] = useState(false);
-    const [loading, startTransition] = useTransition();
+    const [loading, setLoading] = useState(false);
+
+    console.log(categories);
 
     const handleSelectAllClick = (checked: boolean) => {
         setSelectedRows(checked ? categories.map((m) => m.id) : []);
@@ -39,16 +41,17 @@ export const CategoryTable = ({ categories }: CategoryTableProps) => {
     };
 
     const handleDeleteCategory = async () => {
-        startTransition(async () => {
-            const res = await deleteCategory(selectedRows);
-            if (res.success) {
-                setSelectedRows([]);
-                setOpenDeleteModal(false);
-                toast.success(res.message);
-            } else {
-                toast.error(res.message);
-            }
-        });
+        setLoading(true);
+        const res = await deleteCategory(selectedRows);
+        setLoading(false);
+
+        if (res.success) {
+            setSelectedRows([]);
+            setOpenDeleteModal(false);
+            toast.success(res.message);
+        } else {
+            toast.error(res.message);
+        }
     };
 
     const columns: Column<Category>[] = [

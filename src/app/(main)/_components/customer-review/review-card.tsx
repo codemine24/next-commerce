@@ -5,26 +5,11 @@ import { OptimizeImage } from "@/components/optimize-image";
 import { QuoteLeftIcon } from "@/icons/quote-left";
 import { StarIcon } from "@/icons/star";
 
-interface ReviewCardProps {
-  id: number;
-  image: string;
-  name: string;
-  role: string;
-  rating: number;
-  review: string;
-}
-
-export const ReviewCard = ({
-  image,
-  name,
-  role,
-  rating,
-  review,
-}: ReviewCardProps) => {
+export const ReviewCard = () => {
   return (
-    <Box sx={{ height: "340px" }}>
+    <Box>
       <OptimizeImage
-        src={image}
+        src="/images/user.svg"
         alt="Hero Carousel"
         height={100}
         width={100}
@@ -34,10 +19,10 @@ export const ReviewCard = ({
         <Box display="flex" alignItems="center" justifyContent="space-between">
           <Box>
             <Typography variant="h4" fontWeight={500} gutterBottom>
-              {name}
+              Rakib Ahmed
             </Typography>
             <Typography variant="body2" color="text.divider">
-              {role}
+              Web Developer
             </Typography>
           </Box>
           <Box>
@@ -47,12 +32,13 @@ export const ReviewCard = ({
               color="text.secondary"
               gutterBottom
             >
-              {rating}/5
+              5
             </Typography>
             <Box display="flex" alignItems="center">
               {Array.from({ length: 5 }, (_, i) => (
                 <StarIcon
-                  sx={{ width: 20, height: 20, color: "#FFCD4E" }}
+                  sx={{ width: 20, height: 20 }}
+                  color="warning"
                   key={i}
                 />
               ))}
@@ -66,7 +52,9 @@ export const ReviewCard = ({
         </Box>
 
         <Typography variant="body1" color="text.secondary">
-          {review}
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet,
+          recusandae hic, fugit nemo vero sed porro in pariatur architecto, amet
+          quo similique eum modi sunt asperiores veritatis eius excepturi nobis?
         </Typography>
       </Box>
     </Box>
