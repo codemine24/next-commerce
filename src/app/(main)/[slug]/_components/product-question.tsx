@@ -4,7 +4,6 @@ import Stack from "@mui/material/Stack";
 import * as React from "react";
 
 import { QuestionCard } from "./product-question-card";
-import { ProductQuestionForm } from "./product-question-form";
 import { ProductSectionHeader } from "./product-section-header";
 
 const questions = [
@@ -34,18 +33,16 @@ const questions = [
 export const ProductQuestions = () => {
   return (
     <Box id="#product-qna">
-      {/* Section header */}
       <Box display="flex" alignItems="center" justifyContent="space-between">
         <ProductSectionHeader title="Customer Questions" />
-        {/* <ProductQuestionForm /> */}
       </Box>
 
-      <Stack spacing={1} mt={5}>
+      <Stack spacing={1} mt={3}>
         {questions.map((q, index) => (
           <React.Fragment key={q.question}>
             <QuestionCard {...q} />
-            {index < questions.length - 1 && (
-              <Divider sx={{ my: 2, bgcolor: "divider" }} />
+            {index < questions.length && (
+              <Divider sx={{ borderBottom: "1px solid #E6F2EE" }} />
             )}
           </React.Fragment>
         ))}

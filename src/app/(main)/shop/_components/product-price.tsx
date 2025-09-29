@@ -7,7 +7,12 @@ import { currencyFormatter } from "@/utils/currency-formatter";
 export const ProductPrice = ({ product }: { product: Product }) => {
   if (product?.discount_price) {
     return (
-      <Stack direction="row" spacing={3} alignItems="center" mt={1}>
+      <Stack
+        direction="row"
+        spacing={3}
+        alignItems="center"
+        justifyContent="center"
+      >
         <Typography variant="h3" sx={{ fontWeight: 500, fontSize: 20 }}>
           {currencyFormatter(product?.discount_price)}
         </Typography>

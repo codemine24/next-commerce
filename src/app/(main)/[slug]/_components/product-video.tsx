@@ -3,7 +3,6 @@ import Image from "next/image";
 
 import productVideoThumbnail from "@/../public/assets/product-video-thumbnail.svg";
 
-
 export const ProductVideo = ({
   videoUrl,
 }: {

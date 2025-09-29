@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  Button,
-  buttonBaseClasses,
-  ButtonGroup
-} from "@mui/material";
+import { Button, buttonBaseClasses, ButtonGroup } from "@mui/material";
 
 type ProductQuantityButtonProps = {
   qty: number;
