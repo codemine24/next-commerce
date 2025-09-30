@@ -1,16 +1,20 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import Button from "@mui/material/Button";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
 import { createOrderForGuestUser, createOrderForLoggedInUser } from "@/actions/order";
+import { NotDataFound } from "@/components/not-data-found";
 import { useAuth } from "@/hooks/use-auth";
 import { useCart } from "@/hooks/use-cart";
 import { toast } from "@/lib/toast-store";
 import { Order, orderSchema } from "@/zod/order-schema";
 
 import { CheckoutForm } from "./checkout-form";
+
 
 export const CheckoutFormContainer = () => {
     const router = useRouter();
@@ -56,10 +60,28 @@ export const CheckoutFormContainer = () => {
             return;
         }
 
-        toast.success("Order created successfully");
+        toast.success(res.message);
         clearCart();
         router.replace("/payment-success");
     };
+
+    if (cart?.cart_items.length === 0) {
+        return (
+            <NotDataFound
+                message="Your cart is empty"
+                action={
+                    <Button
+                        variant="contained"
+                        sx={{ mt: 2 }}
+                        component={Link}
+                        href="/"
+                    >
+                        Continue Shopping
+                    </Button>
+                }
+            />
+        )
+    }
 
     return <CheckoutForm methods={methods} onSubmit={onSubmit} />;
 };

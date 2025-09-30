@@ -2,7 +2,7 @@
 
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 import { NotDataFound } from "@/components/not-data-found";
 import { useCart } from "@/hooks/use-cart";
@@ -15,7 +15,6 @@ import { CartTotal } from "./cart-total";
 
 export const CartPageContainer = () => {
   const { cart } = useCart();
-  const router = useRouter()
 
   return (
     <Box mt={2}>
@@ -29,7 +28,8 @@ export const CartPageContainer = () => {
             <Button
               variant="contained"
               sx={{ mt: 2 }}
-              onClick={() => router.push("/")}
+              component={Link}
+              href="/"
             >
               Continue Shopping
             </Button>
