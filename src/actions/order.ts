@@ -10,3 +10,11 @@ export const createOrderForGuestUser = async (data: Order) => {
     });
     return res;
 };
+
+export const createOrderForLoggedInUser = async (data: Order) => {
+    const res = await api.post(API_ROUTES.order.create_order_for_user, {
+        body: JSON.stringify(data)
+    });
+
+    return res;
+};

@@ -16,12 +16,12 @@ export const addressSchema = z.object({
     address: z
         .string({ error: "Address is required" })
         .min(5, "Address must be at least 5 characters long"),
-    postal_code: z
-        .string({ error: "Postal code is required" })
-        .min(4, "Postal code must be at least 4 characters long")
-        .max(4, "Postal code must be at most 4 characters long")
+    postal_code: z.
+        string()
         .optional()
-        .nullable(),
+        .refine(val => !val || val.length === 4, {
+            message: 'Postal code must be 4 digits',
+        }),
     city: z
         .string({ error: "City is required" })
         .min(2, "City must be at least 2 characters long"),
