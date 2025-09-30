@@ -12,8 +12,8 @@ export const CartTotal = () => {
     const delivery = 60;
 
     return (
-        <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 4 }}>
-            <Box sx={{ minWidth: 280 }}>
+        <Box display="flex" justifyContent="flex-end" my={4}>
+            <Box minWidth={280}>
                 <Stack
                     direction="row"
                     justifyContent="space-between"
@@ -51,7 +51,6 @@ export const CartTotal = () => {
                 <Stack
                     direction="row"
                     justifyContent="space-between"
-                    sx={{ borderBottom: "1px solid", borderColor: "divider", pb: 1 }}
                 >
                     <Typography fontWeight={600} width="60%" textAlign="right">
                         Total:

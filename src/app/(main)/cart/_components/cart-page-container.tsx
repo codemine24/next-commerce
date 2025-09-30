@@ -17,8 +17,6 @@ export const CartPageContainer = () => {
   const { cart } = useCart();
   const router = useRouter()
 
-  console.log(cart);
-
   return (
     <Box mt={2}>
       <SectionTitle title="Cart" />
