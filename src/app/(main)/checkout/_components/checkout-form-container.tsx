@@ -15,7 +15,6 @@ import { Order, orderSchema } from "@/zod/order-schema";
 
 import { CheckoutForm } from "./checkout-form";
 
-
 export const CheckoutFormContainer = () => {
     const router = useRouter();
     const { isAuthenticated } = useAuth();
@@ -62,7 +61,7 @@ export const CheckoutFormContainer = () => {
 
         toast.success(res.message);
         clearCart();
-        router.replace("/payment-success");
+        router.replace("/payment-status");
     };
 
     if (cart?.cart_items.length === 0) {
