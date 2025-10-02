@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbopack",
     "build": "prisma generate && eslint . --ext .js,.ts,.jsx,.tsx --fix && next build --turbopack",
     "start": "next start",
     "lint": "eslint",
@@ -37,6 +37,7 @@
     "react-dom": "19.1.0",
     "react-dropzone": "^14.3.8",
     "react-hook-form": "^7.62.0",
+    "react-phone-number-input": "^3.4.12",
     "react-quilljs": "^2.0.5",
     "sharp": "^0.34.4",
     "sslcommerz-lts": "^1.2.0",
