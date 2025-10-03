@@ -5,32 +5,28 @@ import { Product } from "@/interfaces/product";
 import { currencyFormatter } from "@/utils/currency-formatter";
 
 export const ProductPrice = ({ product }: { product: Product }) => {
-  if (product?.discount_price) {
-    return (
-      <Stack
-        direction="row"
-        spacing={3}
-        alignItems="center"
-        justifyContent="center"
-      >
-        <Typography variant="h3" sx={{ fontWeight: 500, fontSize: 20 }}>
-          {currencyFormatter(product?.discount_price)}
-        </Typography>
+  return (
+    <Stack
+      direction="row"
+      spacing={1}
+      alignItems="center"
+      justifyContent="center"
+      sx={{ minHeight: 32 }}
+    >
+      <Typography variant="h6" color="primary.main">
+        {currencyFormatter(product?.price)}
+      </Typography>
+      {product.discount_price && (
         <Typography
-          variant="h3"
+          variant="body1"
           sx={{
             textDecoration: "line-through",
             color: "#A4B2AE",
-            fontSize: 20,
-            fontWeight: 500,
           }}
         >
-          {currencyFormatter(product?.price)}
+          {currencyFormatter(product?.discount_price)}
         </Typography>
-      </Stack>
-    );
-  }
-  return (
-    <Typography variant="h3">{currencyFormatter(product?.price)}</Typography>
+      )}
+    </Stack>
   );
 };

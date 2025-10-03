@@ -165,11 +165,11 @@ export const components: Components<Theme> = {
         props: { variant: "soft", color: "primary" },
         style: ({ theme }) => ({
           backgroundColor: alpha((theme.palette.primary as unknown as { [key: string]: string })["100"], 0.1),
-          color: theme.palette.primary.dark,
+          color: theme.palette.primary.main,
           borderRadius: 0,
           transition: "all 0.3s",
           ":hover": {
-            backgroundColor: alpha((theme.palette.primary as unknown as { [key: string]: string })["100"], 0.2),
+            backgroundColor: theme.palette.primary.main,
             color: common.white,
           },
         }),
