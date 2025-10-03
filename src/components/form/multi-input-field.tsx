@@ -2,95 +2,118 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import MuiTextField, { TextFieldProps } from "@mui/material/TextField";
-import { useState } from "react";
-import { useFormContext, Controller } from "react-hook-form";
+import { Controller, useFormContext, useFieldArray } from "react-hook-form";
 
 import { CloseIcon } from "@/icons/close";
 import { PlusIcon } from "@/icons/plus";
 
 import { InputLabel } from "./input-label";
 
-type Props = TextFieldProps & {
-    name: string;
-    label: string;
-    placeholder?: string;
-    required?: boolean;
+type Props<TFormValues> = TextFieldProps & {
+  name: keyof TFormValues & string;
+  label: string;
+  placeholder?: string;
+  required?: boolean;
 };
 
-export const MultiInputField = ({
+export function MultiInputField<TFormValues>({
+  name,
+  label,
+  placeholder,
+  required,
+  helperText,
+  type = "text",
+  ...other
+}: Props<TFormValues>) {
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext();
+
+  // Use useFieldArray for dynamic array inputs
+  const { fields, append, remove } = useFieldArray({
+    control,
     name,
-    label,
-    placeholder,
-    required,
-    helperText,
-    type = "text",
-    ...other
-}: Props) => {
-    const { control, setValue, getValues } = useFormContext();
-    const [values, setValues] = useState<(string | number)[]>(getValues(name));
+  });
 
-    const handleAddItem = () => {
-        setValues((prev) => [...prev, ""]);
-    };
+  // Access array-level error (e.g. nonempty validation)
+  const arrayError = errors?.[name]?.message as string | undefined;
 
-    const handleRemoveItem = (index: number) => {
-        setValues((prev) => prev.filter((_, i) => i !== index));
-    };
+  return (
+    <Box flex={1} width="100%">
+      <InputLabel required={required} label={label} />
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, index: number) => {
-        const updatedValues = [...values];
-        updatedValues[index] = type === "number" ? Number(event.target.value) : event.target.value;
-        setValues(updatedValues);
-        setValue(name, updatedValues);
-    };
+      <Box mb={1}>
+        {fields.length > 0 ? (
+          fields.map((field, index) => {
+            // Error for the individual field item (e.g. empty string)
+            const fieldError =
+              errors?.[name] && Array.isArray(errors[name])
+                ? (errors[name] as any)[index]?.message || null
+                : null;
 
-    return (
-        <Box flex={1} width="100%">
-            <InputLabel required={required} label={label} />
-            <Box mb={1}>
-                {values.length > 0 && values.map((value, index) => (
-                    <Box key={index} display="flex" alignItems="start" marginBottom={1} gap={2}>
-                        <Controller
-                            name={`${name}[${index}]`}
-                            control={control}
-                            render={({ field, fieldState: { error } }) => (
-                                <MuiTextField
-                                    {...field}
-                                    type={type}
-                                    value={value}
-                                    fullWidth
-                                    size="small"
-                                    placeholder={placeholder || label}
-                                    onChange={(event) => handleChange(event, index)}
-                                    error={Boolean(error)}
-                                    helperText={error?.message || helperText}
-                                    {...other}
-                                />
-                            )}
-                        />
-                        <IconButton
-                            color="error"
-                            onClick={() => handleRemoveItem(index)}
-                        >
-                            <CloseIcon />
-                        </IconButton>
-                    </Box>
-                ))}
+            return (
+              <Box
+                key={field.id}
+                display="flex"
+                alignItems="start"
+                marginBottom={1}
+                gap={2}
+              >
+                <Controller
+                  name={`${name}.${index}` as const}
+                  control={control}
+                  rules={{
+                    required: required ? "This field is required" : false,
+                  }}
+                  render={({ field }) => (
+                    <MuiTextField
+                      {...field}
+                      type={type}
+                      fullWidth
+                      size="small"
+                      placeholder={placeholder || label}
+                      error={Boolean(fieldError)}
+                      helperText={fieldError || helperText}
+                      {...other}
+                    />
+                  )}
+                />
 
-                {values.length === 0 && (
-                    <Box color="text.secondary" bgcolor="background.paper" border={1} borderColor="divider" p={2}>
-                        No items added
-                    </Box>
-                )}
-            </Box>
-            <Button
-                variant="contained"
-                color="primary"
-                onClick={handleAddItem}
-                startIcon={<PlusIcon />}
-            >
-                Add Item
-            </Button>
-        </Box>
-    );
-};
+                <IconButton color="error" onClick={() => remove(index)}>
+                  <CloseIcon />
+                </IconButton>
+              </Box>
+            );
+          })
+        ) : (
+          <Box
+            color="text.secondary"
+            bgcolor="background.paper"
+            border={1}
+            borderColor="divider"
+            p={2}
+            borderRadius={1}
+          >
+            No items added
+          </Box>
+        )}
+
+        {arrayError && (
+          <Box mt={1} color="error.main" fontSize="0.875rem">
+            {arrayError}
+          </Box>
+        )}
+      </Box>
+
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={() => append("" as any)}
+        startIcon={<PlusIcon />}
+      >
+        Add Item
+      </Button>
+    </Box>
+  );
+}
