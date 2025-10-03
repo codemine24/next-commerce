@@ -1,10 +1,4 @@
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-
-import { CloseIcon } from "@/icons/close";
+"use client";
 import {
   alpha,
   IconButton,
@@ -12,6 +6,13 @@ import {
   TableContainer,
   Typography,
 } from "@mui/material";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+
+import { CloseIcon } from "@/icons/close";
 
 interface Order {
   id: string;
