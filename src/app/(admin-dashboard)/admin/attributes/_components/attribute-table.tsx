@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import DOMPurify from "isomorphic-dompurify";
 import { useState, useTransition } from "react";
 
+import { deleteAttribute } from "@/actions/attribute";
 import { ConfirmDialog } from "@/components/dialog/confirm-dialog";
 import { NotDataFound } from "@/components/not-data-found";
 import { Column, DataTable } from "@/components/table/data-table";
@@ -13,7 +14,8 @@ import { TableSelectedAction } from "@/components/table/table-selection-action";
 import { DeleteIcon } from "@/icons/delete-icon";
 import { Category } from "@/interfaces/category";
 import { toast } from "@/lib/toast-store";
-import { deleteAttribute } from "@/actions/attribute";
+
+import { CategoryActionPopover } from "../../categories/_components/category-action-popover";
 
 interface CategoryTableProps {
   categories: Category[];

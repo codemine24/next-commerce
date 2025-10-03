@@ -2,6 +2,7 @@
 
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import { AttributeType } from "@prisma/client";
 import { UseFormReturn } from "react-hook-form";
 
 import { TextField, Select, MultiInputField } from "@/components/form";
@@ -9,7 +10,6 @@ import FormProvider from "@/components/form/form-provider";
 import { SubmitButton } from "@/components/submit-button";
 import { Category } from "@/interfaces/category";
 import { AttributeSchema } from "@/zod/attribute-schema";
-import { AttributeType } from "@prisma/client";
 
 interface AttributeFormProps {
   methods: UseFormReturn<AttributeSchema>;
