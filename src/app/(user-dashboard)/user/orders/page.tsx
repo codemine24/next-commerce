@@ -1,6 +1,3 @@
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-
 import { OrderTable } from "./_components/order-table";
 
 const orders = [
@@ -96,6 +93,6 @@ const orders = [
   },
 ];
 
-export default function OrdersPage() {
+export default async function OrdersPage() {
   return <OrderTable orders={orders} />;
 }
