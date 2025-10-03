@@ -7,7 +7,7 @@ import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 import { OptimizeImage } from "@/components/optimize-image";
 import { useCart } from "@/hooks/use-cart";
@@ -23,7 +23,6 @@ interface CartDrawerProps {
 }
 
 export const CartDrawer = ({ open, onClose }: CartDrawerProps) => {
-  const router = useRouter();
   const { cart, removeFromCart } = useCart();
 
   return (
@@ -122,15 +121,13 @@ export const CartDrawer = ({ open, onClose }: CartDrawerProps) => {
             <Button
               fullWidth
               variant="contained"
+              component={Link}
+              href="/cart"
               sx={{
                 whiteSpace: "nowrap",
                 bgcolor: "primary",
                 color: "common.white",
                 borderRadius: BORDER_RADIUS.default,
-              }}
-              onClick={() => {
-                router.push("/cart");
-                onClose();
               }}
             >
               View Cart
@@ -139,6 +136,8 @@ export const CartDrawer = ({ open, onClose }: CartDrawerProps) => {
             <Button
               fullWidth
               variant="contained"
+              component={Link}
+              href="/checkout"
               sx={{
                 whiteSpace: "nowrap",
                 bgcolor: "common.black",
