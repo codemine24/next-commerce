@@ -1,25 +1,30 @@
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Chip from "@mui/material/Chip";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Link from "next/link";
 
-import { VisibilityIcon } from "@/icons/visibility";
-import { getAddresses } from "@/actions/address";
-import { useFetch } from "@/hooks/use-fetch";
-import { API_ROUTES } from "@/lib/api-routes";
-import { LoadingSpinner } from "@/components/loading-spinner";
 import { ErrorComponent } from "@/components/error-component";
+import { LoadingSpinner } from "@/components/loading-spinner";
 import { NotDataFound } from "@/components/not-data-found";
+import { useFetch } from "@/hooks/use-fetch";
 import { Address } from "@/interfaces/address";
+import { API_ROUTES } from "@/lib/api-routes";
+
 import { AddressActionPopover } from "./address-action-popover";
 
-export const UserAddressTable = () => {
+interface IUserAddressTableProps {
+  setSelectedAddress: (value: {
+    mode: "create" | "edit" | null;
+    data: Address | null;
+  }) => void;
+}
+
+export const UserAddressTable = ({
+  setSelectedAddress,
+}: IUserAddressTableProps) => {
   const { data, isLoading, success, message, revalidate } = useFetch(
     API_ROUTES.address.get_addresses
   );
@@ -52,42 +57,11 @@ export const UserAddressTable = () => {
               },
             }}
           >
-            <TableCell
-            // sx={{
-            //   borderBottom: 1,
-            //   borderColor: "divider",
-            //   py: 0.5,
-            //   fontSize: 13,
-            //   backgroundColor: "background.paper",
-            // }}
-            >
-              Full Name
-            </TableCell>
+            <TableCell>Full Name</TableCell>
             <TableCell>Address</TableCell>
             <TableCell>Postcode</TableCell>
             <TableCell>Phone Number</TableCell>
-            {/* <TableCell
-              sx={{
-                borderBottom: 1,
-                borderColor: "divider",
-                py: 0.5,
-                fontSize: 13,
-                backgroundColor: "background.paper",
-              }}
-            >
-              Date
-            </TableCell>
-            <TableCell
-              sx={{
-                borderBottom: 1,
-                borderColor: "divider",
-                py: 0.5,
-                fontSize: 13,
-                backgroundColor: "background.paper",
-              }}
-            >
-              Delivery Method
-            </TableCell> */}
+
             <TableCell align="center">Action</TableCell>
           </TableRow>
         </TableHead>
@@ -106,36 +80,10 @@ export const UserAddressTable = () => {
               }}
             >
               <TableCell>{item.name}</TableCell>
-              <TableCell>
-                {/* <Chip size="small" label={"jjgd"} color="primary" /> */}
-                {item.address}
-              </TableCell>
-              <TableCell>
-                {/* <Chip size="small" label={"dfgfhd"} color="primary" /> */}
-                {item.postal_code}
-              </TableCell>
+              <TableCell>{item.address}</TableCell>
+              <TableCell>{item.postal_code}</TableCell>
               <TableCell>{item.contact_number}</TableCell>
-              {/* <TableCell
-                sx={{
-                  borderBottom: 1,
-                  borderTop: 0,
-                  borderColor: "divider",
-                  py: 1,
-                }}
-              >
-                {"yfydgufd"}
-              </TableCell> */}
-              {/* <TableCell
-                sx={{
-                  borderBottom: 1,
-                  borderTop: 0,
-                  borderColor: "divider",
-                  py: 1,
-                  textTransform: "capitalize",
-                }}
-              >
-                {"hfgdfgudfj"}
-              </TableCell> */}
+
               <TableCell
                 sx={{
                   borderBottom: 1,
@@ -144,7 +92,10 @@ export const UserAddressTable = () => {
                   py: 1,
                 }}
               >
-                <AddressActionPopover address={item} />
+                <AddressActionPopover
+                  address={item}
+                  setSelectedAddress={setSelectedAddress}
+                />
               </TableCell>
             </TableRow>
           ))}

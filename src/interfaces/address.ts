@@ -10,7 +10,7 @@ export interface Address {
   city: string;
   district: string;
   country: string;
-  is_default: Boolean;
+  is_default: boolean;
   created_at: string;
   updated_at: string;
 }

@@ -6,23 +6,27 @@ import IconButton from "@mui/material/IconButton";
 import Popover from "@mui/material/Popover";
 import { useState, useTransition } from "react";
 
-import { deleteCategory } from "@/actions/category";
+import { deleteAddress } from "@/actions/address";
 import { ConfirmDialog } from "@/components/dialog/confirm-dialog";
 import { DeleteIcon } from "@/icons/delete-icon";
 import { DotVerticalIcon } from "@/icons/dot-vertical";
 import { EditIcon } from "@/icons/edit";
-import { Category } from "@/interfaces/category";
-import { toast } from "@/lib/toast-store";
 import { Address } from "@/interfaces/address";
+import { toast } from "@/lib/toast-store";
 
 // import { CategoryEditDialog } from "./category-edit-dialog";
 
 interface AddressActionPopoverProps {
   address: Address;
+  setSelectedAddress: (value: {
+    mode: "create" | "edit" | null;
+    data: Address | null;
+  }) => void;
 }
 
 export const AddressActionPopover = ({
   address,
+  setSelectedAddress,
 }: AddressActionPopoverProps) => {
   const [loading, startTransition] = useTransition();
   const [openConfirmModal, setOpenConfirmModal] = useState<boolean>(false);
@@ -43,7 +47,7 @@ export const AddressActionPopover = ({
 
   const handleDelete = async () => {
     startTransition(async () => {
-      const res = await deleteCategory([address.id]);
+      const res = await deleteAddress([address.id]);
       console.log(address);
 
       if (res.success) {
@@ -79,7 +83,12 @@ export const AddressActionPopover = ({
             startIcon={<EditIcon />}
             variant="text"
             color="inherit"
-            onClick={() => setOpenEditModal(true)}
+            onClick={() => {
+              setSelectedAddress({
+                mode: "edit",
+                data: address,
+              });
+            }}
             sx={{
               pl: 2,
               textTransform: "none",
@@ -110,20 +119,12 @@ export const AddressActionPopover = ({
         <ConfirmDialog
           open={openConfirmModal}
           onClose={handleClose}
-          title="Delete Category"
-          description="Are you sure you want to delete this category?"
+          title="Delete Address"
+          description="Are you sure you want to delete this address?"
           onConfirm={handleDelete}
           loading={loading}
         />
       )}
-
-      {/* {openEditModal && (
-        <CategoryEditDialog
-          open={openEditModal}
-          onClose={handleClose}
-          category={category}
-        />
-      )} */}
     </>
   );
 };

@@ -1,8 +1,10 @@
 import Box from "@mui/material/Box";
+
 import { getBrands } from "@/actions/brand";
 import { ErrorComponent } from "@/components/error-component";
 import { Pagination } from "@/components/pagination";
 import { SearchParams } from "@/interfaces/common";
+
 import { BrandTable } from "./brand-table";
 
 export const BrandContent = async ({

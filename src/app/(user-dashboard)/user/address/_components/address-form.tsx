@@ -1,20 +1,13 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  Button,
-  Grid,
-  Box,
-  FormControlLabel,
-  FormHelperText,
-  FormControl,
-} from "@mui/material";
+import { Button, Grid, Box } from "@mui/material";
 import React from "react";
-import { useForm, SubmitHandler, UseFormReturn } from "react-hook-form";
-import { addAddresses } from "@/actions/address";
-import { addressSchema, AddressSchema } from "@/zod/address-schema";
-import { AddressHeader } from "./address-header";
+import { UseFormReturn } from "react-hook-form";
+
 import { Checkbox, TextField } from "@/components/form";
 import FormProvider from "@/components/form/form-provider";
 import { PhoneInputField } from "@/components/form/phone-input-field";
+import { AddressSchema } from "@/zod/address-schema";
+
+import { AddressHeader } from "./address-header";
 
 interface AddressFormProps {
   methods: UseFormReturn<AddressSchema>;
@@ -123,28 +116,6 @@ export const AddressForm = ({
 
             {/* Is Default Checkbox */}
             <Grid size={{ xs: 12, sm: 12 }}>
-              {/* <FormControl error={!!errors.is_default}>
-                <Controller
-                  name="is_default"
-                  control={control}
-                  render={({ field: { onChange, value, ...field } }) => (
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          {...field}
-                          checked={!!value} // Ensure it's a boolean
-                          onChange={onChange}
-                          color="primary"
-                        />
-                      }
-                      label="Set as default address"
-                    />
-                  )}
-                />
-                {errors.is_default && (
-                  <FormHelperText>{errors.is_default.message}</FormHelperText>
-                )}
-              </FormControl> */}
               <Checkbox name="is_default" label="Set as default address" />
             </Grid>
 
