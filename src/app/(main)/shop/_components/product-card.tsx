@@ -25,7 +25,7 @@ export const ProductCard = async ({
   return (
     <Box
       sx={{
-        pb: { xs: 2, md: 3 },
+        pb: { xs: 1, md: 2 },
         display: "flex",
         flexDirection: "column",
         border: "1px solid",
@@ -53,8 +53,6 @@ export const ProductCard = async ({
         <Box
           sx={{
             position: "relative",
-            p: 2,
-            pb: 0,
             borderBottom: 1,
             borderColor: "divider",
           }}
@@ -64,59 +62,34 @@ export const ProductCard = async ({
               makeImageUrl(product.thumbnail) || "/images/featured_image_1.svg"
             }
             alt={product.name}
-            height={290}
-            imageStyle={{ objectFit: "contain" }}
+            height={220}
+            // imageStyle={{ objectFit: "contain" }}
           />
-
-          {/* Action icons */}
-          {/* <Stack
-            direction="column"
-            spacing={1}
-            className="action-icons"
-            sx={{
-              position: "absolute",
-              top: 20,
-              right: 8,
-              opacity: { xs: 1, md: 0 },
-              transform: { xs: "none", md: "translateY(-10px)" },
-              transition: "opacity 0.3s ease, transform 0.3s ease",
-              zIndex: 2,
-            }}
-          >
-            <AddWishListButton />
-            <AddToCartIconButton product={product} />
-          </Stack> */}
         </Box>
-
-        {/* Product name */}
-        <Box height={60} mt={2} px={3}>
+        <Box mt={2} px={3}>
           <Typography
-            variant="h4"
+            variant="h5"
+            textAlign={"center"}
+            gutterBottom
             sx={{ "&:hover": { textDecoration: "underline" } }}
           >
             {product.name}
           </Typography>
         </Box>
       </Box>
-      <Box sx={{ textAlign: "center" }}>
-        <ProductPrice product={product} />
-      </Box>
+      <ProductPrice product={product} />
 
-      {/* Price and quick view */}
       <Stack direction="row" justifyContent="center" gap={1} px={3} mt={1}>
         <BuyNowButton />
         {!action && <ProductQuickViewButton product={product} />}
       </Stack>
 
-      {/* Action buttons (Add to Cart etc) */}
       {action && (
         <Box display="flex" gap={1} mt={2} px={2}>
           <AddToCartButton product={product} />
           <ProductQuickViewButton product={product} />
         </Box>
       )}
-
-      {/* discount label */}
       <ProductDiscountLabel />
     </Box>
   );

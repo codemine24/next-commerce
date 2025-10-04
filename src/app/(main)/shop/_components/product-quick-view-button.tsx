@@ -17,7 +17,7 @@ export const ProductQuickViewButton = ({ product }: { product: Product }) => {
         onClick={() => setOpen(true)}
         sx={{
           color: "text.primary",
-          fontSize: "1rem",
+          fontSize: ".85rem",
           bgcolor: "rgb(235 236 237)",
           px: 1,
           flexGrow: 1,
