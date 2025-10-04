@@ -14,8 +14,9 @@ export const StatusRenderer = ({ status }: StatusChipProps) => {
   // Map each status to label + custom color
   const getColor = () => {
     switch (normalized) {
+      // Order-related statuses
       case "PENDING":
-        return { label: "Pending", color: "#FBC02D" };
+        return { label: "Pending", color: "#F57C00" };
       case "CONFIRMED":
         return { label: "Confirmed", color: "#0288D1" };
       case "PROCESSING":
@@ -24,10 +25,20 @@ export const StatusRenderer = ({ status }: StatusChipProps) => {
         return { label: "Shipped", color: "#1976D2" };
       case "DELIVERED":
         return { label: "Delivered", color: "#2E7D32" };
-      case "REFUNDED":
-        return { label: "Refunded", color: "#6A1B9A" };
       case "CANCELLED":
         return { label: "Cancelled", color: "#D32F2F" };
+      case "REFUNDED":
+        return { label: "Refunded", color: "#6A1B9A" };
+
+      // Payment-related statuses
+      case "DUE":
+        return { label: "Due", color: "#F57C00" };
+      case "PAID":
+        return { label: "Paid", color: "#388E3C" };
+      case "FAILED":
+        return { label: "Failed", color: "#C62828" };
+
+      // Fallback
       default:
         return { label: status, color: "#9E9E9E" };
     }

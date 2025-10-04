@@ -1,26 +1,41 @@
 "use client";
-import { Button, Stack, TableContainer, Typography } from "@mui/material";
+import { Stack, TableContainer, Typography } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-
-import { MyOrderActionPopover } from "./my-order-action-popover";
 import dayjs from "dayjs";
+
 import { StatusRenderer } from "@/components/status-renderer";
+import { ClipboardIcon } from "@/icons/clipboard-icon";
+import { currencyFormatter } from "@/utils/currency-formatter";
+
+import { TickIcon } from "@/icons/tick-icon";
+import { useState } from "react";
+import { MyOrderActionPopover } from "./my-order-action-popover";
 
 interface Order {
   id: string;
   order_id: string;
   order_status: string;
   payment_status: string;
-  payable_amount: number;
+  total_amount: number;
   created_at: string;
   delivery_method: string;
 }
 
 export const OrderTable = ({ orders }: { orders: Order[] }) => {
+  const [copiedOrderId, setCopiedOrderId] = useState<string | null>(null);
+
+  const handleCopyOrderId = (orderId: string) => {
+    navigator.clipboard.writeText(orderId);
+    setCopiedOrderId(orderId);
+
+    setTimeout(() => {
+      setCopiedOrderId(null);
+    }, 1000);
+  };
   return (
     <TableContainer sx={{ my: 4 }}>
       <Table
@@ -33,10 +48,10 @@ export const OrderTable = ({ orders }: { orders: Order[] }) => {
           <TableRow>
             <TableCell>Order</TableCell>
             <TableCell>Date</TableCell>
-            <TableCell>Status</TableCell>
-            <TableCell align="right">Delivery method</TableCell>
-            <TableCell align="right">Total</TableCell>
-            <TableCell align="right">Action</TableCell>
+            <TableCell>Order Status</TableCell>
+            <TableCell>Payment Status</TableCell>
+            <TableCell>Total</TableCell>
+            <TableCell>Action</TableCell>
           </TableRow>
         </TableHead>
 
@@ -46,8 +61,36 @@ export const OrderTable = ({ orders }: { orders: Order[] }) => {
             <TableRow key={item.id}>
               {/* Product */}
               <TableCell>
-                <Stack direction="row" spacing={2} alignItems="center">
-                  <Typography variant="body1">{item.order_id}</Typography>
+                <Stack
+                  direction="row"
+                  spacing={1}
+                  alignItems="center"
+                  title="Copy Order ID"
+                >
+                  <Typography
+                    variant="body1"
+                    sx={{
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                    }}
+                  >
+                    {item.order_id}
+                  </Typography>
+                  {copiedOrderId ? (
+                    <TickIcon sx={{ height: 12, width: 12 }} />
+                  ) : (
+                    <ClipboardIcon
+                      sx={{
+                        height: 12,
+                        width: 12,
+                        cursor: "pointer",
+                        color: "text.secondary",
+                        "&:hover": { color: "text.primary" },
+                      }}
+                      onClick={() => handleCopyOrderId(item.order_id)}
+                    />
+                  )}
                 </Stack>
               </TableCell>
 
@@ -60,15 +103,15 @@ export const OrderTable = ({ orders }: { orders: Order[] }) => {
               <TableCell>
                 <StatusRenderer status={item.order_status} />
               </TableCell>
-
-              {/* Payment method */}
-              <TableCell align="right">{item.delivery_method}</TableCell>
+              <TableCell>
+                <StatusRenderer status={item.payment_status} />
+              </TableCell>
 
               {/* Total */}
-              <TableCell align="right">{item.payable_amount || 0}</TableCell>
+              <TableCell>{currencyFormatter(item.total_amount) || 0}</TableCell>
 
               {/* Action */}
-              <TableCell align="right">
+              <TableCell>
                 <MyOrderActionPopover
                   item={{
                     id: item.id,
