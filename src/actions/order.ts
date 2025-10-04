@@ -1,6 +1,6 @@
 "use server";
 
-import { SearchParams } from "@/interfaces/common";
+import { TAGS } from "@/constants/tags";
 import api from "@/lib/api";
 import { API_ROUTES } from "@/lib/api-routes";
 import { Order } from "@/zod/order-schema";
