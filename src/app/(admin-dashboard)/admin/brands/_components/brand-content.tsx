@@ -7,33 +7,37 @@ import { SearchParams } from "@/interfaces/common";
 
 import { BrandTable } from "./brand-table";
 
-export const BrandContent = async ({ searchParams }: { searchParams: Promise<SearchParams> }) => {
-    const query = await searchParams;
-    const data = await getBrands(query);
+export const BrandContent = async ({
+  searchParams,
+}: {
+  searchParams: Promise<SearchParams>;
+}) => {
+  const query = await searchParams;
+  const data = await getBrands(query);
 
-    return (
-        <Box>
-            {/* Error Component */}
-            {!data.success && <ErrorComponent message={data.message} />}
+  return (
+    <Box>
+      {/* Error Component */}
+      {!data.success && <ErrorComponent message={data.message} />}
 
-            {/* Brand Table */}
-            {data.success && (
-                <>
-                    <BrandTable brands={data.data} />
-                    <Box
-                        p={2}
-                        bgcolor="background.default"
-                        borderTop={1}
-                        borderColor="divider"
-                    >
-                        <Pagination
-                            page={data.meta.page}
-                            total={data.meta.total}
-                            limit={data.meta.limit}
-                        />
-                    </Box>
-                </>
-            )}
-        </Box>
-    )
+      {/* Brand Table */}
+      {data.success && (
+        <>
+          <BrandTable brands={data.data} />
+          <Box
+            p={2}
+            bgcolor="background.default"
+            borderTop={1}
+            borderColor="divider"
+          >
+            <Pagination
+              page={data.meta.page}
+              total={data.meta.total}
+              limit={data.meta.limit}
+            />
+          </Box>
+        </>
+      )}
+    </Box>
+  );
 };
