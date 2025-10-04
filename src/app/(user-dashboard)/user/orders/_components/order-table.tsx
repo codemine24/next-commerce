@@ -6,26 +6,17 @@ import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import dayjs from "dayjs";
+import { useState } from "react";
 
 import { StatusRenderer } from "@/components/status-renderer";
 import { ClipboardIcon } from "@/icons/clipboard-icon";
+import { TickIcon } from "@/icons/tick-icon";
+import { IOrder } from "@/interfaces/order";
 import { currencyFormatter } from "@/utils/currency-formatter";
 
-import { TickIcon } from "@/icons/tick-icon";
-import { useState } from "react";
 import { MyOrderActionPopover } from "./my-order-action-popover";
 
-interface Order {
-  id: string;
-  order_id: string;
-  order_status: string;
-  payment_status: string;
-  total_amount: number;
-  created_at: string;
-  delivery_method: string;
-}
-
-export const OrderTable = ({ orders }: { orders: Order[] }) => {
+export const OrderTable = ({ orders }: { orders: IOrder[] }) => {
   const [copiedOrderId, setCopiedOrderId] = useState<string | null>(null);
 
   const handleCopyOrderId = (orderId: string) => {
@@ -112,18 +103,7 @@ export const OrderTable = ({ orders }: { orders: Order[] }) => {
 
               {/* Action */}
               <TableCell>
-                <MyOrderActionPopover
-                  item={{
-                    id: item.id,
-                    name: item.order_id,
-                    slug: item.order_status,
-                    code: item.payment_status,
-                    icon: item.payment_status,
-                    description: item.payment_status,
-                    featured: true,
-                    created_at: item.created_at,
-                  }}
-                />
+                <MyOrderActionPopover item={item} />
               </TableCell>
             </TableRow>
           ))}
