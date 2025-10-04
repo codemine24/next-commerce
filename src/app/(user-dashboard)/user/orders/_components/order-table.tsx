@@ -1,18 +1,14 @@
 "use client";
-import {
-  alpha,
-  IconButton,
-  Stack,
-  TableContainer,
-  Typography,
-} from "@mui/material";
+import { Button, Stack, TableContainer, Typography } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 
-import { CloseIcon } from "@/icons/close";
+import { MyOrderActionPopover } from "./my-order-action-popover";
+import dayjs from "dayjs";
+import { StatusRenderer } from "@/components/status-renderer";
 
 interface Order {
   id: string;
@@ -35,11 +31,12 @@ export const OrderTable = ({ orders }: { orders: Order[] }) => {
         {/* Header */}
         <TableHead>
           <TableRow>
-            <TableCell>Product</TableCell>
-            <TableCell>Action</TableCell>
-            <TableCell>Quantity</TableCell>
-            <TableCell align="right">Unit Price</TableCell>
+            <TableCell>Order</TableCell>
+            <TableCell>Date</TableCell>
+            <TableCell>Status</TableCell>
+            <TableCell align="right">Delivery method</TableCell>
             <TableCell align="right">Total</TableCell>
+            <TableCell align="right">Action</TableCell>
           </TableRow>
         </TableHead>
 
@@ -54,38 +51,37 @@ export const OrderTable = ({ orders }: { orders: Order[] }) => {
                 </Stack>
               </TableCell>
 
-              {/* Action */}
+              {/* Date */}
               <TableCell>
-                <IconButton
-                  onClick={() => {}}
-                  sx={{
-                    border: "1px solid",
-                    borderColor: (theme) =>
-                      alpha(theme.palette.primary.main, 0.3),
-                    color: "grey.400",
-                    bgcolor: (theme) => alpha(theme.palette.primary.main, 0.05),
-                    "&:hover": {
-                      bgcolor: (theme) => alpha(theme.palette.error.main, 0.08),
-                      borderColor: (theme) =>
-                        alpha(theme.palette.error.main, 0.3),
-                    },
-                    "&:hover svg": {
-                      color: "error.light",
-                    },
-                  }}
-                >
-                  <CloseIcon />
-                </IconButton>
+                {dayjs(item.created_at).format("ddd MMM D YYYY")}
               </TableCell>
 
-              {/* Quantity */}
-              <TableCell>-</TableCell>
+              {/* Status */}
+              <TableCell>
+                <StatusRenderer status={item.order_status} />
+              </TableCell>
 
-              {/* Unit Price */}
-              <TableCell align="right">-</TableCell>
+              {/* Payment method */}
+              <TableCell align="right">{item.delivery_method}</TableCell>
 
               {/* Total */}
-              <TableCell align="right">-</TableCell>
+              <TableCell align="right">{item.payable_amount || 0}</TableCell>
+
+              {/* Action */}
+              <TableCell align="right">
+                <MyOrderActionPopover
+                  item={{
+                    id: item.id,
+                    name: item.order_id,
+                    slug: item.order_status,
+                    code: item.payment_status,
+                    icon: item.payment_status,
+                    description: item.payment_status,
+                    featured: true,
+                    created_at: item.created_at,
+                  }}
+                />
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

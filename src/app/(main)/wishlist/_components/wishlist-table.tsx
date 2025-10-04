@@ -14,9 +14,10 @@ import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
 import React from "react";
 
-import { StatusChip, WishlistProduct } from "@/components/status-chip";
+import { StatusChip } from "@/components/status-chip";
 import { DeleteCircle } from "@/icons/delete-circle";
 import { ShoppingCart } from "@/icons/shopping-cart";
+import { WishlistProduct } from "@/interfaces/wishlist";
 import { BORDER_RADIUS } from "@/theme";
 import { currencyFormatter } from "@/utils/currency-formatter";
 
@@ -30,18 +31,10 @@ export const WishlistTable = ({ products }: WishlistTableProps) => {
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>
-              Product
-            </TableCell>
-            <TableCell>
-              Price
-            </TableCell>
-            <TableCell>
-              Stock Status
-            </TableCell>
-            <TableCell align="center">
-              Action
-            </TableCell>
+            <TableCell>Product</TableCell>
+            <TableCell>Price</TableCell>
+            <TableCell>Stock Status</TableCell>
+            <TableCell align="center">Action</TableCell>
           </TableRow>
         </TableHead>
 
