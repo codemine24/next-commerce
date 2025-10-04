@@ -28,7 +28,7 @@ export const OrderTable = ({ orders }: { orders: IOrder[] }) => {
     }, 1000);
   };
   return (
-    <TableContainer sx={{ my: 4 }}>
+    <TableContainer>
       <Table
         sx={{
           minWidth: 650,
