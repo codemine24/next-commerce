@@ -8,6 +8,8 @@ import { SearchParams } from "@/interfaces/common";
 
 import { AttributeHeader } from "../attributes/_components/attribute-header";
 
+import { AttributeContent } from "./_components/attribute-content";
+
 export default async function AttributePage({
   searchParams,
 }: {
@@ -24,7 +26,7 @@ export default async function AttributePage({
           />
         </Suspense>
         <Suspense fallback={<LoadingSpinner />}>
-          {/* <AttributeContent searchParams={searchParams} /> */}
+          <AttributeContent searchParams={searchParams} />
         </Suspense>
       </Box>
     </Box>

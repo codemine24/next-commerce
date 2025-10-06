@@ -15,12 +15,14 @@ interface AttributeFormProps {
   methods: UseFormReturn<AttributeSchema>;
   onSubmit: (data: AttributeSchema) => void;
   categories: Category[];
+  hideActionButtons?: boolean;
 }
 
 export const AttributeForm = ({
   methods,
   onSubmit,
   categories,
+  hideActionButtons = false,
 }: AttributeFormProps) => {
   return (
     <FormProvider methods={methods} onSubmit={methods.handleSubmit(onSubmit)}>
@@ -56,7 +58,7 @@ export const AttributeForm = ({
         />
 
         {/* Submit Button */}
-        <Box display="flex" justifyContent="flex-end" gap={2}>
+        {!hideActionButtons && <Box display="flex" justifyContent="flex-end" gap={2}>
           <Button
             variant="outlined"
             disabled={methods.formState.isSubmitting}
@@ -77,7 +79,7 @@ export const AttributeForm = ({
               textTransform: "none",
             }}
           />
-        </Box>
+        </Box>}
       </Box>
     </FormProvider>
   );

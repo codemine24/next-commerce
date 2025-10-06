@@ -2,8 +2,6 @@
 
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import DOMPurify from "isomorphic-dompurify";
 import { useState, useTransition } from "react";
 
 import { deleteAttribute } from "@/actions/attribute";
@@ -12,22 +10,22 @@ import { NotDataFound } from "@/components/not-data-found";
 import { Column, DataTable } from "@/components/table/data-table";
 import { TableSelectedAction } from "@/components/table/table-selection-action";
 import { DeleteIcon } from "@/icons/delete-icon";
-import { Category } from "@/interfaces/category";
+import { Attribute } from "@/interfaces/attribute";
 import { toast } from "@/lib/toast-store";
 
-import { CategoryActionPopover } from "../../categories/_components/category-action-popover";
+import { AttributeActionPopover } from "./attribute-action-popover";
 
-interface CategoryTableProps {
-  categories: Category[];
+interface AttributeTableProps {
+  attributes: Attribute[];
 }
 
-export const CategoryTable = ({ categories }: CategoryTableProps) => {
+export const AttributeTable = ({ attributes }: AttributeTableProps) => {
   const [selectedRows, setSelectedRows] = useState<string[]>([]);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [loading, startTransition] = useTransition();
 
   const handleSelectAllClick = (checked: boolean) => {
-    setSelectedRows(checked ? categories.map((m) => m.id) : []);
+    setSelectedRows(checked ? attributes.map((m) => m.id) : []);
   };
 
   const handleSelectRow = (id: string) => {
@@ -49,45 +47,37 @@ export const CategoryTable = ({ categories }: CategoryTableProps) => {
     });
   };
 
-  const columns: Column<Category>[] = [
+  const columns: Column<Attribute>[] = [
     {
       label: "Title",
-      key: "title",
-      render: (row: Category) => (
-        <Box minWidth={200}>
-          <Typography variant="h6">{row.title}</Typography>
-          <Box
-            component="div"
-            mt={1}
-            fontSize={13}
-            dangerouslySetInnerHTML={{
-              __html: DOMPurify.sanitize(row.description || ""),
-            }}
-          />
-        </Box>
-      ),
+      key: "name",
     },
     {
-      label: "Parent",
-      key: "parent_id",
-      render: (row: Category) => (
-        <Typography>{row.parent_id || "-"}</Typography>
-      ),
+      label: "Values",
+      key: "attribute_values",
+      render: (attribute) => attribute?.attribute_values?.map((value) => value.title).join(", ")
     },
     {
-      label: "Code",
-      key: "code",
+      label: "Type",
+      key: "type",
+    },
+    {
+      label: "Category",
+      key: "category",
+      render: (attribute) => attribute?.category?.title,
     },
     {
       label: "Action",
-      render: (row: Category) => <CategoryActionPopover category={row} />,
+      render: (attribute) => (
+        <AttributeActionPopover attribute={attribute} />
+      ),
     },
   ];
 
   return (
     <Box position="relative">
       <TableSelectedAction
-        rowCount={categories.length}
+        rowCount={attributes.length}
         numSelected={selectedRows.length}
         onSelectAllRows={handleSelectAllClick}
         action={
@@ -97,10 +87,10 @@ export const CategoryTable = ({ categories }: CategoryTableProps) => {
         }
       />
       <DataTable
-        rows={categories}
+        rows={attributes}
         columns={columns}
         rowKey="id"
-        emptyState={<NotDataFound hideIcon message="No categories found" />}
+        emptyState={<NotDataFound hideIcon message="No attributes found" />}
         selectedKeys={selectedRows}
         onToggleRow={handleSelectRow}
         onToggleAll={handleSelectAllClick}
@@ -111,8 +101,8 @@ export const CategoryTable = ({ categories }: CategoryTableProps) => {
         <ConfirmDialog
           open={openDeleteModal}
           onClose={() => setOpenDeleteModal(false)}
-          title="Delete Category"
-          description="Are you sure you want to delete this category?"
+          title="Delete Attribute"
+          description="Are you sure you want to delete this attribute?"
           onConfirm={handleDeleteAttribute}
           loading={loading}
         />

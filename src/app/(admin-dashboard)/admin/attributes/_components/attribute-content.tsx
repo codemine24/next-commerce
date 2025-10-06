@@ -5,6 +5,8 @@ import { ErrorComponent } from "@/components/error-component";
 import { Pagination } from "@/components/pagination";
 import { SearchParams } from "@/interfaces/common";
 
+import { AttributeTable } from "./attribute-table";
+
 export const AttributeContent = async ({
   searchParams,
 }: {
@@ -21,13 +23,8 @@ export const AttributeContent = async ({
       {/* Attribute Table */}
       {data.success && (
         <>
-          {/* <CategoryTable categories={data.data} /> */}
-          <Box
-            p={2}
-            bgcolor="background.default"
-            borderTop={1}
-            borderColor="divider"
-          >
+          <AttributeTable attributes={data.data} />
+          <Box p={2} bgcolor="background.default">
             <Pagination
               page={data.meta.page}
               total={data.meta.total}
