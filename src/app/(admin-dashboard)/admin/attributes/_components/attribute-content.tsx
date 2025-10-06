@@ -1,9 +1,9 @@
 import Box from "@mui/material/Box";
 
+import { getAttributes } from "@/actions/attribute";
 import { ErrorComponent } from "@/components/error-component";
 import { Pagination } from "@/components/pagination";
 import { SearchParams } from "@/interfaces/common";
-import { getAttributes } from "@/actions/attribute";
 
 export const AttributeContent = async ({
   searchParams,

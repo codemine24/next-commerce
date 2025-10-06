@@ -25,7 +25,7 @@ export const AttributeForm = ({
   return (
     <FormProvider methods={methods} onSubmit={methods.handleSubmit(onSubmit)}>
       <Box display="flex" flexDirection="column" gap={4}>
-        <TextField type="text" name="title" label="Attribute Title" required />
+        <TextField type="text" name="name" label="Attribute Name" required />
         <Select
           name="category_id"
           label="Category"

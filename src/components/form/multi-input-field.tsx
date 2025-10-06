@@ -30,90 +30,103 @@ export function MultiInputField<TFormValues>({
     formState: { errors },
   } = useFormContext();
 
-  // Use useFieldArray for dynamic array inputs
   const { fields, append, remove } = useFieldArray({
     control,
     name,
   });
 
-  // Access array-level error (e.g. nonempty validation)
   const arrayError = errors?.[name]?.message as string | undefined;
 
   return (
-    <Box flex={1} width="100%">
-      <InputLabel required={required} label={label} />
+    <Controller
+      name={name}
+      control={control}
+      rules={{
+        validate: (value) =>
+          value && value.length > 0 ? true : "At least one item is required",
+      }}
+      render={() => (
+        <Box flex={1} width="100%">
+          <InputLabel required={required} label={label} />
 
-      <Box mb={1}>
-        {fields.length > 0 ? (
-          fields.map((field, index) => {
-            // Error for the individual field item (e.g. empty string)
-            const fieldError =
-              errors?.[name] && Array.isArray(errors[name])
-                ? (errors[name] as any)[index]?.message || null
-                : null;
+          <Box mb={1}>
+            {fields.length > 0 ? (
+              fields.map((field, index) => {
+                const fieldError =
+                  errors?.[name] && Array.isArray(errors[name])
+                    ? (errors[name] as any)[index]?.message || null
+                    : null;
 
-            return (
-              <Box
-                key={field.id}
-                display="flex"
-                alignItems="start"
-                marginBottom={1}
-                gap={2}
-              >
-                <Controller
-                  name={`${name}.${index}` as const}
-                  control={control}
-                  rules={{
-                    required: required ? "This field is required" : false,
-                  }}
-                  render={({ field }) => (
-                    <MuiTextField
-                      {...field}
-                      type={type}
-                      fullWidth
-                      size="small"
-                      placeholder={placeholder || label}
-                      error={Boolean(fieldError)}
-                      helperText={fieldError || helperText}
-                      {...other}
+                return (
+                  <Box
+                    key={field.id}
+                    display="flex"
+                    alignItems="start"
+                    marginBottom={1}
+                    gap={2}
+                  >
+                    <Controller
+                      name={`${name}.${index}` as const}
+                      control={control}
+                      rules={{
+                        required: required
+                          ? "This field is required"
+                          : false,
+                      }}
+                      render={({ field }) => (
+                        <MuiTextField
+                          {...field}
+                          type={type}
+                          fullWidth
+                          size="small"
+                          placeholder={placeholder || label}
+                          error={Boolean(fieldError)}
+                          helperText={fieldError || helperText}
+                          {...other}
+                        />
+                      )}
                     />
-                  )}
-                />
 
-                <IconButton color="error" onClick={() => remove(index)}>
-                  <CloseIcon />
-                </IconButton>
+                    <IconButton
+                      color="error"
+                      onClick={() => remove(index)}
+                    >
+                      <CloseIcon />
+                    </IconButton>
+                  </Box>
+                );
+              })
+            ) : (
+              <Box
+                color="text.secondary"
+                bgcolor="background.paper"
+                border={1}
+                borderColor="divider"
+                p={2}
+                borderRadius={1}
+              >
+                No items added
               </Box>
-            );
-          })
-        ) : (
-          <Box
-            color="text.secondary"
-            bgcolor="background.paper"
-            border={1}
-            borderColor="divider"
-            p={2}
-            borderRadius={1}
+            )}
+
+            {/* 👇 Show array-level error */}
+            {arrayError && (
+              <Box mt={1} color="error.main" fontSize="small">
+                {arrayError}
+              </Box>
+            )}
+          </Box>
+
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => append("" as any)}
+            startIcon={<PlusIcon />}
           >
-            No items added
-          </Box>
-        )}
-
-        {arrayError && (
-          <Box mt={1} color="error.main" fontSize="0.875rem">
-            {arrayError}
-          </Box>
-        )}
-      </Box>
-
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={() => append("" as any)}
-        startIcon={<PlusIcon />}
-      >
-        Add Item
-      </Button>
-    </Box>
+            Add Item
+          </Button>
+        </Box>
+      )}
+    />
   );
 }

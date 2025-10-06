@@ -9,6 +9,16 @@ import { API_ROUTES } from "@/lib/api-routes";
 import { makeQueryParams } from "@/utils/helper";
 import { AttributeSchema } from "@/zod/attribute-schema";
 
+const convertAttributeSchemaToPayload = (data: AttributeSchema) => {
+  return {
+    ...data,
+    attribute_values: data.attribute_values.map((value, index) => ({
+      title: value,
+      position: index,
+    })),
+  };
+};
+
 export const getAttributes = async (queries?: SearchParams) => {
   let url = API_ROUTES.attributes.get_attributes;
 
@@ -22,8 +32,10 @@ export const getAttributes = async (queries?: SearchParams) => {
 };
 
 export const createAttribute = async (data: AttributeSchema) => {
+  const payload = convertAttributeSchemaToPayload(data);
+
   const res = await api.post(API_ROUTES.attributes.create_attribute, {
-    body: JSON.stringify(data),
+    body: JSON.stringify(payload),
   });
 
   if (res.success) revalidateTag(TAGS.attributes);
@@ -31,8 +43,10 @@ export const createAttribute = async (data: AttributeSchema) => {
 };
 
 export const updateAttribute = async (id: string, data: AttributeSchema) => {
+  const payload = convertAttributeSchemaToPayload(data);
+
   const res = await api.patch(API_ROUTES.attributes.update_attribute(id), {
-    body: JSON.stringify(data),
+    body: JSON.stringify(payload),
   });
 
   if (res.success) {

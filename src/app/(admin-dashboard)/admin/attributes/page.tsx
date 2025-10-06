@@ -5,25 +5,26 @@ import { LoadingSpinner } from "@/components/loading-spinner";
 import { TableToolbar } from "@/components/table/table-toolbar";
 import { TableToolbarSkeleton } from "@/components/table/table-toolbar-skeleton";
 import { SearchParams } from "@/interfaces/common";
-import { CategoryHeader } from "../categories/_components/category-header";
 
-export default async function CategoryPage({
+import { AttributeHeader } from "../attributes/_components/attribute-header";
+
+export default async function AttributePage({
   searchParams,
 }: {
   searchParams: Promise<SearchParams>;
 }) {
   return (
     <Box>
-      <CategoryHeader />
+      <AttributeHeader />
       <Box border={1} borderColor="divider">
         <Suspense fallback={<TableToolbarSkeleton />}>
           <TableToolbar
-            href="/admin/categories/create"
-            addButtonText="Add Category"
+            href="/admin/attributes/create"
+            addButtonText="Add Attribute"
           />
         </Suspense>
         <Suspense fallback={<LoadingSpinner />}>
-          {/* <CategoryContent searchParams={searchParams} /> */}
+          {/* <AttributeContent searchParams={searchParams} /> */}
         </Suspense>
       </Box>
     </Box>

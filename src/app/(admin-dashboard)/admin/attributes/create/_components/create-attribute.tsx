@@ -6,11 +6,12 @@ import Typography from "@mui/material/Typography";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
+import { createAttribute } from "@/actions/attribute";
 import { Category } from "@/interfaces/category";
 import { toast } from "@/lib/toast-store";
 import { attributeSchema, AttributeSchema } from "@/zod/attribute-schema";
+
 import { AttributeForm } from "../../_components/attribute-form";
-import { createAttribute } from "@/actions/attribute";
 
 interface CreateAttributeProps {
   categories: Category[];
@@ -22,7 +23,7 @@ export const CreateAttribute = ({ categories }: CreateAttributeProps) => {
     resolver: zodResolver(attributeSchema),
     defaultValues: {
       name: "",
-      type: undefined,
+      type: "",
       attribute_values: [],
       category_id: "",
     },
@@ -45,6 +46,7 @@ export const CreateAttribute = ({ categories }: CreateAttributeProps) => {
       <Typography variant="h4" sx={{ my: 4 }}>
         Create Attribute
       </Typography>
+
       <AttributeForm
         methods={methods}
         onSubmit={onSubmit}
