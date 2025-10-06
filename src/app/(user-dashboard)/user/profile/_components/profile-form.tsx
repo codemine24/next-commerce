@@ -1,7 +1,6 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Grid } from "@mui/material";
-import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 import { updateProfile } from "@/actions/user";
@@ -16,16 +15,15 @@ import {
   updateProfileSchema,
   UpdateProfileSchemaType,
 } from "@/zod/update-profile-schema";
-
-export const UpdateProfileForm = () => {
-  const { user } = useAuth();
+export const UpdateProfileForm = ({ profileData }: { profileData: any }) => {
+  const { setUser } = useAuth();
   const methods = useForm<UpdateProfileSchemaType>({
     resolver: zodResolver(updateProfileSchema),
     defaultValues: {
-      first_name: user?.first_name || "",
-      last_name: user?.last_name || "",
-      contact_number: user?.contact_number || "",
-      avatar: undefined,
+      first_name: profileData?.first_name || "",
+      last_name: profileData?.last_name || "",
+      contact_number: profileData?.contact_number || "",
+      avatar: profileData?.avatar || "",
     },
   });
 
@@ -36,17 +34,21 @@ export const UpdateProfileForm = () => {
     }
 
     toast.success(res.message);
-    methods.reset();
+    const resData = res.data;
+    // methods.reset();
+    setUser((prev) =>
+      prev
+        ? {
+            ...prev,
+            avatar: resData.avatar as string,
+            first_name: resData.first_name as string,
+            last_name: resData.last_name as string,
+            contact_number: resData.contact_number as string,
+          }
+        : prev
+    );
   };
 
-  useEffect(() => {
-    methods.reset({
-      first_name: user?.first_name || "",
-      last_name: user?.last_name || "",
-      contact_number: user?.contact_number || "",
-      avatar: undefined,
-    });
-  }, [methods, user]);
   return (
     <FormProvider methods={methods} onSubmit={methods.handleSubmit(onSubmit)}>
       <Box>

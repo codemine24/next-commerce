@@ -4,7 +4,8 @@ export const updateProfileSchema = z
   .object({
     avatar: z
       .instanceof(File, { message: "Avatar must be a file" })
-      .optional(),
+      .optional()
+      .or(z.string()),
 
     first_name: z
       .string({ error: "First name should be text" })

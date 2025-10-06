@@ -11,6 +11,8 @@ import queryValidator from "../../(helpers)/utils/query-validator";
 import { USER_SELECTED_FIELDS } from "../auth/auth.utils";
 
 import { userQueryValidationConfig, userSearchableFields } from "./user.utils";
+import { generateToken } from "../../(helpers)/utils/jwt-helpers";
+import { cookies } from "next/headers";
 
 // ------------------------------------ GET PROFILE ----------------------------------------
 const getProfile = async (user: User) => {
@@ -27,6 +29,7 @@ const getProfile = async (user: User) => {
 // ------------------------------------ UPDATE PROFILE -------------------------------------
 const updateProfile = async (user: User, data: Record<string, any>) => {
   const { data: userInfo, avatar } = data;
+  const cookieStore = await cookies();
 
   let uploadedAvatar;
 
@@ -38,8 +41,8 @@ const updateProfile = async (user: User, data: Record<string, any>) => {
     const fileName = `${user.id}-${avatar.name.replaceAll(" ", "-")}`;
 
     // Step 1.2: Upload image to storage
-    const { data: uploadData, error } = await supabase.storage
-      .from(CONFIG.general_bucket)
+    const { data: uploadData } = await supabase.storage
+      .from(CONFIG.user_bucket)
       .upload(fileName, buffer, {
         contentType: avatar.type,
         upsert: true,
@@ -99,6 +102,46 @@ const updateProfile = async (user: User, data: Record<string, any>) => {
       ...USER_SELECTED_FIELDS,
     },
   });
+
+  const jwtPayload = {
+    id: result.id,
+    first_name: result.first_name,
+    last_name: result.last_name,
+    avatar: result.avatar,
+    contact_number: result.contact_number,
+    email: result.email,
+    role: result.role,
+  };
+
+  const accessToken = generateToken(
+    jwtPayload,
+    CONFIG.jwt_access_secret,
+    CONFIG.jwt_access_expiresIn
+  );
+
+  const refreshToken = generateToken(
+    jwtPayload,
+    CONFIG.jwt_refresh_secret,
+    CONFIG.jwt_refresh_expiresIn
+  );
+
+  // Set refresh token in cookie
+  cookieStore.delete("refresh_token");
+  cookieStore.delete("access_token");
+  // cookieStore.set("refresh_token", refreshToken, {
+  //   httpOnly: true,
+  //   secure: CONFIG.node_env === "production",
+  //   sameSite: "strict",
+  //   maxAge: Number(CONFIG.jwt_refresh_expiresIn),
+  // });
+
+  // // Set access token in cookie
+  // cookieStore.set("access_token", accessToken, {
+  //   httpOnly: false,
+  //   secure: CONFIG.node_env === "production",
+  //   sameSite: "strict",
+  //   maxAge: Number(CONFIG.jwt_access_expiresIn),
+  // });
 
   return result;
 };
