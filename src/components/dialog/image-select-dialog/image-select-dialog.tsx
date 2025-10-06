@@ -14,7 +14,7 @@ import { uploadFiles } from "@/actions/file";
 import { Uploader } from "@/components/uploader/uploader";
 import { useFetch } from "@/hooks/use-fetch";
 import { CloseIcon } from "@/icons/close";
-import { UploadCloudIcon } from "@/icons/upload-cloud";
+import { UploadCloudIcon } from "@/icons/upload-cloud-icon";
 import { API_ROUTES } from "@/lib/api-routes";
 import { toast } from "@/lib/toast-store";
 
