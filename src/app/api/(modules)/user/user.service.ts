@@ -1,18 +1,18 @@
 import { Prisma, User, UserRole, UserStatus } from "@prisma/client";
 import httpStatus from "http-status";
+import { cookies } from "next/headers";
 import sharp from "sharp";
 
 import { CONFIG } from "../../(helpers)/config";
 import CustomizedError from "../../(helpers)/error/customized-error";
 import { prisma } from "../../(helpers)/shared/prisma";
 import supabase from "../../(helpers)/shared/supabase";
+import { generateToken } from "../../(helpers)/utils/jwt-helpers";
 import paginationMaker from "../../(helpers)/utils/pagination-maker";
 import queryValidator from "../../(helpers)/utils/query-validator";
 import { USER_SELECTED_FIELDS } from "../auth/auth.utils";
 
 import { userQueryValidationConfig, userSearchableFields } from "./user.utils";
-import { generateToken } from "../../(helpers)/utils/jwt-helpers";
-import { cookies } from "next/headers";
 
 // ------------------------------------ GET PROFILE ----------------------------------------
 const getProfile = async (user: User) => {
@@ -126,22 +126,21 @@ const updateProfile = async (user: User, data: Record<string, any>) => {
   );
 
   // Set refresh token in cookie
-  cookieStore.delete("refresh_token");
-  cookieStore.delete("access_token");
-  // cookieStore.set("refresh_token", refreshToken, {
-  //   httpOnly: true,
-  //   secure: CONFIG.node_env === "production",
-  //   sameSite: "strict",
-  //   maxAge: Number(CONFIG.jwt_refresh_expiresIn),
-  // });
 
-  // // Set access token in cookie
-  // cookieStore.set("access_token", accessToken, {
-  //   httpOnly: false,
-  //   secure: CONFIG.node_env === "production",
-  //   sameSite: "strict",
-  //   maxAge: Number(CONFIG.jwt_access_expiresIn),
-  // });
+  cookieStore.set("refresh_token", refreshToken, {
+    httpOnly: true,
+    secure: CONFIG.node_env === "production",
+    sameSite: "strict",
+    maxAge: Number(CONFIG.jwt_refresh_expiresIn),
+  });
+
+  // Set access token in cookie
+  cookieStore.set("access_token", accessToken, {
+    httpOnly: false,
+    secure: CONFIG.node_env === "production",
+    sameSite: "strict",
+    maxAge: Number(CONFIG.jwt_access_expiresIn),
+  });
 
   return result;
 };

@@ -51,6 +51,7 @@ export const updateProfile = async (data: UpdateProfileSchemaType) => {
 
   const res = await api.patch(API_ROUTES.users.update_profile, {
     body: formData,
+    credentials: "include",
   });
 
   if (res.success) revalidateTag(TAGS.users);
