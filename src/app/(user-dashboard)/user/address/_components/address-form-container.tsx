@@ -1,5 +1,4 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import React from "react";
 import { useForm } from "react-hook-form";
 
 import { addAddresses } from "@/actions/address";
@@ -33,12 +32,9 @@ export const AddressFormContainer = ({
     },
   });
 
-  console.log(methods.formState.errors);
-
   const onSubmit = async (data: AddressSchema) => {
     const response = await addAddresses(data);
     onCancel();
-    console.log("Form Data:", data);
     console.log("Response ", response);
   };
 
