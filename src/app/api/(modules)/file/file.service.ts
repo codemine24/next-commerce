@@ -53,7 +53,6 @@ const uploadFiles = async (data: Record<string, any>, user: User) => {
         );
       }
 
-      console.log(data)
       if (data?.id) {
         uploadedFiles.push({
           user_id: user.id,

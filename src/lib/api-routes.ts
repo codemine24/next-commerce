@@ -15,6 +15,8 @@ export const API_ROUTES = {
     create_user: "/user",
     update_user: (id: string) => `/user/${id}`,
     delete_user: "/user",
+    update_profile: "/user/update-profile",
+    me: "/user/me",
   },
   products: {
     get_products: "/product",
@@ -61,6 +63,7 @@ export const API_ROUTES = {
     delete_files: "/file",
   },
   order: {
+    get_my_orders: "/order/my-order",
     create_order_for_user: "/order",
     create_order_for_guest_user: "/order/guest",
   },

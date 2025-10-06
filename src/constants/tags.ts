@@ -1,7 +1,7 @@
 export const TAGS = {
+  address: "address",
   products: "products",
   product: "product",
-  attributes: "attributes",
   brands: "brands",
   campaign: "campaign",
   cart: "cart",

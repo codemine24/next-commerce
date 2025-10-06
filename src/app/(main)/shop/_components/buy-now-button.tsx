@@ -6,10 +6,10 @@ import { BORDER_RADIUS } from "@/theme";
 const BuyNowButton = () => {
   return (
     <Button
-      variant="contained"
+      variant="soft"
       color="primary"
       sx={{
-        fontSize: "1rem",
+        fontSize: ".85rem",
         borderRadius: BORDER_RADIUS.default,
         flexGrow: 1,
         boxShadow: "none",
