@@ -1,10 +1,11 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Box, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 import { useForm } from "react-hook-form";
 
 import { updateProfile } from "@/actions/user";
 import { TextField } from "@/components/form";
+import { FormContainer } from "@/components/form-container";
 import FormProvider from "@/components/form/form-provider";
 import { PhoneInputField } from "@/components/form/phone-input-field";
 import { SubmitButton } from "@/components/submit-button";
@@ -15,15 +16,16 @@ import {
   updateProfileSchema,
   UpdateProfileSchemaType,
 } from "@/zod/update-profile-schema";
+import { useEffect } from "react";
 export const UpdateProfileForm = ({ profileData }: { profileData: any }) => {
   const { setUser } = useAuth();
   const methods = useForm<UpdateProfileSchemaType>({
     resolver: zodResolver(updateProfileSchema),
     defaultValues: {
-      first_name: profileData?.first_name || "",
-      last_name: profileData?.last_name || "",
-      contact_number: profileData?.contact_number || "",
-      avatar: profileData?.avatar || "",
+      first_name: "",
+      last_name: "",
+      contact_number: "",
+      avatar: "",
     },
   });
 
@@ -49,12 +51,21 @@ export const UpdateProfileForm = ({ profileData }: { profileData: any }) => {
     );
   };
 
+  useEffect(() => {
+    methods.reset({
+      first_name: profileData?.first_name || "",
+      last_name: profileData?.last_name || "",
+      contact_number: profileData?.contact_number || "",
+      avatar: profileData?.avatar || "",
+    });
+  }, [methods, profileData]);
+
   return (
-    <FormProvider methods={methods} onSubmit={methods.handleSubmit(onSubmit)}>
-      <Box>
+    <FormContainer sx={{ p: 2 }}>
+      <FormProvider methods={methods} onSubmit={methods.handleSubmit(onSubmit)}>
         <Grid container spacing={2}>
           <Grid size={{ xs: 12 }}>
-            <SingleImageUploader name="avatar" label="Profile Photo" />
+            <SingleImageUploader name="avatar" label="Profile Photo" required />
           </Grid>
 
           <Grid size={{ xs: 12 }}>
@@ -83,17 +94,17 @@ export const UpdateProfileForm = ({ profileData }: { profileData: any }) => {
               sx={{ maxWidth: { xs: "100%", sm: "320px" } }}
             />
           </Grid>
+          <SubmitButton
+            label="Update Profile"
+            isLoading={methods.formState.isSubmitting}
+            sx={{
+              width: 200,
+              height: 50,
+              textTransform: "none",
+            }}
+          />
         </Grid>
-      </Box>
-      <SubmitButton
-        label="Update Profile"
-        isLoading={methods.formState.isSubmitting}
-        sx={{
-          width: 200,
-          height: 50,
-          textTransform: "none",
-        }}
-      />
-    </FormProvider>
+      </FormProvider>
+    </FormContainer>
   );
 };
