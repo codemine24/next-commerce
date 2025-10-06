@@ -47,8 +47,6 @@ export const ProductReviews = async ({ productId }: ProductReviewsProps) => {
   const maxCount = Math.max(...distribution.map((d) => d.count));
 
   const allReviews = await getReviews(productId);
-  console.log("allReviews", allReviews);
-
   return (
     <Box id="#product-reviews">
       <Box

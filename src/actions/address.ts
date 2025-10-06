@@ -25,8 +25,6 @@ export const getAddresses = async (query?: SearchParams) => {
 };
 
 export const addAddresses = async (address: AddressSchema) => {
-  console.log("Address data received in action:", address);
-
   const res = await api.post(API_ROUTES.address.create_address, {
     body: JSON.stringify(address),
   });

@@ -18,7 +18,6 @@ interface MediaDetailsSidebarProps {
 }
 
 export const MediaDetailsSidebar = ({ media, open, onClose }: MediaDetailsSidebarProps) => {
-    console.log(media);
     return (
         <Drawer
             open={open}

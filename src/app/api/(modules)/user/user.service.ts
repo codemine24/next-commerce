@@ -27,6 +27,7 @@ const getProfile = async (user: User) => {
 // ------------------------------------ UPDATE PROFILE -------------------------------------
 const updateProfile = async (user: User, data: Record<string, any>) => {
   const { data: userInfo, avatar } = data;
+
   let uploadedAvatar;
 
   // Step 1: Process avatar if provided
@@ -37,8 +38,8 @@ const updateProfile = async (user: User, data: Record<string, any>) => {
     const fileName = `${user.id}-${avatar.name.replaceAll(" ", "-")}`;
 
     // Step 1.2: Upload image to storage
-    const { data: uploadData } = await supabase.storage
-      .from(CONFIG.user_bucket)
+    const { data: uploadData, error } = await supabase.storage
+      .from(CONFIG.general_bucket)
       .upload(fileName, buffer, {
         contentType: avatar.type,
         upsert: true,
@@ -139,10 +140,14 @@ const getUsers = async (query: Record<string, any>) => {
   }
 
   // Apply role filter if role is provided
-  if (role) andConditions.push({ role: { equals: role.toUpperCase() as UserRole } });
+  if (role)
+    andConditions.push({ role: { equals: role.toUpperCase() as UserRole } });
 
   // Apply status filter if status is provided
-  if (status) andConditions.push({ status: { equals: status.toUpperCase() as UserStatus } });
+  if (status)
+    andConditions.push({
+      status: { equals: status.toUpperCase() as UserStatus },
+    });
 
   // Combine all AND conditions for Prisma query
   const whereConditions: Prisma.UserWhereInput = { AND: andConditions };
