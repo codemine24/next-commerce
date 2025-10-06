@@ -21,9 +21,7 @@ export const POST = catchAsync(async (request: NextRequest) => {
 
   // Step 2: Parse request body
   const body = await request.formData();
-  console.log(body);
   const data = formDataToObject(body);
-  console.log(data);
   // Step 3: Validate request body against update profile schema
   await payloadValidator(FileSchemas.uploadFiles, data);
 

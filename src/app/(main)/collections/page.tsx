@@ -10,7 +10,6 @@ import { CollectionView } from "./_components/collection-view";
 const CollectionsPage = async () => {
   const res = await getCategories();
   const categories = res.data;
-  console.log(categories);
 
   return (
     <Suspense fallback={<div>Loading...</div>}>

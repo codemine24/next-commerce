@@ -1,32 +1,34 @@
 "use client";
-import {
-  alpha,
-  IconButton,
-  Stack,
-  TableContainer,
-  Typography,
-} from "@mui/material";
+import { Stack, TableContainer, Typography } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import dayjs from "dayjs";
+import { useState } from "react";
 
-import { CloseIcon } from "@/icons/close";
+import { StatusRenderer } from "@/components/status-renderer";
+import { ClipboardIcon } from "@/icons/clipboard-icon";
+import { TickIcon } from "@/icons/tick-icon";
+import { IOrder } from "@/interfaces/order";
+import { currencyFormatter } from "@/utils/currency-formatter";
 
-interface Order {
-  id: string;
-  order_id: string;
-  order_status: string;
-  payment_status: string;
-  payable_amount: number;
-  created_at: string;
-  delivery_method: string;
-}
+import { MyOrderActionPopover } from "./my-order-action-popover";
 
-export const OrderTable = ({ orders }: { orders: Order[] }) => {
+export const OrderTable = ({ orders }: { orders: IOrder[] }) => {
+  const [copiedOrderId, setCopiedOrderId] = useState<string | null>(null);
+
+  const handleCopyOrderId = (orderId: string) => {
+    navigator.clipboard.writeText(orderId);
+    setCopiedOrderId(orderId);
+
+    setTimeout(() => {
+      setCopiedOrderId(null);
+    }, 1000);
+  };
   return (
-    <TableContainer sx={{ my: 4 }}>
+    <TableContainer>
       <Table
         sx={{
           minWidth: 650,
@@ -35,11 +37,12 @@ export const OrderTable = ({ orders }: { orders: Order[] }) => {
         {/* Header */}
         <TableHead>
           <TableRow>
-            <TableCell>Product</TableCell>
+            <TableCell>Order</TableCell>
+            <TableCell>Date</TableCell>
+            <TableCell>Order Status</TableCell>
+            <TableCell>Payment Status</TableCell>
+            <TableCell>Total</TableCell>
             <TableCell>Action</TableCell>
-            <TableCell>Quantity</TableCell>
-            <TableCell align="right">Unit Price</TableCell>
-            <TableCell align="right">Total</TableCell>
           </TableRow>
         </TableHead>
 
@@ -49,43 +52,59 @@ export const OrderTable = ({ orders }: { orders: Order[] }) => {
             <TableRow key={item.id}>
               {/* Product */}
               <TableCell>
-                <Stack direction="row" spacing={2} alignItems="center">
-                  <Typography variant="body1">{item.order_id}</Typography>
+                <Stack
+                  direction="row"
+                  spacing={1}
+                  alignItems="center"
+                  title="Copy Order ID"
+                >
+                  <Typography
+                    variant="body1"
+                    sx={{
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                    }}
+                  >
+                    {item.order_id}
+                  </Typography>
+                  {copiedOrderId ? (
+                    <TickIcon sx={{ height: 12, width: 12 }} />
+                  ) : (
+                    <ClipboardIcon
+                      sx={{
+                        height: 12,
+                        width: 12,
+                        cursor: "pointer",
+                        color: "text.secondary",
+                        "&:hover": { color: "text.primary" },
+                      }}
+                      onClick={() => handleCopyOrderId(item.order_id)}
+                    />
+                  )}
                 </Stack>
               </TableCell>
 
-              {/* Action */}
+              {/* Date */}
               <TableCell>
-                <IconButton
-                  onClick={() => {}}
-                  sx={{
-                    border: "1px solid",
-                    borderColor: (theme) =>
-                      alpha(theme.palette.primary.main, 0.3),
-                    color: "grey.400",
-                    bgcolor: (theme) => alpha(theme.palette.primary.main, 0.05),
-                    "&:hover": {
-                      bgcolor: (theme) => alpha(theme.palette.error.main, 0.08),
-                      borderColor: (theme) =>
-                        alpha(theme.palette.error.main, 0.3),
-                    },
-                    "&:hover svg": {
-                      color: "error.light",
-                    },
-                  }}
-                >
-                  <CloseIcon />
-                </IconButton>
+                {dayjs(item.created_at).format("ddd MMM D YYYY")}
               </TableCell>
 
-              {/* Quantity */}
-              <TableCell>-</TableCell>
-
-              {/* Unit Price */}
-              <TableCell align="right">-</TableCell>
+              {/* Status */}
+              <TableCell>
+                <StatusRenderer status={item.order_status} />
+              </TableCell>
+              <TableCell>
+                <StatusRenderer status={item.payment_status} />
+              </TableCell>
 
               {/* Total */}
-              <TableCell align="right">-</TableCell>
+              <TableCell>{currencyFormatter(item.total_amount) || 0}</TableCell>
+
+              {/* Action */}
+              <TableCell>
+                <MyOrderActionPopover item={item} />
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

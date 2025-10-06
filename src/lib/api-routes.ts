@@ -16,6 +16,7 @@ export const API_ROUTES = {
     create_user: "/user",
     update_user: (id: string) => `/user/${id}`,
     delete_user: "/user",
+    update_profile: "/user/update-profile",
   },
   products: {
     get_products: "/product",

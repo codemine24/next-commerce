@@ -38,13 +38,9 @@ export const AddressActionPopover = ({
     setOpenConfirmModal(false);
   };
 
-  console.log("Address", address.id);
-
   const handleDelete = async () => {
     startTransition(async () => {
       const res = await deleteAddress([address.id]);
-      console.log(address);
-
       if (res.success) {
         toast.success(res.message);
         handleClose();

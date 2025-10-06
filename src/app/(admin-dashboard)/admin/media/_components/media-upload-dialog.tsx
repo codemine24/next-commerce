@@ -13,7 +13,7 @@ import { AnimatedDialog } from '@/components/dialog/animate-dialog';
 import { OverlayScrollbar } from '@/components/overlay-scrollbar';
 import { Uploader } from '@/components/uploader/uploader';
 import { CloseIcon } from '@/icons/close';
-import { UploadCloudIcon } from '@/icons/upload-cloud';
+import { UploadCloudIcon } from '@/icons/upload-cloud-icon';
 import { toast } from '@/lib/toast-store';
 
 interface MediaUploadDialogProps extends DialogProps {
