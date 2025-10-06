@@ -8,8 +8,8 @@ export const attributeSchema = z.object({
     .string({ error: "Attribute type is required" })
     .min(1, "Attribute type is required"),
   category_id: z
-    .string({ error: "Category id is required" })
-    .min(1, "Category id is required"),
+    .string({ error: "Category is required" })
+    .min(1, "Category is required"),
   attribute_values: z
     .array(z.string().min(1, "Attribute value is required"))
     .nonempty({ message: "Attribute values are required" }),

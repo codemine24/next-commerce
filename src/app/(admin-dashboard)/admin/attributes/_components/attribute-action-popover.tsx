@@ -13,6 +13,7 @@ import { DotVerticalIcon } from "@/icons/dot-vertical"
 import { EditIcon } from "@/icons/edit";
 import { Attribute } from "@/interfaces/attribute";
 import { toast } from "@/lib/toast-store";
+
 import { AttributeEditDialog } from "./attribute-edit-dialog";
 
 interface AttributeActionPopoverProps {

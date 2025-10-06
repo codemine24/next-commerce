@@ -13,14 +13,14 @@ import { useForm } from "react-hook-form";
 import { updateAttribute } from "@/actions/attribute";
 import { AnimatedDialog } from "@/components/dialog/animate-dialog";
 import { SubmitButton } from "@/components/submit-button";
+import { useFetch } from "@/hooks/use-fetch";
 import { CloseIcon } from "@/icons/close";
 import { Attribute } from "@/interfaces/attribute";
+import { API_ROUTES } from "@/lib/api-routes";
 import { toast } from "@/lib/toast-store";
 import { attributeSchema, AttributeSchema } from "@/zod/attribute-schema";
 
 import { AttributeForm } from "./attribute-form";
-import { useFetch } from "@/hooks/use-fetch";
-import { API_ROUTES } from "@/lib/api-routes";
 
 interface AttributeEditDialogProps {
     open: boolean;
