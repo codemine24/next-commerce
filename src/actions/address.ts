@@ -18,11 +18,17 @@ export const getAddresses = async (query?: SearchParams) => {
   }
 
   const res = await api.get(url, {
-    next: { tags: [TAGS.address] },
+    next: { tags: [TAGS.addresses] },
   });
 
   return res;
 };
+
+export const getSingleAddress = async (id:string) => {
+  const res = await api.get(API_ROUTES.address.get_address_by_id(id))
+
+  return res
+}
 
 export const addAddresses = async (address: AddressSchema) => {
   console.log("Address data received in action:", address);
@@ -31,7 +37,7 @@ export const addAddresses = async (address: AddressSchema) => {
     body: JSON.stringify(address),
   });
 
-  if (res.success) revalidateTag(TAGS.address);
+  if (res.success) revalidateTag(TAGS.addresses);
 
   return res;
 };
@@ -41,7 +47,10 @@ export const updateAddress = async (id: string, address: AddressSchema) => {
     body: JSON.stringify(address),
   });
 
-  if (res.success) revalidateTag(TAGS.address);
+   if (res.success) {
+    revalidateTag(TAGS.addresses)
+    revalidateTag(TAGS.address);
+  } 
 
   return res;
 };
@@ -51,7 +60,10 @@ export const deleteAddress = async (ids: string[]) => {
     body: JSON.stringify({ ids }),
   });
 
-  if (res.success) revalidateTag(TAGS.address);
+   if (res.success) {
+    revalidateTag(TAGS.addresses)
+    revalidateTag(TAGS.address);
+  } 
 
   return res;
 };

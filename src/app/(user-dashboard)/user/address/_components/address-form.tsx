@@ -1,4 +1,6 @@
+"use client"
 import { Button, Grid, Box } from "@mui/material";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { UseFormReturn } from "react-hook-form";
 
@@ -12,14 +14,15 @@ import { AddressHeader } from "./address-header";
 interface AddressFormProps {
   methods: UseFormReturn<AddressSchema>;
   onSubmit: (data: AddressSchema) => void;
-  onCancel: () => void;
 }
 
 export const AddressForm = ({
   methods,
   onSubmit,
-  onCancel,
 }: AddressFormProps) => {
+
+  const router = useRouter();
+
   return (
     <>
       <FormProvider methods={methods} onSubmit={methods.handleSubmit(onSubmit)}>
@@ -70,7 +73,7 @@ export const AddressForm = ({
               <TextField
                 name="address"
                 label="Address"
-                // rows={2}
+                required
                 sx={{ maxWidth: { xs: "100%", sm: "320px" } }}
               />
             </Grid>
@@ -80,6 +83,7 @@ export const AddressForm = ({
               <TextField
                 name="postal_code"
                 label="Postal Code"
+                required
                 sx={{ maxWidth: { xs: "100%", sm: "320px" } }}
               />
             </Grid>
@@ -125,7 +129,7 @@ export const AddressForm = ({
                 <Button type="submit" variant="contained">
                   Save Address
                 </Button>
-                <Button type="button" variant="outlined" onClick={onCancel}>
+                <Button type="button" variant="outlined" onClick={() => router.push("/user/address")}>
                   Cancel
                 </Button>
               </Box>

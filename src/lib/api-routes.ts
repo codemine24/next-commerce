@@ -7,6 +7,7 @@ export const API_ROUTES = {
   address: {
     get_addresses: "/address",
     create_address: "/address",
+    get_address_by_id: (id: string) => `/address/${id}`,
     update_address: (id: string) => `/address/${id}`,
     delete_address: "/address",
   },
