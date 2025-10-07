@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { Button, Grid, Box } from "@mui/material";
 import { useRouter } from "next/navigation";
 import React from "react";
@@ -10,18 +10,19 @@ import { PhoneInputField } from "@/components/form/phone-input-field";
 import { AddressSchema } from "@/zod/address-schema";
 
 import { AddressHeader } from "./address-header";
+import { useFetch } from "@/hooks/use-fetch";
+import { API_ROUTES } from "@/lib/api-routes";
 
 interface AddressFormProps {
   methods: UseFormReturn<AddressSchema>;
   onSubmit: (data: AddressSchema) => void;
 }
 
-export const AddressForm = ({
-  methods,
-  onSubmit,
-}: AddressFormProps) => {
-
+export const AddressForm = ({ methods, onSubmit }: AddressFormProps) => {
   const router = useRouter();
+  const { data, isLoading, message, revalidate, success } = useFetch(
+    API_ROUTES.address.get_addresses
+  );
 
   return (
     <>
@@ -129,7 +130,11 @@ export const AddressForm = ({
                 <Button type="submit" variant="contained">
                   Save Address
                 </Button>
-                <Button type="button" variant="outlined" onClick={() => router.push("/user/address")}>
+                <Button
+                  type="button"
+                  variant="outlined"
+                  onClick={() => router.push("/user/address")}
+                >
                   Cancel
                 </Button>
               </Box>

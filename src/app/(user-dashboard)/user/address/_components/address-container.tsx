@@ -11,7 +11,6 @@ export default function AddressContainer() {
 
   return (
     <Box>
-      {/* {!selectedAddress.mode ? ( */}
       <Box>
         <AddressHeader title="Your Addresses" />
         <Box>
