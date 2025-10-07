@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
@@ -11,12 +11,13 @@ import { toast } from "@/lib/toast-store";
 import { addressSchema, AddressSchema } from "@/zod/address-schema";
 
 import { AddressForm } from "../../_components/address-form";
+import { AddressHeader } from "../../_components/address-header";
 
 interface EditAddressProps {
-  address: Address 
+  address: Address;
 }
 
-const EditAddress = ({address}: EditAddressProps) => {
+const EditAddress = ({ address }: EditAddressProps) => {
   const router = useRouter();
   const methods = useForm<AddressSchema>({
     resolver: zodResolver(addressSchema),
@@ -34,11 +35,7 @@ const EditAddress = ({address}: EditAddressProps) => {
     },
   });
 
-  console.log("Address id",  address);
-  
-
-
-  
+  console.log("Address id", address);
 
   const onSubmit = async (data: AddressSchema) => {
     const response = await updateAddress(address.id, data);
@@ -51,7 +48,8 @@ const EditAddress = ({address}: EditAddressProps) => {
   };
   return (
     <>
-      <AddressForm methods={methods} onSubmit={onSubmit}   />
+    <AddressHeader title="Edit Address" />
+      <AddressForm methods={methods} onSubmit={onSubmit} />
     </>
   );
 };
