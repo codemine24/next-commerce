@@ -1,5 +1,6 @@
 export const TAGS = {
   address: "address",
+  attributes: "attributes",
   products: "products",
   product: "product",
   brands: "brands",

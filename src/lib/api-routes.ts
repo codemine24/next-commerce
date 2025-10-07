@@ -4,6 +4,12 @@ export const API_ROUTES = {
     register: "/auth/register",
     refresh_token: "/auth/refresh-token",
   },
+  address: {
+    get_addresses: "/address",
+    create_address: "/address",
+    update_address: (id: string) => `/address/${id}`,
+    delete_address: "/address",
+  },
   attributes: {
     get_attributes: "/attribute",
     create_attribute: "/attribute",
