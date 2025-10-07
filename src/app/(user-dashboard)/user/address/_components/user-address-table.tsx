@@ -15,16 +15,14 @@ import { API_ROUTES } from "@/lib/api-routes";
 
 import { AddressActionPopover } from "./address-action-popover";
 
-interface IUserAddressTableProps {
-  setSelectedAddress: (value: {
-    mode: "create" | "edit" | null;
-    data: Address | null;
-  }) => void;
-}
+// interface IUserAddressTableProps {
+//   setSelectedAddress: (value: {
+//     mode: "create" | "edit" | null;
+//     data: Address | null;
+//   }) => void;
+// }
 
-export const UserAddressTable = ({
-  setSelectedAddress,
-}: IUserAddressTableProps) => {
+export const UserAddressTable = ({}) => {
   const { data, isLoading, success, message, revalidate } = useFetch(
     API_ROUTES.address.get_addresses
   );
@@ -94,7 +92,7 @@ export const UserAddressTable = ({
               >
                 <AddressActionPopover
                   address={item}
-                  setSelectedAddress={setSelectedAddress}
+                  
                 />
               </TableCell>
             </TableRow>

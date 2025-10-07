@@ -1,12 +1,16 @@
-import { Box } from "@mui/material";
+
 import React from "react";
 
-const CreateAddressPage = () => {
+import CreateAddress from "./_components/create-address";
+
+
+
+const AddressCreate = () => {
   return (
     <>
-      <Box>Hello</Box>
+     <CreateAddress/>
     </>
   );
 };
 
-export default CreateAddressPage;
+export default AddressCreate;

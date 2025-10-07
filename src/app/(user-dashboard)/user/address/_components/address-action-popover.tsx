@@ -4,6 +4,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import Popover from "@mui/material/Popover";
+import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 
 import { deleteAddress } from "@/actions/address";
@@ -18,19 +19,14 @@ import { toast } from "@/lib/toast-store";
 
 interface AddressActionPopoverProps {
   address: Address;
-  setSelectedAddress: (value: {
-    mode: "create" | "edit" | null;
-    data: Address | null;
-  }) => void;
 }
 
 export const AddressActionPopover = ({
   address,
-  setSelectedAddress,
 }: AddressActionPopoverProps) => {
+  const router = useRouter();
   const [loading, startTransition] = useTransition();
   const [openConfirmModal, setOpenConfirmModal] = useState<boolean>(false);
-  const [openEditModal, setOpenEditModal] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -40,7 +36,6 @@ export const AddressActionPopover = ({
   const handleClose = () => {
     setAnchorEl(null);
     setOpenConfirmModal(false);
-    setOpenEditModal(false);
   };
 
   const handleDelete = async () => {
@@ -79,12 +74,7 @@ export const AddressActionPopover = ({
             startIcon={<EditIcon />}
             variant="text"
             color="inherit"
-            onClick={() => {
-              setSelectedAddress({
-                mode: "edit",
-                data: address,
-              });
-            }}
+            onClick={() => router.push(`/user/address/${address.id}`)}
             sx={{
               pl: 2,
               textTransform: "none",

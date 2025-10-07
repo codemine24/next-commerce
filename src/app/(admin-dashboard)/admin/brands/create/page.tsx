@@ -1,7 +1,9 @@
+
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
 import { CreateBrand } from "./_components/create-brand";
+
 
 export default function BrandCreate() {
   return (
