@@ -20,7 +20,6 @@ export const TextField = ({ name, helperText, type = "text", label, placeholder,
         setInputType(inputType === "password" ? "text" : "password");
     };
 
-
     return (
         <Box flex={1} width="100%">
             <InputLabel required={required} label={label} />
@@ -57,8 +56,12 @@ export const TextField = ({ name, helperText, type = "text", label, placeholder,
                                     </IconButton>
                                 </InputAdornment>,
                             },
+                            htmlInput: {
+
+                            }
                         }}
                         {...other}
+
                     />
                 )}
             />

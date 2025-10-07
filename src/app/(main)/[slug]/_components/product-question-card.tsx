@@ -16,15 +16,8 @@ export const QuestionCard = ({
   answer,
 }: QuestionCardProps) => {
   return (
-    <Box
-      sx={{
-        p: { xs: 2, sm: 3 },
-        borderRadius: 2,
-      }}
-      role="article"
-      aria-label={`Question: ${question}`}
-    >
-      <Stack spacing={1.25}>
+    <Box role="article" aria-label={`Question: ${question}`} sx={{ py: 1 }}>
+      <Stack spacing={1.5}>
         <Stack direction="row" spacing={1.25} alignItems="baseline">
           <Typography component="span" sx={{ fontSize: 16, fontWeight: 600 }}>
             {"Q."}

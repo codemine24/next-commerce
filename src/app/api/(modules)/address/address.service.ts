@@ -93,6 +93,14 @@ const getAddresses = async (query: Record<string, any>, user: User) => {
   };
 };
 
+const getSingleAddress = async (id: string) => {
+  const result = await prisma.address.findUniqueOrThrow({
+    where: {id}
+  })
+
+  return result
+}
+
 const updateAddress = async (
   id: string,
   payload: Partial<AddressPayload>,
@@ -176,6 +184,7 @@ const deleteAddresses = async ({ ids }: { ids: string[] }, user: User) => {
 export const AddressServices = {
   createAddress,
   getAddresses,
+  getSingleAddress,
   updateAddress,
   deleteAddresses,
 };

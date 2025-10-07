@@ -1,11 +1,7 @@
 import Cookies from "js-cookie";
-import React, { createContext, useCallback, useEffect, useState } from "react";
+import React, { createContext, useEffect, useState, useCallback } from "react";
 
-import {
-  addToCartForLogInUser,
-  getCartForLogInUser,
-  removedProductFromCartForLoginUser,
-} from "@/actions/cart";
+import { addToCartForLogInUser, getCartForLogInUser, removedProductFromCartForLoginUser } from "@/actions/cart";
 import { useAuth } from "@/hooks/use-auth";
 import { Cart, CartItem, CartProduct } from "@/interfaces/cart";
 import { toast } from "@/lib/toast-store";
@@ -80,16 +76,17 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
         : { id: "guest_cart", cart_items: [], cart_total: 0 };
     }
 
-    try {
-      const response = await getCartForLogInUser();
+    const response = await getCartForLogInUser();
+
+    if (response.success) {
       return response.data;
-    } catch (error) {
-      console.error("Error fetching cart:", error);
-      const cartData = Cookies.get("cart");
-      return cartData
-        ? JSON.parse(cartData)
-        : { id: "guest_cart", cart_items: [], cart_total: 0 };
     }
+
+    const cartData = Cookies.get("cart");
+    return cartData
+      ? JSON.parse(cartData)
+      : { id: "guest_cart", cart_items: [], cart_total: 0 };
+
   }, [isAuthenticated]);
 
   useEffect(() => {
@@ -123,7 +120,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
 
       // Update UI immediately for better UX
       setCart((prevCart) => {
-        const existingItemIndex = prevCart?.cart_items?.findIndex(
+        const existingItemIndex = prevCart.cart_items.findIndex(
           (item) => item.product.id === product.id
         );
 
@@ -133,17 +130,17 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
           newItems = prevCart.cart_items.map((item, index) =>
             index === existingItemIndex
               ? {
-                  ...item,
-                  quantity: item.quantity + quantity,
-                  total: calculateItemTotal(
-                    item.billing_price,
-                    item.quantity + quantity
-                  ),
-                }
+                ...item,
+                quantity: item.quantity + quantity,
+                total: calculateItemTotal(
+                  item.billing_price,
+                  item.quantity + quantity
+                ),
+              }
               : item
           );
         } else {
-          newItems = [...prevCart?.cart_items, cartItem];
+          newItems = [...prevCart.cart_items, cartItem];
         }
 
         const updatedCart = {
@@ -153,21 +150,22 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
         };
 
         // Save updated cart to cookies for guest users
-        Cookies.set("cart", JSON.stringify(updatedCart), {
-          expires: CART_EXPIRE_DAYS,
-        });
+        if (!isAuthenticated) {
+          Cookies.set("cart", JSON.stringify(updatedCart), {
+            expires: CART_EXPIRE_DAYS,
+          });
+        }
 
         return updatedCart;
       });
 
+      // Sync with backend if logged in
       if (isAuthenticated) {
         setIsAdding(true);
-        const res = await addToCartForLogInUser([
-          {
-            product_id: product.id,
-            quantity,
-          },
-        ]);
+        const res = await addToCartForLogInUser([{
+          product_id: product.id,
+          quantity,
+        }]);
 
         if (!res.success) {
           toast.error(res.message);
@@ -252,10 +250,10 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
         const updatedItems = prevCart.cart_items.map((item) =>
           item.id === itemId
             ? {
-                ...item,
-                quantity: newQuantity,
-                total: calculateItemTotal(item.billing_price, newQuantity),
-              }
+              ...item,
+              quantity: newQuantity,
+              total: calculateItemTotal(item.billing_price, newQuantity),
+            }
             : item
         );
         const updatedCart = {
@@ -308,10 +306,10 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
         const updatedItems = prevCart.cart_items.map((item) =>
           item.id === itemId
             ? {
-                ...item,
-                quantity: newQuantity,
-                total: calculateItemTotal(item.billing_price, newQuantity),
-              }
+              ...item,
+              quantity: newQuantity,
+              total: calculateItemTotal(item.billing_price, newQuantity),
+            }
             : item
         );
         const updatedCart = {

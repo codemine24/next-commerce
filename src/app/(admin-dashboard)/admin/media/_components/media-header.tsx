@@ -5,7 +5,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
 
-import { UploadCloudIcon } from "@/icons/upload-cloud";
+import { UploadCloudIcon } from "@/icons/upload-cloud-icon";
 
 import { MediaUploadDialog } from "./media-upload-dialog";
 

@@ -110,15 +110,15 @@ export const UserProfile = () => {
           <Box p={1} display="flex" flexDirection="column" gap={0.5}>
             <Button
               startIcon={<UserIcon />}
-              component={Link}
-              href="/account"
               size="small"
               variant="text"
               color="inherit"
               sx={{ justifyContent: "flex-start" }}
               fullWidth
             >
-              Account
+              <Link href={user?.role === "ADMIN" ? "/admin" : "/user"}>
+                Account
+              </Link>
             </Button>
 
             <Button

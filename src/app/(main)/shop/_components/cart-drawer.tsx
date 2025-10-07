@@ -7,12 +7,15 @@ import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
+import { OptimizeImage } from "@/components/optimize-image";
 import { useCart } from "@/hooks/use-cart";
 import { CloseIcon } from "@/icons/close";
 import { DeleteIcon } from "@/icons/delete-icon";
 import { BORDER_RADIUS } from "@/theme";
+import { currencyFormatter } from "@/utils/currency-formatter";
+import { makeImageUrl } from "@/utils/helper";
 
 interface CartDrawerProps {
   open: boolean;
@@ -20,7 +23,6 @@ interface CartDrawerProps {
 }
 
 export const CartDrawer = ({ open, onClose }: CartDrawerProps) => {
-  const router = useRouter();
   const { cart, removeFromCart } = useCart();
 
   return (
@@ -61,26 +63,19 @@ export const CartDrawer = ({ open, onClose }: CartDrawerProps) => {
               spacing={2}
               sx={{ mb: 2 }}
             >
-              <Box
-                component="img"
-                src={
-                  cart_item.product.thumbnail ||
-                  "https://placehold.co/80x80/png"
-                }
+              <OptimizeImage
+                src={makeImageUrl(cart_item.product.thumbnail)}
                 alt={cart_item.product.name}
-                sx={{
-                  width: 80,
-                  height: 80,
-                  objectFit: "cover",
-                  borderRadius: BORDER_RADIUS.default,
-                }}
+                width={60}
+                height={60}
               />
+
               <Box sx={{ flex: 1 }}>
                 <Typography variant="h5" mb={1}>
                   {cart_item.product.name}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  Price: TK {cart_item.product.price}
+                  Price: TK <Typography component="span" fontWeight={600}>{currencyFormatter(cart_item.product.price)}</Typography>
                 </Typography>
               </Box>
               <IconButton
@@ -126,15 +121,13 @@ export const CartDrawer = ({ open, onClose }: CartDrawerProps) => {
             <Button
               fullWidth
               variant="contained"
+              component={Link}
+              href="/cart"
               sx={{
                 whiteSpace: "nowrap",
                 bgcolor: "primary",
                 color: "common.white",
                 borderRadius: BORDER_RADIUS.default,
-              }}
-              onClick={() => {
-                router.push("/cart");
-                onClose();
               }}
             >
               View Cart
@@ -143,6 +136,8 @@ export const CartDrawer = ({ open, onClose }: CartDrawerProps) => {
             <Button
               fullWidth
               variant="contained"
+              component={Link}
+              href="/checkout"
               sx={{
                 whiteSpace: "nowrap",
                 bgcolor: "common.black",

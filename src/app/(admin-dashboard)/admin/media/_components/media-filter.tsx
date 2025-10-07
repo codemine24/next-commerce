@@ -1,156 +1,93 @@
 "use client";
 
 import Box from "@mui/material/Box";
-import dayjs from "dayjs";
 import { useSearchParams, useRouter } from "next/navigation";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useState } from "react";
 
 import { CustomDatePicker } from "@/components/custom-date-picker";
-import { useDebounce } from "@/hooks/use-debounce";
+import { TableToolbarSearchBox } from "@/components/table/table-toolbar-search-box";
 import { ChevronDownIcon } from "@/icons/chevron-down";
 import { dateIsAfter, getDateTime } from "@/utils/date-formatter";
 
 import { MediaFileType } from "./media-file-type";
-import { MediaSearchBox } from "./media-search-box";
 
 export const MediaFilter = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
   const [dateError, setDateError] = useState("");
-  const [searchText, setSearchText] = useState(
-    searchParams.get("search_term") || ""
-  );
-  const [fromDate, setFromDate] = useState(searchParams.get("fromDate"));
-  const [toDate, setToDate] = useState(searchParams.get("toDate"));
   const [type, setType] = useState(
     searchParams.get("type")?.split(",") || []
   );
-  const debouncedSearchText = useDebounce(searchText, 500);
 
-  // update URL params with debounced search text
-  const updateSearchParams = useCallback(
-    (updates: Record<string, string | null>) => {
-      const params = new URLSearchParams(searchParams);
-      Object.entries(updates).forEach(([key, value]) => {
-        if (value === null || value === "") {
-          params.delete(key);
-        } else {
-          params.set(key, value);
-        }
-      });
-      router.push(`?${params.toString()}`);
-    },
-    [searchParams, router]
-  );
+  const fromDate = searchParams.get("fromDate") || "";
+  const toDate = searchParams.get("toDate") || "";
 
-  // Sync debounced search text once it settles
-  useEffect(() => {
-    updateSearchParams({ search_term: debouncedSearchText });
-  }, [debouncedSearchText, updateSearchParams]);
+  const updateParam = useCallback((key: string, value: string) => {
+    const params = new URLSearchParams(searchParams);
+    if (value) params.set(key, value);
+    else params.delete(key);
+    router.replace(`?${params.toString()}`);
+  }, [searchParams, router]);
 
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchText(e.target.value);
-  };
+  const handleFromDate = useCallback((newValue: Date) => {
+    if (dateIsAfter(newValue, new Date())) {
+      setDateError("From date cannot be later than today");
+      return false;
+    } else if (toDate && dateIsAfter(newValue, toDate)) {
+      setDateError("From date must be before to date");
+      return false;
+    }
+    setDateError("");
+    updateParam("fromDate", getDateTime(newValue, "YYYY-MM-DD") as string);
+    return true;
+  }, [toDate, updateParam]);
 
-  // handle from date
-  const handleFromDate = useCallback(
-    (newValue: Date): boolean => {
-      if (dateIsAfter(newValue, new Date())) {
-        setDateError("From date cannot be later than today");
-        return false;
-      }
-      if (toDate && dateIsAfter(newValue, new Date(toDate))) {
-        setDateError("From date must be before To date");
-        return false;
-      }
-      const formatted = getDateTime(newValue, "YYYY-MM-DD");
-      setFromDate(formatted);
-      updateSearchParams({ fromDate: formatted });
-      setDateError("");
-      return true;
-    },
-    [toDate, updateSearchParams]
-  );
+  const handleToDate = useCallback((newValue: Date) => {
+    if (dateIsAfter(newValue, new Date())) {
+      setDateError("To date cannot be later than today");
+      return false;
+    } else if (fromDate && dateIsAfter(newValue, fromDate)) {
+      setDateError("To date must be after from date");
+      return false;
+    }
+    setDateError("");
+    updateParam("toDate", getDateTime(newValue, "YYYY-MM-DD") as string);
+    return true;
+  }, [fromDate, updateParam]);
 
-  // handle to date
-  const handleToDate = useCallback(
-    (newValue: Date): boolean => {
-      if (fromDate && dateIsAfter(new Date(fromDate), newValue)) {
-        setDateError("To date must be later than From date");
-        return false;
-      }
-      const formatted = getDateTime(newValue, "YYYY-MM-DD");
-      setToDate(formatted);
-      updateSearchParams({ toDate: formatted });
-      setDateError("");
-      return true;
-    },
-    [fromDate, updateSearchParams]
-  );
-
-  // handle filter type
   const handleFilterType = useCallback(
     (newValue: string) => {
       setType((prev) => {
-        const newTypes = prev.includes(newValue)
-          ? prev.filter((v) => v !== newValue)
-          : [...prev, newValue];
-        updateSearchParams({ type: newTypes.join(",") });
+        const newTypes = prev.includes(newValue) ? prev.filter((v) => v !== newValue) : [...prev, newValue];
+        updateParam("type", newTypes.join(','));
         return newTypes;
       });
     },
-    [updateSearchParams]
+    [updateParam]
   );
 
-  // handle reset type
   const handleResetType = useCallback(() => {
     setType([]);
-    updateSearchParams({ type: null });
-  }, [updateSearchParams]);
-
-  // memoize date objects
-  const fromDateObj = useMemo(
-    () => (fromDate ? dayjs(fromDate).toDate() : new Date()),
-    [fromDate]
-  );
-  const toDateObj = useMemo(
-    () => (toDate ? dayjs(toDate).toDate() : new Date()),
-    [toDate]
-  );
-  const fromDateLabel = useMemo(
-    () => (fromDate ? dayjs(fromDate).format("DD MMM YYYY") : "From Date"),
-    [fromDate]
-  );
-  const toDateLabel = useMemo(
-    () => (toDate ? dayjs(toDate).format("DD MMM YYYY") : "To Date"),
-    [toDate]
-  );
+    updateParam("type", "");
+  }, [updateParam]);
 
   return (
-    <Box
-      p={2}
-      gap={2}
-      display="flex"
-      alignItems="center"
-      justifyContent="space-between"
-    >
-      <MediaSearchBox
-        searchText={searchText}
-        handleSearch={handleSearch} />
+    <Box p={2} gap={2} display="flex" alignItems="center" justifyContent="space-between">
+      <TableToolbarSearchBox />
 
       <Box display="flex" gap={2} alignItems="center">
         <CustomDatePicker
           error={dateError}
-          date={fromDateObj}
-          buttonLabel={fromDateLabel}
+          date={fromDate ? new Date(fromDate) : undefined}
+          buttonLabel={fromDate || "From Date"}
           onChangeDate={handleFromDate}
           endIcon={<ChevronDownIcon />}
         />
         <CustomDatePicker
           error={dateError}
-          date={toDateObj}
-          buttonLabel={toDateLabel}
+          date={toDate ? new Date(toDate) : undefined}
+          buttonLabel={toDate || "To Date"}
           onChangeDate={handleToDate}
           endIcon={<ChevronDownIcon />}
         />

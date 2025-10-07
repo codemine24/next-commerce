@@ -1,9 +1,11 @@
 "use client";
 
-import { MenuItem, Select, SelectChangeEvent, SxProps, TextField } from "@mui/material";
-import { Theme } from "@mui/material";
+import { SxProps, Theme } from "@mui/material";
 import Box from "@mui/material/Box";
+import MenuItem from "@mui/material/MenuItem";
 import Paginate, { PaginationProps } from "@mui/material/Pagination";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useRouter, useSearchParams } from "next/navigation";
 import React from "react";
@@ -27,14 +29,14 @@ export const Pagination = ({ page = 1, total, limit = 10, sx, ...others }: Props
         setCurrentPage(value);
         const params = new URLSearchParams(searchParams.toString());
         params.set("page", value.toString());
-        router.replace(`${window.location.pathname}?${params.toString()}`);
+        router.replace(`?${params.toString()}`);
     };
 
     const handleLimitChange = (event: SelectChangeEvent<unknown>) => {
         setCurrentPage(1);
         const params = new URLSearchParams(searchParams.toString());
         params.set("limit", event.target.value as string);
-        router.replace(`${window.location.pathname}?${params.toString()}`);
+        router.replace(`?${params.toString()}`);
     };
 
     return (
@@ -75,7 +77,7 @@ export const Pagination = ({ page = 1, total, limit = 10, sx, ...others }: Props
                         </Select>
                     </Box>
 
-                    <Box display="flex" alignItems="center" gap={1}>
+                    {totalPage > 1 && <Box display="flex" alignItems="center" gap={1}>
                         <Typography variant="caption" color="text.secondary">Go to</Typography>
                         <TextField
                             type="number"
@@ -101,7 +103,7 @@ export const Pagination = ({ page = 1, total, limit = 10, sx, ...others }: Props
                             }}
                             onChange={(event) => handleChange(event, parseInt(event.target.value, 10))}
                         />
-                    </Box>
+                    </Box>}
                 </Box>
                 <Paginate
                     count={totalPage}
@@ -119,6 +121,9 @@ export const Pagination = ({ page = 1, total, limit = 10, sx, ...others }: Props
                         "& .MuiPaginationItem-root.Mui-selected": {
                             color: "primary.contrastText",
                             backgroundColor: "primary.main",
+                        },
+                        "& .MuiPaginationItem-root:hover": {
+                            backgroundColor: "primary.dark",
                         },
                     }}
                 />

@@ -1,24 +1,22 @@
 "use client";
 
-import {
-  IconButton,
-  Stack,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Typography,
-  alpha,
-  tableCellClasses,
-} from "@mui/material";
+import IconButton from "@mui/material/IconButton";
+import Stack from "@mui/material/Stack";
+import { alpha } from "@mui/material/styles";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Typography from "@mui/material/Typography";
 import Image from "next/image";
 
 import { ProductQuantityButton } from "@/components/product-quantity-button";
 import { useCart } from "@/hooks/use-cart";
-import { CrossIcon } from "@/icons/cross-icon";
+import { CloseIcon } from "@/icons/close";
 import { currencyFormatter } from "@/utils/currency-formatter";
+import { makeImageUrl } from "@/utils/helper";
 
 export const CartItems = () => {
   const { cart, increaseQty, decreaseQty, removeFromCart } = useCart();
@@ -28,44 +26,16 @@ export const CartItems = () => {
       <Table
         sx={{
           minWidth: 650,
-          borderCollapse: "collapse",
-          [`& .${tableCellClasses.root}`]: {
-            borderTop: "1px solid",
-            borderBottom: "1px solid",
-            borderColor: "divider",
-            "&:not(:first-of-type):not(:last-of-type)": {
-              borderLeft: "none",
-              borderRight: "none",
-            },
-          },
-          [`& .${tableCellClasses.root}:first-of-type`]: {
-            borderLeft: "1px solid",
-            borderColor: "divider",
-          },
-          [`& .${tableCellClasses.root}:last-of-type`]: {
-            borderRight: "1px solid",
-            borderColor: "divider",
-          },
         }}
       >
         {/* Header */}
         <TableHead>
           <TableRow>
-            <TableCell>
-              <Typography variant="body1">Product</Typography>
-            </TableCell>
-            <TableCell>
-              <Typography variant="body1">Action</Typography>
-            </TableCell>
-            <TableCell>
-              <Typography variant="body1">Quantity</Typography>
-            </TableCell>
-            <TableCell>
-              <Typography variant="body1">Unit Price</Typography>
-            </TableCell>
-            <TableCell>
-              <Typography variant="body1">Total</Typography>
-            </TableCell>
+            <TableCell>Product</TableCell>
+            <TableCell>Action</TableCell>
+            <TableCell>Quantity</TableCell>
+            <TableCell align="right">Unit Price</TableCell>
+            <TableCell align="right">Total</TableCell>
           </TableRow>
         </TableHead>
 
@@ -77,10 +47,7 @@ export const CartItems = () => {
               <TableCell>
                 <Stack direction="row" spacing={2} alignItems="center">
                   <Image
-                    src={
-                      item.product.thumbnail ||
-                      "https://placehold.co/600x400/png"
-                    }
+                    src={makeImageUrl(item.product.thumbnail)}
                     alt={item.product.name}
                     width={60}
                     height={60}
@@ -109,7 +76,7 @@ export const CartItems = () => {
                     },
                   }}
                 >
-                  <CrossIcon />
+                  <CloseIcon />
                 </IconButton>
               </TableCell>
 
@@ -123,15 +90,12 @@ export const CartItems = () => {
               </TableCell>
 
               {/* Unit Price */}
-              <TableCell>
-                <Typography>
-                  {" "}
-                  {currencyFormatter(item.product.price)}
-                </Typography>
+              <TableCell align="right">
+                <Typography>{currencyFormatter(item.product.price)}</Typography>
               </TableCell>
 
               {/* Total */}
-              <TableCell>
+              <TableCell align="right">
                 <Typography>{currencyFormatter(item.total)}</Typography>
               </TableCell>
             </TableRow>

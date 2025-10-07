@@ -5,18 +5,18 @@ export const CrossIcon = (props: SvgIconProps) => {
     <SvgIcon {...props}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        width="21"
-        height="21"
-        viewBox="0 0 21 21"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
       >
         <g
           fill="none"
-          fill-rule="evenodd"
+          fillRule="evenodd"
           stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeLinecap="round"
+          strokeLinejoin="round"
           transform="translate(2 2)"
-          stroke-width="1"
+          strokeWidth="1"
         >
           <circle cx="8.5" cy="8.5" r="8" />
           <path d="m5.5 5.5l6 6m0-6l-6 6" />

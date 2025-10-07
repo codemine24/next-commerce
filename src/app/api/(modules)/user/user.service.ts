@@ -1,11 +1,13 @@
-import { Prisma, User } from "@prisma/client";
+import { Prisma, User, UserRole, UserStatus } from "@prisma/client";
 import httpStatus from "http-status";
+import { cookies } from "next/headers";
 import sharp from "sharp";
 
 import { CONFIG } from "../../(helpers)/config";
 import CustomizedError from "../../(helpers)/error/customized-error";
 import { prisma } from "../../(helpers)/shared/prisma";
 import supabase from "../../(helpers)/shared/supabase";
+import { generateToken } from "../../(helpers)/utils/jwt-helpers";
 import paginationMaker from "../../(helpers)/utils/pagination-maker";
 import queryValidator from "../../(helpers)/utils/query-validator";
 import { USER_SELECTED_FIELDS } from "../auth/auth.utils";
@@ -27,6 +29,8 @@ const getProfile = async (user: User) => {
 // ------------------------------------ UPDATE PROFILE -------------------------------------
 const updateProfile = async (user: User, data: Record<string, any>) => {
   const { data: userInfo, avatar } = data;
+  const cookieStore = await cookies();
+
   let uploadedAvatar;
 
   // Step 1: Process avatar if provided
@@ -99,6 +103,45 @@ const updateProfile = async (user: User, data: Record<string, any>) => {
     },
   });
 
+  const jwtPayload = {
+    id: result.id,
+    first_name: result.first_name,
+    last_name: result.last_name,
+    avatar: result.avatar,
+    contact_number: result.contact_number,
+    email: result.email,
+    role: result.role,
+  };
+
+  const accessToken = generateToken(
+    jwtPayload,
+    CONFIG.jwt_access_secret,
+    CONFIG.jwt_access_expiresIn
+  );
+
+  const refreshToken = generateToken(
+    jwtPayload,
+    CONFIG.jwt_refresh_secret,
+    CONFIG.jwt_refresh_expiresIn
+  );
+
+  // Set refresh token in cookie
+
+  cookieStore.set("refresh_token", refreshToken, {
+    httpOnly: true,
+    secure: CONFIG.node_env === "production",
+    sameSite: "strict",
+    maxAge: Number(CONFIG.jwt_refresh_expiresIn),
+  });
+
+  // Set access token in cookie
+  cookieStore.set("access_token", accessToken, {
+    httpOnly: false,
+    secure: CONFIG.node_env === "production",
+    sameSite: "strict",
+    maxAge: Number(CONFIG.jwt_access_expiresIn),
+  });
+
   return result;
 };
 
@@ -139,10 +182,14 @@ const getUsers = async (query: Record<string, any>) => {
   }
 
   // Apply role filter if role is provided
-  if (role) andConditions.push({ role });
+  if (role)
+    andConditions.push({ role: { equals: role.toUpperCase() as UserRole } });
 
   // Apply status filter if status is provided
-  if (status) andConditions.push({ status });
+  if (status)
+    andConditions.push({
+      status: { equals: status.toUpperCase() as UserStatus },
+    });
 
   // Combine all AND conditions for Prisma query
   const whereConditions: Prisma.UserWhereInput = { AND: andConditions };

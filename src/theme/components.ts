@@ -165,11 +165,11 @@ export const components: Components<Theme> = {
         props: { variant: "soft", color: "primary" },
         style: ({ theme }) => ({
           backgroundColor: alpha((theme.palette.primary as unknown as { [key: string]: string })["100"], 0.1),
-          color: theme.palette.primary.dark,
+          color: theme.palette.primary.main,
           borderRadius: 0,
           transition: "all 0.3s",
           ":hover": {
-            backgroundColor: alpha((theme.palette.primary as unknown as { [key: string]: string })["100"], 0.2),
+            backgroundColor: theme.palette.primary.main,
             color: common.white,
           },
         }),
@@ -293,7 +293,9 @@ export const components: Components<Theme> = {
     styleOverrides: {
       root: ({ theme }) => ({
         borderSpacing: "0px !important",
-        border: "1px solid", borderColor: theme.palette.divider,
+        border: "1px solid",
+        borderColor: theme.palette.divider,
+        borderBottomColor: "transparent",
         borderCollapse: 'separate'
       }),
     },
@@ -308,14 +310,15 @@ export const components: Components<Theme> = {
           backgroundColor: alpha(theme.palette.primary.main, 0.04),
           '&:hover': { backgroundColor: alpha(theme.palette.primary.main, 0.08) },
         },
-        "&:first-of-type": { [`& .${tableCellClasses.root}`]: { borderTop: "1px solid", borderColor: theme.palette.divider } },
-        '&:last-of-type': { [`& .${tableCellClasses.root}`]: { borderColor: 'transparent' } },
+        [`& .${tableCellClasses.root}`]: { borderBottom: "1px solid", borderColor: theme.palette.divider },
+        "last-of-type": { [`& .${tableCellClasses.root}`]: { borderColor: 'transparent' } },
       }),
     },
   },
   MuiTableCell: {
     styleOverrides: {
       root: ({ theme }) => ({
+        padding: "12px",
         fontSize: 14,
         borderBottom: "1px solid",
         borderColor: theme.palette.divider,

@@ -5,8 +5,6 @@ import Typography from "@mui/material/Typography";
 import { OptimizeImage } from "@/components/optimize-image";
 import { dateFormatter } from "@/utils/date-formatter";
 
-import { SectionTitle } from "./section-title";
-
 const images = [
   "/images/blog/blog-1.svg",
   "/images/blog/blog-2.svg",
@@ -16,17 +14,20 @@ const images = [
 export const RecentBlogs = () => {
   return (
     <Box>
-      <SectionTitle title="Recent Blogs" />
       <Grid container spacing={2}>
         {images.map((image, index) => (
-          <Grid key={index} size={{ xs: 12, sm: 6, md: 4 }}>
+          <Grid
+            key={index}
+            size={{ xs: 12, sm: 6, md: 4 }}
+            sx={{ border: "1px solid #EFEDFA" }}
+          >
             <OptimizeImage
               src={image}
               alt="Blog"
               height={250}
               imageStyle={{ objectFit: "cover" }}
             />
-            <Box py={2}>
+            <Box py={2.5} pl={2.5}>
               <Typography variant="h5" gutterBottom>
                 First Time Home Owner Ideas
               </Typography>

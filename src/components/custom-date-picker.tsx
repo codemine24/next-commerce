@@ -8,7 +8,7 @@ import { useRef, useState } from 'react';
 
 interface CustomDatePickerProps {
     error: string;
-    date: Date;
+    date: Date | undefined;
     buttonLabel: string;
     onChangeDate: (date: Date) => boolean;
     startIcon?: React.ReactNode;

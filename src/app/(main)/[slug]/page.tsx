@@ -1,5 +1,5 @@
 import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
+import { notFound } from "next/navigation";
 
 import { getProductBySlug } from "@/actions/product";
 import { BoxContainer } from "@/components/box-container";
@@ -25,20 +25,11 @@ const ProductDetail = async ({ params }: { params: Params }) => {
   const product = await getProductBySlug(slug);
 
   if (!product.success) {
-    return (
-      <BoxContainer>
-        <Typography variant="h4" fontWeight={600} align="center" gutterBottom>
-          Product Not Found
-        </Typography>
-      </BoxContainer>
-    );
+    return notFound()
   }
 
   return (
-    <BoxContainer>
-      <Typography variant="h4" fontWeight={600} gutterBottom>
-        Product Detail
-      </Typography>
+    <BoxContainer sx={{ py: 6 }}>
       {/* Product Image & Info */}
       <Grid container spacing={4}>
         <Grid size={{ xs: 12, md: 6 }}>

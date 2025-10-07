@@ -23,6 +23,11 @@ export const MediaFileType = ({ types, handleFilterType, handleResetType }: Medi
 
     const handleClose = () => setOpen(false);
 
+    const clearType = () => {
+        handleResetType();
+        handleClose();
+    };
+
     return (
         <>
             <Button
@@ -99,12 +104,8 @@ export const MediaFileType = ({ types, handleFilterType, handleResetType }: Medi
                     </Box>
 
                     <Stack spacing={1.5} direction="row" alignItems="center" justifyContent="flex-end">
-                        <Button variant="outlined" onClick={handleResetType}>
-                            Clear
-                        </Button>
-
-                        <Button variant="contained" onClick={handleClose}>
-                            Apply
+                        <Button variant="outlined" onClick={clearType}>
+                            Clear All
                         </Button>
                     </Stack>
                 </Stack>

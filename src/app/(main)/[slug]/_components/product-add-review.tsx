@@ -72,7 +72,6 @@ export const ProductAddReview = ({ productId }: ProductAddReviewProps) => {
 
   const handleAddReview = async (data: ReviewSchemaType) => {
     const response = await addReView({ ...data, product_id: productId });
-    console.log(response);
 
     if (!response.success) {
       toast.error(response.message || "Failed to add review");
@@ -82,7 +81,6 @@ export const ProductAddReview = ({ productId }: ProductAddReviewProps) => {
     toast.success("Review submitted successfully");
     reset();
     setOpen(false);
-    console.log(data);
   };
 
   return (

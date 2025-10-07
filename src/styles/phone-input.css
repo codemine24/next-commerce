@@ -1,0 +1,38 @@
+.phone-input {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    height: 45px;
+    /* match MUI small TextField */
+    padding: 0 16px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    font-family: inherit;
+}
+
+.phone-input input {
+    border: none;
+    outline: none;
+    flex: 1;
+    font-size: 14px;
+    padding-left: 8px;
+}
+
+.phone-input.error {
+    border-color: red;
+}
+
+.PhoneInputCountrySelect {
+    left: -15px;
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #ddd;
+    transition: border-color 0.3s;
+}
+
+.PhoneInputCountrySelect option {
+    font-size: 14px;
+    padding: 10px;
+    background-color: #fff;
+    font-family: inherit;
+}
