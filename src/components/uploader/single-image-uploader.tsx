@@ -8,6 +8,7 @@ import { Controller, useFormContext, useWatch } from "react-hook-form";
 import { CloseIcon } from "@/icons/close";
 import { UploadCloudIcon } from "@/icons/upload-cloud-icon";
 import { makeImageUrl } from "@/utils/helper";
+
 import { InputLabel } from "../form/input-label";
 
 type ImageUploaderProps = {

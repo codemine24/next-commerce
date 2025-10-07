@@ -34,7 +34,7 @@ export const AddressEditForm = ({ onCancel }: AddressFormContainerProps) => {
 
   return (
     <>
-      <AddressForm methods={methods} onSubmit={onSubmit} onCancel={onCancel} />
+      <AddressForm methods={methods} onSubmit={onSubmit} />
     </>
   );
 };
