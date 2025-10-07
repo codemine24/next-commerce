@@ -3,25 +3,37 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
 }
 
+model AppInfo {
+  id              String  @id @default(uuid())
+  name            String
+  logo            String
+  secondary_logo  String?
+  title           String
+  primary_color   String
+  secondary_color String?
+
+  @@map("app_info")
+}
+
 model User {
-  id                  String     @id @default(uuid())
+  id                  String         @id @default(uuid())
   first_name          String
   last_name           String?
-  email               String     @unique
+  email               String         @unique
   contact_number      String?
   password            String
   avatar              String?
-  role                UserRole   @default(CUSTOMER)
-  status              UserStatus @default(ACTIVE)
-  is_deleted          Boolean    @default(false)
+  role                UserRole       @default(CUSTOMER)
+  status              UserStatus     @default(ACTIVE)
+  is_deleted          Boolean        @default(false)
   password_changed_at DateTime?
-  created_at          DateTime   @default(now())
-  updated_at          DateTime   @updatedAt
+  created_at          DateTime       @default(now())
+  updated_at          DateTime       @updatedAt
   files               File[]
   cart                Cart?
   addresses           Address[]
@@ -61,16 +73,16 @@ model Product {
   created_at             DateTime @default(now())
   updated_at             DateTime @updatedAt
 
-  brand      Brand?     @relation(fields: [brand_id], references: [id])
-  categories Category[] @relation("ProductCategories")
-  attributes AttributeValue[] @relation("AttributeValues")
-  categoryId String?
+  brand       Brand?           @relation(fields: [brand_id], references: [id])
+  categories  Category[]       @relation("ProductCategories")
+  attributes  AttributeValue[] @relation("AttributeValues")
+  categoryId  String?
   cart_items  CartItem[]
   order_items OrderItem[]
   reviews     Review[]
-  coupons     Coupon[]           @relation("EligibleProductsCoupon")
+  coupons     Coupon[]         @relation("EligibleProductsCoupon")
   wishlist    Wishlist[]
-  campaigns   Campaign[]         @relation("EligibleCampaignProducts")
+  campaigns   Campaign[]       @relation("EligibleCampaignProducts")
   campaignId  String?
   qna         QnA[]
 
@@ -108,12 +120,12 @@ model Category {
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt
 
-  parent   Category?  @relation("CategoryToParent", fields: [parent_id], references: [id])
-  children Category[] @relation("CategoryToParent")
-  products Product[]  @relation("ProductCategories")
-  coupons    Coupon[]    @relation("EligibleCategoriesCoupon")
+  parent     Category?          @relation("CategoryToParent", fields: [parent_id], references: [id])
+  children   Category[]         @relation("CategoryToParent")
+  products   Product[]          @relation("ProductCategories")
+  coupons    Coupon[]           @relation("EligibleCategoriesCoupon")
   menu_items MenuItem[]
-  campaign   Campaign[]  @relation("EligibleCampaignCategories")
+  campaign   Campaign[]         @relation("EligibleCampaignCategories")
   attributes ProductAttribute[]
 
   @@map("categories")
@@ -248,17 +260,17 @@ model OrderHistory {
 }
 
 model Payment {
-  id             String        @id @default(uuid())
-  order_id       String        @unique
+  id             String         @id @default(uuid())
+  order_id       String         @unique
   amount         Int
-  gateway         PaymentGateway
-  status         PaymentStatus @default(PENDING)
+  gateway        PaymentGateway
+  status         PaymentStatus  @default(PENDING)
   transaction_id String?
   paid_at        DateTime?
   error_message  String?
   metadata       Json?
-  created_at     DateTime      @default(now())
-  updated_at     DateTime      @updatedAt
+  created_at     DateTime       @default(now())
+  updated_at     DateTime       @updatedAt
 
   order Order @relation(fields: [order_id], references: [id])
 
@@ -354,13 +366,13 @@ model UserOTP {
 }
 
 model ProductAttribute {
-  id          String   @id @default(uuid())
+  id          String          @id @default(uuid())
   name        String
   type        AttributeType
   status      AttributeStatus @default(PUBLISHED)
   category_id String?
 
-  category Category? @relation(fields: [category_id], references: [id])
+  category         Category?        @relation(fields: [category_id], references: [id])
   attribute_values AttributeValue[]
 
   @@map("product_attributes")
@@ -373,7 +385,7 @@ model AttributeValue {
   position     Int    @default(0)
 
   attribute ProductAttribute @relation(fields: [attribute_id], references: [id], onDelete: Cascade)
-  products Product[] @relation("AttributeValues")
+  products  Product[]        @relation("AttributeValues")
 
   @@map("attribute_values")
 }
@@ -465,6 +477,19 @@ model QnA {
   @@map("qna")
 }
 
+model Banner {
+  id          String     @id @default(uuid())
+  type        BannerType @default(BANNER)
+  name        String
+  image       String
+  title       String?
+  sub_title   String?
+  button_text String?
+  button_url  String
+
+  @@map("banners")
+}
+
 enum OrderStatus {
   PENDING
   CONFIRMED
@@ -548,4 +573,9 @@ enum UserStatus {
   ACTIVE
   INACTIVE
   BLOCKED
+}
+
+enum BannerType {
+  BANNER
+  SLIDER
 }
