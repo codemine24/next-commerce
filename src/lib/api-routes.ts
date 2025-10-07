@@ -11,12 +11,19 @@ export const API_ROUTES = {
     update_address: (id: string) => `/address/${id}`,
     delete_address: "/address",
   },
+  attributes: {
+    get_attributes: "/attribute",
+    create_attribute: "/attribute",
+    update_attribute: (id: string) => `/attribute/${id}`,
+    delete_attribute: "/attribute",
+  },
   users: {
     get_users: "/user",
     create_user: "/user",
     update_user: (id: string) => `/user/${id}`,
     delete_user: "/user",
     update_profile: "/user/update-profile",
+    me: "/user/me",
   },
   products: {
     get_products: "/product",

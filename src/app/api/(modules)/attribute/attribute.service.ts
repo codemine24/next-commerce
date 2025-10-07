@@ -113,6 +113,7 @@ const getAttributes = async (query: Record<string, any>) => {
       orderBy: { [sortWith]: sortSequence },
       include: {
         attribute_values: true,
+        category: true,
       },
     }),
     await prisma.productAttribute.count({ where: whereConditions }),

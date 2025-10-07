@@ -37,7 +37,7 @@ export const createUser = async (user: SignupSchemaType) => {
 export const updateProfile = async (data: UpdateProfileSchemaType) => {
   const formData = new FormData();
 
-  if (data?.avatar) {
+  if (data?.avatar && data.avatar instanceof File) {
     formData.append("avatar", data.avatar);
   }
 
@@ -51,9 +51,19 @@ export const updateProfile = async (data: UpdateProfileSchemaType) => {
 
   const res = await api.patch(API_ROUTES.users.update_profile, {
     body: formData,
+    credentials: "include",
   });
 
   if (res.success) revalidateTag(TAGS.users);
 
+  return res;
+};
+
+export const getProfile = async () => {
+  const url = API_ROUTES.users.me;
+
+  const res = await api.get(url, {
+    next: { tags: [TAGS.users] },
+  });
   return res;
 };
