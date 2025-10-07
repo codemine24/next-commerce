@@ -4,11 +4,11 @@ export const API_ROUTES = {
     register: "/auth/register",
     refresh_token: "/auth/refresh-token",
   },
-  address: {
-    get_addresses: "/address",
-    create_address: "/address",
-    update_address: (id: string) => `/address/${id}`,
-    delete_address: "/address",
+  attributes: {
+    get_attributes: "/attribute",
+    create_attribute: "/attribute",
+    update_attribute: (id: string) => `/attribute/${id}`,
+    delete_attribute: "/attribute",
   },
   users: {
     get_users: "/user",
@@ -16,6 +16,7 @@ export const API_ROUTES = {
     update_user: (id: string) => `/user/${id}`,
     delete_user: "/user",
     update_profile: "/user/update-profile",
+    me: "/user/me",
   },
   products: {
     get_products: "/product",
