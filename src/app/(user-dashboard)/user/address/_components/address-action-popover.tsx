@@ -19,10 +19,12 @@ import { toast } from "@/lib/toast-store";
 
 interface AddressActionPopoverProps {
   address: Address;
+  onDeleted?: () => void;
 }
 
 export const AddressActionPopover = ({
   address,
+  onDeleted
 }: AddressActionPopoverProps) => {
   const router = useRouter();
   const [loading, startTransition] = useTransition();
@@ -44,6 +46,7 @@ export const AddressActionPopover = ({
       if (res.success) {
         toast.success(res.message);
         handleClose();
+        onDeleted?.();
       } else {
         toast.error(res.message);
       }
