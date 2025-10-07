@@ -215,9 +215,9 @@ export const ProductFilter = ({ attributes }: ProductFilterProps) => {
                     flexWrap: "nowrap",
                   }}
                 >
-                  {attribute.value.map((value) => (
+                  {attribute.attribute_values.map((value) => (
                     <FormControlLabel
-                      key={value}
+                      key={value.id}
                       sx={{
                         display: "flex",
                         alignItems: "center",
@@ -235,16 +235,16 @@ export const ProductFilter = ({ attributes }: ProductFilterProps) => {
                           size="small"
                           checked={
                             selectedFilters.values[attribute.name]?.includes(
-                              value
+                              value.title
                             ) || false
                           }
                           onChange={() =>
-                            handleCheckboxChange(attribute.name, value)
+                            handleCheckboxChange(attribute.name, value.title)
                           }
                           sx={{ p: 0 }}
                         />
                       }
-                      label={value}
+                      label={value.title}
                     />
                   ))}
                 </FormGroup>

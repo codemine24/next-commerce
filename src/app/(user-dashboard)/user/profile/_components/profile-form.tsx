@@ -1,58 +1,90 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Box, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
-import { updateProfile } from "@/actions/user";
 import { TextField } from "@/components/form";
 import FormProvider from "@/components/form/form-provider";
 import { PhoneInputField } from "@/components/form/phone-input-field";
+import { FormContainer } from "@/components/form-container";
 import { SubmitButton } from "@/components/submit-button";
 import { SingleImageUploader } from "@/components/uploader/single-image-uploader";
 import { useAuth } from "@/hooks/use-auth";
+import api from "@/lib/api";
+import { API_ROUTES } from "@/lib/api-routes";
 import { toast } from "@/lib/toast-store";
 import {
   updateProfileSchema,
   UpdateProfileSchemaType,
 } from "@/zod/update-profile-schema";
 
-export const UpdateProfileForm = () => {
-  const { user } = useAuth();
+export const UpdateProfileForm = ({ profileData }: { profileData: any }) => {
+  const { setUser } = useAuth();
   const methods = useForm<UpdateProfileSchemaType>({
     resolver: zodResolver(updateProfileSchema),
     defaultValues: {
-      first_name: user?.first_name || "",
-      last_name: user?.last_name || "",
-      contact_number: user?.contact_number || "",
-      avatar: undefined,
+      first_name: "",
+      last_name: "",
+      contact_number: "",
+      avatar: "",
     },
   });
 
   const onSubmit = async (data: UpdateProfileSchemaType) => {
-    const res = await updateProfile(data);
+    const formData = new FormData();
+
+    if (data?.avatar && data.avatar instanceof File) {
+      formData.append("avatar", data.avatar);
+    }
+
+    const payload = {
+      first_name: data.first_name,
+      last_name: data.last_name,
+      contact_number: data.contact_number,
+    };
+
+    formData.append("data", JSON.stringify(payload));
+
+    const res = await api.patch(API_ROUTES.users.update_profile, {
+      body: formData,
+    });
+
     if (!res.success) {
-      return toast.error(res.message);
+      return toast.error(res.message)
     }
 
     toast.success(res.message);
-    methods.reset();
+    const resData = res.data;
+
+    setUser((prev) =>
+      prev
+        ? {
+          ...prev,
+          avatar: resData.avatar as string,
+          first_name: resData.first_name as string,
+          last_name: resData.last_name as string,
+          contact_number: resData.contact_number as string,
+        }
+        : prev
+    );
   };
 
   useEffect(() => {
     methods.reset({
-      first_name: user?.first_name || "",
-      last_name: user?.last_name || "",
-      contact_number: user?.contact_number || "",
-      avatar: undefined,
+      first_name: profileData?.first_name || "",
+      last_name: profileData?.last_name || "",
+      contact_number: profileData?.contact_number || "",
+      avatar: profileData?.avatar || "",
     });
-  }, [methods, user]);
+  }, [methods, profileData]);
+
   return (
-    <FormProvider methods={methods} onSubmit={methods.handleSubmit(onSubmit)}>
-      <Box>
+    <FormContainer sx={{ p: 2 }}>
+      <FormProvider methods={methods} onSubmit={methods.handleSubmit(onSubmit)}>
         <Grid container spacing={2}>
           <Grid size={{ xs: 12 }}>
-            <SingleImageUploader name="avatar" label="Profile Photo" />
+            <SingleImageUploader name="avatar" label="Profile Photo" required />
           </Grid>
 
           <Grid size={{ xs: 12 }}>
@@ -78,20 +110,20 @@ export const UpdateProfileForm = () => {
               name="contact_number"
               label="Contact Number"
               required
-              sx={{ maxWidth: { xs: "100%", sm: "320px" } }}
+            // sx={{ maxWidth: { xs: "100%", sm: "320px" } }}
             />
           </Grid>
+          <SubmitButton
+            label="Update Profile"
+            isLoading={methods.formState.isSubmitting}
+            sx={{
+              width: 200,
+              height: 50,
+              textTransform: "none",
+            }}
+          />
         </Grid>
-      </Box>
-      <SubmitButton
-        label="Update Profile"
-        isLoading={methods.formState.isSubmitting}
-        sx={{
-          width: 200,
-          height: 50,
-          textTransform: "none",
-        }}
-      />
-    </FormProvider>
+      </FormProvider>
+    </FormContainer>
   );
 };
