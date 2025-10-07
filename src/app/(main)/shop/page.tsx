@@ -14,7 +14,7 @@ const ShopPage = async () => {
     <BoxContainer>
       <Suspense fallback={<div>Loading...</div>}>
         <Box sx={{ display: "flex", gap: 2 }}>
-          <ProductSidebar />
+          {/* <ProductSidebar /> */}
           {/* Ensure props are serializable */}
           <AllProducts products={products.data} />
         </Box>
