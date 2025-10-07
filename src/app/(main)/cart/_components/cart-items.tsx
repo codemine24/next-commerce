@@ -31,21 +31,11 @@ export const CartItems = () => {
         {/* Header */}
         <TableHead>
           <TableRow>
-            <TableCell>
-              Product
-            </TableCell>
-            <TableCell>
-              Action
-            </TableCell>
-            <TableCell>
-              Quantity
-            </TableCell>
-            <TableCell align="right">
-              Unit Price
-            </TableCell>
-            <TableCell align="right">
-              Total
-            </TableCell>
+            <TableCell>Product</TableCell>
+            <TableCell>Action</TableCell>
+            <TableCell>Quantity</TableCell>
+            <TableCell align="right">Unit Price</TableCell>
+            <TableCell align="right">Total</TableCell>
           </TableRow>
         </TableHead>
 
@@ -101,9 +91,7 @@ export const CartItems = () => {
 
               {/* Unit Price */}
               <TableCell align="right">
-                <Typography>
-                  {currencyFormatter(item.product.price)}
-                </Typography>
+                <Typography>{currencyFormatter(item.product.price)}</Typography>
               </TableCell>
 
               {/* Total */}

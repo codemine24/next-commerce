@@ -3,15 +3,8 @@ import { alpha, Chip } from "@mui/material";
 import { AccessTimeIcon } from "@/icons/access-time";
 import { CheckCircle } from "@/icons/check-circle";
 import { DeleteCircle } from "@/icons/delete-circle";
+import { WishlistProduct } from "@/interfaces/wishlist";
 import { BORDER_RADIUS } from "@/theme";
-
-export interface WishlistProduct {
-  id: string | number;
-  name: string;
-  image: string;
-  price: number;
-  status: "in-stock" | "out-of-stock" | "upcoming";
-}
 
 export const StatusChip: React.FC<{ status: WishlistProduct["status"] }> = ({
   status,

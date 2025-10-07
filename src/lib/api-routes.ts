@@ -7,14 +7,23 @@ export const API_ROUTES = {
   address: {
     get_addresses: "/address",
     create_address: "/address",
+    get_address_by_id: (id: string) => `/address/${id}`,
     update_address: (id: string) => `/address/${id}`,
     delete_address: "/address",
+  },
+  attributes: {
+    get_attributes: "/attribute",
+    create_attribute: "/attribute",
+    update_attribute: (id: string) => `/attribute/${id}`,
+    delete_attribute: "/attribute",
   },
   users: {
     get_users: "/user",
     create_user: "/user",
     update_user: (id: string) => `/user/${id}`,
     delete_user: "/user",
+    update_profile: "/user/update-profile",
+    me: "/user/me",
   },
   products: {
     get_products: "/product",
@@ -61,6 +70,7 @@ export const API_ROUTES = {
     delete_files: "/file",
   },
   order: {
+    get_my_orders: "/order/my-order",
     create_order_for_user: "/order",
     create_order_for_guest_user: "/order/guest",
   },

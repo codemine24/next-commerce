@@ -21,78 +21,84 @@ import { brandSchema, BrandSchema } from "@/zod/brand-schema";
 import { BrandForm } from "./brand-form";
 
 interface BrandEditDialogProps {
-    open: boolean;
-    onClose: () => void;
-    brand: Brand;
+  open: boolean;
+  onClose: () => void;
+  brand: Brand;
 }
 
-export const BrandEditDialog = ({ open, onClose, brand }: BrandEditDialogProps) => {
-    const methods = useForm<BrandSchema>({
-        resolver: zodResolver(brandSchema),
-        defaultValues: {
-            name: brand.name,
-            code: brand.code,
-            description: brand.description,
-            icon: brand.icon,
-        },
-    });
+export const BrandEditDialog = ({
+  open,
+  onClose,
+  brand,
+}: BrandEditDialogProps) => {
+  const methods = useForm<BrandSchema>({
+    resolver: zodResolver(brandSchema),
+    defaultValues: {
+      name: brand.name,
+      code: brand.code,
+      description: brand.description,
+      icon: brand.icon,
+    },
+  });
 
-    const onSubmit = async (data: BrandSchema) => {
-        const res = await updateBrand(brand.id, data);
+  const onSubmit = async (data: BrandSchema) => {
+    const res = await updateBrand(brand.id, data);
 
-        if (res.success) {
-            toast.success(res.message);
-            onClose();
-        } else {
-            toast.error(res.message);
-        }
+    if (res.success) {
+      toast.success(res.message);
+      onClose();
+    } else {
+      toast.error(res.message);
     }
+  };
 
-    return (
-        <AnimatedDialog
-            open={open}
-            onClose={onClose}
-            title="Edit Brand"
-            maxWidth="md"
-            fullWidth
-            sx={{ overflowX: "hidden" }}
+  return (
+    <AnimatedDialog
+      open={open}
+      onClose={onClose}
+      title="Edit Brand"
+      maxWidth="md"
+      fullWidth
+      transition="grow"
+      sx={{ overflowX: "hidden" }}
+    >
+      <IconButton
+        onClick={onClose}
+        sx={{ position: "absolute", right: 8, top: 8 }}
+      >
+        <CloseIcon />
+      </IconButton>
+      <DialogTitle>
+        <Typography variant="h4">Edit Brand</Typography>
+      </DialogTitle>
+
+      <DialogContent
+        sx={{ borderTop: 1, borderBottom: 1, borderColor: "divider" }}
+      >
+        <Box pt={2}>
+          <BrandForm methods={methods} onSubmit={onSubmit} hideActionButtons />
+        </Box>
+      </DialogContent>
+
+      <DialogActions>
+        <Button
+          variant="outlined"
+          onClick={onClose}
+          disabled={methods.formState.isSubmitting}
         >
-            <IconButton onClick={onClose} sx={{ position: "absolute", right: 8, top: 8 }}>
-                <CloseIcon />
-            </IconButton>
-            <DialogTitle>
-                <Typography variant="h4">Edit Brand</Typography>
-            </DialogTitle>
+          Cancel
+        </Button>
 
-            <DialogContent sx={{ borderTop: 1, borderBottom: 1, borderColor: "divider" }}>
-                <Box pt={2}>
-                    <BrandForm
-                        methods={methods}
-                        onSubmit={onSubmit}
-                        hideActionButtons
-                    />
-                </Box>
-            </DialogContent>
-
-            <DialogActions>
-                <Button
-                    variant="outlined"
-                    onClick={onClose}
-                    disabled={methods.formState.isSubmitting}
-                >
-                    Cancel
-                </Button>
-
-                <SubmitButton
-                    label="Save"
-                    loadingLabel="Saving..."
-                    variant="contained"
-                    disabled={methods.formState.isSubmitting}
-                    isLoading={methods.formState.isSubmitting}
-                    sx={{ height: "auto" }}
-                    onClick={methods.handleSubmit(onSubmit)}
-                />
-            </DialogActions>
-        </AnimatedDialog>
-    )
-}
+        <SubmitButton
+          label="Save"
+          loadingLabel="Saving..."
+          variant="contained"
+          disabled={methods.formState.isSubmitting}
+          isLoading={methods.formState.isSubmitting}
+          sx={{ height: "auto" }}
+          onClick={methods.handleSubmit(onSubmit)}
+        />
+      </DialogActions>
+    </AnimatedDialog>
+  );
+};
