@@ -489,6 +489,25 @@ model Banner {
   @@map("banners")
 }
 
+model NewsLetter {
+  id            String     @id @default(uuid())
+  email         String
+  is_verified   Boolean    @default(false)
+  subscribed_at DateTime   @default(now())
+
+  @@map("news_letters")
+}
+
+model NewsLetterOTP {
+  id             String   @id @default(uuid())
+  email          String
+  otp            Int      @unique
+  expires_at     String
+  created_at     DateTime @default(now())
+
+  @@map("news_letter_otp")
+}
+
 enum OrderStatus {
   PENDING
   CONFIRMED
