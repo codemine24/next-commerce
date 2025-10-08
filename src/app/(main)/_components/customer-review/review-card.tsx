@@ -22,7 +22,7 @@ export const ReviewCard = ({
   review,
 }: ReviewCardProps) => {
   return (
-    <Box sx={{ height: "340px" }}>
+    <Box>
       <OptimizeImage
         src={image}
         alt="Hero Carousel"

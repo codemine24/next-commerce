@@ -123,7 +123,7 @@ class ApiClient {
     }
 
     const controller = new AbortController();
-    const timeout = options.timeout ?? 10000; // Default timeout is 10 seconds
+    const timeout = options.timeout ?? 15000; // Default timeout is 15 seconds
     const timeoutId = setTimeout(() => controller.abort(), timeout);
 
     const fetchOptions: RequestInit = {

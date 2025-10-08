@@ -99,7 +99,7 @@ export const UpdateProfileForm = ({ profileData }: { profileData: any }) => {
               name="contact_number"
               label="Contact Number"
               required
-            // sx={{ maxWidth: { xs: "100%", sm: "320px" } }}
+            sx={{ maxWidth: { xs: "100%", sm: "320px" } }}
             />
           </Grid>
         </Grid>
