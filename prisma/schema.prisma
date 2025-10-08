@@ -5,7 +5,7 @@ generator client {
 datasource db {
   provider  = "postgresql"
   url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+  // directUrl = env("DIRECT_URL")
 }
 
 model AppInfo {
@@ -70,6 +70,7 @@ model Product {
   is_published           Boolean  @default(true)
   is_featured            Boolean  @default(false)
   is_deleted             Boolean  @default(false)
+  is_hot_deal            Boolean  @default(false)
   created_at             DateTime @default(now())
   updated_at             DateTime @updatedAt
 
@@ -93,7 +94,6 @@ model Brand {
   id          String   @id @default(uuid())
   name        String   @unique
   slug        String   @unique
-  code        String?  @unique
   icon        String?
   description String?
   featured    Boolean  @default(false)
@@ -484,7 +484,7 @@ model Banner {
   title       String?
   sub_title   String?
   button_text String?
-  url         String
+  url         String?
 
   @@map("banners")
 }

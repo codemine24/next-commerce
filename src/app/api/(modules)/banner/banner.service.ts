@@ -6,15 +6,16 @@ import { prisma } from "../../(helpers)/shared/prisma";
 import paginationMaker from "../../(helpers)/utils/pagination-maker";
 import queryValidator from "../../(helpers)/utils/query-validator";
 
+import { BannerPayload } from "./banner.interface";
 import {
   bannerQueryValidationConfig,
   bannerSearchableFields,
 } from "./banner.utils";
 
 // ------------------------------------ CREATE BANNER --------------------------------------
-const createBanner = async (body: any) => {
+const createBanner = async (data: BannerPayload) => {
   const result = await prisma.banner.create({
-    data: body,
+    data: data,
   });
 
   return result;

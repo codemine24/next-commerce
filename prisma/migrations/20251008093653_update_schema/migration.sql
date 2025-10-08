@@ -40,6 +40,22 @@ CREATE TYPE "public"."UserRole" AS ENUM ('SUPER_ADMIN', 'ADMIN', 'CUSTOMER');
 -- CreateEnum
 CREATE TYPE "public"."UserStatus" AS ENUM ('ACTIVE', 'INACTIVE', 'BLOCKED');
 
+-- CreateEnum
+CREATE TYPE "public"."BannerType" AS ENUM ('BANNER', 'SLIDER');
+
+-- CreateTable
+CREATE TABLE "public"."app_info" (
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "logo" TEXT NOT NULL,
+    "secondary_logo" TEXT,
+    "title" TEXT NOT NULL,
+    "primary_color" TEXT NOT NULL,
+    "secondary_color" TEXT,
+
+    CONSTRAINT "app_info_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateTable
 CREATE TABLE "public"."users" (
     "id" TEXT NOT NULL,
@@ -84,6 +100,7 @@ CREATE TABLE "public"."products" (
     "is_published" BOOLEAN NOT NULL DEFAULT true,
     "is_featured" BOOLEAN NOT NULL DEFAULT false,
     "is_deleted" BOOLEAN NOT NULL DEFAULT false,
+    "is_hot_deal" BOOLEAN NOT NULL DEFAULT false,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
     "categoryId" TEXT,
@@ -97,7 +114,6 @@ CREATE TABLE "public"."brands" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "slug" TEXT NOT NULL,
-    "code" TEXT,
     "icon" TEXT,
     "description" TEXT,
     "featured" BOOLEAN NOT NULL DEFAULT false,
@@ -112,7 +128,6 @@ CREATE TABLE "public"."categories" (
     "id" TEXT NOT NULL,
     "title" TEXT NOT NULL,
     "slug" TEXT NOT NULL,
-    "code" TEXT,
     "icon" TEXT,
     "featured" BOOLEAN NOT NULL DEFAULT false,
     "description" TEXT,
@@ -426,6 +441,20 @@ CREATE TABLE "public"."qna" (
 );
 
 -- CreateTable
+CREATE TABLE "public"."banners" (
+    "id" TEXT NOT NULL,
+    "type" "public"."BannerType" NOT NULL DEFAULT 'BANNER',
+    "name" TEXT NOT NULL,
+    "image" TEXT NOT NULL,
+    "title" TEXT,
+    "sub_title" TEXT,
+    "button_text" TEXT,
+    "url" TEXT NOT NULL,
+
+    CONSTRAINT "banners_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "public"."_EligibleBrandsCoupon" (
     "A" TEXT NOT NULL,
     "B" TEXT NOT NULL,
@@ -508,13 +537,7 @@ CREATE UNIQUE INDEX "brands_name_key" ON "public"."brands"("name");
 CREATE UNIQUE INDEX "brands_slug_key" ON "public"."brands"("slug");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "brands_code_key" ON "public"."brands"("code");
-
--- CreateIndex
 CREATE UNIQUE INDEX "categories_slug_key" ON "public"."categories"("slug");
-
--- CreateIndex
-CREATE UNIQUE INDEX "categories_code_key" ON "public"."categories"("code");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "carts_user_id_key" ON "public"."carts"("user_id");
@@ -646,7 +669,7 @@ ALTER TABLE "public"."shipped_info" ADD CONSTRAINT "shipped_info_courier_id_fkey
 ALTER TABLE "public"."product_attributes" ADD CONSTRAINT "product_attributes_category_id_fkey" FOREIGN KEY ("category_id") REFERENCES "public"."categories"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "public"."attribute_values" ADD CONSTRAINT "attribute_values_attribute_id_fkey" FOREIGN KEY ("attribute_id") REFERENCES "public"."product_attributes"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "public"."attribute_values" ADD CONSTRAINT "attribute_values_attribute_id_fkey" FOREIGN KEY ("attribute_id") REFERENCES "public"."product_attributes"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "public"."menu_items" ADD CONSTRAINT "menu_items_parent_id_fkey" FOREIGN KEY ("parent_id") REFERENCES "public"."menu_items"("id") ON DELETE SET NULL ON UPDATE CASCADE;
