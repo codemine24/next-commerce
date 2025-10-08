@@ -484,7 +484,7 @@ model Banner {
   title       String?
   sub_title   String?
   button_text String?
-  button_url  String
+  url         String
 
   @@map("banners")
 }
