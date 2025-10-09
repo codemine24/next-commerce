@@ -7,11 +7,11 @@ import CONFIG from "@/config";
 import { Product } from "@/interfaces/product";
 import { useRouter } from "next/navigation";
 import Typography from "@mui/material/Typography";
-import CircularProgress from "@mui/material/CircularProgress";
 import { Dispatch, SetStateAction } from "react";
 import { OptimizeImage } from "../optimize-image";
 import { API_ROUTES } from "@/lib/api-routes";
 import { useFetch } from "@/hooks/use-fetch";
+import { LoadingSpinner } from "../loading-spinner";
 
 interface SearchResultPreviewProps {
     searchTerm: string;
@@ -38,16 +38,15 @@ export const SearchResultPreview = ({ searchTerm, setShowResult }: SearchResultP
                     maxHeight: 400,
                     overflowY: "auto",
                     scrollbarWidth: "thin",
-                    borderRadius: "8px",
                     color: "text.primary",
                     backgroundColor: "background.paper",
                 }}
             >
-                {isLoading && <Box height={100} display="flex" alignItems="center" justifyContent="center"><CircularProgress size={20} /></Box>}
+                {isLoading && <LoadingSpinner />}
 
-                {!isLoading && data.length > 0 && (
+                {!isLoading && data?.length > 0 && (
                     <Stack>
-                        {data.map((product: Product) => (
+                        {data?.map((product: Product) => (
                             <Box
                                 key={product.id}
                                 sx={{
@@ -75,14 +74,13 @@ export const SearchResultPreview = ({ searchTerm, setShowResult }: SearchResultP
                                 />
                                 <Box sx={{ flex: 1 }}>
                                     <Typography variant="body2">{product.name}</Typography>
-
                                 </Box>
                             </Box>
                         ))}
                     </Stack>
                 )}
 
-                {!isLoading && data.length === 0 && (
+                {!isLoading && data?.length === 0 && (
                     <Box
                         height={100}
                         display="flex"
