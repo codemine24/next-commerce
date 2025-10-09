@@ -9,16 +9,20 @@ import { CloseIcon } from "@/icons/close";
 import { UploadCloudIcon } from "@/icons/upload-cloud-icon";
 import { makeImageUrl } from "@/utils/helper";
 
+import { InputLabel } from "../form/input-label";
+
 type ImageUploaderProps = {
   name: string;
   label?: string;
   accept?: { [mime: string]: string[] };
+  required?: boolean;
 };
 
 export const SingleImageUploader: React.FC<ImageUploaderProps> = ({
   name,
   label = "Upload Image",
   accept = { "image/*": [] },
+  required = false,
 }) => {
   
   const { control } = useFormContext();
@@ -62,9 +66,7 @@ export const SingleImageUploader: React.FC<ImageUploaderProps> = ({
         return (
           <Box>
             {label && (
-              <Typography fontWeight={600} mb={1}>
-                {label}
-              </Typography>
+             <InputLabel required={required} label={label} />
             )}
 
             {!previewUrl ? (

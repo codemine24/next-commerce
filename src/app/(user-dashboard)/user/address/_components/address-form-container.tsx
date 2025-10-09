@@ -32,6 +32,8 @@ export const AddressFormContainer = ({
     },
   });
 
+  
+
   const onSubmit = async (data: AddressSchema) => {
     const response = await addAddresses(data);
     onCancel();
@@ -40,7 +42,7 @@ export const AddressFormContainer = ({
 
   return (
     <>
-      <AddressForm methods={methods} onSubmit={onSubmit} onCancel={onCancel} />
+      <AddressForm methods={methods} onSubmit={onSubmit} />
     </>
   );
 };

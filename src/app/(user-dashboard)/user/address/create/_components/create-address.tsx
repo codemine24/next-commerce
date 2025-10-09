@@ -1,16 +1,17 @@
+"use client";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { useForm } from "react-hook-form";
 
+import { addAddresses } from "@/actions/address";
+import { toast } from "@/lib/toast-store";
 import { addressSchema, AddressSchema } from "@/zod/address-schema";
 
-import { AddressForm } from "./address-form";
+import { AddressForm } from "../../_components/address-form";
 
-interface AddressFormContainerProps {
-  onCancel: () => void;
-}
-
-export const AddressEditForm = ({ onCancel }: AddressFormContainerProps) => {
+const CreateAddress = () => {
+  const router = useRouter();
   const methods = useForm<AddressSchema>({
     resolver: zodResolver(addressSchema),
     defaultValues: {
@@ -28,13 +29,19 @@ export const AddressEditForm = ({ onCancel }: AddressFormContainerProps) => {
   });
 
   const onSubmit = async (data: AddressSchema) => {
-    onCancel();
-    console.log("Form Data:", data);
+    const response = await addAddresses(data);
+    if (!response.success) {
+      return toast.error(response.message);
+    }
+    toast.success(response.message);
+    router.push("/user/address");
+    console.log(response);
   };
-
   return (
     <>
       <AddressForm methods={methods} onSubmit={onSubmit} />
     </>
   );
 };
+
+export default CreateAddress;
