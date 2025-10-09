@@ -9,8 +9,11 @@ import { CategoriesButton } from "./categories-button";
 import { SearchBox } from "./search-box";
 import { UserButton } from "./user-button";
 import { WishlistButton } from "./wishlist-button";
+import { getCategories } from "@/actions/category";
 
-export const Navbar = () => {
+export const Navbar = async () => {
+  const data = await getCategories();
+
   return (
     <AppBar
       position="sticky"
@@ -28,7 +31,7 @@ export const Navbar = () => {
           <SearchBox />
           <WishlistButton />
           <CartButton />
-          <CategoriesButton />
+          <CategoriesButton categories={data.data} />
           <UserButton />
         </Box>
       </BoxContainer>
