@@ -15,11 +15,10 @@ import { useFetch } from "@/hooks/use-fetch";
 
 interface SearchResultPreviewProps {
     searchTerm: string;
-    showResult: boolean;
     setShowResult: Dispatch<SetStateAction<boolean>>;
 }
 
-export const SearchResultPreview = ({ searchTerm, showResult, setShowResult }: SearchResultPreviewProps) => {
+export const SearchResultPreview = ({ searchTerm, setShowResult }: SearchResultPreviewProps) => {
     const router = useRouter();
     const url = `${API_ROUTES.products.get_products}?searchTerm=${searchTerm}&limit=10`;
     const { data, isLoading } = useFetch(url);
@@ -28,7 +27,7 @@ export const SearchResultPreview = ({ searchTerm, showResult, setShowResult }: S
 
     return (
         <>
-            {/* {showResult && <Box
+            {/* <Box
                 sx={{
                     position: "absolute",
                     top: "100%",
@@ -93,7 +92,7 @@ export const SearchResultPreview = ({ searchTerm, showResult, setShowResult }: S
                         <Typography variant="body2">No products found</Typography>
                     </Box>
                 )}
-            </Box>} */}
+            </Box> */}
         </>
     );
 };

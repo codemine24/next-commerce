@@ -93,11 +93,12 @@ export const SearchBox = () => {
           },
         }}
       />
-      <SearchResultPreview
-        searchTerm={debouncedSearch}
-        showResult={showResult}
-        setShowResult={setShowResult}
-      />
+      {showResult && (
+        <SearchResultPreview
+          searchTerm={debouncedSearch}
+          setShowResult={setShowResult}
+        />
+      )}
     </Box>
   );
 };
