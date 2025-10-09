@@ -18,7 +18,7 @@ const emailSender = async (
   });
 
   const info = await transporter.sendMail({
-    from: `"Techtong" <${CONFIG.app_email_address}>`,
+    from: `"Zero Commerce" <${CONFIG.app_email_address}>`,
     to: receiverEmail,
     subject: subject,
     html,

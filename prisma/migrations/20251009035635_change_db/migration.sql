@@ -449,9 +449,30 @@ CREATE TABLE "public"."banners" (
     "title" TEXT,
     "sub_title" TEXT,
     "button_text" TEXT,
-    "url" TEXT NOT NULL,
+    "url" TEXT,
 
     CONSTRAINT "banners_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "public"."news_letters" (
+    "id" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "is_verified" BOOLEAN NOT NULL DEFAULT false,
+    "subscribed_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "news_letters_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "public"."news_letter_otp" (
+    "id" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "otp" INTEGER NOT NULL,
+    "expires_at" TEXT NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "news_letter_otp_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -580,6 +601,9 @@ CREATE UNIQUE INDEX "wishlists_user_id_product_id_key" ON "public"."wishlists"("
 
 -- CreateIndex
 CREATE UNIQUE INDEX "campaigns_title_key" ON "public"."campaigns"("title");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "news_letter_otp_otp_key" ON "public"."news_letter_otp"("otp");
 
 -- CreateIndex
 CREATE INDEX "_EligibleBrandsCoupon_B_index" ON "public"."_EligibleBrandsCoupon"("B");
