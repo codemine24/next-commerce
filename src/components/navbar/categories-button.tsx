@@ -1,16 +1,15 @@
 "use client";
 
+import Box from "@mui/material/Box"
 import Button from "@mui/material/Button";
+import Popover from "@mui/material/Popover";
+import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
+import { useState } from "react";
 
 import { ArrowDownIcon } from "@/icons/arrow-down-icon";
 import { GridIcon } from "@/icons/grid-icon";
-
 import { Category } from '@/interfaces/category'
-import Box from "@mui/material/Box"
-import Popover from "@mui/material/Popover";
-import { useState } from "react";
-import Stack from "@mui/material/Stack";
 
 interface CategoryButtonProps {
   categories: Category[]
