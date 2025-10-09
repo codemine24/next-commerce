@@ -20,14 +20,14 @@ interface SearchResultPreviewProps {
 
 export const SearchResultPreview = ({ searchTerm, setShowResult }: SearchResultPreviewProps) => {
     const router = useRouter();
-    const url = `${API_ROUTES.products.get_products}?searchTerm=${searchTerm}&limit=10`;
+    const url = `${API_ROUTES.products.get_products}?search_term=${searchTerm}&limit=10`;
     const { data, isLoading } = useFetch(url);
 
     console.log(data);
 
     return (
         <>
-            {/* <Box
+            <Box
                 sx={{
                     position: "absolute",
                     top: "100%",
@@ -92,7 +92,7 @@ export const SearchResultPreview = ({ searchTerm, setShowResult }: SearchResultP
                         <Typography variant="body2">No products found</Typography>
                     </Box>
                 )}
-            </Box> */}
+            </Box>
         </>
     );
 };
