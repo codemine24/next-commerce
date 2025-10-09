@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Divider } from "@mui/material";
+import Divider from "@mui/material/Divider";
 import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
@@ -12,7 +12,6 @@ import Typography from "@mui/material/Typography";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import React, { useMemo } from "react";
 
-import { CloseIcon } from "@/icons/close";
 import { ExpandMoreIcon } from "@/icons/expand-more";
 import { Attribute } from "@/interfaces/attribute";
 
@@ -127,64 +126,6 @@ export const ProductFilter = ({ attributes }: ProductFilterProps) => {
         pb: 2,
       }}
     >
-      {selectedFilters.order.length > 0 && (
-        <Button
-          variant="contained"
-          color="primary"
-          fullWidth
-          onClick={() => setSelectedFilters({ values: {}, order: [] })}
-        >
-          Clear All
-        </Button>
-      )}
-      {selectedFilters.order.length > 0 && <Divider sx={{ my: 2 }} />}
-      {/* Filter Applied */}
-      <Box display="flex" flexDirection="column" gap={1}>
-        {Object.entries(selectedFilters.values).map(
-          ([filterName, values], index) =>
-            values.map((value) => (
-              <Box
-                key={filterName + value + index}
-                display="flex"
-                justifyContent="space-between"
-                alignItems="center"
-                gap={1}
-                pl={2}
-                position="relative"
-                sx={{
-                  "&:before": {
-                    content: '""',
-                    position: "absolute",
-                    left: 0,
-                    top: "50%",
-                    transform: "translateY(-50%)",
-                    width: 5,
-                    height: 5,
-                    borderRadius: "50%",
-                    bgcolor: "text.primary",
-                  },
-                }}
-              >
-                <Box display="flex" alignItems="center" gap={1}>
-                  <Typography variant="caption">{filterName}:</Typography>
-                  <Typography
-                    variant="caption"
-                    fontWeight={600}
-                    textTransform="capitalize"
-                  >
-                    {value}
-                  </Typography>
-                </Box>
-                <CloseIcon
-                  fontSize="small"
-                  onClick={() => handleCheckboxChange(filterName, value)}
-                />
-              </Box>
-            ))
-        )}
-      </Box>
-      {selectedFilters.order.length > 0 && <Divider sx={{ my: 2 }} />}
-
       {/* Filter Options */}
       <Box>
         {sortAttributes.map((attribute, index) => (

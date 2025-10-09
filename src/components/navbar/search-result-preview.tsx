@@ -15,6 +15,8 @@ import { LoadingSpinner } from "../loading-spinner";
 import { ErrorComponent } from "../error-component";
 import { NotDataFound } from "../not-data-found";
 import { Button } from "@mui/material";
+import { useRef } from "react";
+import { useClickOutside } from "@/hooks/use-click-outside";
 
 interface SearchResultPreviewProps {
     searchTerm: string;
@@ -25,6 +27,8 @@ export const SearchResultPreview = ({ searchTerm, setShowResult }: SearchResultP
     const router = useRouter();
     const url = `${API_ROUTES.products.get_products}?search_term=${searchTerm}&limit=10`;
     const { data, isLoading, success, revalidate } = useFetch(url);
+    const ref = useRef<HTMLDivElement>(null);
+    useClickOutside(ref, () => setShowResult(false));
 
     const handleViewAll = () => {
         setShowResult(false);
@@ -34,6 +38,7 @@ export const SearchResultPreview = ({ searchTerm, setShowResult }: SearchResultP
     return (
         <>
             <Box
+                ref={ref}
                 sx={{
                     position: "absolute",
                     top: "100%",
