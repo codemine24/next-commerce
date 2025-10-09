@@ -35,7 +35,6 @@ export const CategoryEditDialog = ({ open, onClose, category }: CategoryEditDial
         resolver: zodResolver(categorySchema),
         defaultValues: {
             title: category.title,
-            code: category.code,
             description: category.description,
             parent_id: category.parent_id || "",
             icon: category.icon,

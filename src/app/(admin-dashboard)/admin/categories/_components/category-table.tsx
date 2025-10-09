@@ -51,6 +51,8 @@ export const CategoryTable = ({ categories }: CategoryTableProps) => {
         });
     };
 
+    console.log(categories)
+
     const columns: Column<Category>[] = [
         {
             label: "Icon",
@@ -78,12 +80,8 @@ export const CategoryTable = ({ categories }: CategoryTableProps) => {
         },
         {
             label: "Parent",
-            key: "parent_id",
-            render: (row: Category) => <Typography>{row.parent_id || "-"}</Typography>
-        },
-        {
-            label: "Code",
-            key: "code"
+            key: "parent",
+            render: (row: Category) => <Typography>{row.parent?.title || "-"}</Typography>
         },
         {
             label: "Action",
