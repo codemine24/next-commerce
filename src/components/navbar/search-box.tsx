@@ -4,14 +4,26 @@ import { InputAdornment } from "@mui/material";
 import Box from "@mui/material/Box";
 import { inputClasses } from "@mui/material/Input";
 import TextField from "@mui/material/TextField";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { CloseIcon } from "@/icons/close";
 import { SearchIcon } from "@/icons/search";
 import { BORDER_RADIUS } from "@/theme";
+import { useDebounce } from "@/hooks/use-debounce";
+import { SearchResultPreview } from "./search-result-preview";
 
 export const SearchBox = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [showResult, setShowResult] = useState(false);
+  const debouncedSearch = useDebounce(searchQuery, 500);
+
+  useEffect(() => {
+    if (debouncedSearch.length >= 2) {
+      setShowResult(true);
+    } else {
+      setShowResult(false);
+    }
+  }, [debouncedSearch]);
 
   return (
     <Box flex={1} height="100%" px={2}>
@@ -80,6 +92,11 @@ export const SearchBox = () => {
             fontSize: ".875rem",
           },
         }}
+      />
+      <SearchResultPreview
+        searchTerm={debouncedSearch}
+        showResult={showResult}
+        setShowResult={setShowResult}
       />
     </Box>
   );
