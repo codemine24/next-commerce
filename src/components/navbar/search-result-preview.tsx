@@ -1,22 +1,24 @@
 "use client";
 
+import { Button } from "@mui/material";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
-import { makeImageUrl } from "@/utils/helper";
-import CONFIG from "@/config";
-import { Product } from "@/interfaces/product";
-import { useRouter } from "next/navigation";
 import Typography from "@mui/material/Typography";
+import { useRouter } from "next/navigation";
 import { Dispatch, SetStateAction } from "react";
-import { OptimizeImage } from "../optimize-image";
-import { API_ROUTES } from "@/lib/api-routes";
-import { useFetch } from "@/hooks/use-fetch";
-import { LoadingSpinner } from "../loading-spinner";
-import { ErrorComponent } from "../error-component";
-import { NotDataFound } from "../not-data-found";
-import { Button } from "@mui/material";
 import { useRef } from "react";
+
+import CONFIG from "@/config";
 import { useClickOutside } from "@/hooks/use-click-outside";
+import { useFetch } from "@/hooks/use-fetch";
+import { Product } from "@/interfaces/product";
+import { API_ROUTES } from "@/lib/api-routes";
+import { makeImageUrl } from "@/utils/helper";
+
+import { ErrorComponent } from "../error-component";
+import { LoadingSpinner } from "../loading-spinner";
+import { NotDataFound } from "../not-data-found";
+import { OptimizeImage } from "../optimize-image";
 
 interface SearchResultPreviewProps {
     searchTerm: string;

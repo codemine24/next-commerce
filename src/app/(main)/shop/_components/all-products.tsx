@@ -3,8 +3,8 @@ import Grid from "@mui/material/Grid";
 
 import { Product } from "@/interfaces/product";
 
-import { ProductCard } from "./product-card";
 import { FilterApplied } from "./filter-applied";
+import { ProductCard } from "./product-card";
 
 export const AllProducts = ({ products }: { products: Product[] }) => {
   return (

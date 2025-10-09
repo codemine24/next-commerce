@@ -1,10 +1,11 @@
 "use client";
 
+import { alpha, Box, Typography } from "@mui/material";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
 import { useSearchParams, useRouter } from "next/navigation";
+
 import { CloseIcon } from "@/icons/close";
-import { alpha, Box, Typography } from "@mui/material";
 
 export const FilterApplied = () => {
     const params = useSearchParams();
