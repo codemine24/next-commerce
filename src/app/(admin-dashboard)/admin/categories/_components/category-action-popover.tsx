@@ -6,11 +6,13 @@ import IconButton from "@mui/material/IconButton"
 import Popover from "@mui/material/Popover"
 import { useState, useTransition } from "react"
 
-import { deleteCategory } from "@/actions/category";
+import { deleteCategory, updateCategory } from "@/actions/category";
 import { ConfirmDialog } from "@/components/dialog/confirm-dialog";
 import { DeleteIcon } from "@/icons/delete-icon";
 import { DotVerticalIcon } from "@/icons/dot-vertical"
 import { EditIcon } from "@/icons/edit";
+import { EmptyStarIcon } from "@/icons/empty-star";
+import { StarIcon } from "@/icons/star";
 import { Category } from "@/interfaces/category";
 import { toast } from "@/lib/toast-store";
 
@@ -48,6 +50,16 @@ export const CategoryActionPopover = ({ category }: CategoryActionPopoverProps) 
         });
     }
 
+    const handleToggleFeaturedCategory = async () => {
+        handleClose();
+        const res = await updateCategory(category.id, { featured: !category.featured });
+        if (res.success) {
+            toast.success(res.message);
+        } else {
+            toast.error(res.message);
+        }
+    }
+
     return (
         <>
             <IconButton onClick={handleClick}>
@@ -80,6 +92,20 @@ export const CategoryActionPopover = ({ category }: CategoryActionPopoverProps) 
                         }}
                     >
                         Edit
+                    </Button>
+
+                    <Button
+                        startIcon={category.featured ? <EmptyStarIcon /> : <StarIcon />}
+                        variant="text"
+                        color="inherit"
+                        onClick={handleToggleFeaturedCategory}
+                        sx={{
+                            pl: 2,
+                            textTransform: "none",
+                            justifyContent: "flex-start"
+                        }}
+                    >
+                        {category.featured ? "Remove featured" : "Make featured"}
                     </Button>
 
                     {/* Delete Button */}

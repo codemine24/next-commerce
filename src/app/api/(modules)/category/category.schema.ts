@@ -17,6 +17,7 @@ const categoryBaseSchema = z
       .optional()
       .nullable(),
     icon: z.string({ error: "Category icon should be a path" }).optional(),
+    featured: z.boolean().default(false)
   })
   .strict();
 

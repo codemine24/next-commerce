@@ -1,6 +1,7 @@
 "use client";
 
 import Box from '@mui/material/Box';
+import Chip from '@mui/material/Chip';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import DOMPurify from 'isomorphic-dompurify';
@@ -51,8 +52,6 @@ export const CategoryTable = ({ categories }: CategoryTableProps) => {
         });
     };
 
-    console.log(categories)
-
     const columns: Column<Category>[] = [
         {
             label: "Icon",
@@ -77,6 +76,11 @@ export const CategoryTable = ({ categories }: CategoryTableProps) => {
                     />
                 </Box>
             )
+        },
+        {
+            label: "Featured",
+            key: "featured",
+            render: (row: Category) => row.featured && <Chip label="Featured" variant="outlined" color="primary" />
         },
         {
             label: "Parent",

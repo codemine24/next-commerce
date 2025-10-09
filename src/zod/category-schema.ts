@@ -9,6 +9,7 @@ export const categorySchema = z
     description: z.string().optional(),
     parent_id: z.string().optional().nullable(),
     icon: z.union([z.instanceof(File), z.string()]).optional(),
+    featured: z.boolean().optional(),
   })
   .refine((data) => {
     if (data.icon instanceof File) {
