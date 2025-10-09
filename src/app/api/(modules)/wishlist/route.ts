@@ -37,8 +37,7 @@ export const POST = catchAsync(async (req: Request) => {
 export const GET = catchAsync(async (req: NextRequest) => {
   // Step 1: Authenticate user
   const user = await userAuthenticator(req, [
-    UserRole.SUPER_ADMIN,
-    UserRole.ADMIN,
+    UserRole.CUSTOMER
   ]);
 
   // Step 2: Extract search parameters from the request URL
@@ -63,8 +62,7 @@ export const GET = catchAsync(async (req: NextRequest) => {
 export const DELETE = catchAsync(async (req: NextRequest) => {
   // Step 1: Authenticate user
   const user = await userAuthenticator(req, [
-    UserRole.SUPER_ADMIN,
-    UserRole.ADMIN,
+    UserRole.CUSTOMER
   ]);
 
   // Step 2: Parse request body

@@ -29,7 +29,11 @@ export const ProductQuantityButton = ({
       <Button
         onClick={onRemove}
         disabled={qty <= 1}
-        sx={{ "&:hover": { borderRightColor: "#E6F2EE !important" } }}
+        sx={{
+          "&:hover": { borderRightColor: "#E6F2EE !important" },
+          [`& .${buttonBaseClasses.disabled}`]: { borderColor: "#E6F2EE" },
+          "&:disabled": { borderColor: "#E6F2EE" },
+        }}
       >
         -
       </Button>
@@ -37,13 +41,18 @@ export const ProductQuantityButton = ({
       <Button
         disabled
         sx={{
-          color: "#222625 !important",
+          "&:disabled": {
+            color: "#222625",
+            borderColor: "#E6F2EE",
+          },
         }}
       >
         {qty}
       </Button>
 
-      <Button onClick={onAdd}>+</Button>
+      <Button onClick={onAdd} sx={{ borderColor: "#E6F2EE" }}>
+        +
+      </Button>
     </ButtonGroup>
   );
 };

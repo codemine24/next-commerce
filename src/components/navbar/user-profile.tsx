@@ -11,7 +11,6 @@ import { OptimizeImage } from "@/components/optimize-image";
 import { useAuth } from "@/hooks/use-auth";
 import { ChevronDownIcon } from "@/icons/chevron-down";
 import { LogoutIcon } from "@/icons/logout";
-import { OrdersIcon } from "@/icons/orders";
 import { UserIcon } from "@/icons/user";
 import { toast } from "@/lib/toast-store";
 import { makeImageUrl } from "@/utils/helper";
@@ -115,22 +114,13 @@ export const UserProfile = () => {
               color="inherit"
               sx={{ justifyContent: "flex-start" }}
               fullWidth
+              href={user?.role === "ADMIN" ? "/admin" : "/user"}
+              component={Link}
             >
-              <Link href={user?.role === "ADMIN" ? "/admin" : "/user"}>
-                Account
-              </Link>
+               <Box component="span" sx={{flexGrow: 1}}> Account</Box>
             </Button>
 
-            <Button
-              startIcon={<OrdersIcon />}
-              size="small"
-              variant="text"
-              color="inherit"
-              sx={{ justifyContent: "flex-start" }}
-              fullWidth
-            >
-              Orders
-            </Button>
+
 
             <Button
               startIcon={<LogoutIcon />}

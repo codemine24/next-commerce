@@ -27,7 +27,7 @@ export const UserAddressTable = ({}) => {
   // Error Component
   if (!success)
     return <ErrorComponent message={message} onRetry={() => revalidate()} />;
-  console.log("table data:", data);
+ 
 
   return (
     <TableContainer component={Box}>

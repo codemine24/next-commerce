@@ -5,7 +5,6 @@ import { getProducts } from "@/actions/product";
 import { BoxContainer } from "@/components/box-container";
 
 import { AllProducts } from "./_components/all-products";
-import { ProductSidebar } from "./_components/products-sidebar";
 
 const ShopPage = async () => {
   const products = await getProducts();

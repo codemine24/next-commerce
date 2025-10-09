@@ -74,4 +74,9 @@ export const API_ROUTES = {
     create_order_for_user: "/order",
     create_order_for_guest_user: "/order/guest",
   },
+  wishlist: {
+    get_wishlist: "/wishlist",
+    add_to_wishlist:"/wishlist",
+    remove_from_wishlist: "/wishlist",
+  },
 };

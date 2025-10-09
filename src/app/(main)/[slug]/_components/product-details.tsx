@@ -30,8 +30,8 @@ export const ProductDetails = () => {
   ];
 
   return (
-    <Box>
-      <ProductSectionHeader title="Details" />
+    <Box id="#product-description">
+      <ProductSectionHeader title="Details"  />
       <Grid container spacing={2} mt={3}>
         {details.map((item, index) => (
           <Grid key={index}>
