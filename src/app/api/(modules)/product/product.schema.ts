@@ -70,6 +70,9 @@ const updateProduct = z.object({
       ...Object.fromEntries(
         Object.entries(baseProductSchema).map(([k, v]) => [k, v.optional()])
       ),
+      is_hot_deal: z
+        .boolean({ error: "Is hot deal should be a boolean" })
+        .optional(),
     })
     .strict(),
 });

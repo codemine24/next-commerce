@@ -83,3 +83,7 @@ export function minutesAgo(dateString: string | Date): number {
 
   return diffMin;
 }
+
+export const OTPGenerator = () => {
+  return Math.floor(100000 + Math.random() * 900000);
+};
