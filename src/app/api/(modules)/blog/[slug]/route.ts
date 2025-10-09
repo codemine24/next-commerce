@@ -14,13 +14,13 @@ import { BlogServices } from "../blog.service";
 export const GET = catchAsync(
   async (
     request: NextRequest,
-    { params }: { params: Promise<{ id: string }> }
+    { params }: { params: Promise<{ slug: string }> }
   ) => {
-    // Step 1: Extract id from params
-    const id = (await params).id;
+    // Step 1: Extract slug from params
+    const slug = (await params).slug;
 
-    // Step 2: Fetch post by id
-    const result = await BlogServices.getSinglePost(id);
+    // Step 2: Fetch post by slug
+    const result = await BlogServices.getSinglePost(slug);
 
     // Step 3: Return success response
     return successResponse({
@@ -35,13 +35,13 @@ export const GET = catchAsync(
 export const PATCH = catchAsync(
   async (
     request: NextRequest,
-    { params }: { params: Promise<{ id: string }> }
+    { params }: { params: Promise<{ slug: string }> }
   ) => {
     // Step 1: Authenticate user
     await userAuthenticator(request, [UserRole.SUPER_ADMIN, UserRole.ADMIN]);
 
-    // Step 2: Extract id from route params
-    const id = (await params).id;
+    // Step 2: Extract slug from route params
+    const slug = (await params).slug;
 
     // Step 3: Parse request body
     const body = await request.json();
@@ -50,7 +50,7 @@ export const PATCH = catchAsync(
     await payloadValidator(BlogSchemas.updatePost, body);
 
     // Step 5: Call service layer to update post in database
-    const result = await BlogServices.updatePost(id, body);
+    const result = await BlogServices.updatePost(slug, body);
 
     // Step 6: Return success response with updated post
     return successResponse({
