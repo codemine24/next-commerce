@@ -12,6 +12,9 @@ import { OptimizeImage } from "../optimize-image";
 import { API_ROUTES } from "@/lib/api-routes";
 import { useFetch } from "@/hooks/use-fetch";
 import { LoadingSpinner } from "../loading-spinner";
+import { ErrorComponent } from "../error-component";
+import { NotDataFound } from "../not-data-found";
+import { Button } from "@mui/material";
 
 interface SearchResultPreviewProps {
     searchTerm: string;
@@ -21,9 +24,12 @@ interface SearchResultPreviewProps {
 export const SearchResultPreview = ({ searchTerm, setShowResult }: SearchResultPreviewProps) => {
     const router = useRouter();
     const url = `${API_ROUTES.products.get_products}?search_term=${searchTerm}&limit=10`;
-    const { data, isLoading } = useFetch(url);
+    const { data, isLoading, success, revalidate } = useFetch(url);
 
-    console.log(data);
+    const handleViewAll = () => {
+        setShowResult(false);
+        router.push(`/shop?search_term=${searchTerm}`)
+    }
 
     return (
         <>
@@ -42,54 +48,65 @@ export const SearchResultPreview = ({ searchTerm, setShowResult }: SearchResultP
                     backgroundColor: "background.paper",
                 }}
             >
+                {/* Loading UI */}
                 {isLoading && <LoadingSpinner />}
 
-                {!isLoading && data?.length > 0 && (
-                    <Stack>
-                        {data?.map((product: Product) => (
-                            <Box
-                                key={product.id}
-                                sx={{
-                                    display: "flex",
-                                    alignItems: "center",
-                                    gap: 2,
-                                    p: 1,
-                                    cursor: "pointer",
-                                    borderBottom: "1px solid",
-                                    borderColor: "divider",
-                                    '&:hover': {
-                                        backgroundColor: "action.hover",
-                                    },
-                                }}
-                                onClick={() => {
-                                    setShowResult(false);
-                                    router.push(`/${product.slug}`);
-                                }}
-                            >
-                                <OptimizeImage
-                                    src={makeImageUrl(product.thumbnail, CONFIG.general_bucket)}
-                                    alt={product.name}
-                                    width={44}
-                                    height={44}
-                                />
-                                <Box sx={{ flex: 1 }}>
-                                    <Typography variant="body2">{product.name}</Typography>
-                                </Box>
-                            </Box>
-                        ))}
-                    </Stack>
-                )}
+                {/* Error UI */}
+                {!isLoading && !success && <ErrorComponent hideIcon onRetry={revalidate} />}
 
-                {!isLoading && data?.length === 0 && (
-                    <Box
-                        height={100}
-                        display="flex"
-                        alignItems="center"
-                        justifyContent="center"
-                    >
-                        <Typography variant="body2">No products found</Typography>
+                {/* Data UI */}
+                {!isLoading && data?.length > 0 && (
+                    <Box>
+                        <Stack>
+                            {data?.map((product: Product) => (
+                                <Box
+                                    key={product.id}
+                                    sx={{
+                                        display: "flex",
+                                        alignItems: "center",
+                                        gap: 2,
+                                        p: 1,
+                                        cursor: "pointer",
+                                        borderBottom: "1px solid",
+                                        borderColor: "divider",
+                                        '&:hover': {
+                                            backgroundColor: "action.hover",
+                                        },
+                                    }}
+                                    onClick={() => {
+                                        setShowResult(false);
+                                        router.push(`/${product.slug}`);
+                                    }}
+                                >
+                                    <OptimizeImage
+                                        src={makeImageUrl(product.thumbnail, CONFIG.general_bucket)}
+                                        alt={product.name}
+                                        width={44}
+                                        height={44}
+                                    />
+                                    <Box sx={{ flex: 1 }}>
+                                        <Typography variant="body2">{product.name}</Typography>
+                                    </Box>
+                                </Box>
+                            ))}
+                        </Stack>
+
+                        {data?.length > 5 && (
+                            <Box p={1}>
+                                <Button
+                                    fullWidth
+                                    variant="text"
+                                    onClick={handleViewAll}
+                                >
+                                    View All
+                                </Button>
+                            </Box>
+                        )}
                     </Box>
                 )}
+
+                {/* Not Data Found UI */}
+                {!isLoading && data?.length === 0 && (<NotDataFound hideIcon message="No products found" />)}
             </Box>
         </>
     );

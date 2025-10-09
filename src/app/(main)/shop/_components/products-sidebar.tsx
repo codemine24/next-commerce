@@ -7,7 +7,8 @@ import { ProductFilter } from "./product-filter";
 
 export const ProductSidebar = async ({ searchParams }: { searchParams: Promise<SearchParams> }) => {
   const query = await searchParams;
-  const attributes = await getAttributes(query);
+  const queryParams = query.category ? { category: query.category } : undefined;
+  const attributes = await getAttributes(queryParams);
 
   return (
     <Box
