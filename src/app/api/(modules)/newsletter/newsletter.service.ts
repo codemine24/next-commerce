@@ -1,3 +1,4 @@
+import { Prisma } from "@prisma/client";
 import httpStatus from "http-status";
 
 import CustomizedError from "../../(helpers)/error/customized-error";
@@ -6,11 +7,17 @@ import { OTPTemplate } from "../../(helpers)/template/otp-template";
 import emailSender from "../../(helpers)/utils/email-sender";
 import { OTPGenerator } from "../../(helpers)/utils/helper";
 import { OTPVerifier } from "../../(helpers)/utils/otp-verifier";
+import paginationMaker from "../../(helpers)/utils/pagination-maker";
+import queryValidator from "../../(helpers)/utils/query-validator";
 
 import {
   CreateOtpForNewsletterPayload,
   SubscribeInNewsletterPayload,
 } from "./newsletter.interface";
+import {
+  subscriberQueryValidationConfig,
+  subscriberSearchableFields,
+} from "./newsletter.utils";
 
 // ------------------------------------- CREATE OTP FOR NEWSLETTER --------------------------------
 const createOtpForNewsletter = async (data: CreateOtpForNewsletterPayload) => {
@@ -88,7 +95,79 @@ const subscribeInNewsletter = async (data: SubscribeInNewsletterPayload) => {
   return result;
 };
 
+// ------------------------------------- GET SUBSCRIBERS ------------------------------------------
+const getSubscribers = async (query: Record<string, any>) => {
+  const {
+    page,
+    limit,
+    sort_by = "email",
+    sort_order,
+    search_term,
+    is_verified,
+  } = query;
+
+  if (sort_by)
+    queryValidator(subscriberQueryValidationConfig, "sort_by", sort_by);
+  if (sort_order)
+    queryValidator(subscriberQueryValidationConfig, "sort_order", sort_order);
+
+  const { pageNumber, limitNumber, skip, sortWith, sortSequence } =
+    paginationMaker({
+      page,
+      limit,
+      sort_by,
+      sort_order,
+    });
+
+  const andConditions: Prisma.NewsLetterWhereInput[] = [];
+
+  if (search_term) {
+    andConditions.push({
+      OR: subscriberSearchableFields.map((field) => {
+        return {
+          [field]: {
+            contains: search_term,
+            mode: "insensitive",
+          },
+        };
+      }),
+    });
+  }
+
+  if (is_verified) {
+    andConditions.push({
+      is_verified: is_verified === "true",
+    });
+  }
+
+  const whereConditions = {
+    AND: andConditions,
+  };
+
+  const [result, total] = await Promise.all([
+    prisma.newsLetter.findMany({
+      where: whereConditions,
+      skip: skip,
+      take: limitNumber,
+      orderBy: {
+        [sortWith]: sortSequence,
+      },
+    }),
+    prisma.newsLetter.count({ where: whereConditions }),
+  ]);
+
+  return {
+    meta: {
+      page: pageNumber,
+      limit: limitNumber,
+      total,
+    },
+    data: result,
+  };
+};
+
 export const NewsletterServices = {
   createOtpForNewsletter,
   subscribeInNewsletter,
+  getSubscribers,
 };
