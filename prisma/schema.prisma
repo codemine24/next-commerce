@@ -42,6 +42,7 @@ model User {
   order_histories     OrderHistory[]
   wishlist            Wishlist[]
   QnA                 QnA[]
+  blogs               Blog[]
 
   @@map("users")
 }
@@ -506,6 +507,25 @@ model NewsLetterOTP {
   created_at DateTime @default(now())
 
   @@map("news_letter_otp")
+}
+
+model Blog {
+  id         String   @id @default(uuid())
+  title      String
+  slug       String   @unique
+  content    String
+  thumbnail  String?
+  images     String[] @default([])
+  tags       String[] @default([])
+  author_id  String
+  published  Boolean  @default(true)
+  featured   Boolean  @default(false)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  author User  @relation(fields: [author_id], references: [id])
+
+  @@map("blogs")
 }
 
 enum OrderStatus {
