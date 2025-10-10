@@ -40,7 +40,7 @@ export const TextField = ({ name, helperText, type = "text", label, placeholder,
                             if (type === "number") {
                                 field.onChange(value === "" ? undefined : Number(value));
                             } else {
-                                field.onChange(value === "" ? undefined : value);
+                                field.onChange(value);
                             }
                         }}
                         error={Boolean(error)}

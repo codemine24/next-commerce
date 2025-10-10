@@ -7,12 +7,6 @@ const brandBaseSchema = z
         error: "Brand name should be a text",
       })
       .min(1, "Brand name is required"),
-    code: z
-      .string({
-        error: "Brand code should be a text",
-      })
-      .transform((val) => val.toUpperCase())
-      .optional(),
     description: z
       .string({ error: "Brand description should be a text" })
       .optional(),

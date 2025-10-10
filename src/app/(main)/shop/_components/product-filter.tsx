@@ -195,6 +195,7 @@ export const ProductFilter = ({ attributes }: ProductFilterProps) => {
               sx={{
                 bgcolor: "transparent",
                 boxShadow: "none",
+                border: 'none',
                 "&:before": { display: "none" },
               }}
             >
