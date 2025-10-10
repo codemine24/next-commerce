@@ -8,10 +8,10 @@ import { commonSchemas } from "../../(helpers)/shared/schema";
 import payloadValidator from "../../(helpers)/utils/payload-validator";
 import userAuthenticator from "../../(helpers)/utils/user-authenticator";
 
-import { AttributeSchemas } from "./attribute.schema";
-import { AttributeServices } from "./attribute.service";
+import { CompanyReviewSchemas } from "./company-review.schema";
+import { CompanyReviewServices } from "./company-review.service";
 
-// ------------------------------------ CREATE ATTRIBUTE --------------------------------------
+// ---------------------------------------- ADD COMPANY REVIEW ------------------------------------
 export const POST = catchAsync(async (req: NextRequest) => {
   // Step 1: Authenticate user
   await userAuthenticator(req, [UserRole.SUPER_ADMIN, UserRole.ADMIN]);
@@ -20,20 +20,20 @@ export const POST = catchAsync(async (req: NextRequest) => {
   const body = await req.json();
 
   // Step 3: Validate request body against schema
-  await payloadValidator(AttributeSchemas.createAttribute, body);
+  await payloadValidator(CompanyReviewSchemas.createCompanyReview, body);
 
-  // Step 4: Call service to create attribute
-  const result = await AttributeServices.createAttribute(body);
+  // Step 4: Call service to create company review
+  const result = await CompanyReviewServices.createCompanyReview(body);
 
-  // Step 5: Return success response with attribute data
+  // Step 5: Return success response
   return successResponse({
     statusCode: httpStatus.CREATED,
-    message: "Attribute created successfully",
+    message: "Company review created successfully",
     data: result,
   });
 });
 
-// ------------------------------------ GET ALL ATTRIBUTES ------------------------------------
+// ---------------------------------------- GET COMPANY REVIEWS -----------------------------------
 export const GET = catchAsync(async (req: NextRequest) => {
   // Step 1: Extract search parameters from the request URL
   const searchParams = req.nextUrl.searchParams;
@@ -41,19 +41,19 @@ export const GET = catchAsync(async (req: NextRequest) => {
   // Step 2: Convert search parameters into a plain object
   const queryParams = Object.fromEntries(searchParams.entries());
 
-  // Step 3: Fetch attributes from the service layer using query parameters
-  const result = await AttributeServices.getAttributes(queryParams);
+  // Step 3: Fetch company reviews from the service layer using query parameters
+  const result = await CompanyReviewServices.getCompanyReviews(queryParams);
 
-  // Step 4: Return success response with attributes and metadata
+  // Step 4: Return success response
   return successResponse({
     statusCode: httpStatus.OK,
-    message: "Attributes fetched successfully",
+    message: "Company reviews fetched successfully",
     meta: result.meta,
     data: result.data,
   });
 });
 
-// ------------------------------------ DELETE ATTRIBUTES -------------------------------------
+// ---------------------------------------- DELETE COMPANY REVIEWS --------------------------------
 export const DELETE = catchAsync(async (req: NextRequest) => {
   // Step 1: Authenticate user
   await userAuthenticator(req, [UserRole.SUPER_ADMIN, UserRole.ADMIN]);
@@ -64,13 +64,13 @@ export const DELETE = catchAsync(async (req: NextRequest) => {
   // Step 3: Validate request body against schema
   await payloadValidator(commonSchemas.deleteRecordsValidationSchema, body);
 
-  // Step 3: Delete attributes from the service layer
-  const result = await AttributeServices.deleteAttributes(body);
+  // Step 3: Delete company reviews from the service layer
+  const result = await CompanyReviewServices.deleteCompanyReviews(body);
 
   // Step 4: Return success response
   return successResponse({
     statusCode: httpStatus.OK,
-    message: "Attributes deleted successfully",
+    message: "Company reviews deleted successfully",
     data: result,
   });
 });

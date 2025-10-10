@@ -1,4 +1,5 @@
 import httpStatus from "http-status";
+import { NextRequest } from "next/server";
 
 import { catchAsync } from "../../(helpers)/shared/catch-async";
 import { successResponse } from "../../(helpers)/shared/response";
@@ -23,5 +24,25 @@ export const POST = catchAsync(async (req: Request) => {
     statusCode: httpStatus.CREATED,
     message: "OTP send successfully",
     data: result,
+  });
+});
+
+// ------------------------------------- GET SUBSCRIBERS ------------------------------------------
+export const GET = catchAsync(async (req: NextRequest) => {
+  // Step 1: Extract search parameters from the request URL
+  const searchParams = req.nextUrl.searchParams;
+
+  // Step 2: Convert search parameters into a plain object
+  const queryParams = Object.fromEntries(searchParams.entries());
+
+  // Step 3: Fetch subscribers from the service layer using query parameters
+  const result = await NewsletterServices.getSubscribers(queryParams);
+
+  // Step 4: Return success response with subscribers and metadata
+  return successResponse({
+    statusCode: httpStatus.OK,
+    message: "Subscribers fetched successfully",
+    meta: result.meta,
+    data: result.data,
   });
 });
