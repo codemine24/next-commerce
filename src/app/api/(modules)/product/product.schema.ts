@@ -73,6 +73,9 @@ const updateProduct = z.object({
       is_hot_deal: z
         .boolean({ error: "Is hot deal should be a boolean" })
         .optional(),
+      is_banner_product: z
+        .boolean({ error: "Is banner product should be a boolean" })
+        .optional(),
     })
     .strict(),
 });

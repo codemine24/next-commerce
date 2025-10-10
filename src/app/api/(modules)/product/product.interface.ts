@@ -19,4 +19,6 @@ export interface ProductPayload {
   additional_information?: string;
   key_features?: string[];
   video_url?: string;
+  is_hot_deal?: boolean;
+  is_banner_product?: boolean;
 }
