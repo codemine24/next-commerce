@@ -1,11 +1,13 @@
 import { CONFIG } from "../config";
 
-export const OrderConfirmationTemplate = (
-  orderId: string,
-  customerName: string,
-  orderItems: { name: string; quantity: number; price: number }[],
-  total: number
-) => {
+export const OrderConfirmationTemplate = (order: any) => {
+  const orderItems: { name: string; quantity: number; price: number }[] =
+    order.order_items.map((item: any) => ({
+      name: item.product.name,
+      quantity: item.quantity,
+      price: item.price,
+    }));
+
   const itemsHTML = orderItems
     .map(
       (item) => `
@@ -46,8 +48,12 @@ export const OrderConfirmationTemplate = (
       <tr>
         <td style="background-color: #ffffff; padding: 40px 30px;">
           <h1 style="margin: 0 0 20px; font-size: 24px; color: #333;">Order Confirmation</h1>
-          <p style="font-size: 16px; line-height: 24px; margin: 0 0 10px;">Hi <strong>${customerName}</strong>,</p>
-          <p style="font-size: 16px; line-height: 24px; margin: 0 0 20px;">Thank you for your purchase! We’re excited to let you know that we’ve received your order <strong>#${orderId}</strong>. Below are your order details:</p>
+          <p style="font-size: 16px; line-height: 24px; margin: 0 0 10px;">Hi <strong>${
+            order.address.name
+          }</strong>,</p>
+          <p style="font-size: 16px; line-height: 24px; margin: 0 0 20px;">Thank you for your purchase! We’re excited to let you know that we’ve received your order <strong>#${
+            order.order_id
+          }</strong>. Below are your order details:</p>
 
           <!-- Order Details Table -->
           <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="border: 1px solid #dddddd; border-radius: 5px; margin-bottom: 20px;">
@@ -63,8 +69,32 @@ export const OrderConfirmationTemplate = (
             </tbody>
             <tfoot>
               <tr>
+                <td colspan="2" style="padding: 10px; text-align: right; font-weight: bold;">Subtotal:</td>
+                <td style="padding: 10px; text-align: right; font-weight: bold;">$${order.sub_amount.toFixed(
+                  2
+                )}</td>
+              </tr>
+              <tr>
+                <td colspan="2" style="padding: 10px; text-align: right; font-weight: bold;">Discount:</td>
+                <td style="padding: 10px; text-align: right; font-weight: bold;">$${order.discount_amount.toFixed(
+                  2
+                )}</td>
+              </tr>
+              <tr>
+                <td colspan="2" style="padding: 10px; text-align: right; font-weight: bold;">Delivery:</td>
+                <td style="padding: 10px; text-align: right; font-weight: bold;">$${order.delivery_charge.toFixed(
+                  2
+                )}</td>
+              </tr>
+              <tr>
+                <td colspan="2" style="padding: 10px; text-align: right; font-weight: bold;">Delivery:</td>
+                <td style="padding: 10px; text-align: right; font-weight: bold;">$${order.tax.toFixed(
+                  2
+                )}</td>
+              </tr>
+              <tr>
                 <td colspan="2" style="padding: 10px; text-align: right; font-weight: bold;">Total:</td>
-                <td style="padding: 10px; text-align: right; font-weight: bold; color: #4f46e5;">$${total.toFixed(
+                <td style="padding: 10px; text-align: right; font-weight: bold; color: #4f46e5;">$${order.total_amount.toFixed(
                   2
                 )}</td>
               </tr>

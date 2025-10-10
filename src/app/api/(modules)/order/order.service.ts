@@ -251,16 +251,7 @@ const placeOrderForRegisteredUser = async (
   });
 
   if (result?.order?.id && result?.order?.address?.email) {
-    const emailBody = OrderConfirmationTemplate(
-      result.order.order_id,
-      result.order.address.name,
-      result.order.order_items.map((item) => ({
-        name: item.product.name,
-        quantity: item.quantity,
-        price: item.price,
-      })),
-      result.order.total_amount
-    );
+    const emailBody = OrderConfirmationTemplate(result.order);
 
     await emailSender(
       result.order.address.email,
@@ -443,16 +434,7 @@ const placeOrderForGuestUser = async (data: OrderPayloadForGuestUser) => {
 
   // Step 11: Send order confirmation email
   if (result?.order?.id && result?.order?.address?.email) {
-    const emailBody = OrderConfirmationTemplate(
-      result.order.order_id,
-      result.order.address.name,
-      result.order.order_items.map((item) => ({
-        name: item.product.name,
-        quantity: item.quantity,
-        price: item.price,
-      })),
-      result.order.total_amount
-    );
+    const emailBody = OrderConfirmationTemplate(result.order);
 
     await emailSender(
       result.order.address.email,
