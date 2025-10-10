@@ -74,4 +74,9 @@ export const API_ROUTES = {
     create_order_for_user: "/order",
     create_order_for_guest_user: "/order/guest",
   },
+  newsletter: {
+    create_otp: "/newsletter",
+    subscribe: "/newsletter/subscribe",
+  },
+
 };
