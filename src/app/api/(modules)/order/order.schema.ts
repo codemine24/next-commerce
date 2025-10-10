@@ -6,12 +6,12 @@ import {
 } from "@prisma/client";
 import z from "zod";
 
-import { createAddress, updateAddress } from "../address/address.schema";
+import { addressSchema } from "../address/address.schema";
 
 const placeOrderForRegisteredUser = z.object({
   body: z
     .object({
-      address: createAddress.strict().optional().nullable(),
+      address: addressSchema.strict().optional().nullable(),
       address_id: z
         .uuid({
           error: "Address id should be a valid uuid",
@@ -38,7 +38,7 @@ const placeOrderForRegisteredUser = z.object({
 const placeOrderForGuestUser = z.object({
   body: z
     .object({
-      address: createAddress.strict().optional().nullable(),
+      address: addressSchema.strict().optional().nullable(),
       address_id: z
         .uuid({
           error: "Address id should be a valid uuid",
@@ -150,7 +150,7 @@ const updateOrderByCustomer = z.object({
         .enum(Object.values(DeliveryMethod) as [string, ...string[]])
         .optional(),
       comment: z.string({ error: "Comment should be a text" }).optional(),
-      address: updateAddress.strict().optional().nullable(),
+      address: addressSchema.partial().strict().optional().nullable(),
       address_id: z
         .uuid({
           error: "Address id should be a valid uuid",

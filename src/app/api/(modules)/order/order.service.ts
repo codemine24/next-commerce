@@ -11,7 +11,9 @@ import httpStatus from "http-status";
 import { CONFIG } from "../../(helpers)/config";
 import CustomizedError from "../../(helpers)/error/customized-error";
 import { prisma } from "../../(helpers)/shared/prisma";
+import { OrderConfirmationTemplate } from "../../(helpers)/template/order-confirmation-template";
 import { dateChecker } from "../../(helpers)/utils/date-checker";
+import emailSender from "../../(helpers)/utils/email-sender";
 import filterAdder from "../../(helpers)/utils/filter-adder";
 import { orderIdGenerator } from "../../(helpers)/utils/helper";
 import paginationMaker from "../../(helpers)/utils/pagination-maker";
@@ -248,6 +250,25 @@ const placeOrderForRegisteredUser = async (
     return { order }; //GatewayPageURL
   });
 
+  if (result?.order?.id && result?.order?.address?.email) {
+    const emailBody = OrderConfirmationTemplate(
+      result.order.order_id,
+      result.order.address.name,
+      result.order.order_items.map((item) => ({
+        name: item.product.name,
+        quantity: item.quantity,
+        price: item.price,
+      })),
+      result.order.total_amount
+    );
+
+    await emailSender(
+      result.order.address.email,
+      emailBody,
+      "Order Confirmation"
+    );
+  }
+
   return result;
 };
 
@@ -380,6 +401,7 @@ const placeOrderForGuestUser = async (data: OrderPayloadForGuestUser) => {
             ...address,
           },
         });
+
         addressId = newAddress.id;
       } else {
         throw new CustomizedError(
@@ -418,6 +440,26 @@ const placeOrderForGuestUser = async (data: OrderPayloadForGuestUser) => {
 
     return { order }; // GatewayPageURL
   });
+
+  // Step 11: Send order confirmation email
+  if (result?.order?.id && result?.order?.address?.email) {
+    const emailBody = OrderConfirmationTemplate(
+      result.order.order_id,
+      result.order.address.name,
+      result.order.order_items.map((item) => ({
+        name: item.product.name,
+        quantity: item.quantity,
+        price: item.price,
+      })),
+      result.order.total_amount
+    );
+
+    await emailSender(
+      result.order.address.email,
+      emailBody,
+      "Order Confirmation"
+    );
+  }
 
   return result;
 };
