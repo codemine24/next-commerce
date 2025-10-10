@@ -16,7 +16,9 @@ import {
 // ------------------------------------ ADD PRODUCT --------------------------------------
 const addProduct = async (payload: ProductPayload) => {
   const { categories, ...rest } = payload;
-  const productCode = "product-" + Math.random().toString(36).substring(2, 9);
+  const productCode = Math.floor(Math.random() * 100000)
+    .toString()
+    .padStart(5, "0");
 
   const product = await prisma.product.create({
     data: {

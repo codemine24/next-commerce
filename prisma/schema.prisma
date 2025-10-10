@@ -8,6 +8,18 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
+model AppInfo {
+  id              String  @id @default(uuid())
+  name            String
+  logo            String
+  secondary_logo  String?
+  title           String
+  primary_color   String
+  secondary_color String?
+
+  @@map("app_info")
+}
+
 model User {
   id                  String         @id @default(uuid())
   first_name          String
@@ -30,6 +42,7 @@ model User {
   order_histories     OrderHistory[]
   wishlist            Wishlist[]
   QnA                 QnA[]
+  blogs               Blog[]
 
   @@map("users")
 }
@@ -58,6 +71,7 @@ model Product {
   is_published           Boolean  @default(true)
   is_featured            Boolean  @default(false)
   is_deleted             Boolean  @default(false)
+  is_hot_deal            Boolean  @default(false)
   created_at             DateTime @default(now())
   updated_at             DateTime @updatedAt
 
@@ -81,7 +95,6 @@ model Brand {
   id          String   @id @default(uuid())
   name        String   @unique
   slug        String   @unique
-  code        String?  @unique
   icon        String?
   description String?
   featured    Boolean  @default(false)
@@ -371,7 +384,7 @@ model AttributeValue {
   title        String
   position     Int    @default(0)
 
-  attribute ProductAttribute @relation(fields: [attribute_id], references: [id])
+  attribute ProductAttribute @relation(fields: [attribute_id], references: [id], onDelete: Cascade)
   products  Product[]        @relation("AttributeValues")
 
   @@map("attribute_values")
@@ -464,6 +477,57 @@ model QnA {
   @@map("qna")
 }
 
+model Banner {
+  id          String     @id @default(uuid())
+  type        BannerType @default(BANNER)
+  name        String
+  image       String
+  title       String?
+  sub_title   String?
+  button_text String?
+  url         String?
+
+  @@map("banners")
+}
+
+model NewsLetter {
+  id            String   @id @default(uuid())
+  email         String   @unique
+  is_verified   Boolean  @default(false)
+  subscribed_at DateTime @default(now())
+
+  @@map("news_letters")
+}
+
+model NewsLetterOTP {
+  id         String   @id @default(uuid())
+  email      String
+  otp        Int      @unique
+  expires_at String
+  created_at DateTime @default(now())
+
+  @@map("news_letter_otp")
+}
+
+model Blog {
+  id         String   @id @default(uuid())
+  title      String
+  slug       String   @unique
+  content    String
+  thumbnail  String?
+  images     String[] @default([])
+  tags       String[] @default([])
+  author_id  String
+  published  Boolean  @default(true)
+  featured   Boolean  @default(false)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  author User  @relation(fields: [author_id], references: [id])
+
+  @@map("blogs")
+}
+
 enum OrderStatus {
   PENDING
   CONFIRMED
@@ -547,4 +611,9 @@ enum UserStatus {
   ACTIVE
   INACTIVE
   BLOCKED
+}
+
+enum BannerType {
+  BANNER
+  SLIDER
 }
