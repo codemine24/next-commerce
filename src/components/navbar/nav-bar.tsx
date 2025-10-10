@@ -12,6 +12,8 @@ import { UserButton } from "./user-button";
 import { WishlistButton } from "./wishlist-button";
 
 export const Navbar = () => {
+  console.log("Navbar");
+  
   return (
     <AppBar
       position="sticky"
