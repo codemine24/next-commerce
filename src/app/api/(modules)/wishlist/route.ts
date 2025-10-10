@@ -66,9 +66,7 @@ export const DELETE = catchAsync(async (req: NextRequest) => {
   ]);
 
   // Step 2: Parse request body
-  const body = await req.json();
-
-  // Step 3: Validate request body against schema
+  const body = await req.json(); 
   await payloadValidator(commonSchemas.deleteRecordsValidationSchema, body);
 
   // Step 3: Delete orders from the database

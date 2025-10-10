@@ -42,7 +42,7 @@ const contactInfo = [
   { label: "Bashundhara R/A", href: "#" },
   { label: "Dhaka, Bangladesh.", href: "#" },
   { label: "Email: info@logo.com", href: "mailto:info@logo.com" },
-  { label: "Phone: +880 1123 456 780", href: "tel:+8801123456780" },
+  { label: "Phone: +1 (555) 123-4567", href: "tel:+1 (555) 123-4567" },
 ];
 
 export default function Footer() {
@@ -54,9 +54,9 @@ export default function Footer() {
           <Grid size={{ xs: 12, md: 3 }}>
             <LogoWhite />
             <Typography variant="body2" sx={{ my: 2, lineHeight: "30px" }}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Auctor
-              libero id et, in gravida. Sit diam duis mauris nulla cursus. Erat
-              et lectus vel ut sollicitudin elit at amet.
+              Discover stylish and affordable furniture for every room in your
+              home. Quality craftsmanship meets modern design, ensuring comfort
+              and elegance in every piece. Shop with us today!
             </Typography>
             {/* payment methods */}
             <Stack direction="row" spacing={1}>
