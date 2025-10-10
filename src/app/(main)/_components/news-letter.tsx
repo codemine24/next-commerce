@@ -12,6 +12,7 @@ import Button from "@mui/material/Button";
 // import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useForm } from "react-hook-form";
+import { OTPForm } from "./otp-form";
 
 export const NewsLetter = () => {
   const {
@@ -100,6 +101,8 @@ export const NewsLetter = () => {
           </Box>
           <Typography color="error">{emailErrors.email?.message}</Typography>
         </Box>
+          <OTPForm />
+        
       </Box>
     </Box>
   );
