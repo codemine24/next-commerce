@@ -528,6 +528,21 @@ model Blog {
   @@map("blogs")
 }
 
+model CompanyReview {
+  id          String @id @default(uuid())
+  name        String
+  email       String?
+  company     String?
+  designation String?
+  comment     String
+  rating      Float @default(5)
+  platform    Platform @default(OFFLINE)
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+
+  @@map("company_reviews")
+}
+
 enum OrderStatus {
   PENDING
   CONFIRMED
@@ -616,4 +631,14 @@ enum UserStatus {
 enum BannerType {
   BANNER
   SLIDER
+}
+
+enum Platform {
+  OFFLINE
+  FACEBOOK
+  x
+  GOOGLE
+  YOUTUBE
+  INSTAGRAM
+  LINKEDIN
 }
