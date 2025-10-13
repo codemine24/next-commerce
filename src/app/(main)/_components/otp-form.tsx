@@ -1,21 +1,27 @@
-import { Button } from "@mui/material";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { useSearchParams } from "next/navigation";
-import {useRef, useState } from "react";
+import { useRef, useState, useTransition } from "react";
 
 import { verifyOtpForNewsletter } from "@/actions/newsletter";
+import { SubmitButton } from "@/components/submit-button";
 import { toast } from "@/lib/toast-store";
+
+interface OTPFormProps {
+  setIsEmailSubmitted: (value: "email" | "otp") => void;
+  resetEmailForm: () => void;
+}
 
 const length = 6;
 
-export const OTPForm = () => {
-   const [otp, setOtp] = useState<string[]>(new Array(length).fill(""));
+export const OTPForm = ({
+  setIsEmailSubmitted,
+  resetEmailForm,
+}: OTPFormProps) => {
+  const [otp, setOtp] = useState<string[]>(new Array(length).fill(""));
   const [error, setError] = useState("");
   const searchParams = useSearchParams();
-
-  
-  
+  const [isLoading, startTransition] = useTransition();
 
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
@@ -76,13 +82,17 @@ export const OTPForm = () => {
       setError("Missing OTP. Please restart verification.");
       return;
     }
-    const res = await verifyOtpForNewsletter(email, otpNumber);
-    console.log(res, "res");
-    if (res.success) {
-      toast.success("OTP verified successfully");
-    }else{
-      toast.error(res.message);
-    }
+    startTransition(async () => {
+      const res = await verifyOtpForNewsletter(email, otpNumber);
+      console.log(res, "res");
+      if (res.success) {
+        toast.success("OTP verified successfully");
+        setIsEmailSubmitted("email");
+        resetEmailForm();
+      } else {
+        toast.error(res.message);
+      }
+    });
   };
 
   return (
@@ -134,9 +144,13 @@ export const OTPForm = () => {
             />
           ))}
         </Box>
-        <Button onClick={onSubmitOtp} variant="contained">
-          Verify
-        </Button>
+        <SubmitButton
+          onClick={onSubmitOtp}
+          label="Verify"
+          isLoading={isLoading}
+          disabled={isLoading}
+          sx={{ "&:disabled": { color: "#fff" } }}
+        />
       </Box>
     </>
   );

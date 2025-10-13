@@ -3,13 +3,14 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TextField } from "@mui/material";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useTransition } from "react";
+import { Suspense, useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 
 import { createOtpForNewsletter } from "@/actions/newsletter";
+import { SubmitButton } from "@/components/submit-button";
+import { toast } from "@/lib/toast-store";
 import {
   EmailFormValues,
   NewsletterEmailSchema,
@@ -17,30 +18,40 @@ import {
 
 import { OTPForm } from "./otp-form";
 
-
-
 export const NewsLetter = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
+  const [isLoading, startTransition] = useTransition();
+  const [isEmailSubmitted, setIsEmailSubmitted] = useState<"email" | "otp">(
+    "email"
+  );
   const {
     register: registerEmail,
     handleSubmit: handleEmailSubmit,
     formState: { errors: emailErrors },
+    reset,
   } = useForm<EmailFormValues>({
     resolver: zodResolver(NewsletterEmailSchema),
   });
 
   const onSubmitEmail = async (data: EmailFormValues) => {
-    const res = await createOtpForNewsletter(data.email);
-    console.log(res, "Response");
-    if (res.success) {
-      const params = new URLSearchParams(searchParams);
-      params.set("email", data.email);
-      router.push(`${pathname}?${params.toString()}`);
-    }
+    startTransition(async () => {
+      const res = await createOtpForNewsletter(data.email);
+      console.log(res, "Response");
+      if (res.success) {
+        const params = new URLSearchParams(searchParams);
+        params.set("email", data.email);
+        router.push(`${pathname}?${params.toString()}`, { scroll: false });
+        toast.success(res.message);
+        setIsEmailSubmitted("otp");
+      } else {
+        toast.error(res.message);
+      }
+    });
   };
 
+  console.log(isLoading, "Loading");
 
   return (
     <Box
@@ -72,50 +83,53 @@ export const NewsLetter = () => {
             arrivals, special offers, and more.
           </Typography>
         </Box>
-        <Box component="form" onSubmit={handleEmailSubmit(onSubmitEmail)}>
-          <Box
-            flex={1}
-            display="flex"
-            alignItems="center"
-            justifyContent={"end"}
-          >
-            <Box>
-              <TextField
-                placeholder="Enter your email"
-                {...registerEmail("email")}
-                error={!!emailErrors.email}
-                sx={{
-                  bgcolor: "white",
-                  "& .MuiOutlinedInput-root": {
-                    height: 50,
-                    "&:hover fieldset": {
-                      border: 0,
-                      boxShadow: "none",
+        {isEmailSubmitted === "email" && (
+          <Box component="form" onSubmit={handleEmailSubmit(onSubmitEmail)}>
+            <Box
+              flex={1}
+              display="flex"
+              alignItems="center"
+              justifyContent={"end"}
+            >
+              <Box>
+                <TextField
+                  placeholder="Enter your email"
+                  {...registerEmail("email")}
+                  error={!!emailErrors.email}
+                  sx={{
+                    bgcolor: "white",
+                    "& .MuiOutlinedInput-root": {
+                      height: 50,
+                      "&:hover fieldset": {
+                        border: 0,
+                        boxShadow: "none",
+                      },
+                      "&.Mui-focused fieldset": {
+                        border: 0,
+                        boxShadow: "none",
+                      },
                     },
-                    "&.Mui-focused fieldset": {
-                      border: 0,
-                      boxShadow: "none",
-                    },
-                  },
-                }}
+                  }}
+                />
+              </Box>
+
+              <SubmitButton
+                label="Subscribe"
+                isLoading={isLoading}
+                disabled={isLoading}
+                sx={{ "&:disabled": { color: "#fff" } }}
               />
             </Box>
-
-            <Button
-              variant="contained"
-              color="primary"
-              type="submit"
-              sx={{
-                height: 50,
-                width: 200,
-              }}
-            >
-              Subscribe
-            </Button>
+            <Typography color="error">{emailErrors.email?.message}</Typography>
           </Box>
-          <Typography color="error">{emailErrors.email?.message}</Typography>
-        </Box>
-        <OTPForm />
+        )}
+
+        {isEmailSubmitted === "otp" && (
+          <OTPForm
+            setIsEmailSubmitted={setIsEmailSubmitted}
+            resetEmailForm={reset}
+          />
+        )}
       </Box>
     </Box>
   );
