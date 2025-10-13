@@ -1,20 +1,28 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
+import { TextField } from "@mui/material";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useTransition } from "react";
+import { useForm } from "react-hook-form";
+
 import { createOtpForNewsletter } from "@/actions/newsletter";
 import {
   EmailFormValues,
   NewsletterEmailSchema,
 } from "@/zod/newsletter-schema";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { TextField } from "@mui/material";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-// import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
-import { useForm } from "react-hook-form";
+
 import { OTPForm } from "./otp-form";
 
+
+
 export const NewsLetter = () => {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
   const {
     register: registerEmail,
     handleSubmit: handleEmailSubmit,
@@ -24,10 +32,16 @@ export const NewsLetter = () => {
   });
 
   const onSubmitEmail = async (data: EmailFormValues) => {
-    const res = await createOtpForNewsletter(data.email)
-    console.log(res);
-    
+    const res = await createOtpForNewsletter(data.email);
+    console.log(res, "Response");
+    if (res.success) {
+      const params = new URLSearchParams(searchParams);
+      params.set("email", data.email);
+      router.push(`${pathname}?${params.toString()}`);
+    }
   };
+
+
   return (
     <Box
       my={5}
@@ -101,8 +115,7 @@ export const NewsLetter = () => {
           </Box>
           <Typography color="error">{emailErrors.email?.message}</Typography>
         </Box>
-          <OTPForm />
-        
+        <OTPForm />
       </Box>
     </Box>
   );

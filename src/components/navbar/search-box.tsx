@@ -6,10 +6,11 @@ import { inputClasses } from "@mui/material/Input";
 import TextField from "@mui/material/TextField";
 import { useEffect, useState } from "react";
 
+import { useDebounce } from "@/hooks/use-debounce";
 import { CloseIcon } from "@/icons/close";
 import { SearchIcon } from "@/icons/search";
 import { BORDER_RADIUS } from "@/theme";
-import { useDebounce } from "@/hooks/use-debounce";
+
 import { SearchResultPreview } from "./search-result-preview";
 
 export const SearchBox = () => {
