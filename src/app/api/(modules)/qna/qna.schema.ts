@@ -8,6 +8,7 @@ const createQuestion = z.object({
           error: "Question should be a text",
         })
         .min(1, "Question is required"),
+      product_id: z.uuid({ error: "Product id should be a valid uuid" }),
     })
     .strict(),
 });

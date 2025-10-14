@@ -11,6 +11,7 @@ import { NewArrivals } from "./_components/new-arrivals";
 import { NewsLetter } from "./_components/news-letter";
 import { RecentBlogs } from "./_components/recent-blogs";
 import { Services } from "./_components/services";
+import { LoadingSpinner } from "@/components/loading-spinner";
 
 export default function Home() {
   return (
@@ -21,7 +22,7 @@ export default function Home() {
       <Banner />
       <NewArrivals />
       <CustomerReviewSection />
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<LoadingSpinner />}>
         <NewsLetter />
       </Suspense>
       <RecentBlogs />
