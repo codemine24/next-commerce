@@ -8,6 +8,7 @@ import { questionSchema, QuestionFormData } from "@/zod/question-schema";
 
 
 import { ProductSectionHeader } from "../../[slug]/_components/product-section-header";
+import { createQuestion } from "@/actions/qna";
 
 export const AskQuestion = () => {
   const {
@@ -19,9 +20,16 @@ export const AskQuestion = () => {
     resolver: zodResolver(questionSchema),
   });
 
-  const onSubmit = (data: QuestionFormData) => {
+  const onSubmit = async (data: QuestionFormData) => {
     console.log("Form submitted:", data);
-    reset();
+    const response = await createQuestion({
+      question: data.question,
+      product_id: "",
+    });
+    console.log(response, "Response");
+    
+
+    // reset();
   };
 
   const textFieldStyle = {
@@ -46,7 +54,7 @@ export const AskQuestion = () => {
         }}
       >
         {/* Name */}
-        <TextField
+        {/* <TextField
           placeholder="Your Name"
           fullWidth
           size="small"
@@ -54,10 +62,10 @@ export const AskQuestion = () => {
           error={!!errors.name}
           helperText={errors.name?.message}
           sx={textFieldStyle}
-        />
+        /> */}
 
         {/* Email */}
-        <TextField
+        {/* <TextField
           placeholder="E-mail (optional)"
           fullWidth
           size="small"
@@ -65,7 +73,7 @@ export const AskQuestion = () => {
           error={!!errors.email}
           helperText={errors.email?.message}
           sx={textFieldStyle}
-        />
+        /> */}
 
         {/* Question */}
         <TextField

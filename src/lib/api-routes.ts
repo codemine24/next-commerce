@@ -79,4 +79,12 @@ export const API_ROUTES = {
     add_to_wishlist:"/wishlist",
     remove_from_wishlist: "/wishlist",
   },
+  newsletter: {
+    create_otp: "/newsletter",
+    subscribe: "/newsletter/subscribe",
+  },
+  qna: {
+    create_question: "/qna",
+  },
+
 };
