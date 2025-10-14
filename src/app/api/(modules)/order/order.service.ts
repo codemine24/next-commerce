@@ -11,6 +11,7 @@ import httpStatus from "http-status";
 import { CONFIG } from "../../(helpers)/config";
 import CustomizedError from "../../(helpers)/error/customized-error";
 import { prisma } from "../../(helpers)/shared/prisma";
+import { stripe } from "../../(helpers)/shared/stripe";
 import { OrderConfirmationTemplate } from "../../(helpers)/template/order-confirmation-template";
 import { dateChecker } from "../../(helpers)/utils/date-checker";
 import emailSender from "../../(helpers)/utils/email-sender";
@@ -18,6 +19,7 @@ import filterAdder from "../../(helpers)/utils/filter-adder";
 import { orderIdGenerator } from "../../(helpers)/utils/helper";
 import paginationMaker from "../../(helpers)/utils/pagination-maker";
 import queryValidator from "../../(helpers)/utils/query-validator";
+import { formatAmountForStripe } from "../../(helpers)/utils/stripe-helper";
 import { AddressPayload } from "../address/address.interface";
 import { ApplyCouponResponse } from "../coupon/coupon.interface";
 import { CouponServices } from "../coupon/coupon.service";
@@ -351,38 +353,7 @@ const placeOrderForGuestUser = async (data: OrderPayloadForGuestUser) => {
   };
 
   // Step 10: Create order and related records in a transaction
-  const result = await prisma.$transaction(async (tx) => {
-    // let GatewayPageURL;
-    // if (payment_type === PaymentType.ONLINE_PAYMENT) {
-    //   // Generate payment data
-    //   const apiResponse = await SSLPaymentInitiate({
-    //     total_amount: orderInfo.payable_amount,
-    //     transactionId: orderInfo.order_id,
-    //     delivery_method: orderInfo.delivery_method,
-    //     products,
-    //     user: {
-    //       name: savedAddress.name,
-    //       email: savedAddress.email || "",
-    //       address: savedAddress.address,
-    //       phone: savedAddress.contact_number,
-    //       city: savedAddress.city,
-    //       country: savedAddress.country || "Bangladesh",
-    //       postal_code: savedAddress.postal_code || "",
-    //     },
-    //   });
-
-    //   // Initialize SSLCommerz payment
-
-    //   if (apiResponse.status === "FAILED") {
-    //     throw new CustomizedError(
-    //       httpStatus.BAD_REQUEST,
-    //       "Failed to create order"
-    //     );
-    //   }
-
-    //   GatewayPageURL = apiResponse.GatewayPageURL;
-    // }
-
+  const order = await prisma.$transaction(async (tx) => {
     let addressId = savedAddress?.id;
 
     if (!addressId) {
@@ -429,21 +400,39 @@ const placeOrderForGuestUser = async (data: OrderPayloadForGuestUser) => {
       },
     });
 
-    return { order }; // GatewayPageURL
+    return order;
   });
 
-  // Step 11: Send order confirmation email
-  if (result?.order?.id && result?.order?.address?.email) {
-    const emailBody = OrderConfirmationTemplate(result.order);
+  let line_items = null;
 
-    await emailSender(
-      result.order.address.email,
-      emailBody,
-      "Order Confirmation"
-    );
+  if (order.id && order.payment_type === PaymentType.ONLINE_PAYMENT) {
+    line_items = itemsToCreateOrder.map((item) => {
+      const productName = products.find((p) => p.id === item.product_id)?.name;
+      return {
+        price_data: {
+          currency: CONFIG.currency,
+          product_data: {
+            name: productName || "",
+          },
+          unit_amount: formatAmountForStripe(item.price, CONFIG.currency),
+        },
+        quantity: item.quantity,
+      };
+    });
   }
 
-  return result;
+  // Step 11: Send order confirmation email
+  // if (result?.order?.id && result?.order?.address?.email) {
+  //   const emailBody = OrderConfirmationTemplate(result.order);
+
+  //   await emailSender(
+  //     result.order.address.email,
+  //     emailBody,
+  //     "Order Confirmation"
+  //   );
+  // }
+
+  return { order, line_items };
 };
 
 // ------------------------------------- GET ALL ORDERS ----------------------------------------
@@ -1047,6 +1036,19 @@ export const checkAddressInOrderFlow = async (
   }
 
   return savedAddress;
+};
+
+export const createPaymentSession = async (lineItems: any) => {
+  const paymentSession = await stripe.checkout.sessions.create({
+    mode: "payment",
+    submit_type: "pay",
+    payment_method_types: ["card"],
+    line_items: lineItems,
+    success_url: `http://localhost:3000/success`,
+    cancel_url: `http://localhost:3000/cancel`,
+  });
+
+  return paymentSession;
 };
 
 export const OrderServices = {

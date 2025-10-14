@@ -19,10 +19,20 @@ const placeOrderForRegisteredUser = z.object({
         .optional()
         .nullable(),
       payment_type: z
-        .enum(Object.values(PaymentType) as [string, ...string[]])
+        .enum(
+          Object.values(PaymentType),
+          `Invalid payment type. Expected: ${Object.values(PaymentType).join(
+            " or "
+          )}`
+        )
         .optional(),
       delivery_method: z
-        .enum(Object.values(DeliveryMethod) as [string, ...string[]])
+        .enum(
+          Object.values(DeliveryMethod),
+          `Invalid delivery method. Expected: ${Object.values(
+            DeliveryMethod
+          ).join(" or ")}`
+        )
         .optional(),
       coupon_code: z
         .string({
@@ -62,10 +72,20 @@ const placeOrderForGuestUser = z.object({
         )
         .nonempty("At least one item is required"),
       payment_type: z
-        .enum(Object.values(PaymentType) as [string, ...string[]])
+        .enum(
+          Object.values(PaymentType),
+          `Invalid payment type. Expected: ${Object.values(PaymentType).join(
+            " or "
+          )}`
+        )
         .optional(),
       delivery_method: z
-        .enum(Object.values(DeliveryMethod) as [string, ...string[]])
+        .enum(
+          Object.values(DeliveryMethod),
+          `Invalid delivery method. Expected: ${Object.values(
+            DeliveryMethod
+          ).join(" or ")}`
+        )
         .optional(),
       coupon_code: z
         .string({
@@ -95,11 +115,21 @@ const placeOrderForGuestUser = z.object({
 const updateOrderByAdmin = z.object({
   body: z
     .object({
-      delivery_method: z
-        .enum(Object.values(DeliveryMethod) as [string, ...string[]])
-        .optional(),
       payment_type: z
-        .enum(Object.values(PaymentType) as [string, ...string[]])
+        .enum(
+          Object.values(PaymentType),
+          `Invalid payment type. Expected: ${Object.values(PaymentType).join(
+            " or "
+          )}`
+        )
+        .optional(),
+      delivery_method: z
+        .enum(
+          Object.values(DeliveryMethod),
+          `Invalid delivery method. Expected: ${Object.values(
+            DeliveryMethod
+          ).join(" or ")}`
+        )
         .optional(),
       order_status: z
         .enum(Object.values(OrderStatus) as [string, ...string[]])
@@ -144,10 +174,20 @@ const updateOrderByCustomer = z.object({
   body: z
     .object({
       payment_type: z
-        .enum(Object.values(PaymentType) as [string, ...string[]])
+        .enum(
+          Object.values(PaymentType),
+          `Invalid payment type. Expected: ${Object.values(PaymentType).join(
+            " or "
+          )}`
+        )
         .optional(),
       delivery_method: z
-        .enum(Object.values(DeliveryMethod) as [string, ...string[]])
+        .enum(
+          Object.values(DeliveryMethod),
+          `Invalid delivery method. Expected: ${Object.values(
+            DeliveryMethod
+          ).join(" or ")}`
+        )
         .optional(),
       comment: z.string({ error: "Comment should be a text" }).optional(),
       address: addressSchema.partial().strict().optional().nullable(),
