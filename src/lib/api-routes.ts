@@ -78,5 +78,8 @@ export const API_ROUTES = {
     create_otp: "/newsletter",
     subscribe: "/newsletter/subscribe",
   },
+  qna: {
+    create_question: "/qna",
+  },
 
 };
