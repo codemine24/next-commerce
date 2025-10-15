@@ -72,6 +72,7 @@ model Product {
   is_featured            Boolean  @default(false)
   is_deleted             Boolean  @default(false)
   is_hot_deal            Boolean  @default(false)
+  is_banner_product      Boolean  @default(false)
   created_at             DateTime @default(now())
   updated_at             DateTime @updatedAt
 
