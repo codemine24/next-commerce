@@ -28,6 +28,8 @@ export const PATCH = catchAsync(
     // Step 4: Validate request body against update question by customer schema
     await payloadValidator(QnASchemas.editQuestion, body);
 
+    console.log("body", body);
+
     // Step 5: Call service layer to update question by customer in database
     const result = await QnAServices.editQuestion(id, body, user);
 

@@ -6,6 +6,7 @@ import { BoxContainer } from "@/components/box-container";
 import { SearchParams } from "@/interfaces/common";
 
 import { AllProducts } from "./_components/all-products";
+import { ProductSidebar } from "./_components/products-sidebar";
 
 const ShopPage = async ({ searchParams }: { searchParams: Promise<SearchParams> }) => {
   const products = await getProducts();
