@@ -63,13 +63,12 @@ export const ProductCard = async ({
             }
             alt={product.name}
             height={220}
-            // imageStyle={{ objectFit: "contain" }}
+          // imageStyle={{ objectFit: "contain" }}
           />
         </Box>
-        <Box mt={2} px={3}>
+        <Box mt={2} px={2}>
           <Typography
             variant="h5"
-            textAlign={"center"}
             gutterBottom
             sx={{ "&:hover": { textDecoration: "underline" } }}
           >
@@ -77,19 +76,20 @@ export const ProductCard = async ({
           </Typography>
         </Box>
       </Box>
+
       <ProductPrice product={product} />
 
-      <Stack direction="row" justifyContent="center" gap={1} px={3} mt={1}>
+      <Stack direction="row" justifyContent="center" gap={1} px={2} mt={1}>
         <BuyNowButton />
-        {!action && <ProductQuickViewButton product={product} />}
+        <ProductQuickViewButton product={product} />
       </Stack>
 
-      {action && (
+      {/* {action && (
         <Box display="flex" gap={1} mt={2} px={2}>
           <AddToCartButton product={product} />
           <ProductQuickViewButton product={product} />
         </Box>
-      )}
+      )} */}
       <ProductDiscountLabel />
     </Box>
   );

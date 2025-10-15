@@ -6,18 +6,35 @@ import Button from "@mui/material/Button";
 import { TextField, Select, ImageUploader } from "@/components/form";
 import FormProvider from "@/components/form/form-provider";
 import { SubmitButton } from "@/components/submit-button";
-import { bannerSchema, BannerSchema } from "@/zod/banner-schema";
+import { advertisementSchema, AdvertisementSchema } from "@/zod/banner-schema";
 import { BannerType } from "@prisma/client";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { createBanner } from "@/actions/banner";
+import { toast } from "@/lib/toast-store";
 
-export const BannerForm = () => {
-    const methods = useForm<BannerSchema>({
-        resolver: zodResolver(bannerSchema),
+export const AdvertisementForm = () => {
+    const methods = useForm<AdvertisementSchema>({
+        resolver: zodResolver(advertisementSchema),
+        defaultValues: {
+            image: "",
+            type: BannerType.BANNER,
+            name: "",
+            title: "",
+            sub_title: "",
+            button_text: "",
+            url: "",
+        },
     });
 
-    const onSubmit = (data: BannerSchema) => {
-        console.log(data);
+    const onSubmit = async (data: AdvertisementSchema) => {
+        const res = await createBanner(data);
+        console.log(res);
+        if (res.success) {
+            toast.success(res.message);
+        } else {
+            toast.error(res.message);
+        }
     };
     return (
         <FormProvider methods={methods} onSubmit={methods.handleSubmit(onSubmit)}>
@@ -25,16 +42,16 @@ export const BannerForm = () => {
                 <ImageUploader
                     required
                     name="image"
-                    label="Banner Image"
-                    heading="Banner Image"
-                    sx={{ width: 400, height: 300 }}
+                    label="Image"
+                    heading="Image"
+                    sx={{ width: 300, height: 300 }}
                 />
 
                 <Box display="flex" gap={2}>
                     <TextField type="text" name="name" label="Banner Name" required />
                     <Select
                         name="type"
-                        label="Banner Type"
+                        label="Type"
                         placeholder="Select a banner type"
                         options={
                             Object.values(BannerType).map((type) => ({
