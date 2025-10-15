@@ -1,7 +1,14 @@
+import { PaymentGateway, PaymentStatus } from "@prisma/client";
+import httpStatus from "http-status";
+import { ApiError } from "next/dist/server/api-utils";
+import Stripe from "stripe";
+
 import { CONFIG } from "../../(helpers)/config";
 import { prisma } from "../../(helpers)/shared/prisma";
 import { stripe } from "../../(helpers)/shared/stripe";
 import { formatAmountForStripe } from "../../(helpers)/utils/stripe-helper";
+
+import { UpdatePaymentInfoPayload } from "./payment.interface";
 
 // ------------------------------------- CREATE PAYMENT SESSION -----------------------------------
 const createPaymentSession = async (orderID: string) => {
@@ -47,4 +54,73 @@ const createPaymentSession = async (orderID: string) => {
   return paymentSession?.url;
 };
 
-export const PaymentServices = { createPaymentSession };
+// ------------------------------------- UPDATE PAYMENT INFO --------------------------------------
+export const updatePaymentInfo = async (payload: UpdatePaymentInfoPayload) => {
+  // Step 1: Validate and find the order
+  const order = await prisma.order.findFirst({
+    where: {
+      OR: [{ id: payload.order_id }, { order_id: payload.order_id }],
+    },
+  });
+
+  if (!order) {
+    throw new ApiError(httpStatus.NOT_FOUND, "Order not found");
+  }
+
+  // Prevent double payment update
+  if (order.payment_status === PaymentStatus.PAID) {
+    throw new ApiError(httpStatus.BAD_REQUEST, "Payment already completed");
+  }
+
+  // Step 2: Retrieve Stripe Checkout Session
+  const paymentSession = await stripe.checkout.sessions.retrieve(
+    payload.payment_session_id,
+    { expand: ["payment_intent"] }
+  );
+
+  const paymentIntent =
+    paymentSession?.payment_intent as Stripe.PaymentIntent | null;
+
+  if (!paymentIntent) {
+    throw new ApiError(
+      httpStatus.BAD_REQUEST,
+      "Invalid payment session or missing payment intent"
+    );
+  }
+
+  // Step 3: Validate payment status
+  const isPaid = paymentSession.payment_status === "paid";
+  const isSucceeded = paymentIntent.status === "succeeded";
+
+  if (!isPaid || !isSucceeded) {
+    throw new ApiError(httpStatus.BAD_REQUEST, "Payment not successful");
+  }
+
+  // Step 4: Build payment info payload
+  const paymentInfo = {
+    order_id: order.id,
+    amount: paymentIntent.amount_received,
+    gateway: PaymentGateway.STRIPE,
+    status: PaymentStatus.PAID,
+    transaction_id: paymentIntent.id,
+    paid_at: new Date(),
+  };
+
+  // Step 5: Record payment & update order atomically
+  const result = await prisma.$transaction(async (tx) => {
+    // Create payment record
+    const payment = await tx.payment.create({ data: paymentInfo });
+
+    // Update order payment status
+    await tx.order.update({
+      where: { id: order.id },
+      data: { payment_status: PaymentStatus.PAID },
+    });
+
+    return payment;
+  });
+
+  return result;
+};
+
+export const PaymentServices = { createPaymentSession, updatePaymentInfo };

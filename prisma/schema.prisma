@@ -524,19 +524,19 @@ model Blog {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
-  author User  @relation(fields: [author_id], references: [id])
+  author User @relation(fields: [author_id], references: [id])
 
   @@map("blogs")
 }
 
 model CompanyReview {
-  id          String @id @default(uuid())
+  id          String   @id @default(uuid())
   name        String
   email       String?
   company     String?
   designation String?
   comment     String
-  rating      Float @default(5)
+  rating      Float    @default(5)
   platform    Platform @default(OFFLINE)
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt
