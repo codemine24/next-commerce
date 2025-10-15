@@ -1,10 +1,18 @@
 import React from "react";
 
+import { stripe } from "@/app/api/(helpers)/shared/stripe";
+
 type Props = {
   searchParams: { session_id: string; order_id: string };
 };
-const PaymentSuccessPage = ({ searchParams }: Props) => {
+const PaymentSuccessPage = async ({ searchParams }: Props) => {
   const { session_id, order_id } = searchParams;
+
+  const paymentSession = await stripe.checkout.sessions.retrieve(session_id, {
+    expand: ["payment_intent"],
+  });
+
+  console.log("payment session: ", paymentSession);
 
   return (
     <div>
