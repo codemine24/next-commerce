@@ -4,9 +4,8 @@ import Button from "@mui/material/Button";
 import { useState } from "react";
 
 import { ProductQuickView } from "@/components/product/product-quick-view";
-import { Product } from "@/interfaces/product";
-import { BORDER_RADIUS } from "@/theme";
 import { EyeIcon } from "@/icons/eye";
+import { Product } from "@/interfaces/product";
 
 export const ProductQuickViewButton = ({ product }: { product: Product }) => {
   const [open, setOpen] = useState(false);

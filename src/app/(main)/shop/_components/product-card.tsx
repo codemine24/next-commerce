@@ -7,7 +7,6 @@ import { OptimizeImage } from "@/components/optimize-image";
 import { Product } from "@/interfaces/product";
 import { makeImageUrl } from "@/utils/helper";
 
-import { AddToCartButton } from "./add-to-cart-button";
 import BuyNowButton from "./buy-now-button";
 import { ProductDiscountLabel } from "./product-discount-label";
 import { ProductPrice } from "./product-price";
@@ -20,7 +19,6 @@ interface ProductCardProps {
 
 export const ProductCard = async ({
   product,
-  action = false,
 }: ProductCardProps) => {
   return (
     <Box
@@ -80,7 +78,7 @@ export const ProductCard = async ({
       <ProductPrice product={product} />
 
       <Stack direction="row" justifyContent="center" gap={1} px={2} mt={1}>
-        <BuyNowButton />
+        <BuyNowButton product={product} />
         <ProductQuickViewButton product={product} />
       </Stack>
 
