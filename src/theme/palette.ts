@@ -18,7 +18,7 @@ export const colorPalette: PaletteOptions = {
     primary: "#03140E",
     secondary: "#4B566B",
   },
-  divider: "#ddd",
+  divider: "#E6F2EE",
   common: {
     black: "#000",
     white: "#fff",

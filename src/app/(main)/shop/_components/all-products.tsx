@@ -1,14 +1,24 @@
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 
+import { Pagination } from "@/components/pagination";
+import { Meta } from "@/interfaces/api";
 import { Product } from "@/interfaces/product";
 
 import { FilterApplied } from "./filter-applied";
 import { ProductCard } from "./product-card";
+import { ProductsCount } from "./products-count";
 
-export const AllProducts = ({ products }: { products: Product[] }) => {
+
+interface AllProductsProps {
+  products: Product[];
+  meta: Meta;
+}
+
+export const AllProducts = ({ products, meta }: AllProductsProps) => {
   return (
     <Box flex={1}>
+      <ProductsCount meta={meta} />
       <FilterApplied />
       <Grid container spacing={2}>
         {products?.map((product) => (
@@ -17,6 +27,10 @@ export const AllProducts = ({ products }: { products: Product[] }) => {
           </Grid>
         ))}
       </Grid>
+
+      <Box p={2}>
+        <Pagination page={meta.page} total={meta.total} limit={meta.limit} />
+      </Box>
     </Box>
   );
 };
