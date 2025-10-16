@@ -5,6 +5,7 @@ import Button from "@mui/material/Button";
 import Popover from "@mui/material/Popover";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
+import Link from "next/link";
 import { useState } from "react";
 
 import { ArrowDownIcon } from "@/icons/arrow-down-icon";
@@ -37,7 +38,7 @@ export const CategoriesButton = ({ categories }: CategoryButtonProps) => {
           height: "100%",
           minHeight: 0,
           borderRadius: 0,
-          borderRight: "1px solid",
+          borderRight: 1,
           borderColor: "divider",
           color: "text.primary",
         }}
@@ -62,12 +63,23 @@ export const CategoriesButton = ({ categories }: CategoryButtonProps) => {
       >
         <Box>
           <Stack width={250}>
+            <Button
+              fullWidth
+              color="inherit"
+              sx={{ justifyContent: "flex-start", px: 2 }}
+              LinkComponent={Link}
+              href="/collections"
+            >
+              All Categories
+            </Button>
             {categories.map((category) => (
               <Button
                 key={category.id}
                 fullWidth
                 color="inherit"
                 sx={{ justifyContent: "flex-start", px: 2 }}
+                LinkComponent={Link}
+                href={`/shop?category${category.slug}`}
               >
                 {category.title}
               </Button>

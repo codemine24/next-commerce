@@ -14,9 +14,11 @@ import React, { useMemo } from "react";
 
 import { ExpandMoreIcon } from "@/icons/expand-more";
 import { Attribute } from "@/interfaces/attribute";
+import { Category } from "@/interfaces/category";
 
 interface ProductFilterProps {
   attributes: Attribute[];
+  categories: Category[];
 }
 
 interface SelectedFilters {
@@ -24,7 +26,7 @@ interface SelectedFilters {
   order: string[];
 }
 
-export const ProductFilter = ({ attributes }: ProductFilterProps) => {
+export const ProductFilter = ({ attributes, categories }: ProductFilterProps) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -126,6 +128,61 @@ export const ProductFilter = ({ attributes }: ProductFilterProps) => {
         pb: 2,
       }}
     >
+      {/* Categories */}
+      <Accordion defaultExpanded>
+        <AccordionSummary
+          sx={{ p: 0 }}
+          expandIcon={<ExpandMoreIcon sx={{ fontSize: 16 }} />}
+        >
+          <Typography variant="body1" fontWeight={600}>Categories</Typography>
+        </AccordionSummary>
+        <AccordionDetails sx={{ p: 0 }}>
+          <FormGroup
+            sx={{
+              gap: 0.5,
+              px: 1,
+              display: "flex",
+              flexDirection: "column",
+              minHeight: "auto",
+              flexWrap: "nowrap",
+            }}
+          >
+            {categories.map((category) => (
+              <FormControlLabel
+                key={category.id}
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  fontSize: "14px",
+                  gap: 1,
+                  "& .MuiFormControlLabel-label": {
+                    fontSize: "14px",
+                    textTransform: "capitalize",
+                    mb: .5,
+                    color: "text.secondary",
+                  },
+                }}
+                control={
+                  <Checkbox
+                    size="small"
+                    checked={
+                      selectedFilters.values[category.title]?.includes(
+                        category.title
+                      ) || false
+                    }
+                    onChange={() =>
+                      handleCheckboxChange("category", category.title)
+                    }
+                    sx={{ p: 0 }}
+                  />
+                }
+                label={category.title}
+              />
+            ))}
+          </FormGroup>
+        </AccordionDetails>
+      </Accordion>
+
       {/* Filter Options */}
       <Box>
         {sortAttributes.map((attribute, index) => (
