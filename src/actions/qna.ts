@@ -73,3 +73,12 @@ export const getQnAs = async (query: Record<string, any>) => {
 
   return response;
 };
+
+export const getAllQnas = async () => {
+  const response = await api.get(API_ROUTES.qna.get_qnas, {
+    next: { tags: [TAGS.qnas] },
+  });
+  
+
+  return response;
+};

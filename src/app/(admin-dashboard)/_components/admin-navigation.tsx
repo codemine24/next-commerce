@@ -95,6 +95,11 @@ export const ADMIN_NAVIGATION = [
     ],
   },
   {
+    name: "QnA",
+    // icon: <QnaIcon fontSize="small" />,
+    path: "/admin/qna",
+  },
+  {
     name: "Customization",
     icon: <CustomizationIcon fontSize="small" />,
     children: [
