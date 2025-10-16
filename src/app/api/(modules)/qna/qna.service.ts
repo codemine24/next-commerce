@@ -1,4 +1,4 @@
-import { Prisma, User } from "@prisma/client";
+import { Prisma, User, UserRole } from "@prisma/client";
 
 import { prisma } from "../../(helpers)/shared/prisma";
 import paginationMaker from "../../(helpers)/utils/pagination-maker";
@@ -19,16 +19,8 @@ const createQuestion = async (user: User, data: CreateQuestionPayload) => {
 };
 
 // ---------------------------------- GET QUESTION & ANSWERS ------------------------------
-const getQnAs = async (query: Record<string, any>) => {
-  const {
-    search_term,
-    page,
-    limit,
-    sort_by,
-    sort_order,
-    inquirer_id,
-    product_id,
-  } = query;
+const getQnAs = async (query: Record<string, any>, user: User | null) => {
+  const { search_term, page, limit, sort_by, sort_order, product_id } = query;
 
   if (sort_by) queryValidator(qnaQueryValidationConfig, "sort_by", sort_by);
   if (sort_order)
@@ -63,12 +55,12 @@ const getQnAs = async (query: Record<string, any>) => {
 
   let approvalCondition: Prisma.QnAWhereInput = { is_approved: true };
 
-  if (inquirer_id) {
+  if (user && user.role === UserRole.CUSTOMER) {
     approvalCondition = {
       OR: [
         { is_approved: true },
         {
-          AND: [{ is_approved: false }, { inquirer_id }],
+          AND: [{ is_approved: false }, { inquirer_id: user.id }],
         },
       ],
     };
