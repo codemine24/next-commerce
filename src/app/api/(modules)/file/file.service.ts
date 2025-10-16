@@ -38,7 +38,10 @@ const uploadFiles = async (data: Record<string, any>, user: User) => {
       }
       const buffer = Buffer.from(await file.arrayBuffer());
       const metadata = await sharp(buffer).metadata();
-      const fileName = `${file.name.replaceAll(" ", "-")}`;
+      const fileName = `${new Date().getTime()}-${file.name.replaceAll(
+        " ",
+        "-"
+      )}`;
       const { data, error } = await supabase.storage
         .from(CONFIG.general_bucket)
         .upload(fileName, buffer, {
@@ -46,7 +49,7 @@ const uploadFiles = async (data: Record<string, any>, user: User) => {
           upsert: true,
         });
       if (error) {
-        console.log(error)
+        console.log(error);
         throw new CustomizedError(
           httpStatus.INTERNAL_SERVER_ERROR,
           "Failed to upload file"

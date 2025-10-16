@@ -17,6 +17,12 @@ export const API_ROUTES = {
     update_attribute: (id: string) => `/attribute/${id}`,
     delete_attribute: "/attribute",
   },
+  banner: {
+    create_banner: "/banner",
+    get_banners: "/banner",
+    update_banner: (id: string) => `/banner/${id}`,
+    delete_banner: "/banner",
+  },
   users: {
     get_users: "/user",
     create_user: "/user",

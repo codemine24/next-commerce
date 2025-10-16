@@ -6,10 +6,11 @@ import { inputClasses } from "@mui/material/Input";
 import TextField from "@mui/material/TextField";
 import { useEffect, useState } from "react";
 
+import { useDebounce } from "@/hooks/use-debounce";
 import { CloseIcon } from "@/icons/close";
 import { SearchIcon } from "@/icons/search";
 import { BORDER_RADIUS } from "@/theme";
-import { useDebounce } from "@/hooks/use-debounce";
+
 import { SearchResultPreview } from "./search-result-preview";
 
 export const SearchBox = () => {
@@ -26,7 +27,12 @@ export const SearchBox = () => {
   }, [debouncedSearch]);
 
   return (
-    <Box flex={1} height="100%" px={2}>
+    <Box
+      px={2}
+      flex={1}
+      height="100%"
+      position="relative"
+    >
       <TextField
         placeholder="Search products..."
         size="small"

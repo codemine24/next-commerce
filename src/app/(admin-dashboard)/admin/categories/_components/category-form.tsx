@@ -27,10 +27,8 @@ export const CategoryForm = ({
   return (
     <FormProvider methods={methods} onSubmit={methods.handleSubmit(onSubmit)}>
       <Box display="flex" flexDirection="column" gap={4}>
-        <Box display="flex" flexDirection={{ xs: "column", sm: "row" }} gap={2}>
-          <TextField type="text" name="title" label="Category Title" required />
-          <TextField type="text" name="code" label="Category Code" />
-        </Box>
+        <TextField type="text" name="title" label="Category Title" required />
+
         <Editor
           label="Description"
           placeholder="Write category description here"

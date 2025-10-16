@@ -11,5 +11,10 @@ declare namespace NodeJS {
     SUPABASE_SERVICE_ROLE_KEY: string;
     USER_BUCKET: string;
     GENERAL_BUCKET: string;
+    STRIPE_SECRET_KEY: string;
+    STRIPE_PUBLISHABLE_KEY: string;
+    APP_NAME: string;
+    APP_EMAIL_ADDRESS: string;
+    EMAIL_APP_PASS: string;
   }
 }

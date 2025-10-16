@@ -41,7 +41,7 @@ interface ProductAddReviewProps {
 export const ProductAddReview = ({ productId }: ProductAddReviewProps) => {
   const router = useRouter();
   const path = usePathname();
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user } = useAuth();
   const [open, setOpen] = useState(false);
 
   const {
@@ -89,6 +89,7 @@ export const ProductAddReview = ({ productId }: ProductAddReviewProps) => {
         variant="soft"
         startIcon={<PlusIcon />}
         onClick={handleOpenReviewModal}
+        sx={{ display: user?.role === "CUSTOMER" ? "block" : "none" }}
       >
         Add Review
       </Button>
