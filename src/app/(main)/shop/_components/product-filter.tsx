@@ -129,7 +129,15 @@ export const ProductFilter = ({ attributes, categories }: ProductFilterProps) =>
       }}
     >
       {/* Categories */}
-      <Accordion defaultExpanded>
+      <Accordion
+        defaultExpanded
+        sx={{
+          bgcolor: "transparent",
+          boxShadow: "none",
+          border: 'none',
+          "&:before": { display: "none" },
+        }}
+      >
         <AccordionSummary
           sx={{ p: 0 }}
           expandIcon={<ExpandMoreIcon sx={{ fontSize: 16 }} />}
@@ -166,7 +174,7 @@ export const ProductFilter = ({ attributes, categories }: ProductFilterProps) =>
                   <Checkbox
                     size="small"
                     checked={
-                      selectedFilters.values[category.title]?.includes(
+                      selectedFilters.values["category"]?.includes(
                         category.title
                       ) || false
                     }
