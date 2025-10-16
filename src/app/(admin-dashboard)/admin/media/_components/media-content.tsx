@@ -23,9 +23,6 @@ export const MediaContent = async ({ searchParams }: { searchParams: Promise<Sea
                     <Box
                         p={2}
                         bgcolor="background.default"
-                        border={1}
-                        borderBottom={0}
-                        borderColor="divider"
                     >
                         <Pagination
                             page={data.meta.page}

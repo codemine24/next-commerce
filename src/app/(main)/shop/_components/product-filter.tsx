@@ -1,23 +1,24 @@
 "use client";
 
-import { Button, Divider } from "@mui/material";
 import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import Box from "@mui/material/Box";
 import Checkbox from "@mui/material/Checkbox";
+import Divider from "@mui/material/Divider";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormGroup from "@mui/material/FormGroup";
 import Typography from "@mui/material/Typography";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import React, { useMemo } from "react";
 
-import { CloseIcon } from "@/icons/close";
 import { ExpandMoreIcon } from "@/icons/expand-more";
 import { Attribute } from "@/interfaces/attribute";
+import { Category } from "@/interfaces/category";
 
 interface ProductFilterProps {
   attributes: Attribute[];
+  categories: Category[];
 }
 
 interface SelectedFilters {
@@ -25,7 +26,7 @@ interface SelectedFilters {
   order: string[];
 }
 
-export const ProductFilter = ({ attributes }: ProductFilterProps) => {
+export const ProductFilter = ({ attributes, categories }: ProductFilterProps) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -127,63 +128,68 @@ export const ProductFilter = ({ attributes }: ProductFilterProps) => {
         pb: 2,
       }}
     >
-      {selectedFilters.order.length > 0 && (
-        <Button
-          variant="contained"
-          color="primary"
-          fullWidth
-          onClick={() => setSelectedFilters({ values: {}, order: [] })}
+      {/* Categories */}
+      <Accordion
+        defaultExpanded
+        sx={{
+          bgcolor: "transparent",
+          boxShadow: "none",
+          border: 'none',
+          "&:before": { display: "none" },
+        }}
+      >
+        <AccordionSummary
+          sx={{ p: 0 }}
+          expandIcon={<ExpandMoreIcon sx={{ fontSize: 16 }} />}
         >
-          Clear All
-        </Button>
-      )}
-      {selectedFilters.order.length > 0 && <Divider sx={{ my: 2 }} />}
-      {/* Filter Applied */}
-      <Box display="flex" flexDirection="column" gap={1}>
-        {Object.entries(selectedFilters.values).map(
-          ([filterName, values], index) =>
-            values.map((value) => (
-              <Box
-                key={filterName + value + index}
-                display="flex"
-                justifyContent="space-between"
-                alignItems="center"
-                gap={1}
-                pl={2}
-                position="relative"
+          <Typography variant="body1" fontWeight={600}>Categories</Typography>
+        </AccordionSummary>
+        <AccordionDetails sx={{ p: 0 }}>
+          <FormGroup
+            sx={{
+              gap: 0.5,
+              px: 1,
+              display: "flex",
+              flexDirection: "column",
+              minHeight: "auto",
+              flexWrap: "nowrap",
+            }}
+          >
+            {categories.map((category) => (
+              <FormControlLabel
+                key={category.id}
                 sx={{
-                  "&:before": {
-                    content: '""',
-                    position: "absolute",
-                    left: 0,
-                    top: "50%",
-                    transform: "translateY(-50%)",
-                    width: 5,
-                    height: 5,
-                    borderRadius: "50%",
-                    bgcolor: "text.primary",
+                  display: "flex",
+                  alignItems: "center",
+                  fontSize: "14px",
+                  gap: 1,
+                  "& .MuiFormControlLabel-label": {
+                    fontSize: "14px",
+                    textTransform: "capitalize",
+                    mb: .5,
+                    color: "text.secondary",
                   },
                 }}
-              >
-                <Box display="flex" alignItems="center" gap={1}>
-                  <Typography variant="caption">{filterName}:</Typography>
-                  <Typography
-                    variant="caption"
-                    fontWeight={600}
-                    textTransform="capitalize"
-                  >
-                    {value}
-                  </Typography>
-                </Box>
-                <CloseIcon
-                  fontSize="small"
-                  onClick={() => handleCheckboxChange(filterName, value)}
-                />
-              </Box>
-            ))
-        )}
-      </Box>
-      {selectedFilters.order.length > 0 && <Divider sx={{ my: 2 }} />}
+                control={
+                  <Checkbox
+                    size="small"
+                    checked={
+                      selectedFilters.values["category"]?.includes(
+                        category.title
+                      ) || false
+                    }
+                    onChange={() =>
+                      handleCheckboxChange("category", category.title)
+                    }
+                    sx={{ p: 0 }}
+                  />
+                }
+                label={category.title}
+              />
+            ))}
+          </FormGroup>
+        </AccordionDetails>
+      </Accordion>
 
       {/* Filter Options */}
       <Box>

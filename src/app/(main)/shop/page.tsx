@@ -9,14 +9,15 @@ import { AllProducts } from "./_components/all-products";
 import { ProductSidebar } from "./_components/products-sidebar";
 
 const ShopPage = async ({ searchParams }: { searchParams: Promise<SearchParams> }) => {
-  const products = await getProducts();
+  const query = await searchParams;
+  const products = await getProducts(query);
 
   return (
     <BoxContainer>
       <Suspense fallback={<div>Loading...</div>}>
         <Box sx={{ display: "flex", gap: 2 }}>
           <ProductSidebar searchParams={searchParams} />
-          <AllProducts products={products.data} />
+          <AllProducts products={products.data} meta={products.meta} />
         </Box>
       </Suspense>
     </BoxContainer>

@@ -25,7 +25,7 @@ export const CreateAttribute = ({ categories }: CreateAttributeProps) => {
       name: "",
       type: "",
       attribute_values: [],
-      category_id: "",
+      category_id: undefined,
     },
   });
 

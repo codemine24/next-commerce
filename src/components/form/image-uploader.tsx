@@ -72,6 +72,7 @@ export const ImageUploader = (props: ImageUploaderProps) => {
                             borderColor="divider"
                             onClick={() => setOpenUploadModal(true)}
                             sx={{
+                                height: "100%",
                                 cursor: 'pointer',
                                 '&:hover': { opacity: 0.72 },
                             }}

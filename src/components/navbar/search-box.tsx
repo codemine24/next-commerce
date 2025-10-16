@@ -27,7 +27,12 @@ export const SearchBox = () => {
   }, [debouncedSearch]);
 
   return (
-    <Box flex={1} height="100%" px={2}>
+    <Box
+      px={2}
+      flex={1}
+      height="100%"
+      position="relative"
+    >
       <TextField
         placeholder="Search products..."
         size="small"

@@ -5,7 +5,7 @@ import { LoadingSpinner } from "@/components/loading-spinner";
 
 import { Banner } from "./_components/banner";
 import { CustomerReviewSection } from "./_components/customer-review/customer-review-section";
-import FeaturedProductCard from "./_components/featured-product-card";
+import { FeaturedCategory } from "./_components/featured-category";
 import { HeroSection } from "./_components/hero/hero-section";
 import { HotDeals } from "./_components/hot-deals";
 import { NewArrivals } from "./_components/new-arrivals";
@@ -17,7 +17,7 @@ export default function Home() {
   return (
     <BoxContainer sx={{ py: 2 }}>
       <HeroSection />
-      <FeaturedProductCard />
+      <FeaturedCategory />
       <HotDeals />
       <Banner />
       <NewArrivals />
@@ -27,7 +27,6 @@ export default function Home() {
       </Suspense>
       <RecentBlogs />
       <Services />
-      {/* <Footer /> */}
     </BoxContainer>
   );
 }

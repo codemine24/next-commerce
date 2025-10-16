@@ -1,18 +1,27 @@
+"use client";
+
 import { Button } from "@mui/material";
 import React from "react";
 
-import { BORDER_RADIUS } from "@/theme";
+import { useCart } from "@/hooks/use-cart";
+import { Product } from "@/interfaces/product";
 
-const BuyNowButton = () => {
+const BuyNowButton = ({ product }: { product: Product }) => {
+  const { addToCart } = useCart();
+
   return (
     <Button
-      variant="soft"
+      fullWidth
+      variant="contained"
       color="primary"
-      sx={{
-        fontSize: ".85rem",
-        borderRadius: BORDER_RADIUS.default,
-        flexGrow: 1,
-        boxShadow: "none",
+      onClick={() => {
+        addToCart({
+          id: product.id,
+          name: product.name,
+          slug: product.slug,
+          price: product.discount_price || product.price,
+          thumbnail: product.thumbnail,
+        })
       }}
     >
       Buy Now

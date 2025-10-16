@@ -1,9 +1,12 @@
 import { Prisma, ProductMetaType } from "@prisma/client";
+import httpStatus from "http-status";
 
 import { prisma } from "@/app/api/(helpers)/shared/prisma";
 
+import CustomizedError from "../../(helpers)/error/customized-error";
 import filterAdder from "../../(helpers)/utils/filter-adder";
 import paginationMaker from "../../(helpers)/utils/pagination-maker";
+import { parseBoolean } from "../../(helpers)/utils/parse-boolean";
 import queryValidator from "../../(helpers)/utils/query-validator";
 import { slugGenerator } from "../../(helpers)/utils/slug-generator";
 
@@ -65,7 +68,19 @@ const addProduct = async (payload: ProductPayload) => {
 
 // ------------------------------------ GET ALL PRODUCTS ---------------------------------
 const getProducts = async (query: Record<string, any>) => {
-  const { page, limit, sort_by, sort_order, search_term, price_range } = query;
+  const {
+    page,
+    limit,
+    sort_by,
+    sort_order,
+    search_term,
+    price_range,
+    is_banner_product,
+    is_hot_deal,
+    is_featured,
+  } = query;
+
+  console.log(query, "query");
 
   // Validate query parameters (sort_by, sort_order) if provided
   if (sort_by) queryValidator(productQueryValidationConfig, "sort_by", sort_by);
@@ -106,6 +121,28 @@ const getProducts = async (query: Record<string, any>) => {
     if (!isNaN(maxPrice)) filterAdder(andConditions, "price", "lte", maxPrice);
   }
 
+  if (is_banner_product)
+    filterAdder(
+      andConditions,
+      "is_banner_product",
+      "equals",
+      parseBoolean(is_banner_product)
+    );
+  if (is_hot_deal)
+    filterAdder(
+      andConditions,
+      "is_hot_deal",
+      "equals",
+      parseBoolean(is_hot_deal)
+    );
+  if (is_featured)
+    filterAdder(
+      andConditions,
+      "is_featured",
+      "equals",
+      parseBoolean(is_featured)
+    );
+
   // Combine all AND conditions for Prisma query
   const whereConditions: Prisma.ProductWhereInput = { AND: andConditions };
 
@@ -145,7 +182,29 @@ const getProduct = async (slug: string) => {
 // ------------------------------------ UPDATE PRODUCT -----------------------------------
 const updateProduct = async (slug: string, payload: ProductPayload) => {
   const { categories, ...rest } = payload;
+
+  const product = await prisma.product.findUniqueOrThrow({
+    where: {
+      slug,
+    },
+  });
+
   if (payload.name) payload.slug = slugGenerator(payload.name);
+  if (payload.is_banner_product && !product.is_banner_product) {
+    const existingBannerProducts = await prisma.product.findMany({
+      where: {
+        is_banner_product: true,
+      },
+    });
+
+    if (existingBannerProducts.length === 2) {
+      throw new CustomizedError(
+        httpStatus.BAD_REQUEST,
+        "You can only have two banner products"
+      );
+    }
+  }
+
   const result = await prisma.product.update({
     where: {
       slug,
