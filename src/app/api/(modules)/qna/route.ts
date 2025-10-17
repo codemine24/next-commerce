@@ -43,9 +43,13 @@ export const GET = catchAsync(async (req: NextRequest) => {
   // Step 1: Extract search parameters from the request URL
   const searchParams = req.nextUrl.searchParams;
 
+  console.log("check api");
+
   const token = req.headers.get("Authorization");
 
   let user: User | null = null;
+
+  console.log(user);
 
   if (token) {
     user = await userAuthenticator(req, [

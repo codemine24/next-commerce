@@ -157,12 +157,22 @@ const getProducts = async (query: Record<string, any>) => {
     prisma.product.count({ where: whereConditions }),
   ]);
 
+  // Count in-stock and out-of-stock products
+  const inStockCount = products.filter((p) => p.stock > 0).length;
+  const outOfStockCount = products.filter((p) => p.stock <= 0).length;
+
+  // Get maximum price
+  const maxPrice = Math.max(...products.map((p) => p.price));
+
   // Return paginated results
   return {
     meta: {
       page: pageNumber,
       limit: limitNumber,
       total,
+      in_stock: inStockCount,
+      out_of_stock: outOfStockCount,
+      max_price: maxPrice,
     },
     data: products,
   };

@@ -39,7 +39,8 @@ export const ProductActionButton = ({ product }: ProductActionButtonProps) => {
 
   return (
     <Box>
-      <Typography fontSize={16} fontWeight={400} mb={1}>
+      <Box>
+        <Typography fontSize={16} fontWeight={400} mb={1}>
         Quantity
       </Typography>
       <ProductQuantityButton
@@ -47,7 +48,8 @@ export const ProductActionButton = ({ product }: ProductActionButtonProps) => {
         onAdd={() => setQty(qty + 1)}
         onRemove={() => setQty(qty - 1)}
       />
-      <Stack direction="row" spacing={1} alignItems="center" mt={5.9}>
+      </Box>
+      <Stack direction="row" spacing={1} alignItems="center" mt={{xs: 2, sm: 5}}>
         <Button
           variant="contained"
           onClick={handleAddToCart}
