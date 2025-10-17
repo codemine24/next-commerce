@@ -3,13 +3,13 @@
 import { TAGS } from "@/constants/tags";
 import api from "@/lib/api";
 import { API_ROUTES } from "@/lib/api-routes";
-import { AdvertisementSchema } from "@/zod/banner-schema";
+import { AdvertiseSchema } from "@/zod/advertise-schema";
 
-export const createBanner = async (banner: AdvertisementSchema) => {
-  const res = await api.post(API_ROUTES.banner.create_banner, {
-    body: JSON.stringify(banner),
+export const createAdvertise = async (advertise: AdvertiseSchema) => {
+  const res = await api.post(API_ROUTES.advertise.create_advertise, {
+    body: JSON.stringify(advertise),
     next: {
-      tags: [TAGS.banner],
+      tags: [TAGS.advertise],
     },
   });
 

@@ -34,9 +34,9 @@ export const ImageUploader = (props: ImageUploaderProps) => {
     const handleSelectImage = (image: string) => {
         if (multiple) {
             const newSelectedImage = selectedImages.includes(image) ? selectedImages.filter((img: string) => img !== image) : [...selectedImages, image];
-            setValue(name, newSelectedImage);
+            setValue(name, newSelectedImage, { shouldValidate: true });
         } else {
-            setValue(name, image);
+            setValue(name, image, { shouldValidate: true });
         }
     };
 

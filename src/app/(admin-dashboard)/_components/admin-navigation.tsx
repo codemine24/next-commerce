@@ -3,7 +3,6 @@ import { BrandIcon } from "@/icons/brand";
 import { CampaignIcon } from "@/icons/campaign";
 import { CategoriesIcon } from "@/icons/categories";
 import { CouponIcon } from "@/icons/coupon";
-import { CustomizationIcon } from "@/icons/customization";
 import { DashboardIcon } from "@/icons/dashboard";
 import { MediaIcon } from "@/icons/media";
 import { OrdersIcon } from "@/icons/orders";
@@ -74,6 +73,14 @@ export const ADMIN_NAVIGATION = [
     path: "/admin/media",
   },
   {
+    name: "Advertisement",
+    icon: <MediaIcon fontSize="small" />,
+    children: [
+      { name: "Advertise List", path: "/admin/advertisement" },
+      { name: "Create Advertise", path: "/admin/advertisement/create" },
+    ],
+  },
+  {
     name: "Coupons",
     icon: <CouponIcon fontSize="small" />,
     children: [
@@ -94,20 +101,20 @@ export const ADMIN_NAVIGATION = [
       { name: "User Management", path: "/admin/user-management" },
     ],
   },
-  {
-    name: "Customization",
-    icon: <CustomizationIcon fontSize="small" />,
-    children: [
-      { name: "Advertisement", path: "/admin/advertisement" },
-      { name: "SEO Settings", path: "/admin/seo" },
-      { name: "Email Settings", path: "/admin/email" },
-      { name: "Social Settings", path: "/admin/social" },
-      { name: "Payment Settings", path: "/admin/payment" },
-      { name: "Shipping Settings", path: "/admin/shipping" },
-      { name: "Tax Settings", path: "/admin/tax" },
-      { name: "Currency Settings", path: "/admin/currency" },
-      { name: "Language Settings", path: "/admin/language" },
-      { name: "Theme Settings", path: "/admin/theme" },
-    ],
-  },
+  // {
+  //   name: "Customization",
+  //   icon: <CustomizationIcon fontSize="small" />,
+  //   children: [
+  //     { name: "Advertisement", path: "/admin/advertisement" },
+  //     { name: "SEO Settings", path: "/admin/seo" },
+  //     { name: "Email Settings", path: "/admin/email" },
+  //     { name: "Social Settings", path: "/admin/social" },
+  //     { name: "Payment Settings", path: "/admin/payment" },
+  //     { name: "Shipping Settings", path: "/admin/shipping" },
+  //     { name: "Tax Settings", path: "/admin/tax" },
+  //     { name: "Currency Settings", path: "/admin/currency" },
+  //     { name: "Language Settings", path: "/admin/language" },
+  //     { name: "Theme Settings", path: "/admin/theme" },
+  //   ],
+  // },
 ];
