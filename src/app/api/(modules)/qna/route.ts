@@ -18,6 +18,7 @@ export const POST = catchAsync(async (req: Request) => {
   const user = await userAuthenticator(req, [
     UserRole.SUPER_ADMIN,
     UserRole.ADMIN,
+    UserRole.CUSTOMER,
   ]);
 
   // Step 2: Parse request body
