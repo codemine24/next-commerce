@@ -17,7 +17,6 @@ export const CreateCategory = ({ categories }: { categories: Category[] }) => {
         resolver: zodResolver(categorySchema),
         defaultValues: {
             title: "",
-            code: "",
             description: "",
             parent_id: "",
             icon: "",

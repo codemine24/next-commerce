@@ -4,6 +4,7 @@ export const colorPalette: PaletteOptions = {
   primary: {
     main: "#007B54",
     light: "#C8FAD6",
+    "300": "#F2FFFB",
     "100": "#3ECDA6",
     "50": "#e4f5ec",
     dark: "#272727",
@@ -17,7 +18,7 @@ export const colorPalette: PaletteOptions = {
     primary: "#03140E",
     secondary: "#4B566B",
   },
-  divider: "#ddd",
+  divider: "#E6F2EE",
   common: {
     black: "#000",
     white: "#fff",
