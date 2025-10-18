@@ -9,7 +9,7 @@ export const ProductSpecification = ({
   specification: string | null;
 }) => {
   return (
-    <Box id="product-specifications">
+    <Box id="#product-specifications">
       <ProductSectionHeader title="Specifications" />
       <Box sx={{ bgcolor: "background.paper", p: { xs: 2, sm: 3 } }}>
         {specification && (

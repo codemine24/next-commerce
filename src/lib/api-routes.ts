@@ -95,6 +95,8 @@ export const API_ROUTES = {
     edit_question: (id: string) => `/qna/${id}`,
     delete_qnas: "/qna",
     get_qnas: "/qna",
+    post_answer: (id: string) => `/qna/${id}/admin`,
+    get_answer: (id: string) => `/qna/${id}/admin`,
   },
 
 };

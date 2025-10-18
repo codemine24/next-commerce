@@ -122,8 +122,12 @@ const updateQnAByAdmin = (id: string, payload: Record<string, any>) => {
 
 // ---------------------------------- EDIT QUESTION BY CUSTOMER ---------------------------
 const editQuestion = (id: string, payload: Record<string, any>, user: User) => {
+  // const result = prisma.qnA.update({
+  //   where: { id: id, is_approved: false, inquirer_id: user.id },
+  //   data: payload,
+  // });
   const result = prisma.qnA.update({
-    where: { id: id, is_approved: false, inquirer_id: user.id },
+    where: {id: id, inquirer_id: user.id },
     data: payload,
   });
   return result;

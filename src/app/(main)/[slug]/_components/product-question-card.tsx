@@ -139,7 +139,8 @@ export const QuestionCard = ({ question, authUserId }: QuestionCardProps) => {
                 sx={{ fontSize: 16, fontWeight: 600 }}
               >
                 {question.question}
-                {isEditor && !question.is_approved && (
+                {isEditor && (
+                  <>
                   <IconButton
                     size="small"
                     onClick={handleEdit}
@@ -147,16 +148,15 @@ export const QuestionCard = ({ question, authUserId }: QuestionCardProps) => {
                   >
                     <EditIcon fontSize="small" />
                   </IconButton>
-                )}
-                {isEditor && (
                   <IconButton
                     size="small"
                     onClick={() => setOpenDeleteModal(true)}
                     aria-label="Edit question"
                   >
                     <DeleteIcon fontSize="small" />
-                  </IconButton>
-                )}
+                  </IconButton></>
+                  
+                )}                
               </Typography>
             </Stack>
           )}
