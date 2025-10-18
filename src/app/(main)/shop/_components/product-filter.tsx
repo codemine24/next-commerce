@@ -77,7 +77,7 @@ export const ProductFilter = ({ attributes }: ProductFilterProps) => {
     return () => clearTimeout(timeout);
   }, [selectedFilters, pathname, router]);
 
-  // Toggle filter values and track order 2
+  // Toggle filter values and track order
   const handleCheckboxChange = React.useCallback(
     (filterName: string, value: string) => {
       setSelectedFilters((prev) => {
