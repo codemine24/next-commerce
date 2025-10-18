@@ -25,7 +25,7 @@ export default function PaymentStatusPage() {
                     Payment Successful
                 </Typography>
                 <Typography sx={{ mb: 3 }}>Thank you for your purchase 🎉</Typography>
-                <Button variant="contained" component={Link} href="/">
+                <Button variant="contained" LinkComponent={Link} href="/">
                     Return Home
                 </Button>
             </Box>
