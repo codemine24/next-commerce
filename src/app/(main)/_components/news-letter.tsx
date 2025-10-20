@@ -9,7 +9,14 @@ import Typography from "@mui/material/Typography";
 import { useForm } from "react-hook-form";
 
 import { createOtpForNewsletter } from "@/actions/newsletter";
-import { EmailFormValues, NewsletterEmailSchema } from "@/zod/newsletter-schema";
+import {
+  EmailFormValues,
+  NewsletterEmailSchema,
+} from "@/zod/newsletter-schema";
+
+import { OTPForm } from "./otp-form";
+
+
 
 export const NewsLetter = () => {
   const {
@@ -98,6 +105,8 @@ export const NewsLetter = () => {
           </Box>
           <Typography color="error">{emailErrors.email?.message}</Typography>
         </Box>
+          <OTPForm />
+        
       </Box>
     </Box>
   );
