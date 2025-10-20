@@ -2,33 +2,57 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Button, TextField } from "@mui/material";
+import { usePathname, useRouter } from "next/navigation";
+import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 
+import { getProductBySlug } from "@/actions/product";
 import { createQuestion } from "@/actions/qna";
+import { SubmitButton } from "@/components/submit-button";
+import { useAuth } from "@/hooks/use-auth";
+import { toast } from "@/lib/toast-store";
 import { questionSchema, QuestionFormData } from "@/zod/question-schema";
-
 
 import { ProductSectionHeader } from "../../[slug]/_components/product-section-header";
 
 export const AskQuestion = () => {
+  const { isAuthenticated } = useAuth();
+  const router = useRouter();
+  const path = usePathname();
+  const [isLoading, startTransition] = useTransition();
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<QuestionFormData>({
     resolver: zodResolver(questionSchema),
   });
 
-  const onSubmit = async (data: QuestionFormData) => {
-    console.log("Form submitted:", data);
-    const response = await createQuestion({
-      question: data.question,
-      product_id: "",
-    });
-    console.log(response, "Response");
-    
+  console.log(path);
 
-    // reset();
+  const onSubmit = async (data: QuestionFormData) => {
+    const product = await getProductBySlug(path);
+    console.log("product id", product.data.id);
+    console.log("Form submitted:", data);
+    if (!isAuthenticated) {
+      toast.error("You must be logged in to ask a question");
+      router.push(`/login?redirect=${encodeURIComponent(path)}`);
+      return;
+    }
+    startTransition(async () => {
+      const response = await createQuestion({
+        question: data.question,
+        product_id: product.data.id,
+      });
+      console.log("Response", response);
+      if (response.success) {
+        toast.success(response.message);
+        reset();
+      } else {
+        toast.error(response.message);
+      }
+    });
   };
 
   const textFieldStyle = {
@@ -73,7 +97,6 @@ export const AskQuestion = () => {
           helperText={errors.email?.message}
           sx={textFieldStyle}
         /> */}
-
         {/* Question */}
         <TextField
           placeholder="Write your question here..."
@@ -85,6 +108,18 @@ export const AskQuestion = () => {
           error={!!errors.question}
           helperText={errors.question?.message}
           sx={textFieldStyle}
+        />
+
+        <SubmitButton
+          label="Submit"
+          isLoading={isLoading}
+          disabled={isLoading}
+          sx={{
+            width: "225px",
+            height: "48px",
+            fontSize: "16px",
+            fontWeight: 400,
+          }}
         />
 
         <Button
