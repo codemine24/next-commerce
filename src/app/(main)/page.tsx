@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 
 import { BoxContainer } from "@/components/box-container";
+import { LoadingSpinner } from "@/components/loading-spinner";
 
 import { Banner } from "./_components/banner";
 import { CustomerReviewSection } from "./_components/customer-review/customer-review-section";
@@ -21,7 +22,7 @@ export default function Home() {
       <Banner />
       <NewArrivals />
       <CustomerReviewSection />
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<LoadingSpinner />}>
         <NewsLetter />
       </Suspense>
       <RecentBlogs />

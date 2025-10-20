@@ -46,7 +46,7 @@ export const AskQuestion = () => {
         }}
       >
         {/* Name */}
-        <TextField
+        {/* <TextField
           placeholder="Your Name"
           fullWidth
           size="small"
@@ -54,10 +54,10 @@ export const AskQuestion = () => {
           error={!!errors.name}
           helperText={errors.name?.message}
           sx={textFieldStyle}
-        />
+        /> */}
 
         {/* Email */}
-        <TextField
+        {/* <TextField
           placeholder="E-mail (optional)"
           fullWidth
           size="small"
@@ -65,7 +65,7 @@ export const AskQuestion = () => {
           error={!!errors.email}
           helperText={errors.email?.message}
           sx={textFieldStyle}
-        />
+        /> */}
 
         {/* Question */}
         <TextField
