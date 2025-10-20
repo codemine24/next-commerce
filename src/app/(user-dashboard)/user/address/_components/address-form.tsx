@@ -7,12 +7,8 @@ import { UseFormReturn } from "react-hook-form";
 import { Checkbox, TextField } from "@/components/form";
 import FormProvider from "@/components/form/form-provider";
 import { PhoneInputField } from "@/components/form/phone-input-field";
-import { useFetch } from "@/hooks/use-fetch";
-import { API_ROUTES } from "@/lib/api-routes";
+import { SubmitButton } from "@/components/submit-button";
 import { AddressSchema } from "@/zod/address-schema";
-
-import { AddressHeader } from "./address-header";
-
 interface AddressFormProps {
   methods: UseFormReturn<AddressSchema>;
   onSubmit: (data: AddressSchema) => void;
@@ -20,15 +16,12 @@ interface AddressFormProps {
 
 export const AddressForm = ({ methods, onSubmit }: AddressFormProps) => {
   const router = useRouter();
-  const { data, isLoading, message, revalidate, success } = useFetch(
-    API_ROUTES.address.get_addresses
-  );
+  const isSubmitting = methods.formState.isSubmitting;
 
   return (
     <>
       <FormProvider methods={methods} onSubmit={methods.handleSubmit(onSubmit)}>
         <Box>
-          <AddressHeader title="Add New Address" />
           <Grid container spacing={2}>
             {/* Name */}
             <Grid size={{ xs: 12 }}>
@@ -121,15 +114,21 @@ export const AddressForm = ({ methods, onSubmit }: AddressFormProps) => {
 
             {/* Is Default Checkbox */}
             <Grid size={{ xs: 12, sm: 12 }}>
-              <Checkbox name="is_default" label="Set as default address" />
+              <Checkbox name="is_default" label="Set as default address"  />
             </Grid>
 
             {/* Submit Button */}
             <Grid size={{ xs: 12, sm: 12 }}>
               <Box sx={{ display: "flex", gap: 2, mt: 1, mb: 2 }}>
-                <Button type="submit" variant="contained">
-                  Save Address
-                </Button>
+                <SubmitButton
+                  label="Save Address"
+                  isLoading={isSubmitting}
+                  sx={{
+                    width: 200,
+                    height: 50,
+                    textTransform: "none",
+                  }}
+                />
                 <Button
                   type="button"
                   variant="outlined"

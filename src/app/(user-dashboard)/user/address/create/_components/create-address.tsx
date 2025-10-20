@@ -9,6 +9,7 @@ import { toast } from "@/lib/toast-store";
 import { addressSchema, AddressSchema } from "@/zod/address-schema";
 
 import { AddressForm } from "../../_components/address-form";
+import { AddressHeader } from "../../_components/address-header";
 
 const CreateAddress = () => {
   const router = useRouter();
@@ -39,6 +40,7 @@ const CreateAddress = () => {
   };
   return (
     <>
+      <AddressHeader title="Add New Address" />
       <AddressForm methods={methods} onSubmit={onSubmit} />
     </>
   );
