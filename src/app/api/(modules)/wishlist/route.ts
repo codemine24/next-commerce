@@ -39,7 +39,7 @@ export const GET = catchAsync(async (req: NextRequest) => {
   const user = await userAuthenticator(req, [
     UserRole.SUPER_ADMIN,
     UserRole.ADMIN,
-    UserRole.CUSTOMER
+    UserRole.CUSTOMER,
   ]);
 
   // Step 2: Extract search parameters from the request URL
@@ -66,7 +66,7 @@ export const DELETE = catchAsync(async (req: NextRequest) => {
   const user = await userAuthenticator(req, [
     UserRole.SUPER_ADMIN,
     UserRole.ADMIN,
-    UserRole.CUSTOMER
+    UserRole.CUSTOMER,
   ]);
 
   // Step 2: Parse request body

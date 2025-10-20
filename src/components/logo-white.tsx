@@ -4,7 +4,7 @@ export const LogoWhite = () => {
   return (
     <Stack spacing={1} direction={"row"} alignItems={"center"}>
       <Typography variant="h5" fontWeight={600}>
-        Next
+        Zero
       </Typography>
       <Typography variant="h5" fontWeight={300}>
         Commerce

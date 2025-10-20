@@ -52,6 +52,9 @@ const WishlistTableRow = ({item}: {item: Wishlist}) => {
               <TableCell>
                 <Typography>{currencyFormatter(item.product.price)}</Typography>
               </TableCell>
+              <TableCell>
+                <Typography>{currencyFormatter(item.product.price)}</Typography>
+              </TableCell>
 
               <TableCell align="center">
                 <Stack direction="row" justifyContent="center" spacing={2}>
