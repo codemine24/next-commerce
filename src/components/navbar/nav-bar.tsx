@@ -10,7 +10,7 @@ import { SearchBox } from "./search-box";
 import { UserButton } from "./user-button";
 import { WishlistButton } from "./wishlist-button";
 
-export const Navbar = () => {
+export const Navbar = () => {  
   return (
     <AppBar
       position="sticky"
