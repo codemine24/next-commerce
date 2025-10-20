@@ -15,13 +15,6 @@ import { API_ROUTES } from "@/lib/api-routes";
 
 import { AddressActionPopover } from "./address-action-popover";
 
-// interface IUserAddressTableProps {
-//   setSelectedAddress: (value: {
-//     mode: "create" | "edit" | null;
-//     data: Address | null;
-//   }) => void;
-// }
-
 export const UserAddressTable = ({}) => {
   const { data, isLoading, success, message, revalidate } = useFetch(
     API_ROUTES.address.get_addresses
@@ -90,10 +83,7 @@ export const UserAddressTable = ({}) => {
                   py: 1,
                 }}
               >
-                <AddressActionPopover
-                  address={item}
-                  
-                />
+                <AddressActionPopover address={item} />
               </TableCell>
             </TableRow>
           ))}
