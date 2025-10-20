@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Button, TextField } from "@mui/material";
 import { useForm } from "react-hook-form";
 
+import { createQuestion } from "@/actions/qna";
 import { questionSchema, QuestionFormData } from "@/zod/question-schema";
 
 
@@ -14,14 +15,20 @@ export const AskQuestion = () => {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm<QuestionFormData>({
     resolver: zodResolver(questionSchema),
   });
 
-  const onSubmit = (data: QuestionFormData) => {
+  const onSubmit = async (data: QuestionFormData) => {
     console.log("Form submitted:", data);
-    reset();
+    const response = await createQuestion({
+      question: data.question,
+      product_id: "",
+    });
+    console.log(response, "Response");
+    
+
+    // reset();
   };
 
   const textFieldStyle = {
