@@ -26,7 +26,6 @@ export const QuestionCard = ({
   authUserId,
 }: QuestionCardProps) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [isPending, startTransition] = useTransition();
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const createdAt = dayjs(question.created_at).format("YYYY-MM-DD");
@@ -42,11 +41,6 @@ export const QuestionCard = ({
       question: question,
     },
   });
-  // const editQuestion = inquirer_id === inquirer.id;
-
-  // console.log("authUser", inquirer_id);
-  // console.log("inquirer_id", product_id);
-  // console.log(question, "question");
 
   const isEditor = authUserId === question.inquirer.id;
 
@@ -55,11 +49,9 @@ export const QuestionCard = ({
     reset({ question: question.question });
   };
 
-  const handleDelete = async () => {
-    
+  const handleDelete = async () => {    
     startTransition(async () => {
       const response = await deleteQnas({ ids: [question.id] });
-
       if (response.success) {
         toast.success(response.message);
         setIsEditing(false);
@@ -74,12 +66,9 @@ export const QuestionCard = ({
     reset({ question: question.question });
   };
 
-  const onSubmit = async (data: QuestionFormData) => {
-    console.log("Edit data", data);
-    setIsLoading(true);
+  const onSubmit = async (data: QuestionFormData) => {    
     startTransition(async () => {
-      const response = await editQuestion(question.id, data);
-      setIsLoading(false);
+      const response = await editQuestion(question.id, data);      
       if (response.success) {
         toast.success(response.message);
         setIsEditing(false);
@@ -117,13 +106,13 @@ export const QuestionCard = ({
                 error={!!errors.question}
                 helperText={errors.question?.message}
                 sx={textFieldStyle}
-                disabled={isLoading}
+                disabled={isPending}
               />
               <Stack direction="row" spacing={1} sx={{ mt: 1 }}>
                 <SubmitButton
                   label="Update"
-                  isLoading={isLoading}
-                  disabled={isLoading}
+                  isLoading={isPending}
+                  disabled={isPending}
                 />
                 <Button
                   type="button"
@@ -163,7 +152,6 @@ export const QuestionCard = ({
                 {isEditor && (
                   <IconButton
                     size="small"
-                    // onClick={handleDelete}
                     onClick={() => setOpenDeleteModal(true)}
                     aria-label="Edit question"
                   >

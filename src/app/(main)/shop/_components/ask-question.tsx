@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Box, Button, TextField } from "@mui/material";
+import { Box, TextField } from "@mui/material";
 import { usePathname, useRouter } from "next/navigation";
 import { useTransition } from "react";
 import { useForm } from "react-hook-form";
@@ -121,20 +121,6 @@ export const AskQuestion = () => {
             fontWeight: 400,
           }}
         />
-
-        <Button
-          type="submit"
-          variant="contained"
-          color="primary"
-          sx={{
-            width: "225px",
-            height: "48px",
-            fontSize: "16px",
-            fontWeight: 400,
-          }}
-        >
-          Submit
-        </Button>
       </Box>
     </>
   );
