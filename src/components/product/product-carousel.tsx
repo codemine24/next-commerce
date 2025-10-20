@@ -89,7 +89,7 @@ export const ProductCarousel = ({
           sx={{
             overflow: "hidden",
             height: 350,
-            width: 100,
+            width: 70,
           }}
         >
           <Box
@@ -189,8 +189,8 @@ const ThumbImage = forwardRef<HTMLDivElement, ThumbImagePropType>(
         sx={{
           flex:
             direction === "vertical"
-              ? "0 0 80px"
-              : { xs: "0 0 22%", sm: "0 0 25%" },
+              ? "0 0 70px"
+              : { xs: "0 0 22%", sm: "0 0 18%" },
           minWidth: 0,
           padding: direction === "vertical" ? "0 0 0.8rem 0" : "0 0.8rem 0 0",
         }}
@@ -208,10 +208,10 @@ const ThumbImage = forwardRef<HTMLDivElement, ThumbImagePropType>(
             borderColor: selected ? "primary.main" : "#E6F2EE",
             padding: 0,
             margin: 0,
-            height: direction === "vertical" ? 70 : { xs: 70, sm: 135 },
-            width: direction === "vertical" ? 80 : "100%",
+            height: direction === "vertical" ? 70 : { xs: 70, sm: 100 },
+            width: direction === "vertical" ? 70 : 100,
             borderRadius: 0,
-            pl: 2,
+            // pl: 2,
           }}
         >
           <Image

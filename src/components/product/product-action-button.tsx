@@ -8,9 +8,9 @@ import { useState } from "react";
 
 import { ProductQuantityButton } from "@/components/product-quantity-button";
 import { useCart } from "@/hooks/use-cart";
-import { CartIcon } from "@/icons/cart-icon";
-import { HeartEmptyIcon } from "@/icons/heart-empty";
 import { Product } from "@/interfaces/product";
+
+import WishlistButton from "./wishlist-button";
 
 interface ProductActionButtonProps {
   product: Product;
@@ -19,6 +19,10 @@ interface ProductActionButtonProps {
 export const ProductActionButton = ({ product }: ProductActionButtonProps) => {
   const [qty, setQty] = useState(1);
   const { addToCart } = useCart();
+
+  console.log(product.id);
+  
+ 
 
   const handleAddToCart = () => {
     addToCart(
@@ -34,7 +38,7 @@ export const ProductActionButton = ({ product }: ProductActionButtonProps) => {
   };
 
   return (
-    <Box mt={5.9}>
+    <Box>
       <Typography fontSize={16} fontWeight={400} mb={1}>
         Quantity
       </Typography>
@@ -45,20 +49,13 @@ export const ProductActionButton = ({ product }: ProductActionButtonProps) => {
       />
       <Stack direction="row" spacing={1} alignItems="center" mt={5.9}>
         <Button
-          startIcon={<CartIcon />}
           variant="contained"
           onClick={handleAddToCart}
           sx={{ height: 48, flexGrow: 1 }}
         >
-          Add to cart
+          Buy Now
         </Button>
-        <Button
-          startIcon={<HeartEmptyIcon />}
-          variant="contained"
-          sx={{ height: 48, flexGrow: 1, bgcolor: "common.black" }}
-        >
-          Add to Wishlist
-        </Button>
+        <WishlistButton product={product} />
       </Stack>
     </Box>
   );
