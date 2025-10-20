@@ -83,7 +83,7 @@ export const UserAddressTable = ({}) => {
                   py: 1,
                 }}
               >
-                <AddressActionPopover address={item} />
+                <AddressActionPopover address={item} onDeleted={revalidate} />
               </TableCell>
             </TableRow>
           ))}
