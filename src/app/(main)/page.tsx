@@ -1,3 +1,5 @@
+import { Suspense } from "react";
+
 import { BoxContainer } from "@/components/box-container";
 
 import { Banner } from "./_components/banner";
@@ -19,7 +21,9 @@ export default function Home() {
       <Banner />
       <NewArrivals />
       <CustomerReviewSection />
-      <NewsLetter />
+      <Suspense fallback={<div>Loading...</div>}>
+        <NewsLetter />
+      </Suspense>
       <RecentBlogs />
       <Services />
       {/* <Footer /> */}

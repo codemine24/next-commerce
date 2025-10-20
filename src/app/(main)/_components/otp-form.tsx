@@ -1,17 +1,27 @@
-import { Alert, Button } from "@mui/material";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import { useEffect, useRef, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { useRef, useState, useTransition } from "react";
 
-import { CheckCircle } from "@/icons/check-circle";
-import { ErrorIcon } from "@/icons/error";
+import { verifyOtpForNewsletter } from "@/actions/newsletter";
+import { SubmitButton } from "@/components/submit-button";
+import { toast } from "@/lib/toast-store";
+
+interface OTPFormProps {
+  setIsEmailSubmitted: (value: "email" | "otp") => void;
+  resetEmailForm: () => void;
+}
 
 const length = 6;
 
-export const OTPForm = () => {
+export const OTPForm = ({
+  setIsEmailSubmitted,
+  resetEmailForm,
+}: OTPFormProps) => {
   const [otp, setOtp] = useState<string[]>(new Array(length).fill(""));
-  const [isComplete, setIsComplete] = useState(false);
   const [error, setError] = useState("");
+  const searchParams = useSearchParams();
+  const [isLoading, startTransition] = useTransition();
 
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
@@ -57,9 +67,33 @@ export const OTPForm = () => {
     }
   };
 
-  useEffect(() => {
-    setIsComplete(otp.every((digit) => digit !== ""));
-  }, [otp]);
+  const onSubmitOtp = async () => {
+    console.log("otp submitted");
+    console.log(otp, otp.join(""));
+    const otpNumber = Number(otp.join(""));
+    console.log(otpNumber);
+    console.log(searchParams.get("email"));
+    const email = searchParams.get("email");
+    if (!email) {
+      setError("Missing email. Please restart verification.");
+      return;
+    }
+    if (!otpNumber) {
+      setError("Missing OTP. Please restart verification.");
+      return;
+    }
+    startTransition(async () => {
+      const res = await verifyOtpForNewsletter(email, otpNumber);
+      console.log(res, "res");
+      if (res.success) {
+        toast.success("OTP verified successfully");
+        setIsEmailSubmitted("email");
+        resetEmailForm();
+      } else {
+        toast.error(res.message);
+      }
+    });
+  };
 
   return (
     <>
@@ -88,21 +122,21 @@ export const OTPForm = () => {
               sx={{
                 "& input": {
                   fontSize: { xs: "1rem", md: "1.5rem" },
-                  padding: { xs: 0.8, md: 1, lg: 2 },
+                  padding: { xs: 0.8 },
+                  color: "#ffffff",
                 },
                 "& .MuiOutlinedInput-root": {
-                  "&:hover": {
-                    border: "none",
+                  "&:hover fieldset": {
+                    borderColor: data ? "#4caf50" : "#acacac", // 👈 same as normal (no hover effect)
                   },
                   "& fieldset": {
-                    borderColor: data ? "#4caf50" : "red",
+                    borderColor: data ? "#4caf50" : "#acacac",
                     borderWidth: data ? "2px" : "1px",
                   },
                 },
                 "& .MuiInputBase-root": {
                   width: { xs: 35, md: 45, lg: 40 },
                   height: { xs: 35, md: 45, lg: 50 },
-
                 },
               }}
               autoComplete="one-time-code"
@@ -110,17 +144,13 @@ export const OTPForm = () => {
             />
           ))}
         </Box>
-        {isComplete && (
-          <Alert severity="success" icon={<CheckCircle />}>
-            OTP entered successfully!
-          </Alert>
-        )}
-        {error && (
-          <Alert severity="error" icon={<ErrorIcon />}>
-            {error}
-          </Alert>
-        )}
-        <Button variant="contained">Verify</Button>
+        <SubmitButton
+          onClick={onSubmitOtp}
+          label="Verify"
+          isLoading={isLoading}
+          disabled={isLoading}
+          sx={{ "&:disabled": { color: "#fff" } }}
+        />
       </Box>
     </>
   );

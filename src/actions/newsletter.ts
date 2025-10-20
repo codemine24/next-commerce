@@ -12,5 +12,15 @@ export const createOtpForNewsletter = async (email: string) => {
   return res;
 };
 
+export const verifyOtpForNewsletter = async (email: string, otp: number) => {
+  console.log(email, otp, "email.....");
+  const res = await api.post(API_ROUTES.newsletter.subscribe, {
+    body: JSON.stringify({ email, otp }),
+  });
+
+  return res;
+};
+
+
 
 
