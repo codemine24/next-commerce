@@ -21,10 +21,7 @@ export type QuestionCardProps = {
   authUserId?: string;
 };
 
-export const QuestionCard = ({
-  question,
-  authUserId,
-}: QuestionCardProps) => {
+export const QuestionCard = ({ question, authUserId }: QuestionCardProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const [isPending, startTransition] = useTransition();
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
@@ -42,6 +39,8 @@ export const QuestionCard = ({
     },
   });
 
+  console.log("UserQuestion", question);
+
   const isEditor = authUserId === question.inquirer.id;
 
   const handleEdit = () => {
@@ -49,7 +48,7 @@ export const QuestionCard = ({
     reset({ question: question.question });
   };
 
-  const handleDelete = async () => {    
+  const handleDelete = async () => {
     startTransition(async () => {
       const response = await deleteQnas({ ids: [question.id] });
       if (response.success) {
@@ -66,9 +65,9 @@ export const QuestionCard = ({
     reset({ question: question.question });
   };
 
-  const onSubmit = async (data: QuestionFormData) => {    
+  const onSubmit = async (data: QuestionFormData) => {
     startTransition(async () => {
-      const response = await editQuestion(question.id, data);      
+      const response = await editQuestion(question.id, data);
       if (response.success) {
         toast.success(response.message);
         setIsEditing(false);
