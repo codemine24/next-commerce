@@ -43,6 +43,7 @@
     "react-quilljs": "^2.0.5",
     "sharp": "^0.34.4",
     "sslcommerz-lts": "^1.2.0",
+    "stripe": "^19.1.0",
     "zod": "^4.0.17"
   },
   "devDependencies": {
@@ -54,6 +55,7 @@
     "@types/nodemailer": "^7.0.2",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/stripe": "^8.0.416",
     "eslint": "^9",
     "eslint-config-next": "15.5.0",
     "eslint-import-resolver-typescript": "^4.4.4",

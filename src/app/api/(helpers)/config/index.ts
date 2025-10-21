@@ -14,4 +14,5 @@ export const CONFIG = {
   app_name: process.env.APP_NAME,
   app_email_address: process.env.APP_EMAIL_ADDRESS,
   email_app_pass: process.env.EMAIL_APP_PASS,
+  stripe_secret_key: process.env.STRIPE_SECRET_KEY,
 };
