@@ -15,9 +15,7 @@ export const createQuestion = async (data: QuestionPayload) => {
   const response = await api.post(API_ROUTES.qna.create_question, {
     body: JSON.stringify(data),
   });
-
   if (response.success) revalidateTag(TAGS.qnas);
-
   return response;
 };
 
@@ -38,9 +36,7 @@ export const editQuestion = async (
   const response = await api.patch(API_ROUTES.qna.edit_question(id), {
     body: JSON.stringify(payload),
   });
-
   if (response.success) revalidateTag(TAGS.qnas);
-
   console.log("editQuestion", response);
   return response;
 };
@@ -49,21 +45,20 @@ export const deleteQnas = async ({ ids }: { ids: string[] }) => {
   const response = await api.delete(API_ROUTES.qna.delete_qnas, {
     body: JSON.stringify({ ids }),
   });
-
   if (response.success) revalidateTag(TAGS.qnas);
   return response;
 };
 
+
 export const getQnAs = async (query: Record<string, any>) => {
   const queryString = new URLSearchParams({
     ...query,
-    inquirer_id: query.inquirer_id,
+    inquirer_id: "",
   }).toString();
 
   const response = await api.get(`${API_ROUTES.qna.get_qnas}?${queryString}`, {
     next: { tags: [TAGS.qnas] },
   });
-
   return response;
 };
 
@@ -71,6 +66,5 @@ export const getAllQnas = async () => {
   const response = await api.get(API_ROUTES.qna.get_qnas, {
     next: { tags: [TAGS.qnas] },
   });
-
   return response;
 };

@@ -16,7 +16,7 @@ interface ProductInfoProps {
 
 export const ProductInfo = ({ product }: ProductInfoProps) => {
   return (
-    <Box>
+    <Box display="flex" flexDirection="column" gap={{xs: 2, sm: 5}}>
       <Typography
         variant="h3"
         sx={{ "&:hover": { textDecoration: "underline" } }}
@@ -25,7 +25,7 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
       </Typography>
 
       {/* Rating & Stock */}
-      <Box display="flex" alignItems="center" gap={2} mt={2.8}>
+      <Box display="flex" alignItems="center" gap={2}>
         <Box display="flex" alignItems="center" color="#A4B2AE">
           {Array(5)
             .fill(0)
