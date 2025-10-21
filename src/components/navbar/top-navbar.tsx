@@ -51,7 +51,7 @@ export const TopNavbar = () => {
 
                         <Box display="flex" alignItems="center" gap={1}>
                             <PhoneIcon sx={{ color: "primary.contrastText", fontSize: 18 }} />
-                            <Typography variant="body2" color="primary.contrastText">+880 1123 456 780</Typography>
+                            <Typography variant="body2" color="primary.contrastText">+1 (555) 123-4567</Typography>
                         </Box>
                     </Box>
                 </Box>

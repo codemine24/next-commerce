@@ -1,35 +1,24 @@
-"use client";
-
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
+import { Box, Button, Popover } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
-import Popover from "@mui/material/Popover";
-import { useRouter } from "next/navigation";
-import { useState, useTransition } from "react";
+import React, { useState, useTransition } from "react";
 
-import { deleteAddress } from "@/actions/address";
+import { deleteQnas } from "@/actions/qna";
 import { ConfirmDialog } from "@/components/dialog/confirm-dialog";
 import { DeleteIcon } from "@/icons/delete-icon";
 import { DotVerticalIcon } from "@/icons/dot-vertical";
-import { EditIcon } from "@/icons/edit";
-import { Address } from "@/interfaces/address";
+import { Qna } from "@/interfaces/qna";
 import { toast } from "@/lib/toast-store";
 
-// import { CategoryEditDialog } from "./category-edit-dialog";
+import AnswerFormPopover from "./answer-form-popover";
 
-interface AddressActionPopoverProps {
-  address: Address;
-  onDeleted?: () => void;
+interface QnaActionPopoverProps {
+  qna: Qna;
 }
 
-export const AddressActionPopover = ({
-  address,
-  onDeleted
-}: AddressActionPopoverProps) => {
-  const router = useRouter();
-  const [loading, startTransition] = useTransition();
-  const [openConfirmModal, setOpenConfirmModal] = useState<boolean>(false);
+const QnaActionPopover = ({ qna }: QnaActionPopoverProps) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [openConfirmModal, setOpenConfirmModal] = useState(false);
+  const [isPending, startTransition] = useTransition();
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -38,22 +27,24 @@ export const AddressActionPopover = ({
   const handleClose = () => {
     setAnchorEl(null);
     setOpenConfirmModal(false);
+    // setOpenEditModal(false);
   };
 
-  const handleDelete = async () => {
+ 
+
+  const handleDeleteQna = () => {
     startTransition(async () => {
-      const res = await deleteAddress([address.id]);
+      const res = await deleteQnas({ ids : [qna.id] });
       if (res.success) {
         toast.success(res.message);
-        handleClose();
-        onDeleted?.();
       } else {
         toast.error(res.message);
       }
     });
   };
 
-  return (
+  return ( 
+
     <>
       <IconButton onClick={handleClick}>
         <DotVerticalIcon />
@@ -73,19 +64,8 @@ export const AddressActionPopover = ({
         }}
       >
         <Box width={200} display="flex" flexDirection="column" p={0.5}>
-          <Button
-            startIcon={<EditIcon />}
-            variant="text"
-            color="inherit"
-            onClick={() => router.push(`/user/address/${address.id}`)}
-            sx={{
-              pl: 2,
-              textTransform: "none",
-              justifyContent: "flex-start",
-            }}
-          >
-            Edit
-          </Button>
+         
+          <AnswerFormPopover qna={qna} />
 
           {/* Delete Button */}
           <Button
@@ -108,12 +88,14 @@ export const AddressActionPopover = ({
         <ConfirmDialog
           open={openConfirmModal}
           onClose={handleClose}
-          title="Delete Address"
-          description="Are you sure you want to delete this address?"
-          onConfirm={handleDelete}
-          loading={loading}
+          title="Delete Category"
+          description="Are you sure you want to delete this category?"
+          onConfirm={handleDeleteQna}
+          loading={isPending}
         />
       )}
     </>
   );
 };
+
+export default QnaActionPopover;
