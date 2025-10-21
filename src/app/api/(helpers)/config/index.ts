@@ -11,4 +11,10 @@ export const CONFIG = {
   general_bucket: process.env.GENERAL_BUCKET,
   direct_db_url: process.env.DIRECT_DB_URL,
   tax: Number(process.env.TAX) || 5,
+  app_name: process.env.APP_NAME,
+  app_email_address: process.env.APP_EMAIL_ADDRESS,
+  email_app_pass: process.env.EMAIL_APP_PASS,
+  stripe_secret_key: process.env.STRIPE_SECRET_KEY,
+  stripe_publishable_key: process.env.STRIPE_PUBLISHABLE_KEY,
+  currency: "usd",
 };

@@ -10,9 +10,9 @@ import { VisibilityOffIcon } from "@/icons/visibility-off";
 
 import { InputLabel } from "./input-label";
 
-type Props = TextFieldProps & { name: string, label: string, placeholder?: string, required?: boolean };
+type Props = TextFieldProps & { name: string, label?: string, placeholder?: string, required?: boolean,hideLabel?: boolean };
 
-export const TextField = ({ name, helperText, type = "text", label, placeholder, required, ...other }: Props) => {
+export const TextField = ({ name, helperText, type = "text", label, placeholder, required, hideLabel=false, ...other }: Props) => {
     const { control } = useFormContext();
     const [inputType, setInputType] = useState(type);
 
@@ -22,7 +22,7 @@ export const TextField = ({ name, helperText, type = "text", label, placeholder,
 
     return (
         <Box flex={1} width="100%">
-            <InputLabel required={required} label={label} />
+            {!hideLabel && <InputLabel required={required} label={label || ""} />}
             <Controller
                 name={name}
                 control={control}
@@ -32,7 +32,7 @@ export const TextField = ({ name, helperText, type = "text", label, placeholder,
                         type={inputType}
                         fullWidth
                         size="small"
-                        placeholder={placeholder || label}
+                        placeholder={placeholder || label || ""}
                         value={field.value ?? ""}
                         onChange={(event) => {
                             const value = event.target.value;
@@ -40,7 +40,7 @@ export const TextField = ({ name, helperText, type = "text", label, placeholder,
                             if (type === "number") {
                                 field.onChange(value === "" ? undefined : Number(value));
                             } else {
-                                field.onChange(value === "" ? undefined : value);
+                                field.onChange(value);
                             }
                         }}
                         error={Boolean(error)}

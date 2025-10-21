@@ -67,7 +67,7 @@ export const DELETE = catchAsync(async (req: NextRequest) => {
   // Step 3: Delete attributes from the service layer
   const result = await AttributeServices.deleteAttributes(body);
 
-  // Step 4: Return success response with attributes and metadata
+  // Step 4: Return success response
   return successResponse({
     statusCode: httpStatus.OK,
     message: "Attributes deleted successfully",

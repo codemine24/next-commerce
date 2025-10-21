@@ -17,6 +17,12 @@ export const API_ROUTES = {
     update_attribute: (id: string) => `/attribute/${id}`,
     delete_attribute: "/attribute",
   },
+  banner: {
+    create_banner: "/banner",
+    get_banners: "/banner",
+    update_banner: (id: string) => `/banner/${id}`,
+    delete_banner: "/banner",
+  },
   users: {
     get_users: "/user",
     create_user: "/user",
@@ -74,4 +80,23 @@ export const API_ROUTES = {
     create_order_for_user: "/order",
     create_order_for_guest_user: "/order/guest",
   },
+  wishlist: {
+    get_wishlist: "/wishlist",
+    add_to_wishlist:"/wishlist",
+    remove_from_wishlist: "/wishlist",
+  },
+  newsletter: {
+    create_otp: "/newsletter",
+    subscribe: "/newsletter/subscribe",
+  },
+  qna: {
+    create_question: "/qna",
+    update_qna_by_admin: (id: string) => `/qna/${id}`,
+    edit_question: (id: string) => `/qna/${id}`,
+    delete_qnas: "/qna",
+    get_qnas: "/qna",
+    post_answer: (id: string) => `/qna/${id}/admin`,
+    get_answer: (id: string) => `/qna/${id}/admin`,
+  },
+
 };

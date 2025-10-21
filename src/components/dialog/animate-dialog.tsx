@@ -41,11 +41,13 @@ export const AnimatedDialog = ({
 
     const TransitionComponent = transitions[transition];
 
-    return <Dialog
-        slots={{
-            backdrop: Backdrop,
-            transition: TransitionComponent
-        }}
-        {...props}
-    />
+    return (
+        <Dialog
+            slots={{
+                backdrop: Backdrop,
+                transition: TransitionComponent
+            }}
+            {...props}
+        />
+    );
 };

@@ -47,6 +47,7 @@ export const ProductReviews = async ({ productId }: ProductReviewsProps) => {
   const maxCount = Math.max(...distribution.map((d) => d.count));
 
   const allReviews = await getReviews(productId);
+
   return (
     <Box id="#product-reviews">
       <Box
@@ -173,7 +174,7 @@ export const ProductReviews = async ({ productId }: ProductReviewsProps) => {
 
         {/* Reviews list */}
         <Stack sx={{ mt: 2 }}>
-          {allReviews.data.map((r: Review, index: number) => (
+          {allReviews?.data?.map((r: Review, index: number) => (
             <React.Fragment key={r.id}>
               <Box
                 sx={{
@@ -225,7 +226,7 @@ export const ProductReviews = async ({ productId }: ProductReviewsProps) => {
                 </Stack>
               </Box>
 
-              {index < allReviews.data.length && (
+              {index < allReviews?.data?.length && (
                 <Divider sx={{ my: 2, borderColor: "#E6F2EE" }} />
               )}
             </React.Fragment>

@@ -7,12 +7,6 @@ const categoryBaseSchema = z
         error: "Category title should be a text",
       })
       .min(1, "Category title is required"),
-    code: z
-      .string({
-        error: "Category code should be a text",
-      })
-      .transform((val) => val.toUpperCase())
-      .optional(),
     description: z
       .string({ error: "Category description should be a text" })
       .optional(),

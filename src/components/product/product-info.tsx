@@ -1,5 +1,3 @@
-"use client";
-
 import { alpha, Chip } from "@mui/material";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -11,7 +9,6 @@ import { Product } from "@/interfaces/product";
 import { BORDER_RADIUS } from "@/theme";
 
 import { ProductActionButton } from "./product-action-button";
-import { ProductOptions } from "./product-options";
 
 interface ProductInfoProps {
   product: Product;
@@ -19,7 +16,7 @@ interface ProductInfoProps {
 
 export const ProductInfo = ({ product }: ProductInfoProps) => {
   return (
-    <Box>
+    <Box display="flex" flexDirection="column" gap={{xs: 2, sm: 5}}>
       <Typography
         variant="h3"
         sx={{ "&:hover": { textDecoration: "underline" } }}
@@ -28,7 +25,7 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
       </Typography>
 
       {/* Rating & Stock */}
-      <Box display="flex" alignItems="center" gap={2} mt={2.8}>
+      <Box display="flex" alignItems="center" gap={2}>
         <Box display="flex" alignItems="center" color="#A4B2AE">
           {Array(5)
             .fill(0)
@@ -57,23 +54,7 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
           }}
         />
       </Box>
-
-      <Box mt={5.9}>
-        <ProductPrice product={product} />
-      </Box>
-      <Box
-        mt={5.9}
-        sx={{
-          borderBottom: "1px solid",
-          borderTop: "1px solid",
-          borderColor: "divider",
-          pt: 1,
-          pb: 2,
-        }}
-      >
-        <ProductOptions />
-      </Box>
-
+      <ProductPrice product={product} />
       <ProductActionButton product={product} />
     </Box>
   );
