@@ -15,4 +15,6 @@ export const CONFIG = {
   app_email_address: process.env.APP_EMAIL_ADDRESS,
   email_app_pass: process.env.EMAIL_APP_PASS,
   stripe_secret_key: process.env.STRIPE_SECRET_KEY,
+  stripe_publishable_key: process.env.STRIPE_PUBLISHABLE_KEY,
+  currency: "usd",
 };

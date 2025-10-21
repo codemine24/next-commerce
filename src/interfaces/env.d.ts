@@ -12,6 +12,7 @@ declare namespace NodeJS {
     USER_BUCKET: string;
     GENERAL_BUCKET: string;
     STRIPE_SECRET_KEY: string;
+    STRIPE_PUBLISHABLE_KEY: string;
     APP_NAME: string;
   }
 }
