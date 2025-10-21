@@ -53,7 +53,7 @@ export const deleteQnas = async ({ ids }: { ids: string[] }) => {
 export const getQnAs = async (query: Record<string, any>) => {
   const queryString = new URLSearchParams({
     ...query,
-    inquirer_id: "",
+    inquirer_id: query.inquirer_id || "",
   }).toString();
 
   const response = await api.get(`${API_ROUTES.qna.get_qnas}?${queryString}`, {
@@ -68,3 +68,17 @@ export const getAllQnas = async () => {
   });
   return response;
 };
+
+export const createAnswer = async (id: string, payload: Record<string, any>) => {
+  const response = await api.patch(API_ROUTES.qna.post_answer(id), {
+    body: JSON.stringify(payload),
+  });
+  if (response.success) revalidateTag(TAGS.qnas);
+  return response;
+};
+
+export const getAnswer = async (id: string) => {
+  const response = await api.get(API_ROUTES.qna.get_answer(id));
+  return response;
+};
+

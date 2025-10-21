@@ -13,6 +13,10 @@ import { DeleteIcon } from "@/icons/delete-icon";
 import { Qna } from "@/interfaces/qna";
 import { toast } from "@/lib/toast-store";
 
+import QnaActionPopover from "../../_components/qna-action-popover";
+
+
+
 interface QnaTableProps {
   questions: Qna[];
 }
@@ -42,12 +46,8 @@ const QnaTable = ({ questions }: QnaTableProps) => {
       } else {
         toast.error(res.message);
       }
-    })
-
-    
-  }
-
-
+    });
+  };
 
   const columns: Column<Qna>[] = [
     {
@@ -55,7 +55,8 @@ const QnaTable = ({ questions }: QnaTableProps) => {
       key: "question",
       render: (row: Qna) => (
         <Box minWidth={200}>
-          <Typography variant="h6">{row.question}</Typography>
+          <Typography variant="h6">Q: {row.question}</Typography>
+          <Typography variant="body2">A: {row.answer}</Typography>
         </Box>
       ),
     },
@@ -63,6 +64,10 @@ const QnaTable = ({ questions }: QnaTableProps) => {
       label: "Date",
       key: "created_at",
       render: (row: Qna) => dayjs(row.created_at).format("YYYY-MM-DD"),
+    },
+    {
+      label: "Action",
+      render: (row: Qna) => <QnaActionPopover qna={row} />,
     },
   ];
   return (

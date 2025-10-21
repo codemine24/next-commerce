@@ -16,7 +16,7 @@ import { questionSchema, QuestionFormData } from "@/zod/question-schema";
 import { ProductSectionHeader } from "../../[slug]/_components/product-section-header";
 
 export const AskQuestion = () => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated,user } = useAuth();
   const router = useRouter();
   const path = usePathname();
   const [isLoading, startTransition] = useTransition();
@@ -32,15 +32,15 @@ export const AskQuestion = () => {
   console.log(path);
 
   const onSubmit = async (data: QuestionFormData) => {
-    const product = await getProductBySlug(path);
-    console.log("product id", product.data.id);
-    console.log("Form submitted:", data);
+    
+    
     if (!isAuthenticated) {
       toast.error("You must be logged in to ask a question");
       router.push(`/login?redirect=${encodeURIComponent(path)}`);
       return;
     }
     startTransition(async () => {
+      const product = await getProductBySlug(path);
       const response = await createQuestion({
         question: data.question,
         product_id: product.data.id,
@@ -66,7 +66,9 @@ export const AskQuestion = () => {
 
   return (
     <>
-      <ProductSectionHeader title="Ask a question" />
+      {user?.role === "CUSTOMER" && (
+        <Box>
+          <ProductSectionHeader title="Ask a question" />
       <Box
         component="form"
         onSubmit={handleSubmit(onSubmit)}
@@ -122,6 +124,8 @@ export const AskQuestion = () => {
           }}
         />
       </Box>
+        </Box>
+      )}
     </>
   );
 };
