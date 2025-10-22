@@ -1,7 +1,8 @@
-import { UserRole } from "@prisma/client";
+import { User, UserRole } from "@prisma/client";
 import httpStatus from "http-status";
 import { NextRequest } from "next/server";
 
+import CustomizedError from "../../(helpers)/error/customized-error";
 import { catchAsync } from "../../(helpers)/shared/catch-async";
 import { successResponse } from "../../(helpers)/shared/response";
 import { commonSchemas } from "../../(helpers)/shared/schema";
@@ -17,6 +18,7 @@ export const POST = catchAsync(async (req: Request) => {
   const user = await userAuthenticator(req, [
     UserRole.SUPER_ADMIN,
     UserRole.ADMIN,
+    UserRole.CUSTOMER,
   ]);
 
   // Step 2: Parse request body
@@ -41,11 +43,41 @@ export const GET = catchAsync(async (req: NextRequest) => {
   // Step 1: Extract search parameters from the request URL
   const searchParams = req.nextUrl.searchParams;
 
+  const token = req.headers.get("Authorization");
+
+  let user: User | null = null;
+
+  if (token) {
+    user = await userAuthenticator(req, [
+      UserRole.SUPER_ADMIN,
+      UserRole.ADMIN,
+      UserRole.CUSTOMER,
+    ]);
+  } else {
+    if (!searchParams.get("product_id")) {
+      throw new CustomizedError(
+        httpStatus.BAD_REQUEST,
+        "Product ID is required in the search params"
+      );
+    }
+  }
+
+  if (
+    user &&
+    user.role === UserRole.CUSTOMER &&
+    !searchParams.get("product_id")
+  ) {
+    throw new CustomizedError(
+      httpStatus.BAD_REQUEST,
+      "Product ID is required in the search params"
+    );
+  }
+
   // Step 2: Convert search parameters into a plain object
   const queryParams = Object.fromEntries(searchParams.entries());
 
   // Step 3: Fetch question and answers from the service layer using query parameters
-  const result = await QnAServices.getQnAs(queryParams);
+  const result = await QnAServices.getQnAs(queryParams, user);
 
   // Step 4: Return success response with question and answers and metadata
   return successResponse({
