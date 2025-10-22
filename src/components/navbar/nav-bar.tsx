@@ -2,7 +2,7 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 
 import { BoxContainer } from "../box-container";
-import { Logo } from "../logo";
+import { LogoBlack } from "../logo-black";
 
 import { CartButton } from "./cart-button";
 import { CategoriesButton } from "./categories-button";
@@ -24,7 +24,7 @@ export const Navbar = () => {
     >
       <BoxContainer sx={{ height: "100%" }}>
         <Box display="flex" alignItems="center">
-          <Logo />
+          <LogoBlack />
           <SearchBox />
           <WishlistButton />
           <CartButton />

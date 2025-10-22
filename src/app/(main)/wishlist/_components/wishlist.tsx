@@ -24,7 +24,7 @@ const Wishlist = () => {
         )}
       </Stack>
 
-      <WishlistTable products={wishlistData as any} />
+      <WishlistTable wishList={wishlistData as any} />
     </Box>
   );
 };

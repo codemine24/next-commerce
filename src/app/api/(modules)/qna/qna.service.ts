@@ -53,7 +53,7 @@ const getQnAs = async (query: Record<string, any>, user: User | null) => {
     andConditions.push({ product_id });
   }
 
-  let approvalCondition: Prisma.QnAWhereInput = { is_approved: true };
+  let approvalCondition: Prisma.QnAWhereInput = { is_approved: false };
 
   if (user && user.role === UserRole.CUSTOMER) {
     approvalCondition = {
@@ -87,6 +87,16 @@ const getQnAs = async (query: Record<string, any>, user: User | null) => {
       skip: skip,
       take: limitNumber,
       orderBy,
+      include: {
+        inquirer: {
+          select: {
+            id: true,
+            first_name: true,
+            last_name: true,
+            email: true,
+          },
+        },
+      },
     }),
     await prisma.qnA.count({ where: whereConditions }),
   ]);
@@ -113,7 +123,7 @@ const updateQnAByAdmin = (id: string, payload: Record<string, any>) => {
 // ---------------------------------- EDIT QUESTION BY CUSTOMER ---------------------------
 const editQuestion = (id: string, payload: Record<string, any>, user: User) => {
   const result = prisma.qnA.update({
-    where: { id: id, is_approved: false, inquirer_id: user.id },
+    where: { id: id, inquirer_id: user.id },
     data: payload,
   });
   return result;

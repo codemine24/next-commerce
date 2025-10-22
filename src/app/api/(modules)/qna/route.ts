@@ -91,7 +91,7 @@ export const GET = catchAsync(async (req: NextRequest) => {
 // ---------------------------------- DELETE QnAs ------------------------------------
 export const DELETE = catchAsync(async (req: NextRequest) => {
   // Step 1: Authenticate user
-  await userAuthenticator(req, [UserRole.SUPER_ADMIN, UserRole.ADMIN]);
+  await userAuthenticator(req, [UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.CUSTOMER]);
 
   // Step 2: Parse request body
   const body = await req.json();

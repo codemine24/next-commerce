@@ -34,12 +34,6 @@ const EditAddress = ({address}: EditAddressProps) => {
     },
   });
 
-  console.log("Address id",  address);
-  
-
-
-  
-
   const onSubmit = async (data: AddressSchema) => {
     const response = await updateAddress(address.id, data);
     if (!response.success) {
