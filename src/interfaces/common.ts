@@ -1,14 +1,16 @@
 export interface UserNavItem {
-    path: string;
-    icon?: React.ReactNode;
-    name: string;
+  path: string;
+  icon?: React.ReactNode;
+  name: string;
 }
 
 export interface ExtendFile extends File {
-    path?: string;
-    preview?: string;
-    lastModifiedDate?: Date;
+  path?: string;
+  preview?: string;
+  lastModifiedDate?: Date;
 }
 
-export type Params = { [key: string]: string | string[] | undefined }
-export type SearchParams = { [key: string]: string | string[] | undefined }
+export type Params = { [key: string]: string | string[] | undefined };
+export type SearchParams = {
+  [key: string]: string | string[] | boolean | number | undefined;
+};

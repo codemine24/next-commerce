@@ -9,7 +9,7 @@ import { ProductCard } from "../shop/_components/product-card";
 import { SectionTitle } from "./section-title";
 
 export const HotDeals = async () => {
-  const products = await getProducts();
+  const products = await getProducts({ is_hot_deal: true });
 
   return (
     <Box component="section" py={5}>
