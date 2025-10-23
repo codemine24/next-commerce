@@ -19,17 +19,16 @@ import { Blog } from "@/interfaces/blog";
 import { BORDER_RADIUS } from "@/theme";
 import { makeImageUrl } from "@/utils/helper";
 
-import { blogData, socialIcons } from "./blog-data";
+import { socialIcons } from "./blog-data";
 import { PopularPostCard } from "./popular-post-card";
 import { SectionTitle } from "./section-title";
 
 type Props = {
   post: Blog;
+  relatedPosts?: Blog[] | null;
 };
 
-const SingleBlog: React.FC<Props> = ({ post }) => {
-  const popularPosts = blogData.slice(1, 6);
-
+const SingleBlog: React.FC<Props> = ({ post, relatedPosts }) => {
   return (
     <BoxContainer sx={{ py: 2 }}>
       <Grid container spacing={4} sx={{ position: "relative" }}>
@@ -110,20 +109,24 @@ const SingleBlog: React.FC<Props> = ({ post }) => {
 
         <Grid size={{ xs: 12, md: 4 }}>
           <Box sx={{ position: "sticky", top: 60 }}>
-            <SectionTitle title="Popular Posts" />
+            <SectionTitle title="Related Posts" />
 
             <Stack
               mt={2}
               direction="column"
               sx={{ borderRadius: BORDER_RADIUS.default, overflow: "hidden" }}
             >
-              {popularPosts.map((post, index) => (
-                <PopularPostCard
-                  key={post.id}
-                  post={post}
-                  isLast={index === 4}
-                />
-              ))}
+              {relatedPosts && relatedPosts?.length > 0 ? (
+                relatedPosts.map((post, index) => (
+                  <PopularPostCard
+                    key={index}
+                    post={post}
+                    isLast={index === relatedPosts.length - 1}
+                  />
+                ))
+              ) : (
+                <div>No related post found</div>
+              )}
             </Stack>
           </Box>
         </Grid>

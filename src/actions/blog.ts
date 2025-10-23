@@ -30,6 +30,13 @@ export const getPostBySlug = async (slug: string) => {
   return res;
 };
 
+export const getRelatedPosts = async (slug: string) => {
+  const res = await api.get(API_ROUTES.blog.get_related_posts(slug), {
+    next: { tags: [TAGS.post] },
+  });
+  return res;
+};
+
 export const addPost = async (data: BlogSchema) => {
   const res = await api.post(API_ROUTES.blog.create_post, {
     body: JSON.stringify(data),
