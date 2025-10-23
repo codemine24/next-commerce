@@ -17,10 +17,7 @@ interface ProductCardProps {
   action?: boolean;
 }
 
-export const ProductCard = async ({
-  product,
-  action = false,
-}: ProductCardProps) => {
+export const ProductCard = async ({ product }: ProductCardProps) => {
   return (
     <Box
       sx={{
@@ -79,7 +76,7 @@ export const ProductCard = async ({
       <ProductPrice product={product} />
 
       <Stack direction="row" justifyContent="center" gap={1} px={2} mt={1}>
-        <BuyNowButton />
+        <BuyNowButton product={product} />
         <ProductQuickViewButton product={product} />
       </Stack>
 
