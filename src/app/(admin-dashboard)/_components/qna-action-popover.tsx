@@ -88,8 +88,8 @@ const QnaActionPopover = ({ qna }: QnaActionPopoverProps) => {
         <ConfirmDialog
           open={openConfirmModal}
           onClose={handleClose}
-          title="Delete Category"
-          description="Are you sure you want to delete this category?"
+          title="Delete Question"
+          description="Are you sure you want to delete this question?"
           onConfirm={handleDeleteQna}
           loading={isPending}
         />

@@ -16,6 +16,7 @@ model AppInfo {
   title           String
   primary_color   String
   secondary_color String?
+  favicon         String?
 
   @@map("app_info")
 }
@@ -72,6 +73,7 @@ model Product {
   is_featured            Boolean  @default(false)
   is_deleted             Boolean  @default(false)
   is_hot_deal            Boolean  @default(false)
+  is_banner_product      Boolean  @default(false)
   created_at             DateTime @default(now())
   updated_at             DateTime @updatedAt
 
@@ -262,6 +264,8 @@ model OrderHistory {
 model Payment {
   id             String         @id @default(uuid())
   order_id       String         @unique
+  name           String?
+  email          String?
   amount         Int
   gateway        PaymentGateway
   status         PaymentStatus  @default(PENDING)
@@ -523,9 +527,25 @@ model Blog {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
-  author User  @relation(fields: [author_id], references: [id])
+  author User @relation(fields: [author_id], references: [id])
 
   @@map("blogs")
+}
+
+model CompanyReview {
+  id          String   @id @default(uuid())
+  name        String
+  email       String?
+  avatar      String?
+  company     String?
+  designation String?
+  comment     String
+  rating      Float    @default(5)
+  platform    Platform @default(OFFLINE)
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+
+  @@map("company_reviews")
 }
 
 enum OrderStatus {
@@ -616,4 +636,14 @@ enum UserStatus {
 enum BannerType {
   BANNER
   SLIDER
+}
+
+enum Platform {
+  OFFLINE
+  FACEBOOK
+  x
+  GOOGLE
+  YOUTUBE
+  INSTAGRAM
+  LINKEDIN
 }

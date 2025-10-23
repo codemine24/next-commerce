@@ -9,22 +9,26 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import dayjs from "dayjs";
 import * as React from "react";
 
 import { BoxContainer } from "@/components/box-container";
 import { AccessTimeIcon } from "@/icons/access-time";
 import { AccountCircleIcon } from "@/icons/account-circle";
+import { Blog } from "@/interfaces/blog";
 import { BORDER_RADIUS } from "@/theme";
+import { makeImageUrl } from "@/utils/helper";
 
-import { blogData, socialIcons } from "./blog-data";
+import { socialIcons } from "./blog-data";
 import { PopularPostCard } from "./popular-post-card";
 import { SectionTitle } from "./section-title";
 
+type Props = {
+  post: Blog;
+  relatedPosts?: Blog[] | null;
+};
 
-const SingleBlogPage: React.FC = () => {
-  const blogPost = blogData[0];
-  const popularPosts = blogData.slice(1, 6);
-
+const SingleBlog: React.FC<Props> = ({ post, relatedPosts }) => {
   return (
     <BoxContainer sx={{ py: 2 }}>
       <Grid container spacing={4} sx={{ position: "relative" }}>
@@ -41,26 +45,28 @@ const SingleBlogPage: React.FC = () => {
                 <CardMedia
                   component="img"
                   height="400"
-                  image={blogPost.image}
-                  alt={blogPost.title}
+                  image={makeImageUrl(post.thumbnail)}
+                  alt={post.title}
                   sx={{ objectFit: "contain", p: 1 }}
                 />
               </Card>
             </Box>
             <Box component="article">
               <Typography variant="h4" component="h2" gutterBottom>
-                {blogPost.title}
+                {post.title}
               </Typography>
 
               <Stack direction="row" spacing={2} alignItems="center" mb={1}>
                 <Chip
                   icon={<AccountCircleIcon />}
-                  label={blogPost.author}
+                  label={
+                    post.author.first_name + " " + (post.author.last_name || "")
+                  }
                   size="small"
                 />
                 <Chip
                   icon={<AccessTimeIcon />}
-                  label={blogPost.date}
+                  label={dayjs(post.created_at).format("MMM DD, YYYY")}
                   size="small"
                 />
               </Stack>
@@ -95,7 +101,7 @@ const SingleBlogPage: React.FC = () => {
                 variant="subtitle1"
                 color="text.secondary"
                 component={"div"}
-                dangerouslySetInnerHTML={{ __html: blogPost.description }}
+                dangerouslySetInnerHTML={{ __html: post.content }}
               />
             </Box>
           </Box>
@@ -103,20 +109,24 @@ const SingleBlogPage: React.FC = () => {
 
         <Grid size={{ xs: 12, md: 4 }}>
           <Box sx={{ position: "sticky", top: 60 }}>
-            <SectionTitle title="Popular Posts" />
+            <SectionTitle title="Related Posts" />
 
             <Stack
               mt={2}
               direction="column"
               sx={{ borderRadius: BORDER_RADIUS.default, overflow: "hidden" }}
             >
-              {popularPosts.map((post, index) => (
-                <PopularPostCard
-                  key={post.id}
-                  post={post}
-                  isLast={index === 4}
-                />
-              ))}
+              {relatedPosts && relatedPosts?.length > 0 ? (
+                relatedPosts.map((post, index) => (
+                  <PopularPostCard
+                    key={index}
+                    post={post}
+                    isLast={index === relatedPosts.length - 1}
+                  />
+                ))
+              ) : (
+                <div>No related post found</div>
+              )}
             </Stack>
           </Box>
         </Grid>
@@ -125,4 +135,4 @@ const SingleBlogPage: React.FC = () => {
   );
 };
 
-export default SingleBlogPage;
+export default SingleBlog;

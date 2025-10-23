@@ -4,6 +4,8 @@ export const TAGS = {
   address: "address",
   products: "products",
   product: "product",
+  posts: "posts",
+  post: "post",
   brands: "brands",
   campaign: "campaign",
   cart: "cart",
@@ -17,4 +19,5 @@ export const TAGS = {
   users: "users",
   wishlist: "wishlist",
   qnas: "qnas",
+  company_review: "company_review",
 };

@@ -13,9 +13,7 @@ import { DeleteIcon } from "@/icons/delete-icon";
 import { Qna } from "@/interfaces/qna";
 import { toast } from "@/lib/toast-store";
 
-import QnaActionPopover from "../../_components/qna-action-popover";
-
-
+import QnaActionPopover from "../../../_components/qna-action-popover";
 
 interface QnaTableProps {
   questions: Qna[];
@@ -55,8 +53,19 @@ const QnaTable = ({ questions }: QnaTableProps) => {
       key: "question",
       render: (row: Qna) => (
         <Box minWidth={200}>
-          <Typography variant="h6">Q: {row.question}</Typography>
-          <Typography variant="body2">A: {row.answer}</Typography>
+          <Typography variant="h6" gutterBottom>
+            Q: {row.question}
+          </Typography>
+          <Typography variant="body1">
+            <Box component="span" fontWeight={600}>
+              A:
+            </Box>{" "}
+            {row.answer
+              ? row.answer.length > 70
+                ? `${row.answer.slice(0, 70)}...`
+                : row.answer
+              : ""}
+          </Typography>
         </Box>
       ),
     },
@@ -91,6 +100,7 @@ const QnaTable = ({ questions }: QnaTableProps) => {
           selectedKeys={selectedRows}
           onToggleRow={handleSelectRow}
           onToggleAll={handleSelectAllClick}
+          sx={{ border: "none", borderTop: 1, borderColor: "divider" }}
         />
       </Box>
 
@@ -99,7 +109,7 @@ const QnaTable = ({ questions }: QnaTableProps) => {
           open={openDeleteModal}
           onClose={() => setOpenDeleteModal(false)}
           title="Delete Questions"
-          description="Are you sure you want to delete this questions?"
+          description="Are you sure you want to delete all questions?"
           onConfirm={handleDeleteQna}
           loading={isPending}
         />

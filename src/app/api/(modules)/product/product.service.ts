@@ -3,6 +3,7 @@ import { Prisma, ProductMetaType } from "@prisma/client";
 import { prisma } from "@/app/api/(helpers)/shared/prisma";
 
 import filterAdder from "../../(helpers)/utils/filter-adder";
+import { parseBoolean } from "../../(helpers)/utils/helper";
 import paginationMaker from "../../(helpers)/utils/pagination-maker";
 import queryValidator from "../../(helpers)/utils/query-validator";
 import { slugGenerator } from "../../(helpers)/utils/slug-generator";
@@ -65,7 +66,15 @@ const addProduct = async (payload: ProductPayload) => {
 
 // ------------------------------------ GET ALL PRODUCTS ---------------------------------
 const getProducts = async (query: Record<string, any>) => {
-  const { page, limit, sort_by, sort_order, search_term, price_range } = query;
+  const {
+    page,
+    limit,
+    sort_by,
+    sort_order,
+    search_term,
+    price_range,
+    is_hot_deal,
+  } = query;
 
   // Validate query parameters (sort_by, sort_order) if provided
   if (sort_by) queryValidator(productQueryValidationConfig, "sort_by", sort_by);
@@ -105,6 +114,14 @@ const getProducts = async (query: Record<string, any>) => {
     if (!isNaN(minPrice)) filterAdder(andConditions, "price", "gte", minPrice);
     if (!isNaN(maxPrice)) filterAdder(andConditions, "price", "lte", maxPrice);
   }
+
+  if (is_hot_deal)
+    filterAdder(
+      andConditions,
+      "is_hot_deal",
+      "equals",
+      parseBoolean(is_hot_deal)
+    );
 
   // Combine all AND conditions for Prisma query
   const whereConditions: Prisma.ProductWhereInput = { AND: andConditions };
