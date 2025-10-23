@@ -26,6 +26,7 @@ export const CustomTab = ({ tabs, value, onChange }: CustomTabProps) => {
           onChange={handleChange}
           aria-label="basic tabs example"
           sx={{
+            mb: "-1px",
             [`& .${tabClasses.selected}`]: {
               color: "#08996B",
               bgcolor: alpha("#08996B", 0.1),
