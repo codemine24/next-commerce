@@ -21,7 +21,7 @@ export const ProductDetailInfo = ({ product }: { product: Product }) => {
         <ProductSpecification specification={product?.specification} />
         <ProductVideo videoUrl="" />
         <ProductReviews productId={product.id} />
-        <ProductQuestions />
+        <ProductQuestions productId={product.id} />
         <AskQuestion />
       </Box>
     </Box>
