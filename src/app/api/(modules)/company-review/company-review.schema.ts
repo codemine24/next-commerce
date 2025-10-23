@@ -4,6 +4,7 @@ import z from "zod";
 const companyReviewSchema = z.object({
   name: z.string({ error: "Name should be a text" }).min(1, "Name is required"),
   email: z.email({ error: "Enter a valid email" }).optional(),
+  avatar: z.string({ error: "Avatar should be a valid image path" }).optional(),
   company: z.string({ error: "Company name should be a text" }).optional(),
   designation: z.string({ error: "Designation should be a text" }).optional(),
   rating: z

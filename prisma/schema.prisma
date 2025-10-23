@@ -536,6 +536,7 @@ model CompanyReview {
   id          String   @id @default(uuid())
   name        String
   email       String?
+  avatar      String?
   company     String?
   designation String?
   comment     String
