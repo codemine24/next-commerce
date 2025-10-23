@@ -104,4 +104,12 @@ export const API_ROUTES = {
     update_company_review: (id: string) => `/company-review/${id}`,
     delete_company_reviews: "/company-review",
   },
+  blog: {
+    get_posts: "/blog",
+    create_post: "/blog",
+    get_post_by_slug: (slug: string) => `/blog/${slug}`,
+    update_post: (slug: string) => `/blog/${slug}`,
+    delete_posts: "/blog",
+    get_related_posts: (slug: string) => `/blog/related-post/${slug}`,
+  },
 };
