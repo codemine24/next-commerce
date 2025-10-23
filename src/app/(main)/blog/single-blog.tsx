@@ -9,20 +9,25 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import dayjs from "dayjs";
 import * as React from "react";
 
 import { BoxContainer } from "@/components/box-container";
 import { AccessTimeIcon } from "@/icons/access-time";
 import { AccountCircleIcon } from "@/icons/account-circle";
+import { Blog } from "@/interfaces/blog";
 import { BORDER_RADIUS } from "@/theme";
+import { makeImageUrl } from "@/utils/helper";
 
 import { blogData, socialIcons } from "./blog-data";
 import { PopularPostCard } from "./popular-post-card";
 import { SectionTitle } from "./section-title";
 
+type Props = {
+  post: Blog;
+};
 
-const SingleBlogPage: React.FC = () => {
-  const blogPost = blogData[0];
+const SingleBlog: React.FC<Props> = ({ post }) => {
   const popularPosts = blogData.slice(1, 6);
 
   return (
@@ -41,26 +46,28 @@ const SingleBlogPage: React.FC = () => {
                 <CardMedia
                   component="img"
                   height="400"
-                  image={blogPost.image}
-                  alt={blogPost.title}
+                  image={makeImageUrl(post.thumbnail)}
+                  alt={post.title}
                   sx={{ objectFit: "contain", p: 1 }}
                 />
               </Card>
             </Box>
             <Box component="article">
               <Typography variant="h4" component="h2" gutterBottom>
-                {blogPost.title}
+                {post.title}
               </Typography>
 
               <Stack direction="row" spacing={2} alignItems="center" mb={1}>
                 <Chip
                   icon={<AccountCircleIcon />}
-                  label={blogPost.author}
+                  label={
+                    post.author.first_name + " " + (post.author.last_name || "")
+                  }
                   size="small"
                 />
                 <Chip
                   icon={<AccessTimeIcon />}
-                  label={blogPost.date}
+                  label={dayjs(post.created_at).format("MMM DD, YYYY")}
                   size="small"
                 />
               </Stack>
@@ -95,7 +102,7 @@ const SingleBlogPage: React.FC = () => {
                 variant="subtitle1"
                 color="text.secondary"
                 component={"div"}
-                dangerouslySetInnerHTML={{ __html: blogPost.description }}
+                dangerouslySetInnerHTML={{ __html: post.content }}
               />
             </Box>
           </Box>
@@ -125,4 +132,4 @@ const SingleBlogPage: React.FC = () => {
   );
 };
 
-export default SingleBlogPage;
+export default SingleBlog;

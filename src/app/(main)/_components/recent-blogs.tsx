@@ -1,6 +1,7 @@
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
+import Link from "next/link";
 
 import { getPosts } from "@/actions/blog";
 import { OptimizeImage } from "@/components/optimize-image";
@@ -29,9 +30,15 @@ export const RecentBlogs = async () => {
                   imageStyle={{ objectFit: "cover" }}
                 />
                 <Box py={2.5} pl={2.5}>
-                  <Typography variant="h5" gutterBottom>
-                    {post.title}
-                  </Typography>
+                  <Link href={`/blog/${post.slug}`}>
+                    <Typography
+                      variant="h5"
+                      gutterBottom
+                      sx={{ "&:hover": { textDecoration: "underline" } }}
+                    >
+                      {post.title}
+                    </Typography>
+                  </Link>
                   <Typography variant="body2" color="text.secondary">
                     By {post.author.first_name} on{" "}
                     {dateFormatter(post.created_at)}
