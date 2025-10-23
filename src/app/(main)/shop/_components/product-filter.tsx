@@ -9,7 +9,7 @@ import Divider from "@mui/material/Divider";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormGroup from "@mui/material/FormGroup";
 import Typography from "@mui/material/Typography";
-import { useRouter, useSearchParams, usePathname } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { useMemo } from "react";
 
 import { ExpandMoreIcon } from "@/icons/expand-more";
@@ -26,7 +26,10 @@ interface SelectedFilters {
   order: string[];
 }
 
-export const ProductFilter = ({ attributes, categories }: ProductFilterProps) => {
+export const ProductFilter = ({
+  attributes,
+  categories,
+}: ProductFilterProps) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -129,12 +132,22 @@ export const ProductFilter = ({ attributes, categories }: ProductFilterProps) =>
       }}
     >
       {/* Categories */}
-      <Accordion defaultExpanded>
+      <Accordion
+        defaultExpanded
+        sx={{
+          bgcolor: "transparent",
+          boxShadow: "none",
+          border: "none",
+          "&:before": { display: "none" },
+        }}
+      >
         <AccordionSummary
           sx={{ p: 0 }}
           expandIcon={<ExpandMoreIcon sx={{ fontSize: 16 }} />}
         >
-          <Typography variant="body1" fontWeight={600}>Categories</Typography>
+          <Typography variant="body1" fontWeight={600}>
+            Categories
+          </Typography>
         </AccordionSummary>
         <AccordionDetails sx={{ p: 0 }}>
           <FormGroup
@@ -158,7 +171,7 @@ export const ProductFilter = ({ attributes, categories }: ProductFilterProps) =>
                   "& .MuiFormControlLabel-label": {
                     fontSize: "14px",
                     textTransform: "capitalize",
-                    mb: .5,
+                    mb: 0.5,
                     color: "text.secondary",
                   },
                 }}
@@ -166,7 +179,7 @@ export const ProductFilter = ({ attributes, categories }: ProductFilterProps) =>
                   <Checkbox
                     size="small"
                     checked={
-                      selectedFilters.values[category.title]?.includes(
+                      selectedFilters.values["category"]?.includes(
                         category.title
                       ) || false
                     }
@@ -193,7 +206,7 @@ export const ProductFilter = ({ attributes, categories }: ProductFilterProps) =>
               sx={{
                 bgcolor: "transparent",
                 boxShadow: "none",
-                border: 'none',
+                border: "none",
                 "&:before": { display: "none" },
               }}
             >
@@ -201,7 +214,9 @@ export const ProductFilter = ({ attributes, categories }: ProductFilterProps) =>
                 sx={{ p: 0 }}
                 expandIcon={<ExpandMoreIcon sx={{ fontSize: 16 }} />}
               >
-                <Typography variant="body1" fontWeight={600}>{attribute.name}</Typography>
+                <Typography variant="body1" fontWeight={600}>
+                  {attribute.name}
+                </Typography>
               </AccordionSummary>
               <AccordionDetails sx={{ p: 0 }}>
                 <FormGroup
@@ -225,7 +240,7 @@ export const ProductFilter = ({ attributes, categories }: ProductFilterProps) =>
                         "& .MuiFormControlLabel-label": {
                           fontSize: "14px",
                           textTransform: "capitalize",
-                          mb: .5,
+                          mb: 0.5,
                           color: "text.secondary",
                         },
                       }}
