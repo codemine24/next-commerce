@@ -74,6 +74,8 @@ const reviews = [
   },
 ];
 
+// Fetch reviews
+
 export const CustomerReviewSection = () => {
   return (
     <Box component="section" py={5}>

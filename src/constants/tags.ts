@@ -17,4 +17,5 @@ export const TAGS = {
   users: "users",
   wishlist: "wishlist",
   qnas: "qnas",
+  company_review: "company_review",
 };

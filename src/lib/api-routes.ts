@@ -82,7 +82,7 @@ export const API_ROUTES = {
   },
   wishlist: {
     get_wishlist: "/wishlist",
-    add_to_wishlist:"/wishlist",
+    add_to_wishlist: "/wishlist",
     remove_from_wishlist: "/wishlist",
   },
   newsletter: {
@@ -98,5 +98,10 @@ export const API_ROUTES = {
     post_answer: (id: string) => `/qna/${id}/admin`,
     get_answer: (id: string) => `/qna/${id}/admin`,
   },
-
+  companyReview: {
+    get_company_reviews: "/company-review",
+    create_company_review: "/company-review",
+    update_company_review: (id: string) => `/company-review/${id}`,
+    delete_company_reviews: "/company-review",
+  },
 };
