@@ -1,25 +1,15 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Box, TextField } from "@mui/material";
-import { usePathname, useRouter } from "next/navigation";
-import { useTransition } from "react";
+import { Box, Button, TextField } from "@mui/material";
 import { useForm } from "react-hook-form";
 
-import { getProductBySlug } from "@/actions/product";
-import { createQuestion } from "@/actions/qna";
-import { SubmitButton } from "@/components/submit-button";
-import { useAuth } from "@/hooks/use-auth";
-import { toast } from "@/lib/toast-store";
 import { questionSchema, QuestionFormData } from "@/zod/question-schema";
+
 
 import { ProductSectionHeader } from "../../[slug]/_components/product-section-header";
 
 export const AskQuestion = () => {
-  const { isAuthenticated,user } = useAuth();
-  const router = useRouter();
-  const path = usePathname();
-  const [isLoading, startTransition] = useTransition();
   const {
     register,
     handleSubmit,
@@ -29,30 +19,9 @@ export const AskQuestion = () => {
     resolver: zodResolver(questionSchema),
   });
 
-  console.log(path);
-
-  const onSubmit = async (data: QuestionFormData) => {
-    
-    
-    if (!isAuthenticated) {
-      toast.error("You must be logged in to ask a question");
-      router.push(`/login?redirect=${encodeURIComponent(path)}`);
-      return;
-    }
-    startTransition(async () => {
-      const product = await getProductBySlug(path);
-      const response = await createQuestion({
-        question: data.question,
-        product_id: product.data.id,
-      });
-      console.log("Response", response);
-      if (response.success) {
-        toast.success(response.message);
-        reset();
-      } else {
-        toast.error(response.message);
-      }
-    });
+  const onSubmit = (data: QuestionFormData) => {
+    console.log("Form submitted:", data);
+    reset();
   };
 
   const textFieldStyle = {
@@ -66,9 +35,7 @@ export const AskQuestion = () => {
 
   return (
     <>
-      {user?.role === "CUSTOMER" && (
-        <Box>
-          <ProductSectionHeader title="Ask a question" />
+      <ProductSectionHeader title="Ask a question" />
       <Box
         component="form"
         onSubmit={handleSubmit(onSubmit)}
@@ -79,7 +46,7 @@ export const AskQuestion = () => {
         }}
       >
         {/* Name */}
-        {/* <TextField
+        <TextField
           placeholder="Your Name"
           fullWidth
           size="small"
@@ -87,10 +54,10 @@ export const AskQuestion = () => {
           error={!!errors.name}
           helperText={errors.name?.message}
           sx={textFieldStyle}
-        /> */}
+        />
 
         {/* Email */}
-        {/* <TextField
+        <TextField
           placeholder="E-mail (optional)"
           fullWidth
           size="small"
@@ -98,7 +65,8 @@ export const AskQuestion = () => {
           error={!!errors.email}
           helperText={errors.email?.message}
           sx={textFieldStyle}
-        /> */}
+        />
+
         {/* Question */}
         <TextField
           placeholder="Write your question here..."
@@ -112,20 +80,20 @@ export const AskQuestion = () => {
           sx={textFieldStyle}
         />
 
-        <SubmitButton
-          label="Submit"
-          isLoading={isLoading}
-          disabled={isLoading}
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
           sx={{
             width: "225px",
             height: "48px",
             fontSize: "16px",
             fontWeight: 400,
           }}
-        />
+        >
+          Submit
+        </Button>
       </Box>
-        </Box>
-      )}
     </>
   );
 };
