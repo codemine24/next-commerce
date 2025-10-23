@@ -87,3 +87,12 @@ export function minutesAgo(dateString: string | Date): number {
 export const OTPGenerator = () => {
   return Math.floor(100000 + Math.random() * 900000);
 };
+
+export const parseBoolean = (
+  value?: string | string[]
+): boolean | undefined => {
+  if (Array.isArray(value)) value = value[0];
+  if (value === "true") return true;
+  if (value === "false") return false;
+  return undefined;
+};

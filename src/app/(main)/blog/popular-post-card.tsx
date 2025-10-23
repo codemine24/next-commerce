@@ -2,20 +2,15 @@ import { Avatar, Button, Stack, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import Link from "next/link";
 
+import { Blog } from "@/interfaces/blog";
+import { makeImageUrl } from "@/utils/helper";
+
 export const PopularPostCard = ({
   isLast,
   post,
 }: {
   isLast: boolean;
-  post: {
-    id: number;
-    title: string;
-    author: string;
-    date: string;
-    image: string;
-    description: string;
-    slug: string;
-  };
+  post: Blog;
 }) => {
   return (
     <Box
@@ -36,7 +31,7 @@ export const PopularPostCard = ({
       <Box sx={{ display: "flex", gap: 2 }}>
         <Avatar
           variant="rounded"
-          src={post.image}
+          src={makeImageUrl(post.thumbnail)}
           sx={{
             width: 80,
             height: 60,
@@ -59,13 +54,13 @@ export const PopularPostCard = ({
 
           <Stack direction="row" spacing={1} alignItems="center">
             <Typography variant="caption" color="text.secondary">
-              {post.author}
+              {post.author.first_name}
             </Typography>
             <Typography variant="caption" color="text.secondary">
               •
             </Typography>
             <Typography variant="caption" color="text.secondary">
-              {post.date}
+              {post.created_at}
             </Typography>
           </Stack>
 
