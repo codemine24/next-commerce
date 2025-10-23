@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@mui/material";
+import React from "react";
 
 import { useCart } from "@/hooks/use-cart";
 import { Product } from "@/interfaces/product";
@@ -20,7 +21,7 @@ const BuyNowButton = ({ product }: { product: Product }) => {
           slug: product.slug,
           price: product.discount_price || product.price,
           thumbnail: product.thumbnail,
-        });
+        })
       }}
     >
       Buy Now

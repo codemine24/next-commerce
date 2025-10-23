@@ -17,7 +17,9 @@ interface ProductCardProps {
   action?: boolean;
 }
 
-export const ProductCard = async ({ product }: ProductCardProps) => {
+export const ProductCard = async ({
+  product,
+}: ProductCardProps) => {
   return (
     <Box
       sx={{
@@ -59,7 +61,7 @@ export const ProductCard = async ({ product }: ProductCardProps) => {
             }
             alt={product.name}
             height={220}
-            // imageStyle={{ objectFit: "contain" }}
+          // imageStyle={{ objectFit: "contain" }}
           />
         </Box>
         <Box mt={2} px={2}>

@@ -1,4 +1,5 @@
-import { Stack, Typography } from "@mui/material";
+import { Stack } from "@mui/material";
+import { Typography } from "@mui/material";
 
 import { Product } from "@/interfaces/product";
 import { currencyFormatter } from "@/utils/currency-formatter";

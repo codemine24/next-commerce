@@ -14,10 +14,8 @@ const Specification = () => {
 
   return (
     <>
-     <Box id="#product-specifications">
-     <ProductSectionHeader title="Specification" />
-     <Box dangerouslySetInnerHTML={{ __html: sanitizedDescription }} />
-     </Box>
+      <ProductSectionHeader title="Specification" />
+      <Box dangerouslySetInnerHTML={{ __html: sanitizedDescription }} />
     </>
   );
 };
