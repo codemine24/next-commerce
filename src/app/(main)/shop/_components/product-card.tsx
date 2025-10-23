@@ -7,7 +7,6 @@ import { OptimizeImage } from "@/components/optimize-image";
 import { Product } from "@/interfaces/product";
 import { makeImageUrl } from "@/utils/helper";
 
-import { AddToCartButton } from "./add-to-cart-button";
 import BuyNowButton from "./buy-now-button";
 import { ProductDiscountLabel } from "./product-discount-label";
 import { ProductPrice } from "./product-price";
@@ -66,10 +65,9 @@ export const ProductCard = async ({
             // imageStyle={{ objectFit: "contain" }}
           />
         </Box>
-        <Box mt={2} px={3}>
+        <Box mt={2} px={2}>
           <Typography
             variant="h5"
-            textAlign={"center"}
             gutterBottom
             sx={{ "&:hover": { textDecoration: "underline" } }}
           >
@@ -77,19 +75,20 @@ export const ProductCard = async ({
           </Typography>
         </Box>
       </Box>
+
       <ProductPrice product={product} />
 
-      <Stack direction="row" justifyContent="center" gap={1} px={3} mt={1}>
+      <Stack direction="row" justifyContent="center" gap={1} px={2} mt={1}>
         <BuyNowButton />
-        {!action && <ProductQuickViewButton product={product} />}
+        <ProductQuickViewButton product={product} />
       </Stack>
 
-      {action && (
+      {/* {action && (
         <Box display="flex" gap={1} mt={2} px={2}>
           <AddToCartButton product={product} />
           <ProductQuickViewButton product={product} />
         </Box>
-      )}
+      )} */}
       <ProductDiscountLabel />
     </Box>
   );
