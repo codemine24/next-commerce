@@ -15,11 +15,13 @@ export default function QnaPage() {
   return (
     <Box>
       <Typography variant="h4">QnA</Typography>
+      <Box border={1} borderColor="divider">
       <Suspense fallback={<TableToolbarSkeleton />}>
         <UserTabs />
         <TableToolbar href="" addButtonText="Add User" />
       </Suspense>
       <QnaContent />
+      </Box>
     </Box>
   );
 }

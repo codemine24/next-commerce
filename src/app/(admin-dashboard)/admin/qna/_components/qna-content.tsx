@@ -3,7 +3,7 @@ import React from "react";
 
 import { getAllQnas } from "@/actions/qna";
 
-import QnaTable from "../qna-table";
+import QnaTable from "./qna-table";
 
 
 

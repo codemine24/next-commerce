@@ -8,6 +8,7 @@ import { DashboardIcon } from "@/icons/dashboard";
 import { MediaIcon } from "@/icons/media";
 import { OrdersIcon } from "@/icons/orders";
 import { ProductsIcon } from "@/icons/products";
+import { QnaIcon } from "@/icons/qna-icon";
 import { ReviewIcon } from "@/icons/review";
 import { SettingsIcon } from "@/icons/settings";
 import { UsersIcon } from "@/icons/users";
@@ -96,7 +97,7 @@ export const ADMIN_NAVIGATION = [
   },
   {
     name: "QnA",
-    // icon: <QnaIcon fontSize="small" />,
+    icon: <QnaIcon fontSize="small" />,
     path: "/admin/qna",
   },
   {

@@ -40,6 +40,9 @@ export const QuestionCard = ({ question, authUserId }: QuestionCardProps) => {
   });
 
   console.log("UserQuestion", question);
+  console.log("question.inquirer.id", question.inquirer.id);
+  console.log("authUserId", authUserId);
+
 
   const isEditor = authUserId === question.inquirer.id;
 
@@ -152,8 +155,9 @@ export const QuestionCard = ({ question, authUserId }: QuestionCardProps) => {
                     size="small"
                     onClick={() => setOpenDeleteModal(true)}
                     aria-label="Edit question"
+                    color="error"
                   >
-                    <DeleteIcon fontSize="small" />
+                    <DeleteIcon fontSize="small"/>
                   </IconButton></>
                   
                 )}                

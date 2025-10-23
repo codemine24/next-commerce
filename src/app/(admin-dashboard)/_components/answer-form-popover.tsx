@@ -26,10 +26,11 @@ const AnswerFormPopover = ({ qna }: AnswerFormPopoverProps) => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<AnswerFormData>({
     resolver: zodResolver(answerSchema),
     defaultValues: {
-      answer: "",
+      answer: qna.answer || "",
     },
   });
 
@@ -39,9 +40,10 @@ const AnswerFormPopover = ({ qna }: AnswerFormPopoverProps) => {
 
   const handleClose = () => {
     setAnchorEl(null);
+    reset();
   };
 
-  console.log("qna", qna.id);
+ 
 
   const onSubmit = async (data: AnswerFormData) => {
     startTransition(async () => {
