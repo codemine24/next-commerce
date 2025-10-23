@@ -8,20 +8,19 @@ import { CollectionCard } from "./_components/collection-box";
 import { CollectionView } from "./_components/collection-view";
 
 const CollectionsPage = async () => {
-  const res = await getCategories();
-  const categories = res.data;
+  const data = await getCategories();
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <BoxContainer sx={{ py: "60px" }}>
         <Box sx={{ mb: 6 }}>
           <Typography variant="h1" sx={{ textAlign: "center" }}>
-            Catalog
+            Collections
           </Typography>
         </Box>
 
         <Grid container spacing={4}>
-          {categories?.map((cat: any) => (
+          {data?.data?.map((cat: any) => (
             <Grid size={{ xs: 12, md: 4 }} key={cat.id}>
               <CollectionCard
                 image="/images/collections/collections.webp"

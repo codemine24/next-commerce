@@ -1,6 +1,6 @@
 "use client";
 
-import { Select, MenuItem } from "@mui/material";
+import { MenuItem, Select } from "@mui/material";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { useSearchParams } from "next/navigation";
@@ -9,7 +9,7 @@ import { useState } from "react";
 import { PRODUCT_SORT } from "@/constants/product";
 import { Meta } from "@/interfaces/api";
 
-export const ProductsCount = ({ meta }: { meta: Meta }) => {
+const ProductsCount = ({ meta }: { meta: Meta }) => {
   const searchParams = useSearchParams();
   const [sort, setSort] = useState(searchParams.get("sort") || "default");
 
@@ -56,3 +56,5 @@ export const ProductsCount = ({ meta }: { meta: Meta }) => {
     </Box>
   );
 };
+
+export default ProductsCount;
