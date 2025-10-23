@@ -34,6 +34,9 @@ const AnswerFormPopover = ({ qna }: AnswerFormPopoverProps) => {
     },
   });
 
+  console.log("Anawar action form");
+  
+
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
