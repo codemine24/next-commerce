@@ -49,7 +49,7 @@ export const ProductReviews = async ({ productId }: ProductReviewsProps) => {
   const allReviews = await getReviews(productId);
 
   return (
-    <Box id="#product-reviews">
+    <Box id="product-reviews">
       <Box
         display="flex"
         alignItems="center"

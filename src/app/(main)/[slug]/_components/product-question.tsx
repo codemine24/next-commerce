@@ -15,8 +15,6 @@ export const ProductQuestions = async ({
 }: {
   productId: string;
 }) => {
-  console.log("productId", productId);
-
   // 2️⃣ Fetch QnAs using product.id
   const profile = await getProfile();
   const authUserId = profile?.data?.id as string | undefined;
@@ -26,14 +24,12 @@ export const ProductQuestions = async ({
     ...(authUserId ? { inquirer_id: authUserId } : {}),
   });
 
-
-
   const questions = response.data;
 
   console.log("Fetched questions:", response.data);
 
   return (
-    <Box id="#product-qna">
+    <Box id="product-qna">
       <Box display="flex" alignItems="center" justifyContent="space-between">
         <ProductSectionHeader title="Customer Questions" />
       </Box>

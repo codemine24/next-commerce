@@ -9,7 +9,7 @@ export const ProductVideo = ({
   videoUrl: string | null | undefined;
 }) => {
   return (
-    <Box id="#product-video" sx={{ p: { xs: 2, sm: 3 } }}>
+    <Box id="product-video" sx={{ p: { xs: 2, sm: 3 } }}>
       <Box
         sx={{
           width: "100%",
