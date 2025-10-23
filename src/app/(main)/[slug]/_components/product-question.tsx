@@ -26,8 +26,6 @@ export const ProductQuestions = async ({
     ...(authUserId ? { inquirer_id: authUserId } : {}),
   });
 
-
-
   const questions = response.data;
 
   console.log("Fetched questions:", response.data);

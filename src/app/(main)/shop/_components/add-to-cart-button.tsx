@@ -6,7 +6,7 @@ import { useCart } from "@/hooks/use-cart";
 import { Product } from "@/interfaces/product";
 
 export const AddToCartButton = ({ product }: { product: Product }) => {
-  const { addToCart  } = useCart();
+  const { addToCart } = useCart();
 
   return (
     <Button

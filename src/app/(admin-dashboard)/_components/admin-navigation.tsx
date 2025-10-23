@@ -104,6 +104,7 @@ export const ADMIN_NAVIGATION = [
     name: "Customization",
     icon: <CustomizationIcon fontSize="small" />,
     children: [
+      { name: "Advertisement", path: "/admin/advertisement" },
       { name: "SEO Settings", path: "/admin/customization/seo" },
       { name: "Email Settings", path: "/admin/customization/email" },
       { name: "Social Settings", path: "/admin/customization/social" },

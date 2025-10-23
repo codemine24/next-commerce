@@ -9,10 +9,11 @@ export const ProductPrice = ({ product }: { product: Product }) => {
     <Stack
       direction="row"
       spacing={1}
+      px={2}
       minHeight={32}
       alignItems="center"
     >
-      <Typography variant="h3" color="primary.main">
+      <Typography variant="h6" color="primary.main">
         {currencyFormatter(product?.price)}
       </Typography>
       {product.discount_price && (
