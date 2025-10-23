@@ -9,6 +9,7 @@ export interface ReviewCardProps {
   id: number;
   name: string;
   email?: string;
+  avatar?: string;
   company?: string;
   designation?: string;
   comment: string;
@@ -20,6 +21,8 @@ export interface ReviewCardProps {
 
 export const ReviewCard = ({
   name,
+  avatar,
+  company,
   designation,
   comment,
   rating,
@@ -27,7 +30,7 @@ export const ReviewCard = ({
   return (
     <Box>
       <OptimizeImage
-        src=""
+        src={avatar}
         alt="Hero Carousel"
         height={100}
         width={100}
@@ -41,6 +44,7 @@ export const ReviewCard = ({
             </Typography>
             <Typography variant="body2" color="text.divider">
               {designation}
+              {company && ` • ${company}`}
             </Typography>
           </Box>
           <Box>
@@ -75,3 +79,15 @@ export const ReviewCard = ({
     </Box>
   );
 };
+
+// {
+//         "name": "Herry Quark",
+//         "email": "herry@gmail.com",
+//         "avatar": "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXZhdGFyfGVufDB8fDB8fHww&fm=jpg&q=60&w=3000",
+//         "company": "Microsoft INC",
+//         "designation": "CTO",
+//         "comment": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam illo sequi eos recusandae mollitia obcaecati dolor velit iure fugiat asperiores.",
+//         "rating": 5,
+//         "platform": "OFFLINE",
+//         "created_at": "2025-10-23T04:27:08.140Z",
+//     }
