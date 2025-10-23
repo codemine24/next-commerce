@@ -5,26 +5,29 @@ import { OptimizeImage } from "@/components/optimize-image";
 import { QuoteLeftIcon } from "@/icons/quote-left";
 import { StarIcon } from "@/icons/star";
 
-interface ReviewCardProps {
+export interface ReviewCardProps {
   id: number;
-  image: string;
   name: string;
-  role: string;
+  email?: string;
+  company?: string;
+  designation?: string;
+  comment: string;
   rating: number;
-  review: string;
+  platform: string;
+  created_at: string;
+  updated_at: string;
 }
 
 export const ReviewCard = ({
-  image,
   name,
-  role,
+  designation,
+  comment,
   rating,
-  review,
 }: ReviewCardProps) => {
   return (
     <Box>
       <OptimizeImage
-        src={image}
+        src=""
         alt="Hero Carousel"
         height={100}
         width={100}
@@ -37,7 +40,7 @@ export const ReviewCard = ({
               {name}
             </Typography>
             <Typography variant="body2" color="text.divider">
-              {role}
+              {designation}
             </Typography>
           </Box>
           <Box>
@@ -66,7 +69,7 @@ export const ReviewCard = ({
         </Box>
 
         <Typography variant="body1" color="text.secondary">
-          {review}
+          {comment}
         </Typography>
       </Box>
     </Box>
