@@ -80,11 +80,34 @@ const getReviewsByProductId = async (
     prisma.review.count({ where: whereConditions }),
   ]);
 
+  const avgRating = await prisma.review.aggregate({
+    where: { product_id: product_id },
+    _avg: { rating: true },
+  });
+
+  const stats = {
+    "5": 0,
+    "4": 0,
+    "3": 0,
+    "2": 0,
+    "1": 0,
+  };
+
+  result.forEach((r) => {
+    if (r.rating >= 4.5 && r.rating <= 5) stats["5"]++;
+    else if (r.rating >= 3.5 && r.rating <= 4.4) stats["4"]++;
+    else if (r.rating >= 2.5 && r.rating <= 3.4) stats["3"]++;
+    else if (r.rating >= 1.5 && r.rating <= 2.4) stats["2"]++;
+    else if (r.rating === 1) stats["1"]++;
+  });
+
   return {
     meta: {
       page: pageNumber,
       limit: limitNumber,
       total,
+      avg: avgRating._avg.rating,
+      stats,
     },
     data: result,
   };

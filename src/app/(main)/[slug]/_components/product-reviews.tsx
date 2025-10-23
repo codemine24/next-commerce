@@ -3,6 +3,7 @@ import Divider from "@mui/material/Divider";
 import Rating from "@mui/material/Rating";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
+import dayjs from "dayjs";
 import React from "react";
 
 import { getReviews } from "@/actions/review";
@@ -30,11 +31,11 @@ type Review = {
 };
 
 const distribution = [
-  { stars: 5, count: 330, color: "#22c55e" },
-  { stars: 4, count: 150, color: "#5b21b6" },
-  { stars: 3, count: 180, color: "#f59e0b" },
-  { stars: 2, count: 12, color: "#fb923c" },
-  { stars: 1, count: 8, color: "#ef4444" },
+  { stars: 5, color: "#22c55e" },
+  { stars: 4, color: "#5b21b6" },
+  { stars: 3, color: "#f59e0b" },
+  { stars: 2, color: "#fb923c" },
+  { stars: 1, color: "#ef4444" },
 ];
 
 interface ProductReviewsProps {
@@ -42,11 +43,11 @@ interface ProductReviewsProps {
 }
 
 export const ProductReviews = async ({ productId }: ProductReviewsProps) => {
-  const avg = 4.5;
-  const total = 688;
-  const maxCount = Math.max(...distribution.map((d) => d.count));
-
   const allReviews = await getReviews(productId);
+
+  const maxCount = Math.max(
+    ...(Object.values((allReviews.meta as any).stats) as number[])
+  );
 
   return (
     <Box id="product-reviews">
@@ -74,19 +75,22 @@ export const ProductReviews = async ({ productId }: ProductReviewsProps) => {
             flexGrow={1}
             sx={{ width: { xs: "100%", md: "55%" } }}
           >
-            <StatCard label="Total Reviews" value={total.toLocaleString()} />
+            <StatCard
+              label="Total Reviews"
+              value={allReviews.meta.total.toLocaleString()}
+            />
             <StatCard
               label="Average Rating"
-              value={avg.toString()}
+              value={(allReviews.meta as any).avg.toString()}
               extra={
                 <Rating
                   name="avg-rating"
-                  value={avg}
+                  value={(allReviews.meta as any).avg}
                   precision={0.5}
                   readOnly
                   size="small"
                   sx={{ color: "#FFCD4E" }}
-                  aria-label={"Average rating " + avg}
+                  aria-label={"Average rating " + (allReviews.meta as any).avg}
                 />
               }
             />
@@ -104,7 +108,10 @@ export const ProductReviews = async ({ productId }: ProductReviewsProps) => {
                 {distribution.map((item) => {
                   const width = Math.max(
                     6,
-                    Math.round((item.count / maxCount) * 100)
+                    Math.round(
+                      ((allReviews.meta as any).stats[item.stars] / maxCount) *
+                        100
+                    )
                   );
                   return (
                     <Stack
@@ -138,7 +145,9 @@ export const ProductReviews = async ({ productId }: ProductReviewsProps) => {
                           overflow: "hidden",
                         }}
                         role="progressbar"
-                        aria-valuenow={item.count}
+                        aria-valuenow={
+                          (allReviews.meta as any).stats[item.stars]
+                        }
                         aria-valuemin={0}
                         aria-valuemax={maxCount}
                         aria-label={`${item.stars} star reviews`}
@@ -162,7 +171,7 @@ export const ProductReviews = async ({ productId }: ProductReviewsProps) => {
                           color: "text.secondary",
                         }}
                       >
-                        {item.count}
+                        {(allReviews.meta as any).stats[item.stars]}
                       </Typography>
                     </Stack>
                   );
@@ -222,7 +231,9 @@ export const ProductReviews = async ({ productId }: ProductReviewsProps) => {
                     By {r.user.first_name}
                   </Typography>
                   <Separator />
-                  <Typography variant="body2">{r.updated_at}</Typography>
+                  <Typography variant="body2">
+                    {dayjs(r.created_at).format("MMM DD, YYYY")}
+                  </Typography>
                 </Stack>
               </Box>
 

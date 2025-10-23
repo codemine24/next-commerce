@@ -26,8 +26,6 @@ export const ProductQuestions = async ({
 
   const questions = response.data;
 
-  console.log("Fetched questions:", response.data);
-
   return (
     <Box id="product-qna">
       <Box display="flex" alignItems="center" justifyContent="space-between">

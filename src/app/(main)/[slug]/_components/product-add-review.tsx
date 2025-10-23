@@ -41,7 +41,7 @@ interface ProductAddReviewProps {
 export const ProductAddReview = ({ productId }: ProductAddReviewProps) => {
   const router = useRouter();
   const path = usePathname();
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user } = useAuth();
   const [open, setOpen] = useState(false);
 
   const {
@@ -86,6 +86,7 @@ export const ProductAddReview = ({ productId }: ProductAddReviewProps) => {
   return (
     <>
       <Button
+        disabled={!!(user && ["SUPER_ADMIN", "ADMIN"].includes(user.role))}
         variant="soft"
         startIcon={<PlusIcon />}
         onClick={handleOpenReviewModal}
