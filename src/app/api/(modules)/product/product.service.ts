@@ -124,12 +124,10 @@ const getProducts = async (query: Record<string, any>) => {
       parseBoolean(is_hot_deal)
     );
 
-  if (category)
-    filterAdder(andConditions, "categories", "in", {
-      slug: {
-        in: category.split(",").map((c: string) => c.trim()),
-      },
-    });
+  // Apply category filter if provided
+  if (category) {
+    filterAdder(andConditions, "categories", "some", { slug: category });
+  }
 
   // Combine all AND conditions for Prisma query
   const whereConditions: Prisma.ProductWhereInput = { AND: andConditions };
@@ -174,6 +172,9 @@ const getProduct = async (slug: string) => {
   const product = await prisma.product.findUniqueOrThrow({
     where: {
       slug,
+    },
+    include: {
+      categories: true,
     },
   });
 

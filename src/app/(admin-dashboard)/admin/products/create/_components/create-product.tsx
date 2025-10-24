@@ -6,19 +6,26 @@ import { useForm } from "react-hook-form";
 
 import { addProduct } from "@/actions/product";
 import { Brand } from "@/interfaces/brand";
+import { Category } from "@/interfaces/category";
 import { toast } from "@/lib/toast-store";
 import { ProductSchema, productSchema } from "@/zod/product-schema";
 
 import { ProductForm } from "../../_components/product-form";
 
-export const CreateProduct = ({ brands }: { brands: Brand[] }) => {
+interface CreateProductProps {
+    brands: Brand[];
+    categories: Category[];
+}
+
+export const CreateProduct = ({ brands, categories }: CreateProductProps) => {
     const router = useRouter();
     const methods = useForm<ProductSchema>({
         resolver: zodResolver(productSchema),
         defaultValues: {
             name: "",
             model: "",
-            brand_id: "",
+            categories: undefined,
+            brand_id: undefined,
             size: "",
             color: "",
             tags: [],
@@ -38,11 +45,7 @@ export const CreateProduct = ({ brands }: { brands: Brand[] }) => {
     });
 
     const onSubmit = async (data: ProductSchema) => {
-        const payload = {
-            ...data,
-            brand_id: data.brand_id || undefined,
-        }
-        const response = await addProduct(payload);
+        const response = await addProduct(data);
 
         if (!response.success) {
             toast.error(response.message);
@@ -54,6 +57,11 @@ export const CreateProduct = ({ brands }: { brands: Brand[] }) => {
     };
 
     return (
-        <ProductForm methods={methods} onSubmit={onSubmit} brands={brands} />
+        <ProductForm
+            methods={methods}
+            onSubmit={onSubmit}
+            brands={brands}
+            categories={categories}
+        />
     );
 };

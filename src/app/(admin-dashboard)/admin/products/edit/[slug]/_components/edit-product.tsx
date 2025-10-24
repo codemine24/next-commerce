@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 
 import { editProduct } from "@/actions/product";
 import { Brand } from "@/interfaces/brand";
+import { Category } from "@/interfaces/category";
 import { Product } from "@/interfaces/product";
 import { toast } from "@/lib/toast-store";
 import { ProductSchema, productSchema } from "@/zod/product-schema";
@@ -14,17 +15,19 @@ import { ProductForm } from "../../../_components/product-form";
 
 interface EditProductProps {
     brands: Brand[];
+    categories: Category[];
     product: Product;
 }
 
-export const EditProduct = ({ brands, product }: EditProductProps) => {
+export const EditProduct = ({ brands, categories, product }: EditProductProps) => {
     const router = useRouter();
     const methods = useForm<ProductSchema>({
         resolver: zodResolver(productSchema),
         defaultValues: {
             name: product.name,
             model: product.model || '',
-            brand_id: product.brand_id || '',
+            categories: product?.categories?.map((category) => ({ label: category.title, value: category.id })) || [],
+            brand_id: product.brand_id || undefined,
             size: product.size || '',
             color: product.color || '',
             tags: product.tags,
@@ -44,11 +47,7 @@ export const EditProduct = ({ brands, product }: EditProductProps) => {
     });
 
     const onSubmit = async (data: ProductSchema) => {
-        const payload = {
-            ...data,
-            brand_id: data.brand_id || undefined,
-        }
-        const response = await editProduct(product.slug, payload);
+        const response = await editProduct(product.slug, data);
 
         if (!response.success) {
             toast.error(response.message);
@@ -60,6 +59,11 @@ export const EditProduct = ({ brands, product }: EditProductProps) => {
     };
 
     return (
-        <ProductForm methods={methods} onSubmit={onSubmit} brands={brands} />
+        <ProductForm
+            methods={methods}
+            onSubmit={onSubmit}
+            brands={brands}
+            categories={categories}
+        />
     );
 };

@@ -1,3 +1,5 @@
+import { Category } from "./category";
+
 export interface Product {
   id: string;
   name: string;
@@ -19,4 +21,5 @@ export interface Product {
   additional_information: string;
   key_features: string[];
   video_url: string | undefined;
+  categories: Category[];
 }

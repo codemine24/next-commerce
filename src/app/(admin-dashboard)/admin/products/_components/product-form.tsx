@@ -17,20 +17,30 @@ import { MultiInputField } from "@/components/form/multi-input-field";
 import { SubmitButton } from "@/components/submit-button";
 import { PRODUCT_SIZE, PRODUCT_TAGS } from "@/constants/product";
 import { Brand as BrandType } from "@/interfaces/brand";
+import { Category } from "@/interfaces/category";
 import { ProductSchema } from "@/zod/product-schema";
 
 interface ProductFormProps {
   methods: UseFormReturn<ProductSchema>;
   onSubmit: (data: ProductSchema) => void;
   brands: BrandType[];
+  categories: Category[];
 }
 
-export const ProductForm = ({ methods, onSubmit, brands }: ProductFormProps) => {
+export const ProductForm = ({ methods, onSubmit, brands, categories }: ProductFormProps) => {
   return (
     <FormProvider methods={methods} onSubmit={methods.handleSubmit(onSubmit)}>
       <Box display="flex" flexDirection="column" gap={4}>
         {/* Product Name */}
         <TextField type="text" name="name" label="Product Name" required />
+
+        {/* Categories */}
+        <Autocomplete
+          multiple
+          name="categories"
+          label="Select Categories"
+          options={categories?.map((category) => ({ label: category.title, value: category.id })) || []}
+        />
 
         {/* Model and Brand */}
         <Box display="flex" gap={2} alignItems="center">
