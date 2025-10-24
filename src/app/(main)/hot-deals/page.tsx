@@ -2,6 +2,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Link from "next/link";
+import { Suspense } from "react";
 
 import { getProducts } from "@/actions/product";
 import { BoxContainer } from "@/components/box-container";
@@ -35,17 +36,19 @@ export default async function HotDeals() {
 
     return (
         <BoxContainer sx={{ pt: 2 }}>
-            <Grid container spacing={2}>
-                {products.data.map((product: Product) => (
-                    <Grid size={{ xs: 6, md: 4 }} key={product.id}>
-                        <ProductCard product={product} action={true} />
-                    </Grid>
-                ))}
-            </Grid>
+            <Suspense fallback={<div>Loading...</div>}>
+                <Grid container spacing={2}>
+                    {products.data.map((product: Product) => (
+                        <Grid size={{ xs: 6, md: 4 }} key={product.id}>
+                            <ProductCard product={product} action={true} />
+                        </Grid>
+                    ))}
+                </Grid>
 
-            <Box p={2}>
-                <Pagination page={products.meta.page} total={products.meta.total} limit={products.meta.limit} />
-            </Box>
+                <Box p={2}>
+                    <Pagination page={products.meta.page} total={products.meta.total} limit={products.meta.limit} />
+                </Box>
+            </Suspense>
         </BoxContainer>
     );
 }

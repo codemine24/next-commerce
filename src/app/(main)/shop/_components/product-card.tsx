@@ -59,7 +59,7 @@ export const ProductCard = async ({
             src={makeImageUrl(product.thumbnail) || "/images/featured_image_1.svg"}
             alt={product.name}
             height={220}
-            imageStyle={{ objectFit: "contain" }}
+          // imageStyle={{ objectFit: "contain" }}
           />
         </Box>
         <Box mt={2} px={2}>

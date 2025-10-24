@@ -12,15 +12,19 @@ export const HotDeals = async () => {
   const products = await getProducts({ is_hot_deal: true });
 
   return (
-    <Box component="section" py={5}>
-      <SectionTitle title="Hot Deals" href="/shop" />
-      <Grid container spacing={2}>
-        {products?.data?.map((product: Product) => (
-          <Grid key={product.id} size={{ xs: 6, md: 4, lg: 3 }}>
-            <ProductCard product={product} />
+    <>
+      {products.data.length > 0 && (
+        <Box component="section" py={5}>
+          <SectionTitle title="Hot Deals" href={products.data.length > 4 ? "/hot-deals" : ""} />
+          <Grid container spacing={2}>
+            {products?.data?.map((product: Product) => (
+              <Grid key={product.id} size={{ xs: 6, md: 4, lg: 3 }}>
+                <ProductCard product={product} />
+              </Grid>
+            ))}
           </Grid>
-        ))}
-      </Grid>
-    </Box>
+        </Box>
+      )}
+    </>
   );
 };

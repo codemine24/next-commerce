@@ -13,7 +13,7 @@ export const NewArrivals = async () => {
 
   return (
     <Box component="section" py={5}>
-      <SectionTitle title="New Arrivals" href="/shop" />
+      <SectionTitle title="New Arrivals" />
       <Grid container spacing={2}>
         {data?.data?.map((product: Product) => (
           <Grid key={product.id} size={{ xs: 6, md: 3 }}>
