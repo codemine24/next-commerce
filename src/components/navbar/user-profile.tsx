@@ -117,10 +117,10 @@ export const UserProfile = () => {
               href={user?.role === "ADMIN" ? "/admin" : "/user"}
               component={Link}
             >
-               <Box component="span" sx={{flexGrow: 1}}> Account</Box>
+              <Box component="span" sx={{ flexGrow: 1 }}>
+                Account
+              </Box>
             </Button>
-
-
 
             <Button
               startIcon={<LogoutIcon />}

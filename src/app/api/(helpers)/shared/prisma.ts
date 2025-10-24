@@ -8,7 +8,10 @@ export const prisma =
     log: ["query", "error", "warn"],
     datasources: {
       db: {
-        url: process.env.NODE_ENV === "production" ? process.env.DATABASE_URL : process.env.DIRECT_URL,
+        url:
+          process.env.NODE_ENV === "development"
+            ? process.env.DATABASE_URL
+            : process.env.DIRECT_URL,
       },
     },
   });

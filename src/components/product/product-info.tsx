@@ -16,13 +16,8 @@ interface ProductInfoProps {
 
 export const ProductInfo = ({ product }: ProductInfoProps) => {
   return (
-    <Box display="flex" flexDirection="column" gap={{xs: 2, sm: 5}}>
-      <Typography
-        variant="h3"
-        sx={{ "&:hover": { textDecoration: "underline" } }}
-      >
-        {product?.name}
-      </Typography>
+    <Box display="flex" flexDirection="column" gap={{ xs: 2, sm: 5 }}>
+      <Typography variant="h3">{product?.name}</Typography>
 
       {/* Rating & Stock */}
       <Box display="flex" alignItems="center" gap={2}>
