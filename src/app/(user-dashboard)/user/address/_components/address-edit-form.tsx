@@ -29,7 +29,6 @@ export const AddressEditForm = ({ onCancel }: AddressFormContainerProps) => {
 
   const onSubmit = async (data: AddressSchema) => {
     onCancel();
-    console.log("Form Data:", data);
   };
 
   return (

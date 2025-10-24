@@ -38,7 +38,6 @@ export const NewsLetter = () => {
   const onSubmitEmail = async (data: EmailFormValues) => {
     startTransition(async () => {
       const res = await createOtpForNewsletter(data.email);
-      console.log(res, "Response");
       if (res.success) {
         const params = new URLSearchParams(searchParams);
         params.set("email", data.email);
@@ -50,8 +49,6 @@ export const NewsLetter = () => {
       }
     });
   };
-
-  console.log(isLoading, "Loading");
 
   return (
     <Box

@@ -36,7 +36,6 @@ const CreateAddress = () => {
     }
     toast.success(response.message);
     router.push("/user/address");
-    console.log(response);
   };
   return (
     <>

@@ -35,9 +35,8 @@ export const AddressFormContainer = ({
   
 
   const onSubmit = async (data: AddressSchema) => {
-    const response = await addAddresses(data);
+    await addAddresses(data);
     onCancel();
-    console.log("Response ", response);
   };
 
   return (

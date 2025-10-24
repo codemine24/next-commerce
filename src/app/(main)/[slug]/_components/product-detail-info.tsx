@@ -20,7 +20,7 @@ export const ProductDetailInfo = ({ product }: { product: Product }) => {
         <ProductDetailInfoNavbar />
         <ProductDescription description={product?.description} />
         <ProductSpecification specification={product?.specification} />
-        <ProductVideo videoUrl="https://youtu.be/1n2Z2YeKj7M?si=yF25FksgjY1RRlW4" />
+        <ProductVideo videoUrl={product?.video_url} />
         <ProductReviews productId={product.id} />
         <ProductQuestions productId={product.id} />
         <AskQuestion />

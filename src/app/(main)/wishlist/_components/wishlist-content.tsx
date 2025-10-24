@@ -33,10 +33,7 @@ const WishlistContent = ({ wishList }: WishlistProps) => {
   
   const hasProducts = wishList.length > 0;
 
-  console.log(
-    "wishList is",
-    wishList.map((item) => item.product.id)
-  );
+ 
 
   return (
     <Box sx={{ my: 5 }}>

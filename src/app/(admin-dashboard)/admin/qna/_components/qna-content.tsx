@@ -10,8 +10,6 @@ import QnaTable from "./qna-table";
 const QnaContent = async () => {
   const response = await getAllQnas();
 
-  console.log("All questions", response);
-
 
   return (
     <>

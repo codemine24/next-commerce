@@ -37,7 +37,7 @@ export const editQuestion = async (
     body: JSON.stringify(payload),
   });
   if (response.success) revalidateTag(TAGS.qnas);
-  console.log("editQuestion", response);
+  
   return response;
 };
 

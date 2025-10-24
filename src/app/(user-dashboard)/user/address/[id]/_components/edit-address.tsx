@@ -41,7 +41,6 @@ const EditAddress = ({address}: EditAddressProps) => {
     }
     toast.success(response.message);
     router.push("/user/address");
-    console.log(response);
   };
   return (
     <>

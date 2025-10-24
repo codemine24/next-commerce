@@ -49,7 +49,6 @@ const uploadFiles = async (data: Record<string, any>, user: User) => {
           upsert: true,
         });
       if (error) {
-        console.log(error);
         throw new CustomizedError(
           httpStatus.INTERNAL_SERVER_ERROR,
           "Failed to upload file"

@@ -19,8 +19,6 @@ interface ProductActionButtonProps {
 export const ProductActionButton = ({ product }: ProductActionButtonProps) => {
   const [qty, setQty] = useState(1);
   const { addToCart } = useCart();
-
-  console.log(product.id);
   
  
 

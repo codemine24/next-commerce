@@ -29,8 +29,6 @@ export const AskQuestion = () => {
     resolver: zodResolver(questionSchema),
   });
 
-  console.log(path);
-
   const onSubmit = async (data: QuestionFormData) => {
     
     
@@ -45,7 +43,6 @@ export const AskQuestion = () => {
         question: data.question,
         product_id: product.data.id,
       });
-      console.log("Response", response);
       if (response.success) {
         toast.success(response.message);
         reset();

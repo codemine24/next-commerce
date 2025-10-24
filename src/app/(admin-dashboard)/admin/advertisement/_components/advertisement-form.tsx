@@ -30,7 +30,7 @@ export const AdvertisementForm = () => {
 
     const onSubmit = async (data: AdvertisementSchema) => {
         const res = await createBanner(data);
-        console.log(res);
+        
         if (res.success) {
             toast.success(res.message);
         } else {

@@ -15,7 +15,7 @@ export const FeaturedCategory = async () => {
   return (
     <Box component="section" py={5}>
       <Grid container spacing={2}>
-        {categories.data.map((category: Category) => (
+        {categories.data?.map((category: Category) => (
           <Grid size={{ xs: 12, sm: 4 }} key={category.id}>
             <Card
               sx={{

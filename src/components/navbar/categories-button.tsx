@@ -72,7 +72,7 @@ export const CategoriesButton = ({ categories }: CategoryButtonProps) => {
             >
               All Categories
             </Button>
-            {categories.map((category) => (
+            {categories?.map((category) => (
               <Button
                 key={category.id}
                 fullWidth

@@ -12,8 +12,6 @@ const PaymentSuccessPage = async ({ searchParams }: Props) => {
     expand: ["payment_intent"],
   });
 
-  console.log("payment session: ", paymentSession);
-
   return (
     <div>
       Payment success

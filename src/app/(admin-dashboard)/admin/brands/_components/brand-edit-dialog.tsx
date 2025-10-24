@@ -52,7 +52,7 @@ export const BrandEditDialog = ({
     }
   };
 
-  console.log(methods.getValues());
+ 
 
   return (
     <AnimatedDialog

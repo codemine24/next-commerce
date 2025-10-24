@@ -17,7 +17,7 @@ export const addToWishlist = async (id: string) => {
     revalidateTag(TAGS.wishlist);
   }
 
-  console.log("post response is", res);
+  
 
   return res;
 };
@@ -41,6 +41,6 @@ export const removeFromWishlist = async (ids: string[]) => {
     revalidateTag(TAGS.wishlist);
   }
 
-  console.log("delete response is", res);
+  
   return res;
 };

@@ -29,7 +29,6 @@ const prismaClientKnownErrorHandler = (
       },
     ];
   } else if (err.code === "P2003") {
-    console.log(err);
   }
 
   return {

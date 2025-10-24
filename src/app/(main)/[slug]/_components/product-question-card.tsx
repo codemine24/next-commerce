@@ -39,10 +39,6 @@ export const QuestionCard = ({ question, authUserId }: QuestionCardProps) => {
     },
   });
 
-  console.log("UserQuestion", question);
-  console.log("question.inquirer.id", question.inquirer.id);
-  console.log("authUserId", authUserId);
-
 
   const isEditor = authUserId === question.inquirer.id;
 

@@ -80,8 +80,6 @@ const getProducts = async (query: Record<string, any>) => {
     is_featured,
   } = query;
 
-  console.log(query, "query");
-
   // Validate query parameters (sort_by, sort_order) if provided
   if (sort_by) queryValidator(productQueryValidationConfig, "sort_by", sort_by);
   if (sort_order)

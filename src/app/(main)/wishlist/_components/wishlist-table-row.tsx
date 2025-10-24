@@ -15,7 +15,6 @@ import { makeImageUrl } from '@/utils/helper'
 
 const WishlistTableRow = ({item}: {item: Wishlist}) => {
     const [isPending, startTransition] = useTransition();
-    console.log("item is",item);
     
 
     const handleDeleteWishlist = (id: string) => {

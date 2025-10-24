@@ -299,7 +299,6 @@ const updateCouponActiveStatus = async () => {
       is_active: false,
     },
   });
-  console.log(`${updateExpiredCoupons.count} expired coupons deactivated`);
 
   // Activate coupons that are within the start and expiration date range
   const updateDiactiveCoupons = await prisma.coupon.updateMany({
@@ -316,7 +315,6 @@ const updateCouponActiveStatus = async () => {
       is_active: true,
     },
   });
-  console.log(`${updateDiactiveCoupons.count} diactive coupons activated`);
 };
 
 // ------------------------------------- APPLY COUPON -------------------------------------
