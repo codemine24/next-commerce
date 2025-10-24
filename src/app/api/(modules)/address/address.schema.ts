@@ -2,59 +2,61 @@ import { z } from "zod";
 
 import { commonSchemas } from "../../(helpers)/shared/schema";
 
-export const createAddress = z.object({
-  body: z.object({
-    name: z
-      .string({
-        error: "Name is required",
-      })
-      .min(2, "Name must be at least 2 characters long")
-      .max(100, "Name must not exceed 100 characters"),
-    contact_number: commonSchemas.phoneSchema({
-      required: true,
-      allowEmpty: false,
-    }),
-    secondary_contact_number: commonSchemas.phoneSchema({
-      required: false,
-      allowEmpty: true,
-    }),
-    email: z
-      .string({ error: "Email should be a valid email" })
-      .refine(
-        (val) => !val || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val),
-        "Invalid email"
-      ),
-    address: z
-      .string({
-        error: "Address is required",
-      })
-      .min(5, "Address must be at least 5 characters long"),
-    postal_code: z
-      .string({
-        error: "Postal code must be a string",
-      })
-      .length(4, "Postal code must be 4 characters long")
-      .optional()
-      .nullable(),
-    city: z
-      .string({
-        error: "City is required",
-      })
-      .min(2, "City must be at least 2 characters long"),
-    district: z
-      .string({
-        error: "District is required",
-      })
-      .min(4, "District must be at least 2 characters long"),
-    country: z
-      .string({
-        error: "Country must be a string",
-      })
-      .default("bangladesh"),
-    is_default: z
-      .boolean({ error: "Is default must be a boolean" })
-      .default(false),
+export const addressSchema = z.object({
+  name: z
+    .string({
+      error: "Name is required",
+    })
+    .min(2, "Name must be at least 2 characters long")
+    .max(100, "Name must not exceed 100 characters"),
+  contact_number: commonSchemas.phoneSchema({
+    required: true,
+    allowEmpty: false,
   }),
+  secondary_contact_number: commonSchemas.phoneSchema({
+    required: false,
+    allowEmpty: true,
+  }),
+  email: z
+    .string({ error: "Email should be a valid email" })
+    .refine(
+      (val) => !val || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val),
+      "Invalid email"
+    ),
+  address: z
+    .string({
+      error: "Address is required",
+    })
+    .min(5, "Address must be at least 5 characters long"),
+  postal_code: z
+    .string({
+      error: "Postal code must be a string",
+    })
+    .length(4, "Postal code must be 4 characters long")
+    .optional()
+    .nullable(),
+  city: z
+    .string({
+      error: "City is required",
+    })
+    .min(2, "City must be at least 2 characters long"),
+  district: z
+    .string({
+      error: "District is required",
+    })
+    .min(4, "District must be at least 2 characters long"),
+  country: z
+    .string({
+      error: "Country must be a string",
+    })
+    .default("bangladesh"),
+  is_default: z
+    .boolean({ error: "Is default must be a boolean" })
+    .default(false),
+});
+
+export const createAddress = z.object({
+  body: addressSchema,
 });
 
 export const updateAddress = z.object({

@@ -23,8 +23,6 @@ export const CategoryContent = async ({ searchParams }: { searchParams: Promise<
                     <Box
                         p={2}
                         bgcolor="background.default"
-                        borderTop={1}
-                        borderColor="divider"
                     >
                         <Pagination
                             page={data.meta.page}

@@ -6,6 +6,7 @@ const filterAdder = <T extends Record<string, any>>(
   operator:
     | keyof Prisma.StringFilter
     | keyof Prisma.IntFilter
+    | keyof Prisma.BoolFilter
     | keyof Prisma.DateTimeFilter,
   value: any
 ) => {

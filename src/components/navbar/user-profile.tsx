@@ -23,6 +23,7 @@ export const UserProfile = () => {
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -84,21 +85,8 @@ export const UserProfile = () => {
           vertical: "top",
           horizontal: "center",
         }}
-        slotProps={{
-          paper: {
-            sx: {
-              elevation: 0,
-              width: 250,
-              boxShadow: "none",
-              borderRadius: 0,
-              border: "1px solid",
-              borderColor: "divider",
-              bgcolor: "background.default",
-            },
-          },
-        }}
       >
-        <Box>
+        <Box width={300}>
           <Box p={2}>
             <Typography fontWeight={600}>
               {user?.first_name} {user?.last_name}

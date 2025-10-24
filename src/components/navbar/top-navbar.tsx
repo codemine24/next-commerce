@@ -20,7 +20,7 @@ export const TopNavbar = () => {
                     <Box display="flex" alignItems="center" gap={3}>
                         <Button
                             component={Link}
-                            href="/shop"
+                            href="/collections"
                             variant="text"
                             sx={{
                                 color: "primary.contrastText",
