@@ -6,28 +6,12 @@ import Typography from "@mui/material/Typography";
 import React from "react";
 
 import { getReviews } from "@/actions/review";
+import { Pagination } from "@/components/pagination";
 import { StarIcon } from "@/icons/star";
-
-import CustomPagination from "../../shop/_components/custom-pagination";
+import { Review } from "@/interfaces/review";
 
 import { ProductAddReview } from "./product-add-review";
 import { ProductSectionHeader } from "./product-section-header";
-
-type Review = {
-  id: string;
-  comment: string;
-  created_at: string;
-  product: { name: string };
-  rating: number;
-  updated_at: string;
-  user: {
-    contact_number: string;
-    email: string;
-    first_name: string;
-    last_name: string;
-  };
-  date: string;
-};
 
 const distribution = [
   { stars: 5, count: 330, color: "#22c55e" },
@@ -174,8 +158,8 @@ export const ProductReviews = async ({ productId }: ProductReviewsProps) => {
 
         {/* Reviews list */}
         <Stack sx={{ mt: 2 }}>
-          {allReviews?.data?.map((r: Review, index: number) => (
-            <React.Fragment key={r.id}>
+          {allReviews?.data?.map((review: Review, index: number) => (
+            <React.Fragment key={review.id}>
               <Box
                 sx={{
                   p: 1,
@@ -183,14 +167,14 @@ export const ProductReviews = async ({ productId }: ProductReviewsProps) => {
                   overflow: "hidden",
                 }}
                 component="section"
-                aria-labelledby={`review-${r.id}-heading`}
+                aria-labelledby={`review-${review.id}-heading`}
               >
                 <Typography
-                  id={`review-${r.id}-heading`}
+                  id={`review-${review.id}-heading`}
                   variant="body1"
                   sx={{ color: "text.primary" }}
                 >
-                  {r.comment}
+                  {review.comment}
                 </Typography>
 
                 <Stack
@@ -200,8 +184,8 @@ export const ProductReviews = async ({ productId }: ProductReviewsProps) => {
                   sx={{ mt: 1.5, color: "text.secondary" }}
                 >
                   <Rating
-                    name={`rating-${r.id}`}
-                    value={r.rating}
+                    name={`rating-${review.id}`}
+                    value={review.rating}
                     readOnly
                     precision={0.5}
                     size="small"
@@ -215,14 +199,14 @@ export const ProductReviews = async ({ productId }: ProductReviewsProps) => {
                         sx={{ opacity: 0.25, border: "1px solid #FFCD4E" }}
                       />
                     }
-                    aria-label={`Rating ${r.rating} out of 5`}
+                    aria-label={`Rating ${review.rating} out of 5`}
                   />
                   <Separator />
                   <Typography variant="body2">
-                    By {r.user.first_name}
+                    By {review.user.first_name}
                   </Typography>
                   <Separator />
-                  <Typography variant="body2">{r.updated_at}</Typography>
+                  <Typography variant="body2">{review.updated_at}</Typography>
                 </Stack>
               </Box>
 
@@ -234,16 +218,14 @@ export const ProductReviews = async ({ productId }: ProductReviewsProps) => {
         </Stack>
 
         {/* Pagination */}
-        <Box
-          sx={{
-            mt: 3,
-            display: "flex",
-            justifyContent: "center",
-          }}
-          aria-label="Reviews pagination"
-        >
-          <CustomPagination />
-        </Box>
+        <Pagination
+          page={allReviews.meta.page}
+          total={allReviews.meta.total}
+          limit={allReviews.meta.limit}
+          showLimit={false}
+          sx={{ justifyContent: "center", mt: 2 }}
+        />
+
       </Box>
     </Box>
   );

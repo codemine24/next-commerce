@@ -16,10 +16,11 @@ interface Props extends PaginationProps {
     page: number;
     total: number;
     limit: number;
+    showLimit?: boolean;
     sx?: SxProps<Theme>;
 }
 
-export const Pagination = ({ page = 1, total, limit = 10, sx, ...others }: Props) => {
+export const Pagination = ({ page = 1, total, limit = 10, showLimit = true, sx, ...others }: Props) => {
     const router = useRouter();
     const searchParams = useSearchParams();
     const [currentPage, setCurrentPage] = React.useState(page);
@@ -47,7 +48,7 @@ export const Pagination = ({ page = 1, total, limit = 10, sx, ...others }: Props
                 alignItems="center"
                 sx={sx}
             >
-                <Box display="flex" alignItems="center" gap={1}>
+                {showLimit && <Box display="flex" alignItems="center" gap={1}>
                     <Box display="flex" alignItems="center" gap={1}>
                         <Typography variant="caption" color="text.secondary">Rows per page</Typography>
                         <Select
@@ -104,7 +105,7 @@ export const Pagination = ({ page = 1, total, limit = 10, sx, ...others }: Props
                             onChange={(event) => handleChange(event, parseInt(event.target.value, 10))}
                         />
                     </Box>}
-                </Box>
+                </Box>}
                 <Paginate
                     count={totalPage}
                     page={currentPage}
