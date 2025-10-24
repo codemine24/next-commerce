@@ -13,9 +13,7 @@ export const AppRootLayout = ({ children }: { children: React.ReactNode }) => {
             <AppProvider>
                 <TopNavbar />
                 <Navbar />
-                <Box minHeight="calc(100svh - 50px)">
-                    {children}
-                </Box>
+                <Box minHeight="calc(100svh - 50px)">{children}</Box>
                 <Footer />
             </AppProvider>
         </AppRouterCacheProvider>
