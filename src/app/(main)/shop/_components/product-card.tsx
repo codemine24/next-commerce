@@ -56,12 +56,10 @@ export const ProductCard = async ({
           }}
         >
           <OptimizeImage
-            src={
-              makeImageUrl(product.thumbnail) || "/images/featured_image_1.svg"
-            }
+            src={makeImageUrl(product.thumbnail) || "/images/featured_image_1.svg"}
             alt={product.name}
             height={220}
-          // imageStyle={{ objectFit: "contain" }}
+            imageStyle={{ objectFit: "contain" }}
           />
         </Box>
         <Box mt={2} px={2}>
