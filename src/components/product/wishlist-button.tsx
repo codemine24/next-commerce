@@ -1,6 +1,6 @@
 import Button from "@mui/material/Button";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useTransition } from "react";
 
 import { addToWishlist } from "@/actions/wishlist";
 import { useAuth } from "@/hooks/use-auth";
@@ -14,6 +14,7 @@ interface WishlistButtonProps {
 const WishlistButton = ({ product }: WishlistButtonProps) => {
   const { user } = useAuth();
   const router = useRouter();
+  const [loading, startTransition] = useTransition();
 
   const handleAddToWishlist = async () => {
     if (!user) {
@@ -21,14 +22,18 @@ const WishlistButton = ({ product }: WishlistButtonProps) => {
       router.push("/login");
       return;
     }
-
-    const res = await addToWishlist(product.id);
-    if (res.success) {
-      toast.success(res.message);
-    }else{
-      toast.error(res.message);
-    }
+    startTransition( async () => {
+      const res = await addToWishlist(product.id);
+      if (res.success) {
+        toast.success(res.message);
+      }else{
+        toast.error(res.message);
+      }
+    })
   };
+
+  
+  
   
   return (
     <>
@@ -36,9 +41,11 @@ const WishlistButton = ({ product }: WishlistButtonProps) => {
         variant="contained"
         onClick={handleAddToWishlist}
         sx={{ height: 48, flexGrow: 1, bgcolor: "common.black" }}
+        disabled={loading}
       >
-        Add to Wishlist
+        {loading ?"Adding to wishlist..." : "Add to Wishlist"}
       </Button>
+     
     </>
   );
 };

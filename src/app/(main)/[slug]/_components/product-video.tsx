@@ -1,8 +1,9 @@
+import { Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Image from "next/image";
 
 import productVideoThumbnail from "@/../public/assets/product-video-thumbnail.svg";
-import { Typography } from "@mui/material";
+
 import { ProductSectionHeader } from "./product-section-header";
 
 export const ProductVideo = ({

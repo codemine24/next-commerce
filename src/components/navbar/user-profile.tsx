@@ -3,7 +3,6 @@ import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import Popover from "@mui/material/Popover";
 import Typography from "@mui/material/Typography";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -102,14 +101,11 @@ export const UserProfile = () => {
               color="inherit"
               sx={{ justifyContent: "flex-start" }}
               fullWidth
-              href={user?.role === "ADMIN" ? "/admin" : "/user"}
-              component={Link}
+              onClick={() => router.push(user?.role === "ADMIN" ? "/admin" : "/user")}
+              
             >
-               <Box component="span" sx={{flexGrow: 1}}> Account</Box>
+               <Box component="span" sx={{}}> Account</Box>
             </Button>
-
-
-
             <Button
               startIcon={<LogoutIcon />}
               size="small"
