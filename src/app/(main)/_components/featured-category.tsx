@@ -1,12 +1,12 @@
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography';
+import Link from 'next/link';
 
 import { getCategories } from '@/actions/category';
 import { OptimizeImage } from '@/components/optimize-image';
 import { Category } from '@/interfaces/category';
 import { makeImageUrl } from '@/utils/helper';
-import Link from 'next/link';
 
 export const FeaturedCategory = async () => {
   const categories = await getCategories({ featured: true });
