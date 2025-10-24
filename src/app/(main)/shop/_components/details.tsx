@@ -14,10 +14,8 @@ const Details = () => {
 
   return (
     <>
-      <Box id="#product-description">
       <ProductSectionHeader title="Details" />
       <Box dangerouslySetInnerHTML={{ __html: sanitizedDescription }} />
-      </Box>
     </>
   );
 };

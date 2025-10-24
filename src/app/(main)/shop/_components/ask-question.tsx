@@ -11,12 +11,12 @@ import { createQuestion } from "@/actions/qna";
 import { SubmitButton } from "@/components/submit-button";
 import { useAuth } from "@/hooks/use-auth";
 import { toast } from "@/lib/toast-store";
-import { questionSchema, QuestionFormData } from "@/zod/question-schema";
+import { QuestionFormData, questionSchema } from "@/zod/question-schema";
 
 import { ProductSectionHeader } from "../../[slug]/_components/product-section-header";
 
 export const AskQuestion = () => {
-  const { isAuthenticated,user } = useAuth();
+  const { isAuthenticated, user } = useAuth();
   const router = useRouter();
   const path = usePathname();
   const [isLoading, startTransition] = useTransition();
@@ -29,11 +29,9 @@ export const AskQuestion = () => {
     resolver: zodResolver(questionSchema),
   });
 
-  console.log(path);
-
   const onSubmit = async (data: QuestionFormData) => {
-    
-    
+    console.log("data....", data);
+
     if (!isAuthenticated) {
       toast.error("You must be logged in to ask a question");
       router.push(`/login?redirect=${encodeURIComponent(path)}`);
@@ -66,64 +64,43 @@ export const AskQuestion = () => {
 
   return (
     <>
-      {user?.role === "CUSTOMER" && (
+      {user?.role !== "ADMIN" && user?.role !== "SUPER_ADMIN" && (
         <Box>
           <ProductSectionHeader title="Ask a question" />
-      <Box
-        component="form"
-        onSubmit={handleSubmit(onSubmit)}
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          gap: 1,
-        }}
-      >
-        {/* Name */}
-        {/* <TextField
-          placeholder="Your Name"
-          fullWidth
-          size="small"
-          {...register("name")}
-          error={!!errors.name}
-          helperText={errors.name?.message}
-          sx={textFieldStyle}
-        /> */}
+          <Box
+            component="form"
+            onSubmit={handleSubmit(onSubmit)}
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 1,
+            }}
+          >
+            {/* Question */}
+            <TextField
+              placeholder="Write your question here..."
+              fullWidth
+              size="small"
+              multiline
+              rows={4}
+              {...register("question")}
+              error={!!errors.question}
+              helperText={errors.question?.message}
+              sx={textFieldStyle}
+            />
 
-        {/* Email */}
-        {/* <TextField
-          placeholder="E-mail (optional)"
-          fullWidth
-          size="small"
-          {...register("email")}
-          error={!!errors.email}
-          helperText={errors.email?.message}
-          sx={textFieldStyle}
-        /> */}
-        {/* Question */}
-        <TextField
-          placeholder="Write your question here..."
-          fullWidth
-          size="small"
-          multiline
-          rows={4}
-          {...register("question")}
-          error={!!errors.question}
-          helperText={errors.question?.message}
-          sx={textFieldStyle}
-        />
-
-        <SubmitButton
-          label="Submit"
-          isLoading={isLoading}
-          disabled={isLoading}
-          sx={{
-            width: "225px",
-            height: "48px",
-            fontSize: "16px",
-            fontWeight: 400,
-          }}
-        />
-      </Box>
+            <SubmitButton
+              label="Submit"
+              isLoading={isLoading}
+              disabled={isLoading}
+              sx={{
+                width: "225px",
+                height: "48px",
+                fontSize: "16px",
+                fontWeight: 400,
+              }}
+            />
+          </Box>
         </Box>
       )}
     </>
