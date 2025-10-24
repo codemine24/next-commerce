@@ -8,6 +8,19 @@ export const ProductVideo = ({
 }: {
   videoUrl: string | null | undefined;
 }) => {
+
+    // ✅ Convert YouTube short links or normal watch links to embed format
+  const getEmbedUrl = (url: string | null | undefined) => {
+    if (!url) return null;
+
+    // Match YouTube short link or watch URL
+    const match = url.match(
+      /(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/))([\w-]+)/
+    );
+    return match ? `https://www.youtube.com/embed/${match[1]}` : url;
+  };
+
+  const embedUrl = getEmbedUrl(videoUrl); 
   return (
     <Box id="#product-video" sx={{ p: { xs: 2, sm: 3 } }}>
       <Box
@@ -19,13 +32,13 @@ export const ProductVideo = ({
           borderRadius: "10px",
         }}
       >
-        {videoUrl ? (
+         {embedUrl ? (
           <iframe
-            src={videoUrl}
+            src={embedUrl}
             title="Product Video"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allow="clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
-            style={{ width: "100%", height: "100%" }}
+            style={{ width: "100%", height: "100%", border: "none" }}
           />
         ) : (
           <Image
