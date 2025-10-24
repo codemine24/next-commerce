@@ -145,6 +145,7 @@ export const components: Components<Theme> = {
         style: {
           borderRadius: 0,
           transition: "all 0.3s",
+          borderColor: colorPalette.divider,
           // backgroundColor: "transparent",
           // ":hover": { backgroundColor: colorPalette.divider },
         },
@@ -164,7 +165,12 @@ export const components: Components<Theme> = {
       {
         props: { variant: "soft", color: "primary" },
         style: ({ theme }) => ({
-          backgroundColor: alpha((theme.palette.primary as unknown as { [key: string]: string })["100"], 0.1),
+          backgroundColor: alpha(
+            (theme.palette.primary as unknown as { [key: string]: string })[
+              "100"
+            ],
+            0.1
+          ),
           color: theme.palette.primary.main,
           borderRadius: 0,
           transition: "all 0.3s",
@@ -296,7 +302,7 @@ export const components: Components<Theme> = {
         border: "1px solid",
         borderColor: theme.palette.divider,
         borderBottomColor: "transparent",
-        borderCollapse: 'separate'
+        borderCollapse: "separate",
       }),
     },
   },
@@ -308,10 +314,17 @@ export const components: Components<Theme> = {
         },
         [`&.${tableRowClasses.selected}`]: {
           backgroundColor: alpha(theme.palette.primary.main, 0.04),
-          '&:hover': { backgroundColor: alpha(theme.palette.primary.main, 0.08) },
+          "&:hover": {
+            backgroundColor: alpha(theme.palette.primary.main, 0.08),
+          },
         },
-        [`& .${tableCellClasses.root}`]: { borderBottom: "1px solid", borderColor: theme.palette.divider },
-        "last-of-type": { [`& .${tableCellClasses.root}`]: { borderColor: 'transparent' } },
+        [`& .${tableCellClasses.root}`]: {
+          borderBottom: "1px solid",
+          borderColor: theme.palette.divider,
+        },
+        "last-of-type": {
+          [`& .${tableCellClasses.root}`]: { borderColor: "transparent" },
+        },
       }),
     },
   },
@@ -334,5 +347,5 @@ export const components: Components<Theme> = {
       }),
       paddingCheckbox: ({ theme }) => ({ paddingLeft: theme.spacing(1) }),
     },
-  }
+  },
 };
