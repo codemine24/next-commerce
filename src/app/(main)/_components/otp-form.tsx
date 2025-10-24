@@ -68,11 +68,7 @@ export const OTPForm = ({
   };
 
   const onSubmitOtp = async () => {
-    console.log("otp submitted");
-    console.log(otp, otp.join(""));
     const otpNumber = Number(otp.join(""));
-    console.log(otpNumber);
-    console.log(searchParams.get("email"));
     const email = searchParams.get("email");
     if (!email) {
       setError("Missing email. Please restart verification.");
@@ -84,7 +80,6 @@ export const OTPForm = ({
     }
     startTransition(async () => {
       const res = await verifyOtpForNewsletter(email, otpNumber);
-      console.log(res, "res");
       if (res.success) {
         toast.success("OTP verified successfully");
         setIsEmailSubmitted("email");
@@ -99,7 +94,7 @@ export const OTPForm = ({
     <>
       <Box display="flex" flexDirection="row" gap={1}>
         <Box display="flex" gap={{ xs: 0.5, md: 1 }}>
-          {otp.map((data, index) => (
+          {otp?.map((data, index) => (
             <TextField
               key={index}
               inputRef={(el) => (inputRefs.current[index] = el)}

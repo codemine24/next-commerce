@@ -37,7 +37,7 @@ const content = [
 export const Services = () => {
   return (
     <Grid container spacing={2} py={10}>
-      {content.map((item) => (
+      {content?.map((item) => (
         <Grid key={item.id} size={{ xs: 12, sm: 6, md: 3 }}>
           <Box
             sx={{

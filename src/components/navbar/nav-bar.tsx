@@ -1,8 +1,10 @@
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 
+import { getCategories } from "@/actions/category";
+
 import { BoxContainer } from "../box-container";
-import { LogoBlack } from "../logo-black";
+import { Logo } from "../logo";
 
 import { CartButton } from "./cart-button";
 import { CategoriesButton } from "./categories-button";
@@ -10,7 +12,9 @@ import { SearchBox } from "./search-box";
 import { UserButton } from "./user-button";
 import { WishlistButton } from "./wishlist-button";
 
-export const Navbar = () => {
+export const Navbar = async () => {
+  const data = await getCategories();
+
   return (
     <AppBar
       position="sticky"
@@ -24,11 +28,11 @@ export const Navbar = () => {
     >
       <BoxContainer sx={{ height: "100%" }}>
         <Box display="flex" alignItems="center">
-          <LogoBlack />
+          <Logo />
           <SearchBox />
           <WishlistButton />
           <CartButton />
-          <CategoriesButton />
+          <CategoriesButton categories={data.data} />
           <UserButton />
         </Box>
       </BoxContainer>
