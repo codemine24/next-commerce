@@ -15,6 +15,8 @@ interface ProductInfoProps {
 }
 
 export const ProductInfo = ({ product }: ProductInfoProps) => {
+  console.log(product.stock);
+  const isStock = product.stock > 0;
   return (
     <Box display="flex" flexDirection="column" gap={{xs: 2, sm: 5}}>
       <Typography
@@ -42,14 +44,14 @@ export const ProductInfo = ({ product }: ProductInfoProps) => {
 
         <Typography color="#A4B2AE">(5.0) | 640 Reviews</Typography>
         <Chip
-          label="In Stock"
+          label={isStock ? "In Stock" : "Out of Stock"}
           variant="outlined"
           size="small"
-          icon={<CheckCircle sx={{ color: "#08996B !important" }} />}
+          icon={isStock ? <CheckCircle sx={{ color: "#08996B !important" }} /> : <CheckCircle sx={{ color: "#08996B !important", display:"none" }} /> }
           sx={{
-            color: "#08996B",
-            borderColor: "#08996B",
-            bgcolor: alpha("#08996B", 0.06),
+            color: isStock ? "#08996B" : "#D32F2F",
+            borderColor: isStock ? "#08996B" : "#D32F2F",
+            bgcolor: alpha(isStock ? "#08996B" : "#D32F2F", 0.06),
             borderRadius: BORDER_RADIUS.default,
           }}
         />

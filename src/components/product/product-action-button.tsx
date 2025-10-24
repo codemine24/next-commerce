@@ -19,8 +19,9 @@ interface ProductActionButtonProps {
 export const ProductActionButton = ({ product }: ProductActionButtonProps) => {
   const [qty, setQty] = useState(1);
   const { addToCart } = useCart();
+
+  const isStock = product.stock > 0;
   
- 
 
   const handleAddToCart = () => {
     addToCart(
@@ -47,14 +48,16 @@ export const ProductActionButton = ({ product }: ProductActionButtonProps) => {
         onRemove={() => setQty(qty - 1)}
       />
       </Box>
-      <Stack direction="row" spacing={1} alignItems="center" mt={{xs: 2, sm: 5}}>
-        <Button
-          variant="contained"
-          onClick={handleAddToCart}
-          sx={{ height: 48, flexGrow: 1 }}
-        >
-          Buy Now
-        </Button>
+      <Stack direction="row" spacing={1} alignItems="center" mt={{xs: 2, sm: 5}}>       
+          <Button
+            variant="contained"
+            onClick={handleAddToCart}
+            sx={{ height: 48, flexGrow: 1 }}
+            disabled={!isStock}
+          >
+            Buy Now
+          </Button>
+     
         <WishlistButton product={product} />
       </Stack>
     </Box>

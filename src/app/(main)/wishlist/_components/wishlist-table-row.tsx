@@ -13,6 +13,7 @@ import TableRow from "@mui/material/TableRow";
 import React, { useState, useTransition } from "react";
 
 import { removeFromWishlist } from "@/actions/wishlist";
+import { ConfirmDialog } from "@/components/dialog/confirm-dialog";
 import { DeleteCircle } from "@/icons/delete-circle";
 import { ShoppingCart } from "@/icons/shopping-cart";
 import { Wishlist } from "@/interfaces/wishlist";
@@ -20,7 +21,6 @@ import { toast } from "@/lib/toast-store";
 import { BORDER_RADIUS } from "@/theme";
 import { currencyFormatter } from "@/utils/currency-formatter";
 import { makeImageUrl } from "@/utils/helper";
-import { ConfirmDialog } from "@/components/dialog/confirm-dialog";
 
 const WishlistTableRow = ({ item }: { item: Wishlist }) => {
   const [isPending, startTransition] = useTransition();

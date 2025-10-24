@@ -3,13 +3,13 @@ import { Box, Button, Stack } from "@mui/material";
 import React, { useState, useTransition } from "react";
 
 import { removeFromWishlist } from "@/actions/wishlist";
+import { ConfirmDialog } from "@/components/dialog/confirm-dialog";
 import { Wishlist } from "@/interfaces/wishlist";
 import { toast } from "@/lib/toast-store";
 
 import { SectionTitle } from "../../_components/section-title";
 
 import { WishlistTable } from "./wishlist-table";
-import { ConfirmDialog } from "@/components/dialog/confirm-dialog";
 
 interface WishlistProps {
   wishList: Wishlist[];
