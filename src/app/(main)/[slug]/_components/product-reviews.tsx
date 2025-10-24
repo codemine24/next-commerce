@@ -81,16 +81,16 @@ export const ProductReviews = async ({ productId }: ProductReviewsProps) => {
             />
             <StatCard
               label="Average Rating"
-              value={(allReviews.meta as any).avg.toString()}
+              value={(allReviews.meta as any)?.avg?.toString()}
               extra={
                 <Rating
                   name="avg-rating"
-                  value={(allReviews.meta as any).avg}
+                  value={(allReviews.meta as any)?.avg}
                   precision={0.5}
                   readOnly
                   size="small"
                   sx={{ color: "#FFCD4E" }}
-                  aria-label={"Average rating " + (allReviews.meta as any).avg}
+                  aria-label={"Average rating " + (allReviews.meta as any)?.avg}
                 />
               }
             />
