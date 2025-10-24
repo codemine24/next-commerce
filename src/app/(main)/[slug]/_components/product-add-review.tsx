@@ -19,9 +19,10 @@ import { Controller, useForm } from "react-hook-form";
 import { addReView } from "@/actions/review";
 import { useAuth } from "@/hooks/use-auth";
 import { CloseIcon } from "@/icons/close";
-import { PlusIcon } from "@/icons/plus";
+
 import { toast } from "@/lib/toast-store";
 import { reviewSchema, ReviewSchemaType } from "@/zod/review-schema";
+import { PlusIcon } from "@/icons/plus";
 
 const style = {
   position: "absolute" as const,
@@ -89,7 +90,7 @@ export const ProductAddReview = ({ productId }: ProductAddReviewProps) => {
         variant="soft"
         startIcon={<PlusIcon />}
         onClick={handleOpenReviewModal}
-        sx={{ display: user?.role === "CUSTOMER" ? "block" : "none" }}
+        sx={{ display: user?.role === "CUSTOMER" ? "flex" : "none" }}
       >
         Add Review
       </Button>

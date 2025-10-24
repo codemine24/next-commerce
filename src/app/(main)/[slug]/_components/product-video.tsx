@@ -60,7 +60,7 @@ export const ProductVideo = ({
         >
           <ProductSectionHeader title="Video" />
           <Box sx={{ bgcolor: "background.paper", p: { xs: 2, sm: 3 } }}>
-            <Typography variant="body2"> No Video Found</Typography>
+            <Typography variant="body2"> No video found</Typography>
           </Box>
         </Box>
       )}
