@@ -10,9 +10,9 @@ import { VisibilityOffIcon } from "@/icons/visibility-off";
 
 import { InputLabel } from "./input-label";
 
-type Props = TextFieldProps & { name: string, label?: string, placeholder?: string, required?: boolean,hideLabel?: boolean };
+type Props = TextFieldProps & { name: string, label?: string, placeholder?: string, required?: boolean, hideLabel?: boolean };
 
-export const TextField = ({ name, helperText, type = "text", label, placeholder, required, hideLabel=false, ...other }: Props) => {
+export const TextField = ({ name, helperText, type = "text", label, placeholder, required, hideLabel = false, ...other }: Props) => {
     const { control } = useFormContext();
     const [inputType, setInputType] = useState(type);
 
@@ -38,7 +38,7 @@ export const TextField = ({ name, helperText, type = "text", label, placeholder,
                             const value = event.target.value;
 
                             if (type === "number") {
-                                field.onChange(value === "" ? undefined : Number(value));
+                                field.onChange(value === "" ? 0 : Number(value));
                             } else {
                                 field.onChange(value);
                             }

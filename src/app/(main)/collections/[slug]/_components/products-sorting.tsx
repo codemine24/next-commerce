@@ -1,17 +1,54 @@
 "use client";
 
 import { Select, MenuItem } from "@mui/material";
+import { SelectChangeEvent } from "@mui/material";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 import { PRODUCT_SORT } from "@/constants/product";
 import { Meta } from "@/interfaces/api";
 
-export const ProductsCount = ({ meta }: { meta: Meta }) => {
+export const ProductsSorting = ({ meta }: { meta: Meta }) => {
+    const router = useRouter();
+    const pathname = usePathname();
     const searchParams = useSearchParams();
-    const [sort, setSort] = useState(searchParams.get("sort") || "default");
+    const [sort, setSort] = useState("default");
+
+    // Set initial state
+    useEffect(() => {
+        const sortBy = searchParams.get("sort_by");
+        const sortOrder = searchParams.get("sort_order");
+
+        let resolvedSort = "default";
+
+        if (sortBy && sortOrder) {
+            resolvedSort = `${sortBy}-${sortOrder}`;
+        }
+
+        setSort(resolvedSort);
+    }, [searchParams]);
+
+
+    // Update query params
+    const handleChange = (event: SelectChangeEvent) => {
+        const newValue = event.target.value;
+        setSort(newValue);
+
+        const params = new URLSearchParams(searchParams.toString());
+
+        if (newValue === "default") {
+            params.delete("sort_by");
+            params.delete("sort_order");
+        } else {
+            const [sortBy, sortOrder] = newValue.split("-");
+            params.set("sort_by", sortBy);
+            params.set("sort_order", sortOrder);
+        }
+
+        router.replace(`${pathname}?${params.toString()}`);
+    };
 
     return (
         <Box
@@ -28,7 +65,7 @@ export const ProductsCount = ({ meta }: { meta: Meta }) => {
             <Box>
                 <Select
                     value={sort}
-                    onChange={(e) => setSort(e.target.value)}
+                    onChange={(e) => handleChange(e)}
                     slotProps={{
                         root: {
                             sx: {

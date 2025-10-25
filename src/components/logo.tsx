@@ -9,8 +9,6 @@ export const Logo = () => {
         alignItems="center"
         width={200}
         height="100%"
-        component={Link}
-        href="/"
         fontSize={20}
       >
         {/* <Image src="/images/logo.svg" alt="Logo" width={150} height={50} /> */}

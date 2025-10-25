@@ -7,13 +7,8 @@ import { useState, useEffect } from 'react';
 
 import { Meta } from '@/interfaces/api';
 
-interface Props {
-    meta: Meta;
-    onClose: () => void;
-}
-
-export const ProductPriceSlider = ({ meta, onClose }: Props) => {
-    const MIN_DISTANCE = meta?.max_price ? meta?.max_price / 20 : 5000;
+export const ProductPriceSlider = ({ meta }: { meta: Meta }) => {
+    const MIN_DISTANCE = 10;
     const MAX_PRICE = meta?.max_price || 5000;
     const [value, setValue] = useState<number[]>([0, MAX_PRICE]);
 
@@ -65,7 +60,6 @@ export const ProductPriceSlider = ({ meta, onClose }: Props) => {
         const searchParams = new URLSearchParams(window.location.search);
         searchParams.set("price_range", `${newValue[0]},${newValue[1]}`);
         router.push(`${pathname}?${searchParams.toString()}`);
-        onClose();
     };
 
     return (
@@ -96,14 +90,17 @@ export const ProductPriceSlider = ({ meta, onClose }: Props) => {
                     {value[1]}
                 </Box>
             </Box>
-            <Slider
-                value={value}
-                onChange={handleChange}
-                onChangeCommitted={handleChangeCommitted}
-                disableSwap
-                min={MIN_DISTANCE}
-                max={MAX_PRICE}
-            />
+
+            <Box px={2}>
+                <Slider
+                    value={value}
+                    onChange={handleChange}
+                    onChangeCommitted={handleChangeCommitted}
+                    disableSwap
+                    min={MIN_DISTANCE}
+                    max={MAX_PRICE}
+                />
+            </Box>
         </>
     );
 };

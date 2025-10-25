@@ -8,12 +8,7 @@ import { useState, useEffect } from "react";
 
 import { Meta } from "@/interfaces/api";
 
-interface ProductAvailabilityFilterProps {
-    meta: Meta;
-    onClose: () => void;
-}
-
-export const ProductAvailabilityFilter = ({ meta, onClose }: ProductAvailabilityFilterProps) => {
+export const ProductAvailabilityFilter = ({ meta }: { meta: Meta }) => {
     const router = useRouter();
     const searchParams = useSearchParams();
 
@@ -47,7 +42,6 @@ export const ProductAvailabilityFilter = ({ meta, onClose }: ProductAvailability
         }
 
         router.push(`?${params.toString()}`);
-        onClose();
     };
 
     useEffect(() => {

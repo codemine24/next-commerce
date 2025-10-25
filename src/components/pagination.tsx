@@ -42,93 +42,102 @@ export const Pagination = ({ page = 1, total, limit = 10, showLimit = true, sx, 
 
     return (
         <>
-            <Box
-                display="flex"
-                justifyContent="space-between"
-                alignItems="center"
-                sx={sx}
-            >
-                {showLimit && <Box display="flex" alignItems="center" gap={1}>
-                    <Box display="flex" alignItems="center" gap={1}>
-                        <Typography variant="caption" color="text.secondary">Rows per page</Typography>
-                        <Select
-                            value={limit.toString()}
-                            onChange={handleLimitChange}
-                            slotProps={{
-                                root: {
-                                    sx: {
-                                        height: 32,
-                                        width: 70,
-                                        borderRadius: 0,
-                                        borderColor: "divider",
-                                    },
-                                },
-                                input: {
-                                    sx: {
-                                        fontSize: 12,
-                                    },
-                                },
-                            }}
-                        >
-                            {ROW_PER_PAGE_OPTIONS.map((option) => (
-                                <MenuItem key={option} value={option}>
-                                    {option}
-                                </MenuItem>
-                            ))}
-                        </Select>
-                    </Box>
+            {totalPage > 1 && (
+                <Box
+                    display="flex"
+                    justifyContent="space-between"
+                    alignItems="center"
+                    sx={sx}
+                >
+                    {/* Rows per page */}
+                    {showLimit && (
+                        <Box display="flex" alignItems="center" gap={1}>
+                            {/* Rows per page */}
+                            <Box display="flex" alignItems="center" gap={1}>
+                                <Typography variant="caption" color="text.secondary">Rows per page</Typography>
+                                <Select
+                                    value={limit.toString()}
+                                    onChange={handleLimitChange}
+                                    slotProps={{
+                                        root: {
+                                            sx: {
+                                                height: 32,
+                                                width: 70,
+                                                borderRadius: 0,
+                                                borderColor: "divider",
+                                            },
+                                        },
+                                        input: {
+                                            sx: {
+                                                fontSize: 12,
+                                            },
+                                        },
+                                    }}
+                                >
+                                    {ROW_PER_PAGE_OPTIONS.map((option) => (
+                                        <MenuItem key={option} value={option}>
+                                            {option}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </Box>
 
-                    {totalPage > 1 && <Box display="flex" alignItems="center" gap={1}>
-                        <Typography variant="caption" color="text.secondary">Go to</Typography>
-                        <TextField
-                            type="number"
-                            variant="outlined"
-                            size="small"
-                            value={currentPage}
-                            slotProps={{
-                                root: {
-                                    sx: {
-                                        p: "0px !important",
-                                        width: 60,
-                                        borderRadius: 0,
-                                        borderColor: "divider",
-                                    },
-                                },
-                                input: {
-                                    sx: {
-                                        padding: 0,
-                                        fontSize: 12,
-                                        height: 31,
-                                    },
-                                },
-                            }}
-                            onChange={(event) => handleChange(event, parseInt(event.target.value, 10))}
-                        />
-                    </Box>}
-                </Box>}
-                <Paginate
-                    count={totalPage}
-                    page={currentPage}
-                    onChange={handleChange}
-                    variant="outlined"
-                    showFirstButton
-                    showLastButton
-                    {...others}
-                    sx={{
-                        "& .MuiPaginationItem-root": {
-                            height: "32px",
-                            borderRadius: 0,
-                        },
-                        "& .MuiPaginationItem-root.Mui-selected": {
-                            color: "primary.contrastText",
-                            backgroundColor: "primary.main",
-                        },
-                        "& .MuiPaginationItem-root:hover": {
-                            backgroundColor: "primary.dark",
-                        },
-                    }}
-                />
-            </Box>
+                            {/* Go to */}
+                            <Box display="flex" alignItems="center" gap={1}>
+                                <Typography variant="caption" color="text.secondary">Go to</Typography>
+                                <TextField
+                                    type="number"
+                                    variant="outlined"
+                                    size="small"
+                                    value={currentPage}
+                                    slotProps={{
+                                        root: {
+                                            sx: {
+                                                p: "0px !important",
+                                                width: 60,
+                                                borderRadius: 0,
+                                                borderColor: "divider",
+                                            },
+                                        },
+                                        input: {
+                                            sx: {
+                                                padding: 0,
+                                                fontSize: 12,
+                                                height: 31,
+                                            },
+                                        },
+                                    }}
+                                    onChange={(event) => handleChange(event, parseInt(event.target.value, 10))}
+                                />
+                            </Box>
+                        </Box>
+                    )}
+
+                    {/* Pagination */}
+                    <Paginate
+                        count={totalPage}
+                        page={currentPage}
+                        onChange={handleChange}
+                        variant="outlined"
+                        showFirstButton
+                        showLastButton
+                        {...others}
+                        sx={{
+                            "& .MuiPaginationItem-root": {
+                                height: "32px",
+                                borderRadius: 0,
+                            },
+                            "& .MuiPaginationItem-root.Mui-selected": {
+                                color: "primary.contrastText",
+                                backgroundColor: "primary.main",
+                            },
+                            "& .MuiPaginationItem-root:hover": {
+                                backgroundColor: "primary.dark",
+                            },
+                        }}
+                    />
+                </Box>
+            )}
         </>
     );
 }

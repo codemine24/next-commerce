@@ -12,8 +12,8 @@ export const PRODUCT_SORT = [
   { id: 1, label: "Default", value: "default" },
   { id: 2, label: "Price: Low to High", value: "price-asc" },
   { id: 3, label: "Price: High to Low", value: "price-desc" },
-  { id: 4, label: "Newest", value: "newest" },
-  { id: 5, label: "Oldest", value: "oldest" },
+  { id: 4, label: "Newest", value: "created_at-desc" },
+  { id: 5, label: "Oldest", value: "created_at-asc" },
 ];
 
 export const PRODUCT_NAV_ITEM = [

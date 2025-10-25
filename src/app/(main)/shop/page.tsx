@@ -5,7 +5,7 @@ import { getProducts } from "@/actions/product";
 import { BoxContainer } from "@/components/box-container";
 import { SearchParams } from "@/interfaces/common";
 
-import { AllProducts } from "./_components/all-products";
+import { AllProducts } from "../collections/[slug]/_components/all-products";
 
 const ShopPage = async ({
   searchParams,

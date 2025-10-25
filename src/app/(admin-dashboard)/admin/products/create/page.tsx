@@ -12,8 +12,6 @@ const CreateProductPage = async () => {
 
     const [brands, categories] = await Promise.all([brandsPromise, categoriesPromise]);
 
-    console.log(brands, categories);
-
     return (
         <Box pb={10}>
             <Typography variant="h3" mb={4}>Create Product</Typography>
