@@ -23,7 +23,7 @@ interface CartDrawerProps {
 }
 
 export const CartDrawer = ({ open, onClose }: CartDrawerProps) => {
-  const { cart, removeFromCart } = useCart();
+  const { cart, removeFromCart, } = useCart();
 
   return (
     <Drawer anchor="right" open={open} onClose={onClose}>

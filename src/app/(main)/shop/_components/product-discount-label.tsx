@@ -21,6 +21,7 @@ export const ProductDiscountLabel = ({
         size="small"
         sx={{
           position: "absolute",
+          borderRadius: 0,
           top: 8,
           left: 8,
           fontWeight: 600,
@@ -48,6 +49,7 @@ export const ProductDiscountLabel = ({
       size="small"
       sx={{
         position: "absolute",
+        borderRadius: 0,
         top: 8,
         left: 8,
         fontWeight: 600,
