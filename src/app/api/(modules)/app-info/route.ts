@@ -1,11 +1,12 @@
-import { UserRole } from "@prisma/client";
+// import { UserRole } from "@prisma/client";
 import httpStatus from "http-status";
 import { NextRequest } from "next/server";
 
-import { catchAsync } from "../../(helpers)/shared/catch-async";
-import { successResponse } from "../../(helpers)/shared/response";
-import payloadValidator from "../../(helpers)/utils/payload-validator";
-import userAuthenticator from "../../(helpers)/utils/user-authenticator";
+// import userAuthenticator from "../../(helpers)/utils/user-authenticator";
+
+import { catchAsync } from "@/app/api/(helpers)/shared/catch-async";
+import { successResponse } from "@/app/api/(helpers)/shared/response";
+import payloadValidator from "@/app/api/(helpers)/utils/payload-validator";
 
 import { AppInfoSchemas } from "./app-info.schema";
 import { AppInfoServices } from "./app-info.service";
@@ -13,7 +14,7 @@ import { AppInfoServices } from "./app-info.service";
 // ------------------------------------ SET APP INFO -------------------------------------
 export const POST = catchAsync(async (req: Request) => {
   // Step 1: Authenticate user
-  await userAuthenticator(req, [UserRole.SUPER_ADMIN]);
+  // await userAuthenticator(req, [UserRole.SUPER_ADMIN]);
 
   // Step 2: Parse request body
   const body = await req.json();

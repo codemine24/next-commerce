@@ -17,4 +17,5 @@ export const CONFIG = {
   stripe_secret_key: process.env.STRIPE_SECRET_KEY,
   stripe_publishable_key: process.env.STRIPE_PUBLISHABLE_KEY,
   currency: "usd",
+  mongodb_uri: process.env.MONGODB_URI,
 };

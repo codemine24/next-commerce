@@ -14,5 +14,6 @@ declare namespace NodeJS {
     STRIPE_SECRET_KEY: string;
     STRIPE_PUBLISHABLE_KEY: string;
     APP_NAME: string;
+    MONGODB_URI: string;
   }
 }

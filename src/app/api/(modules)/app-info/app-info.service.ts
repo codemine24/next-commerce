@@ -1,21 +1,23 @@
 import httpStatus from "http-status";
 
 import CustomizedError from "../../(helpers)/error/customized-error";
-import { prisma } from "../../(helpers)/shared/prisma";
+import { connectToDatabase } from "../../(helpers)/utils/mongoose";
 
 import { AppInfoPayload } from "./app-info.interface";
+import { AppInfoModel } from "./app-info.model";
 
 // ------------------------------------ SET APP INFO -------------------------------------
 const setAppInfo = async (data: AppInfoPayload) => {
-  const result = await prisma.appInfo.create({
-    data: data,
-  });
+  await connectToDatabase();
 
+  const result = await AppInfoModel.create(data);
   return result;
 };
 
 // ------------------------------------ GET APP INFO -------------------------------------
 const getAppInfo = async (query: Record<string, any>) => {
+  await connectToDatabase();
+
   const { name } = query;
 
   if (!name) {
@@ -25,28 +27,30 @@ const getAppInfo = async (query: Record<string, any>) => {
     );
   }
 
-  const result = await prisma.appInfo.findFirst({
-    where: { name },
-  });
-
+  const result = await AppInfoModel.findOne({ name });
   return result;
 };
 
 // ------------------------------------ UPDATE APP INFO ----------------------------------
 const updateAppInfo = async (id: string, data: AppInfoPayload) => {
-  const result = await prisma.appInfo.update({
-    where: { id },
-    data: data,
-  });
+  await connectToDatabase();
+
+  const result = await AppInfoModel.findByIdAndUpdate(id, data, { new: true });
+  if (!result) {
+    throw new CustomizedError(httpStatus.NOT_FOUND, "App info not found");
+  }
 
   return result;
 };
 
 // ------------------------------------ DELETE APP INFO ----------------------------------
 const deleteAppInfo = async (id: string) => {
-  await prisma.appInfo.delete({
-    where: { id },
-  });
+  await connectToDatabase();
+
+  const deleted = await AppInfoModel.findByIdAndDelete(id);
+  if (!deleted) {
+    throw new CustomizedError(httpStatus.NOT_FOUND, "App info not found");
+  }
 
   return null;
 };

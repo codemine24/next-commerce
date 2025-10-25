@@ -18,7 +18,7 @@ const appInfoFields = {
     .string({ error: "Title should be a text" })
     .min(2, "Title is required"),
   primary_color: z
-    .string()
+    .string({ error: "Primary color is required" })
     .regex(
       hexColorRegex,
       "Primary color must be a valid hex color (e.g. #FFFFFF)"
