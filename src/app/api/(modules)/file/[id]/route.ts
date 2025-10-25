@@ -8,7 +8,7 @@ import payloadValidator from "@/app/api/(helpers)/utils/payload-validator";
 import userAuthenticator from "@/app/api/(helpers)/utils/user-authenticator";
 
 import { FileSchemas } from "../file.schema";
-import { FileServices } from "../file.service";
+import { FileServices } from "../file.servicev2";
 
 // ------------------------------------- UPDATE FILE ----------------------------------------
 export const PATCH = catchAsync(

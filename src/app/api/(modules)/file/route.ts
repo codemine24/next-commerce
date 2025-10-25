@@ -9,7 +9,7 @@ import payloadValidator from "../../(helpers)/utils/payload-validator";
 import userAuthenticator from "../../(helpers)/utils/user-authenticator";
 
 import { FileSchemas } from "./file.schema";
-import { FileServices } from "./file.service";
+import { FileServices } from "./file.servicev2";
 
 // ----------------------------------- UPLOAD FILE -----------------------------------------
 export const POST = catchAsync(async (request: NextRequest) => {
