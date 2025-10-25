@@ -3,13 +3,17 @@
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
+import { useFormContext } from "react-hook-form";
 
+import { DELIVERY_METHODS } from "@/constants/checkout";
 import { useCart } from "@/hooks/use-cart";
 import { currencyFormatter } from "@/utils/currency-formatter";
 
 export const CartTotal = () => {
     const { cart } = useCart();
-    const delivery = 60;
+    const { watch } = useFormContext()
+    const deliveryMethod = watch("delivery_method");
+    const delivery = deliveryMethod === DELIVERY_METHODS.HOME_DELIVERY.value ? 60 : 0;
 
     return (
         <Box display="flex" justifyContent="flex-end" my={4}>
@@ -42,7 +46,7 @@ export const CartTotal = () => {
                     }}
                 >
                     <Typography width="60%" textAlign="right">
-                        Home Delivery:
+                        {deliveryMethod === DELIVERY_METHODS.HOME_DELIVERY.value ? "Home Delivery" : "Store Pickup"}:
                     </Typography>
                     <Typography color="primary.main">
                         {currencyFormatter(delivery)}

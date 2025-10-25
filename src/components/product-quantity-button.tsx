@@ -1,6 +1,11 @@
 "use client";
 
-import { Button, buttonBaseClasses, ButtonGroup } from "@mui/material";
+import { buttonBaseClasses } from "@mui/material";
+import Button from "@mui/material/Button";
+import ButtonGroup from "@mui/material/ButtonGroup";
+
+import { MinusIcon } from "@/icons/minus";
+import { PlusIcon } from "@/icons/plus";
 
 type ProductQuantityButtonProps = {
   qty: number;
@@ -21,37 +26,28 @@ export const ProductQuantityButton = ({
         [`& .${buttonBaseClasses.root}`]: {
           width: 48,
           height: 48,
-          borderColor: "#E6F2EE",
+          borderColor: "divider",
           fontSize: 16,
         },
+        // '&.Mui-disabled': {
+        //   '& .MuiButton-root': {
+        //     borderColor: 'grey',
+        //     color: 'divider',
+        //   },
+        // },
       }}
     >
       <Button
         onClick={onRemove}
         disabled={qty <= 1}
-        sx={{
-          "&:hover": { borderRightColor: "#E6F2EE !important" },
-          [`& .${buttonBaseClasses.disabled}`]: { borderColor: "#E6F2EE" },
-          "&:disabled": { borderColor: "#E6F2EE" },
-        }}
       >
-        -
+        <MinusIcon />
       </Button>
 
-      <Button
-        disabled
-        sx={{
-          "&:disabled": {
-            color: "#222625",
-            borderColor: "#E6F2EE",
-          },
-        }}
-      >
-        {qty}
-      </Button>
+      <Button color="inherit" sx={{ cursor: "default" }}>{qty}</Button>
 
-      <Button onClick={onAdd} sx={{ borderColor: "#E6F2EE" }}>
-        +
+      <Button onClick={onAdd}>
+        <PlusIcon />
       </Button>
     </ButtonGroup>
   );

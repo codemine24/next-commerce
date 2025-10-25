@@ -20,10 +20,6 @@ export const ProductActionButton = ({ product }: ProductActionButtonProps) => {
   const [qty, setQty] = useState(1);
   const { addToCart } = useCart();
 
-  console.log(product.id);
-  
- 
-
   const handleAddToCart = () => {
     addToCart(
       {
@@ -41,15 +37,15 @@ export const ProductActionButton = ({ product }: ProductActionButtonProps) => {
     <Box>
       <Box>
         <Typography fontSize={16} fontWeight={400} mb={1}>
-        Quantity
-      </Typography>
-      <ProductQuantityButton
-        qty={qty}
-        onAdd={() => setQty(qty + 1)}
-        onRemove={() => setQty(qty - 1)}
-      />
+          Quantity
+        </Typography>
+        <ProductQuantityButton
+          qty={qty}
+          onAdd={() => setQty(qty + 1)}
+          onRemove={() => setQty(qty - 1)}
+        />
       </Box>
-      <Stack direction="row" spacing={1} alignItems="center" mt={{xs: 2, sm: 5}}>
+      <Stack direction="row" spacing={1} alignItems="center" mt={{ xs: 2, sm: 5 }}>
         <Button
           variant="contained"
           onClick={handleAddToCart}

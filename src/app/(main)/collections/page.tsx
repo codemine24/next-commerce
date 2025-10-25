@@ -3,8 +3,9 @@ import { Suspense } from "react";
 
 import { getCategories } from "@/actions/category";
 import { BoxContainer } from "@/components/box-container";
+import { Category } from "@/interfaces/category";
 
-import { CollectionCard } from "./_components/collection-box";
+import { CollectionCard } from "./_components/collection-card";
 import { CollectionView } from "./_components/collection-view";
 
 const CollectionsPage = async () => {
@@ -21,12 +22,12 @@ const CollectionsPage = async () => {
         </Box>
 
         <Grid container spacing={4}>
-          {categories?.map((cat: any) => (
-            <Grid size={{ xs: 12, md: 4 }} key={cat.id}>
+          {categories?.map((category: Category) => (
+            <Grid size={{ xs: 12, md: 4 }} key={category.id}>
               <CollectionCard
                 image="/images/collections/collections.webp"
-                title={cat.title}
-                href={`/categories/${cat.id}`}
+                title={category.title}
+                href={`/collections/${category.slug}`}
               />
             </Grid>
           ))}

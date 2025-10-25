@@ -115,7 +115,7 @@ export const CartDrawer = ({ open, onClose }: CartDrawerProps) => {
             }}
           >
             <Typography variant="body1">Subtotal:</Typography>
-            <Typography variant="h6">$80.00</Typography>
+            <Typography variant="h6">${cart.cart_total}</Typography>
           </Stack>
           <Stack direction="row" spacing={2}>
             <Button
