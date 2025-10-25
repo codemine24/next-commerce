@@ -2,7 +2,7 @@
 
 import { IconButton } from "@mui/material";
 
-import { CheckRounded } from "@/icons/check-rounded";
+import { CheckIcon } from "@/icons/check";
 
 interface ColorOptionProps {
   color: string;
@@ -30,7 +30,7 @@ export const ColorOption = ({
       }}
     >
       {isSelected && (
-        <CheckRounded
+        <CheckIcon
           sx={{
             color: "#fff",
             fontSize: 30,

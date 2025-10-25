@@ -1,6 +1,6 @@
 import SvgIcon, { SvgIconProps } from "@mui/material/SvgIcon";
 
-export const CheckRounded = (props: SvgIconProps) => {
+export const CheckIcon = (props: SvgIconProps) => {
   return (
     <SvgIcon {...props}>
       <svg

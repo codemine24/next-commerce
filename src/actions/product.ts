@@ -24,8 +24,6 @@ export const getProducts = async (query?: SearchParams) => {
     url += `?${queryParams}`;
   }
 
-  console.log(url);
-
   const res = await api.get(url, {
     next: { tags: [TAGS.products] },
   });

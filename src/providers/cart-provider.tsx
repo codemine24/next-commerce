@@ -27,6 +27,8 @@ interface CartContextType {
     discount: number;
     value: string;
   }) => void;
+  openCartModal: boolean;
+  setOpenCartModal: (open: boolean) => void;
 }
 
 export const CartContext = createContext<CartContextType | undefined>(
@@ -57,10 +59,17 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     cart_items: [],
     cart_total: 0,
   });
+
+  // Cart states
+  const [openCartModal, setOpenCartModal] = useState(false);
+
+  // Loading states
   const [isLoading, setIsLoading] = useState(true);
   const [isAdding, setIsAdding] = useState(false);
   const [isRemoving, setIsRemoving] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
+
+  // Coupon state
   const [coupon, setCoupon] = useState({
     isApplied: false,
     discount: 0,
@@ -177,11 +186,13 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
             ),
           }));
         } else {
-          toast.success(res.message);
+          // toast.success(res.message);
+          setOpenCartModal(true);
         }
         setIsAdding(false);
       } else {
-        toast.success("Product added to cart");
+        // toast.success("Product added to cart");
+        setOpenCartModal(true);
       }
     },
     [isAuthenticated]
@@ -396,6 +407,8 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     increaseQty,
     decreaseQty,
     setCoupon,
+    openCartModal,
+    setOpenCartModal,
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
