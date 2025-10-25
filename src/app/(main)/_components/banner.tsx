@@ -1,6 +1,7 @@
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import Link from "next/link";
 
 export const Banner = () => {
     return (
@@ -37,6 +38,8 @@ export const Banner = () => {
                 <Button
                     variant="contained"
                     color="primary"
+                    component={Link}
+                    href="/collections"
                     sx={{
                         mt: 3,
                         width: 200,

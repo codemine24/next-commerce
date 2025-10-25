@@ -4,6 +4,14 @@ import { Typography } from "@mui/material";
 import { Product } from "@/interfaces/product";
 import { currencyFormatter } from "@/utils/currency-formatter";
 
+const getProductPrice = (product: Product) => {
+    if (product.discount_price) {
+        return currencyFormatter(product.discount_price);
+    }
+    return currencyFormatter(product.price);
+};
+
+
 export const ProductPrice = ({ product }: { product: Product }) => {
   return (
     <Stack
@@ -14,7 +22,7 @@ export const ProductPrice = ({ product }: { product: Product }) => {
       alignItems="center"
     >
       <Typography variant="h3" color="primary.main">
-        {currencyFormatter(product?.price)}
+        {getProductPrice(product)}
       </Typography>
       {product.discount_price && (
         <Typography
@@ -24,7 +32,7 @@ export const ProductPrice = ({ product }: { product: Product }) => {
             color: "#A4B2AE",
           }}
         >
-          {currencyFormatter(product?.discount_price)}
+          {currencyFormatter(product?.price)}
         </Typography>
       )}
     </Stack>

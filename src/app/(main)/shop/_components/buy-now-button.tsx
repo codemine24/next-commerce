@@ -8,6 +8,7 @@ import { Product } from "@/interfaces/product";
 
 const BuyNowButton = ({ product }: { product: Product }) => {
   const { addToCart } = useCart();
+  const isStockAvailable = product.stock > 0;
 
   return (
     <Button
@@ -23,6 +24,7 @@ const BuyNowButton = ({ product }: { product: Product }) => {
           thumbnail: product.thumbnail,
         })
       }}
+      disabled={!isStockAvailable}
     >
       Buy Now
     </Button>

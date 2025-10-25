@@ -20,7 +20,7 @@ export const PasswordChangeForm = () => {
     });
 
     const onSubmit = (data: PasswordChangeFormType) => {
-        console.log("Data");
+        console.log("Data", data);
     };
 
     return (

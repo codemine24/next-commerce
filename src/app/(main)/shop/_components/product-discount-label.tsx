@@ -1,25 +1,57 @@
 "use client";
 
-import Box from "@mui/material/Box";
-import { alpha } from "@mui/material/styles";
-import Typography from "@mui/material/Typography";
+import { Chip } from "@mui/material";
 
-export const ProductDiscountLabel = () => {
+import { Product } from "@/interfaces/product";
+
+interface ProductDiscountLabelProps {
+  product: Product;
+}
+
+export const ProductDiscountLabel = ({
+  product,
+}: ProductDiscountLabelProps) => {
+  // Out of stock case
+
+  if (product.stock <= 0) {
     return (
-        <Box
-            sx={{
-                position: "absolute",
-                top: 10,
-                left: 10,
-                height: 30,
-                width: 60,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                backgroundColor: (theme) => alpha((theme.palette.primary as unknown as { [key: string]: string })["100"], 0.1),
-            }}
-        >
-            <Typography variant="body2" color="primary">20%</Typography>
-        </Box>
+      <Chip
+        label="Out of Stock"
+        color="error"
+        size="small"
+        sx={{
+          position: "absolute",
+          top: 8,
+          left: 8,
+          fontWeight: 600,
+        }}
+      />
     );
+  }
+
+  //Discount calculation
+  const regularPrice = Number(product.price);
+  const discountPrice = Number(product.discount_price);
+
+  // Check if both prices are valid
+  if (!regularPrice || !discountPrice || discountPrice >= regularPrice) {
+    return null;
+  }
+  const discountPercent = Math.round(
+    ((regularPrice - discountPrice) / regularPrice) * 100
+  );
+
+  return (
+    <Chip
+      label={`${discountPercent}%`}
+      color="primary"
+      size="small"
+      sx={{
+        position: "absolute",
+        top: 8,
+        left: 8,
+        fontWeight: 600,
+      }}
+    />
+  );
 };
