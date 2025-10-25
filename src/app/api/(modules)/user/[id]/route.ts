@@ -8,7 +8,7 @@ import payloadValidator from "@/app/api/(helpers)/utils/payload-validator";
 import userAuthenticator from "@/app/api/(helpers)/utils/user-authenticator";
 
 import { UserSchemas } from "../user.schema";
-import { UserServices } from "../user.service";
+import { UserServices } from "../user.servicev2";
 
 // ----------------------------------- GET USER --------------------------------------------
 export const GET = catchAsync(

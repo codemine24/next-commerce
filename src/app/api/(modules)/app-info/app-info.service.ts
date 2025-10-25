@@ -4,7 +4,7 @@ import CustomizedError from "../../(helpers)/error/customized-error";
 import { connectToDatabase } from "../../(helpers)/utils/mongoose";
 
 import { AppInfoPayload } from "./app-info.interface";
-import { AppInfoModel } from "./app-info.model";
+import AppInfoModel from "./app-info.model";
 
 // ------------------------------------ SET APP INFO -------------------------------------
 const setAppInfo = async (data: AppInfoPayload) => {

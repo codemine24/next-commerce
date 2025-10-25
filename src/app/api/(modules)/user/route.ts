@@ -6,7 +6,7 @@ import { catchAsync } from "../../(helpers)/shared/catch-async";
 import { successResponse } from "../../(helpers)/shared/response";
 import userAuthenticator from "../../(helpers)/utils/user-authenticator";
 
-import { UserServices } from "./user.service";
+import { UserServices } from "./user.servicev2";
 
 // ----------------------------------- GET USERS ----------------------------------------
 export const GET = catchAsync(async (request: NextRequest) => {

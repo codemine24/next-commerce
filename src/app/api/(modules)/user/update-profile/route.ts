@@ -9,7 +9,7 @@ import payloadValidator from "@/app/api/(helpers)/utils/payload-validator";
 import userAuthenticator from "@/app/api/(helpers)/utils/user-authenticator";
 
 import { UserSchemas } from "../user.schema";
-import { UserServices } from "../user.service";
+import { UserServices } from "../user.servicev2";
 
 // ----------------------------------- UPDATE PROFILE -----------------------------------------
 export const PATCH = catchAsync(async (request: NextRequest) => {

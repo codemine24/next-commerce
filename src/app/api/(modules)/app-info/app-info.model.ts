@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose";
+import { Schema, Model, model, models } from "mongoose";
 
 import { AppInfo } from "./app-info.interface";
 
@@ -27,5 +27,8 @@ const AppInfoSchema = new Schema<AppInfo>(
   }
 );
 
-export const AppInfoModel =
-  mongoose.models.AppInfo || mongoose.model<AppInfo>("AppInfo", AppInfoSchema);
+const AppInfoModel =
+  (models.AppInfo as Model<AppInfo>) ||
+  model<AppInfo>("AppInfo", AppInfoSchema);
+
+export default AppInfoModel;
