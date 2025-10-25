@@ -5,12 +5,13 @@ import { catchAsync } from "@/app/api/(helpers)/shared/catch-async";
 import { successResponse } from "@/app/api/(helpers)/shared/response";
 import userAuthenticator from "@/app/api/(helpers)/utils/user-authenticator";
 
+import { UserRole } from "../user.constant";
 import { UserServices } from "../user.service";
 
 // ----------------------------------- GET PROFILE ----------------------------------------
 export const GET = catchAsync(async (request: NextRequest) => {
   // Step 1: Authenticate user
-  const user = await userAuthenticator(request, ["CUSTOMER"]);
+  const user = await userAuthenticator(request, [UserRole.CUSTOMER]);
 
   // Step 2: Call service layer to get profile in database
   const result = await UserServices.getProfile(user);

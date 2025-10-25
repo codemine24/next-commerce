@@ -1,4 +1,3 @@
-import { UserRole } from "@prisma/client";
 import httpStatus from "http-status";
 import { NextRequest } from "next/server";
 
@@ -8,8 +7,9 @@ import { formDataToObject } from "@/app/api/(helpers)/utils/helper";
 import payloadValidator from "@/app/api/(helpers)/utils/payload-validator";
 import userAuthenticator from "@/app/api/(helpers)/utils/user-authenticator";
 
+import { UserRole } from "../user.constant";
 import { UserSchemas } from "../user.schema";
-import { UserServices } from "../user.servicev2";
+import { UserServices } from "../user.service";
 
 // ----------------------------------- UPDATE PROFILE -----------------------------------------
 export const PATCH = catchAsync(async (request: NextRequest) => {

@@ -25,7 +25,7 @@ const getProfile = async (user: User) => {
 };
 
 // ------------------------------------ UPDATE PROFILE -------------------------------------
-const updateProfile = async (user: any, data: Record<string, any>) => {
+const updateProfile = async (user: User, data: Record<string, any>) => {
   const { data: userInfo, avatar } = data;
   const cookieStore = await cookies();
 
